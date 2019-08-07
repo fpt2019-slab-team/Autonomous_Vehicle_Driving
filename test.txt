@@ -1,4 +1,4 @@
-commit test(y0sshi)
+c
 commit test(kawamata)
 commit test(ore)
 commit test(kfujita)
