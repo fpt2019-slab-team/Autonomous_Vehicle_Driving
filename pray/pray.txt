@@ -1,2 +1,3 @@
 # for the success of the
 2019-08-08 th project, petalinux, zybo, pynq, reading paper, road construction
+2019-08-20 tu i2c, naofumi_and_kakizaki@tmc_internship
