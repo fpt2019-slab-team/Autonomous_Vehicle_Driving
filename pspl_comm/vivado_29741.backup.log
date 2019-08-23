@@ -1,0 +1,168 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Thu Aug 22 20:51:58 2019
+# Process ID: 29741
+# Current directory: /home/users/saikai/FPGAs/PYNQ/pspl_comm
+# Command line: vivado project_1/project_1.xpr
+# Log file: /home/users/saikai/FPGAs/PYNQ/pspl_comm/vivado.log
+# Journal file: /home/users/saikai/FPGAs/PYNQ/pspl_comm/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project project_1/project_1.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:11 ; elapsed = 00:00:10 . Memory (MB): peak = 6525.324 ; gain = 163.887 ; free physical = 961 ; free virtual = 5740
+update_compile_order -fileset sources_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 20:53:15 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 20:53:15 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3
+  **** Build date : Dec  6 2018-23:53:53
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+ERROR: [Labtoolstcl 44-513] HW Target shutdown. Closing target: localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+WARNING: [Labtoolstcl 44-129] No matching hw_ila_data was found.
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+close_hw
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - ps7_0_axi_periph
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_50M
+Adding cell -- pcalab:user:myip:1.0 - myip_0
+Successfully read diagram <design_1> from BD file </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd>
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 7584.148 ; gain = 10.117 ; free physical = 113 ; free virtual = 4555
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:09 ; elapsed = 00:00:09 . Memory (MB): peak = 7600.262 ; gain = 26.230 ; free physical = 113 ; free virtual = 4537
+update_compile_order -fileset sources_1
+set_property core_revision 12 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+report_ip_status -name ip_status 
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 11 to revision 12
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+generate_target: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 7741.367 ; gain = 0.000 ; free physical = 122 ; free virtual = 4287
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1
+
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 21:04:04 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 21:04:24 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 21:04:24 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3
+  **** Build date : Dec  6 2018-23:53:53
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 22 21:23:32 2019...

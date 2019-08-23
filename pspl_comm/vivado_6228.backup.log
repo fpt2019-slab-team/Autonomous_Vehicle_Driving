@@ -1,0 +1,585 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Thu Aug 22 18:17:54 2019
+# Process ID: 6228
+# Current directory: /home/users/saikai/FPGAs/PYNQ/pspl_comm
+# Command line: vivado project_1/project_1.xpr
+# Log file: /home/users/saikai/FPGAs/PYNQ/pspl_comm/vivado.log
+# Journal file: /home/users/saikai/FPGAs/PYNQ/pspl_comm/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project project_1/project_1.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 6532.312 ; gain = 174.125 ; free physical = 1309 ; free virtual = 6451
+update_compile_order -fileset sources_1
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+Adding cell -- pcalab:user:myip:1.0 - myip_0
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - ps7_0_axi_periph
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_50M
+Successfully read diagram <design_1> from BD file </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd>
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:06 . Memory (MB): peak = 6746.547 ; gain = 4.113 ; free physical = 1139 ; free virtual = 6291
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:10 ; elapsed = 00:00:08 . Memory (MB): peak = 6777.176 ; gain = 34.742 ; free physical = 1096 ; free virtual = 6248
+update_compile_order -fileset sources_1
+ipx::merge_project_changes hdl_parameters [ipx::current_core]
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+INFO: [IP_Flow 19-3166] Bus Interface 'S00_AXI': References existing memory map 'S00_AXI'.
+set_property core_revision 3 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+startgroup
+create_bd_cell -type ip -vlnv pcalab:user:myip:1.0 myip_1
+endgroup
+set_property location {4 1112 -4} [get_bd_cells myip_1]
+delete_bd_objs [get_bd_intf_nets ps7_0_axi_periph_M00_AXI] [get_bd_nets myip_0_led_out] [get_bd_nets myip_0_addr] [get_bd_nets myip_0_data] [get_bd_cells myip_0]
+set_property location {3 1139 96} [get_bd_cells myip_1]
+delete_bd_objs [get_bd_cells myip_1]
+startgroup
+create_bd_cell -type ip -vlnv pcalab:user:myip:1.0 myip_0
+endgroup
+set_property location {2.5 1107 162} [get_bd_cells myip_0]
+connect_bd_intf_net -boundary_type upper [get_bd_intf_pins ps7_0_axi_periph/M00_AXI] [get_bd_intf_pins myip_0/S00_AXI]
+delete_bd_objs [get_bd_intf_nets ps7_0_axi_periph_M00_AXI] [get_bd_intf_nets processing_system7_0_M_AXI_GP0] [get_bd_nets rst_ps7_0_50M_peripheral_aresetn] [get_bd_cells ps7_0_axi_periph]
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK0] [get_bd_nets processing_system7_0_FCLK_RESET0_N] [get_bd_cells processing_system7_0]
+delete_bd_objs [get_bd_cells rst_ps7_0_50M]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0
+endgroup
+set_property location {1.5 707 162} [get_bd_cells processing_system7_0]
+connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins myip_0/s00_axi_aclk]
+connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK]
+apply_bd_automation -rule xilinx.com:bd_rule:axi4 -config { Clk_master {/processing_system7_0/FCLK_CLK0 (50 MHz)} Clk_slave {/processing_system7_0/FCLK_CLK0 (50 MHz)} Clk_xbar {/processing_system7_0/FCLK_CLK0 (50 MHz)} Master {/processing_system7_0/M_AXI_GP0} Slave {/myip_0/S00_AXI} intc_ip {New AXI Interconnect} master_apm {0}}  [get_bd_intf_pins myip_0/S00_AXI]
+</myip_0/S00_AXI/S00_AXI_reg> is being mapped into </processing_system7_0/Data> at <0x43C00000 [ 64K ]>
+regenerate_bd_layout
+connect_bd_net [get_bd_ports led_out] [get_bd_pins myip_0/led_out]
+create_bd_port -dir O pulse
+startgroup
+connect_bd_net [get_bd_ports pulse] [get_bd_pins myip_0/pulse]
+endgroup
+regenerate_bd_layout
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ui/bd_1f5defd0.ui> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+generate_target: Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 7012.555 ; gain = 20.316 ; free physical = 865 ; free virtual = 6087
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:29:47 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+add_files -norecurse {/home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv /home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv}
+update_compile_order -fileset sources_1
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+INFO: [BD 41-1637] Generated targets are already up-to-date for bd-design 'design_1' - hence not re-generating.
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:31:11 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 18:31:27 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 18:31:27 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+add_files -norecurse /home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv
+WARNING: [filemgmt 56-12] File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv' cannot be added to the project because it already exists in the project, skipping this file
+reset_run synth_1
+reset_run design_1_synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 18:33:38 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 18:33:38 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+reset_run synth_1
+reset_run design_1_synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 18:36:07 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 18:36:07 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 7220.660 ; gain = 0.000 ; free physical = 689 ; free virtual = 5618
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+INFO: [BD 41-1637] Generated targets are already up-to-date for bd-design 'design_1' - hence not re-generating.
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:39:23 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+add_files -norecurse /home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv
+WARNING: [filemgmt 56-12] File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv' cannot be added to the project because it already exists in the project, skipping this file
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 7240.664 ; gain = 0.000 ; free physical = 745 ; free virtual = 5675
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 7240.664 ; gain = 0.000 ; free physical = 741 ; free virtual = 5671
+update_compile_order -fileset sources_1
+add_files -norecurse -copy_to /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src /home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv
+update_compile_order -fileset sources_1
+ipx::merge_project_changes files [ipx::current_core]
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+set_property core_revision 4 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+report_ip_status -name ip_status 
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 3 to revision 4
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ui/bd_1f5defd0.ui> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:54:00 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 18:54:15 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 18:54:15 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 7310.188 ; gain = 0.000 ; free physical = 636 ; free virtual = 5565
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 7310.188 ; gain = 0.000 ; free physical = 644 ; free virtual = 5572
+update_compile_order -fileset sources_1
+add_files -norecurse -copy_to /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src /home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv
+ipx::merge_project_changes files [ipx::current_core]
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+update_compile_order -fileset sources_1
+set_property core_revision 5 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 4 to revision 5
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:56:53 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+update_ip_catalog -rebuild -scan_changes
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+report_ip_status -name ip_status
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-1972] Upgraded design_1_myip_0_0 from myip_v1.0 1.0 to myip_v1.0 1.0
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 18:57:25 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 18:59:36 2019] Launched synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 18:59:36 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+open_hw
+connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3
+  **** Build date : Dec  6 2018-23:53:53
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+open_hw_target: Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 8150.863 ; gain = 657.191 ; free physical = 161 ; free virtual = 4608
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+close_hw
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 8177.926 ; gain = 0.000 ; free physical = 121 ; free virtual = 4565
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 8177.926 ; gain = 0.000 ; free physical = 111 ; free virtual = 4563
+update_compile_order -fileset sources_1
+set_property core_revision 6 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 5 to revision 6
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+delete_bd_objs [get_bd_ports addr]
+delete_bd_objs [get_bd_ports data]
+regenerate_bd_layout
+regenerate_bd_layout
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:04 ; elapsed = 00:00:08 . Memory (MB): peak = 8221.730 ; gain = 0.000 ; free physical = 122 ; free virtual = 4228
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:09 . Memory (MB): peak = 8221.730 ; gain = 0.000 ; free physical = 115 ; free virtual = 4222
+update_compile_order -fileset sources_1
+set_property core_revision 7 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+set_property core_revision 8 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+open_bd_design {/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:06 . Memory (MB): peak = 8248.203 ; gain = 0.000 ; free physical = 101 ; free virtual = 4252
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 8248.203 ; gain = 0.000 ; free physical = 102 ; free virtual = 4252
+update_compile_order -fileset sources_1
+ipx::unload_core /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+ipx::open_ipxact_file /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+WARNING: [IP_Flow 19-3898] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' is not found in the project sources. It will be removed from the packaged IP when the sources are merged. If still required, please add this file to the project and re-package.
+ipx::merge_project_changes hdl_parameters [ipx::current_core]
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+INFO: [IP_Flow 19-5169] Module 'myip_v1_0' uses SystemVerilog sources with a Verilog top file. These SystemVerilog files will not be analysed by the packager.
+INFO: [IP_Flow 19-3166] Bus Interface 'S00_AXI': References existing memory map 'S00_AXI'.
+set_property core_revision 9 [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+set_property core_revision 10 [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+close_project
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 6 to revision 8
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ui/bd_1f5defd0.ui> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+regenerate_bd_layout
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:10 . Memory (MB): peak = 8274.695 ; gain = 0.000 ; free physical = 137 ; free virtual = 4095
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:12 . Memory (MB): peak = 8274.695 ; gain = 0.000 ; free physical = 142 ; free virtual = 4102
+update_compile_order -fileset sources_1
+close_project
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:08 . Memory (MB): peak = 8409.871 ; gain = 0.000 ; free physical = 113 ; free virtual = 3965
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:09 . Memory (MB): peak = 8409.871 ; gain = 0.000 ; free physical = 136 ; free virtual = 3957
+update_compile_order -fileset sources_1
+update_files -from_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv -to_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv -filesets [get_filesets *]
+INFO: [filemgmt 20-762] Replacing file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' with file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv'.
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/pwmc.sv:]
+update_files -from_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv -to_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv -filesets [get_filesets *]
+INFO: [filemgmt 20-762] Replacing file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv' with file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv'.
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/FPGAs/PYNQ/pspl_comm/astray.sv:]
+ipx::merge_project_changes files [ipx::current_core]
+WARNING: [IP_Flow 19-5226] Project source file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml' ignored by IP packager.
+WARNING: [IP_Flow 19-5109] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv' does not exist in the project sources. It has been removed from the packaged IP. If still required, please add this file to the project, merge sources and re-package.
+WARNING: [IP_Flow 19-5109] File Group 'xilinx_verilogsynthesis (Verilog Synthesis)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' does not exist in the project sources. It has been removed from the packaged IP. If still required, please add this file to the project, merge sources and re-package.
+WARNING: [IP_Flow 19-5109] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/astray.sv' does not exist in the project sources. It has been removed from the packaged IP. If still required, please add this file to the project, merge sources and re-package.
+WARNING: [IP_Flow 19-5109] File Group 'xilinx_verilogbehavioralsimulation (Verilog Simulation)': File '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' does not exist in the project sources. It has been removed from the packaged IP. If still required, please add this file to the project, merge sources and re-package.
+set_property core_revision 11 [ipx::current_core]
+ipx::update_source_project_archive -component [ipx::current_core]
+ipx::create_xgui_files [ipx::current_core]
+ipx::update_checksums [ipx::current_core]
+ipx::save_core [ipx::current_core]
+ipx::move_temp_component_back -component [ipx::current_core]
+close_project
+update_ip_catalog -rebuild -repo_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0
+INFO: [IP_Flow 19-725] Reloaded user IP repository '/home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0'
+upgrade_ip -srcset design_1 -vlnv pcalab:user:myip:1.0 [get_ips  design_1_myip_0_0] -log ip_upgrade.log
+Upgrading '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd'
+INFO: [IP_Flow 19-3422] Upgraded design_1_myip_0_0 (myip_v1.0 1.0) from revision 8 to revision 11
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+INFO: [Coretcl 2-1525] Wrote upgrade log to '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/ip_upgrade.log'.
+export_ip_user_files -of_objects [get_ips design_1_myip_0_0] -no_script -sync -force -quiet
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+Wrote  : </home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd> 
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/sim/design_1.v
+VHDL Output written to : /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hdl/design_1_wrapper.v
+INFO: [BD 41-1029] Generation completed for the IP Integrator block myip_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block processing_system7_0 .
+INFO: [BD 41-1029] Generation completed for the IP Integrator block rst_ps7_0_50M .
+WARNING: [IP_Flow 19-4994] Overwriting existing constraint file '/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_0/design_1_auto_pc_0_ooc.xdc'
+INFO: [BD 41-1029] Generation completed for the IP Integrator block ps7_0_axi_periph/s00_couplers/auto_pc .
+Exporting to file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1.hwh
+Generated Block Design Tcl file /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/hw_handoff/design_1_bd.tcl
+Generated Hardware Definition File /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.hwdef
+generate_target: Time (s): cpu = 00:00:01 ; elapsed = 00:00:08 . Memory (MB): peak = 8430.883 ; gain = 0.000 ; free physical = 135 ; free virtual = 3924
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1
+
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 20:28:24 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 20:29:39 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 20:29:40 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+generate_target all [get_files  /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd]
+INFO: [BD 41-1637] Generated targets are already up-to-date for bd-design 'design_1' - hence not re-generating.
+export_ip_user_files -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+reset_run design_1_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1
+
+launch_runs -jobs 4 design_1_synth_1
+[Thu Aug 22 20:35:47 2019] Launched design_1_synth_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+export_simulation -of_objects [get_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd] -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/sim_scripts -ip_user_files_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files -ipstatic_source_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.ip_user_files/ipstatic -lib_map_path [list {modelsim=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/modelsim} {questa=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/questa} {ies=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/ies} {xcelium=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/xcelium} {vcs=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/vcs} {riviera=/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/compile_simlib/riviera}] -use_ip_compiled_libs -force -quiet
+reset_run design_1_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1
+
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1
+
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+[Thu Aug 22 20:38:52 2019] Launched design_1_synth_1, synth_1...
+Run output will be captured here:
+design_1_synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1/runme.log
+synth_1: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/runme.log
+[Thu Aug 22 20:38:53 2019] Launched impl_1...
+Run output will be captured here: /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/impl_1/runme.log
+launch_runs: Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 8484.969 ; gain = 8.004 ; free physical = 112 ; free virtual = 3909
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [Common 17-41] Interrupt caught. Command should exit soon.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+INFO: [IP_Flow 19-2338] Canceling the changes to the IP catalog. Reverting the catalog back to its previous state.
+INFO: [IP_Flow 19-2340] The IP catalog has been returned to its previous state.
+INFO: [Common 17-344] 'create_project' was cancelled
+ERROR: [Ipptcl 7-562] Cannot create project 'myip_v1_0_project'.
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:07 ; elapsed = 00:01:45 . Memory (MB): peak = 8484.969 ; gain = 0.000 ; free physical = 114 ; free virtual = 3887
+INFO: [Common 17-344] 'ipx::edit_ip_in_project' was cancelled
+close_project
+reset_run synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1
+
+reset_run design_1_synth_1
+WARNING: [Vivado 12-1017] Problems encountered:
+1. Failed to delete one or more files in run directory /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/design_1_synth_1
+
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 22 20:51:10 2019...
