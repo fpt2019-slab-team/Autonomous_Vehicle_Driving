@@ -6,7 +6,7 @@ module myip_v1_0_S00_AXI
 
     // User parameters ends
     // Do not modify the parameters beyond this line
-
+    
     // Width of S_AXI data bus
     parameter integer C_S_AXI_DATA_WIDTH = 32,
     // Width of S_AXI address bus
@@ -14,9 +14,13 @@ module myip_v1_0_S00_AXI
     )
    (
     // Users to add ports here
+
+    input wire [1:0]                          sw, 
+    
     output wire [3:0]                         led_out,
     output wire                               pulse1,
     output wire                               pulse2, 
+
     // User ports ends
     // Do not modify the ports beyond this line
 
@@ -374,7 +378,8 @@ module myip_v1_0_S00_AXI
 	  2'h0   : reg_data_out <= slv_reg0;
 	  2'h1   : reg_data_out <= slv_reg1;
 	  2'h2   : reg_data_out <= slv_reg2;
-	  2'h3   : reg_data_out <= slv_reg3;
+	  2'h3   : reg_data_out <= {30'd0, sw};
+	  // 2'h3   : reg_data_out <= slv_reg3;
 	  default : reg_data_out <= 0;
 	endcase
      end
@@ -399,7 +404,11 @@ module myip_v1_0_S00_AXI
      end    
 
    // Add user logic here
+
    assign led_out = slv_reg0[3:0];
+   
+   wire [12:0] pwmv1, pwmv2;
+   assign {pwmv1, pwmv2} = {slv_reg1[12:0], slv_reg2[12:0]}; 
 
    astray astray_inst1
      (
@@ -407,14 +416,14 @@ module myip_v1_0_S00_AXI
       .pwmv(slv_reg1[12:0]),
       .pulse(pulse1)
       );
-      
+   
    astray astray_inst2
      (
       .clk(S_AXI_ACLK),
       .pwmv(slv_reg2[12:0]),
       .pulse(pulse2)
-      );
-
+      );      
+      
    // User logic ends
 
 endmodule

@@ -48,12 +48,13 @@
 
 
 // IP VLNV: pcalab:user:myip:1.0
-// IP Revision: 16
+// IP Revision: 31
 
 `timescale 1ns/1ps
 
 (* DowngradeIPIdentifiedWarnings = "yes" *)
 module design_1_myip_0_0 (
+  sw,
   led_out,
   pulse1,
   pulse2,
@@ -80,6 +81,7 @@ module design_1_myip_0_0 (
   s00_axi_aresetn
 );
 
+input wire [1 : 0] sw;
 output wire [3 : 0] led_out;
 output wire pulse1;
 output wire pulse2;
@@ -134,6 +136,7 @@ input wire s00_axi_aresetn;
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
     .C_S00_AXI_ADDR_WIDTH(4)  // Width of S_AXI address bus
   ) inst (
+    .sw(sw),
     .led_out(led_out),
     .pulse1(pulse1),
     .pulse2(pulse2),

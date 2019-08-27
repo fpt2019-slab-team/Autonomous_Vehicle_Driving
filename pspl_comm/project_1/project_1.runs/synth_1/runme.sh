@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1'
+HD_PWD='/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

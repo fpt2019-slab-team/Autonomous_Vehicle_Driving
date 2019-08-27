@@ -18,14 +18,14 @@
 -endlib
 -makelib ies_lib/xil_defaultlib \
   "../../../bd/design_1/sim/design_1.v" \
-  "../../../bd/design_1/ipshared/a019/hdl/myip_v1_0_S00_AXI.v" \
+  "../../../bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v" \
 -endlib
 -makelib ies_lib/xil_defaultlib -sv \
-  "../../../bd/design_1/astray.sv" \
-  "../../../bd/design_1/pwmc.sv" \
+  "../../../bd/design_1/ipshared/b565/src/astray.sv" \
+  "../../../bd/design_1/ipshared/b565/src/pwmc.sv" \
 -endlib
 -makelib ies_lib/xil_defaultlib \
-  "../../../bd/design_1/ipshared/a019/hdl/myip_v1_0.v" \
+  "../../../bd/design_1/ipshared/b565/hdl/myip_v1_0.v" \
   "../../../bd/design_1/ip/design_1_myip_0_0/sim/design_1_myip_0_0.v" \
 -endlib
 -makelib ies_lib/axi_infrastructure_v1_1_0 \

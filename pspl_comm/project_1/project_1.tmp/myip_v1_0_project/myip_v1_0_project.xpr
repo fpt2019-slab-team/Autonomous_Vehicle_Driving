@@ -3,10 +3,10 @@
 <!--                                                         -->
 <!-- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.   -->
 
-<Project Version="7" Minor="39" Path="/home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.tmp/myip_v1_0_project/myip_v1_0_project.xpr">
+<Project Version="7" Minor="39" Path="/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.tmp/myip_v1_0_project/myip_v1_0_project.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
-    <Option Name="Id" Val="00fd6c3c1d784d36b898450795d8dc9a"/>
+    <Option Name="Id" Val="47ec647d326d4a1c8a7f89f1ca252ef0"/>
     <Option Name="Part" Val="xc7z020clg400-1"/>
     <Option Name="CompiledLibDir" Val="$PCACHEDIR/compile_simlib"/>
     <Option Name="CompiledLibDirXSim" Val=""/>
@@ -68,7 +68,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../astray.sv">
+      <File Path="$PPRDIR/../../../ip_repo/myip_1.0/src/astray.sv">
         <FileInfo>
           <Attr Name="Library" Val=""/>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -76,7 +76,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PPRDIR/../../../pwmc.sv">
+      <File Path="$PPRDIR/../../../ip_repo/myip_1.0/src/pwmc.sv">
         <FileInfo>
           <Attr Name="Library" Val=""/>
           <Attr Name="UsedIn" Val="synthesis"/>

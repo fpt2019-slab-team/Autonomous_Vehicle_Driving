@@ -66,22 +66,23 @@ start_step init_design
 set ACTIVE_STEP init_design
 set rc [catch {
   create_msg_db init_design.pb
+  set_param xicom.use_bs_reader 1
   create_project -in_memory -part xc7z020clg400-1
   set_property design_mode GateLvl [current_fileset]
   set_param project.singleFileAddWarning.threshold 0
-  set_property webtalk.parent_dir /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/wt [current_project]
-  set_property parent.project_path /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.xpr [current_project]
-  set_property ip_repo_paths /home/users/saikai/FPGAs/PYNQ/pspl_comm/ip_repo/myip_1.0 [current_project]
+  set_property webtalk.parent_dir /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.cache/wt [current_project]
+  set_property parent.project_path /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.xpr [current_project]
+  set_property ip_repo_paths /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0 [current_project]
   update_ip_catalog
-  set_property ip_output_repo /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.cache/ip [current_project]
+  set_property ip_output_repo /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.cache/ip [current_project]
   set_property ip_cache_permissions {read write} [current_project]
   set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
-  add_files -quiet /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.runs/synth_1/top.dcp
+  add_files -quiet /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/synth_1/top.dcp
   set_msg_config -source 4 -id {BD 41-1661} -limit 0
   set_param project.isImplRun true
-  add_files /home/users/saikai/FPGAs/PYNQ/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd
+  add_files /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd
   set_param project.isImplRun false
-  read_xdc /home/users/saikai/FPGAs/PYNQ/pspl_comm/PYNQ-Z1_C.xdc
+  read_xdc /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/PYNQ-Z1_C.xdc
   set_param project.isImplRun true
   link_design -top top -part xc7z020clg400-1
   set_param project.isImplRun false
