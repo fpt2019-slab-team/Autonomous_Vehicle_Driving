@@ -1,8 +1,8 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-//Date        : Fri Aug 23 11:19:19 2019
-//Host        : flamingo running 64-bit CentOS release 6.10 (Final)
+//Date        : Tue Aug 27 16:20:09 2019
+//Host        : swan.cis.nagasaki-u.ac.jp running 64-bit CentOS release 6.10 (Final)
 //Command     : generate_target design_1.bd
 //Design      : design_1
 //Purpose     : IP block netlist
@@ -13,10 +13,12 @@
 module design_1
    (led_out,
     pulse1,
-    pulse2);
+    pulse2,
+    sw);
   output [3:0]led_out;
   output pulse1;
   output pulse2;
+  input [1:0]sw;
 
   wire [3:0]myip_0_led_out;
   wire myip_0_pulse1;
@@ -81,10 +83,12 @@ module design_1
   wire [3:0]ps7_0_axi_periph_M00_AXI_WSTRB;
   wire ps7_0_axi_periph_M00_AXI_WVALID;
   wire [0:0]rst_ps7_0_50M_peripheral_aresetn;
+  wire [1:0]sw_1;
 
   assign led_out[3:0] = myip_0_led_out;
   assign pulse1 = myip_0_pulse1;
   assign pulse2 = myip_0_pulse2;
+  assign sw_1 = sw[1:0];
   design_1_myip_0_0 myip_0
        (.led_out(myip_0_led_out),
         .pulse1(myip_0_pulse1),
@@ -109,7 +113,8 @@ module design_1
         .s00_axi_wdata(ps7_0_axi_periph_M00_AXI_WDATA),
         .s00_axi_wready(ps7_0_axi_periph_M00_AXI_WREADY),
         .s00_axi_wstrb(ps7_0_axi_periph_M00_AXI_WSTRB),
-        .s00_axi_wvalid(ps7_0_axi_periph_M00_AXI_WVALID));
+        .s00_axi_wvalid(ps7_0_axi_periph_M00_AXI_WVALID),
+        .sw(sw_1));
   design_1_processing_system7_0_0 processing_system7_0
        (.FCLK_CLK0(processing_system7_0_FCLK_CLK0),
         .FCLK_RESET0_N(processing_system7_0_FCLK_RESET0_N),

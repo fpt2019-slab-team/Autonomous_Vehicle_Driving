@@ -49,14 +49,14 @@ vcom -work xpm -64 -93 \
 
 vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../bd/design_1/sim/design_1.v" \
-"../../../bd/design_1/ipshared/a019/hdl/myip_v1_0_S00_AXI.v" \
+"../../../bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v" \
 
 vlog -work xil_defaultlib -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/design_1/astray.sv" \
-"../../../bd/design_1/pwmc.sv" \
+"../../../bd/design_1/ipshared/b565/src/astray.sv" \
+"../../../bd/design_1/ipshared/b565/src/pwmc.sv" \
 
 vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/design_1/ipshared/a019/hdl/myip_v1_0.v" \
+"../../../bd/design_1/ipshared/b565/hdl/myip_v1_0.v" \
 "../../../bd/design_1/ip/design_1_myip_0_0/sim/design_1_myip_0_0.v" \
 
 vlog -work axi_infrastructure_v1_1_0 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
