@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-| Date         : Tue Aug 27 16:24:16 2019
-| Host         : swan.cis.nagasaki-u.ac.jp running 64-bit CentOS release 6.10 (Final)
+| Date         : Thu Aug 29 15:55:24 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
 | Command      : report_methodology -file top_methodology_drc_routed.rpt -pb top_methodology_drc_routed.pb -rpx top_methodology_drc_routed.rpx
 | Design       : top
 | Device       : xc7z020clg400-1
@@ -23,63 +23,334 @@ Table of Contents
           Floorplan: design_1
       Design limits: <entire design considered>
              Max violations: <unlimited>
-             Violations found: 10
+             Violations found: 64
 +-----------+----------+-------------------------------+------------+
 | Rule      | Severity | Description                   | Violations |
 +-----------+----------+-------------------------------+------------+
-| TIMING-18 | Warning  | Missing input or output delay | 10         |
+| TIMING-18 | Warning  | Missing input or output delay | 2          |
+| TIMING-20 | Warning  | Non-clocked latch             | 62         |
 +-----------+----------+-------------------------------+------------+
 
 2. REPORT DETAILS
 -----------------
 TIMING-18#1 Warning
 Missing input or output delay  
-An input delay is missing on sw[0] relative to clock(s) clk_fpga_0
+An output delay is missing on pulse1 relative to clock(s) clk_fpga_0
 Related violations: <none>
 
 TIMING-18#2 Warning
 Missing input or output delay  
-An input delay is missing on sw[1] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#3 Warning
-Missing input or output delay  
-An output delay is missing on led_out[0] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#4 Warning
-Missing input or output delay  
-An output delay is missing on led_out[1] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#5 Warning
-Missing input or output delay  
-An output delay is missing on led_out[2] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#6 Warning
-Missing input or output delay  
-An output delay is missing on led_out[3] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#7 Warning
-Missing input or output delay  
-An output delay is missing on led_out[4] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#8 Warning
-Missing input or output delay  
-An output delay is missing on led_out[5] relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#9 Warning
-Missing input or output delay  
-An output delay is missing on pulse1 relative to clock(s) clk_fpga_0
-Related violations: <none>
-
-TIMING-18#10 Warning
-Missing input or output delay  
 An output delay is missing on pulse2 relative to clock(s) clk_fpga_0
+Related violations: <none>
+
+TIMING-20#1 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[0] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#2 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[1] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#3 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[2] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#4 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[3] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[3]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#5 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[0] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#6 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[10] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[10]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#7 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[11] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[11]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#8 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[12] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[12]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#9 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[1] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#10 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[2] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#11 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[3] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[3]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#12 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[4] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[4]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#13 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[5] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[5]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#14 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[6] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[6]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#15 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[7] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[7]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#16 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[8] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[8]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#17 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[9] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[9]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#18 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[0] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#19 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[10] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[10]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#20 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[11] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[11]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#21 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[12] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[12]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#22 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[1] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#23 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[2] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#24 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[3] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[3]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#25 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[4] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[4]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#26 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[5] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[5]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#27 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[6] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[6]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#28 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[7] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[7]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#29 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[8] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[8]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#30 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[9] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[9]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#31 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[0] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[0]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#32 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[10] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[10]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#33 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[11] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[11]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#34 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[12] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[12]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#35 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[13] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[13]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#36 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[14] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[14]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#37 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[15] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[15]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#38 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[16] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[16]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#39 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[17] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[17]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#40 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[18] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[18]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#41 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[19] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[19]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#42 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[1] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[1]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#43 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[20] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[20]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#44 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[21] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[21]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#45 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[22] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[22]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#46 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[23] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[23]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#47 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[24] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[24]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#48 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[25] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[25]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#49 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[26] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[26]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#50 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[27] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[27]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#51 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[28] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[28]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#52 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[29] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[29]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#53 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[2] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[2]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#54 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[30] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[30]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#55 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[31] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[31]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#56 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[3] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[3]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#57 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[4] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[4]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#58 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[5] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[5]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#59 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[6] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[6]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#60 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[7] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[7]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#61 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[8] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[8]/G is not reached by a timing clock
+Related violations: <none>
+
+TIMING-20#62 Warning
+Non-clocked latch  
+The latch uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[9] cannot be properly analyzed as its control pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[9]/G is not reached by a timing clock
 Related violations: <none>
 
 

@@ -48,7 +48,7 @@
 
 
 // IP VLNV: pcalab:user:myip:1.0
-// IP Revision: 31
+// IP Revision: 35
 
 `timescale 1ns/1ps
 

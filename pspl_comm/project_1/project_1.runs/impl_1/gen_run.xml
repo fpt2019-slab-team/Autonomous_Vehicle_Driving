@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="impl_1" LaunchPart="xc7z020clg400-1" LaunchTime="1566890446">
+<GenRun Id="impl_1" LaunchPart="xc7z020clg400-1" LaunchTime="1567061383">
   <File Type="WBT-USG" Name="usage_statistics_webtalk.html"/>
   <File Type="BG-DRC" Name="top.drc"/>
   <File Type="BG-BGN" Name="top.bgn"/>
@@ -109,6 +109,7 @@
       </FileInfo>
     </File>
     <Config>
+      <Option Name="TargetConstrsFile" Val="$PPRDIR/../PYNQ-Z1_C.xdc"/>
       <Option Name="ConstrsType" Val="XDC"/>
     </Config>
   </FileSet>

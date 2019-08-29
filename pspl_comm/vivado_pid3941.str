@@ -3222,3 +3222,4 @@ selectCodeEditor("top.v", 415, 565); // cl (w, cp)
 // WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 7105 ms. Increasing delay to 21315 ms.
 // WARNING: HSwingWorker (Refresh Filesets Swing Worker) is taking 20 ms. Decreasing delay to 2020 ms.
 // HMemoryUtils.trashcanNow. Engine heap size: 7,306 MB. GUI used memory: 181 MB. Current time: 8/27/19, 5:50:31 PM JST
+// TclEventType: FILE_SET_CHANGE

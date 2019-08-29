@@ -9,7 +9,7 @@
     
   - How to use 
     
-    Vivado の Hardware Maneger を開き，
+    Vivado の Hardware Manager を開き，
 
     ./pspl_comm/project_1/project_1.runs/impl_1/top.bit 
 
@@ -75,3 +75,17 @@
     - ip_repo/myip_1.0/hdl/myip_v1_0.v, ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v 
       Vivado IP が作ったモジュール
       主に myip_v1_0_S00_AXI.v を変更しました．
+
+* update 
+  
+  - 2019/8/29
+  
+    レジスタの使用方法を変更しました．
+
+    map_addr[0] : ps から指定する PL のオブジェクトのアドレス
+    0: led_out, 1: pulse1, 2: pulse2
+    map_addr[1] : map_addr[0] で指定したオブジェクトに格納する値
+    map_addr[2] : PS が読みたい PL のオブジェクトのアドレス
+    0: sw[0], 1: sw[1]
+    map_addr[3] : map_addr[2] で指定したオブジェクトの値
+

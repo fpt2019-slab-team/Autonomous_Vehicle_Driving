@@ -49,14 +49,14 @@ vcom -work xpm -93 \
 
 vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../bd/design_1/sim/design_1.v" \
-"../../../bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v" \
+"../../../bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v" \
 
 vlog -work xil_defaultlib  -sv2k12 "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/design_1/ipshared/b565/src/astray.sv" \
-"../../../bd/design_1/ipshared/b565/src/pwmc.sv" \
+"../../../bd/design_1/ipshared/5260/src/astray.sv" \
+"../../../bd/design_1/ipshared/5260/src/pwmc.sv" \
 
 vlog -work xil_defaultlib  -v2k5 "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/design_1/ipshared/b565/hdl/myip_v1_0.v" \
+"../../../bd/design_1/ipshared/5260/hdl/myip_v1_0.v" \
 "../../../bd/design_1/ip/design_1_myip_0_0/sim/design_1_myip_0_0.v" \
 
 vlog -work axi_infrastructure_v1_1_0  -v2k5 "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \

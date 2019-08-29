@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-| Date         : Tue Aug 27 16:24:13 2019
-| Host         : swan.cis.nagasaki-u.ac.jp running 64-bit CentOS release 6.10 (Final)
+| Date         : Thu Aug 29 15:55:21 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
 | Command      : report_drc -file top_drc_routed.rpt -pb top_drc_routed.pb -rpx top_drc_routed.rpx
 | Design       : top
 | Device       : xc7z020clg400-1
@@ -24,12 +24,33 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 0
-+------+----------+-------------+------------+
-| Rule | Severity | Description | Violations |
-+------+----------+-------------+------------+
-+------+----------+-------------+------------+
+             Violations found: 4
++----------+----------+-------------------+------------+
+| Rule     | Severity | Description       | Violations |
++----------+----------+-------------------+------------+
+| PDRC-153 | Warning  | Gated clock check | 4          |
++----------+----------+-------------------+------------+
 
 2. REPORT DETAILS
 -----------------
+PDRC-153#1 Warning
+Gated clock check  
+Net uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[3]_i_1_n_0 is a gated clock net sourced by a combinational pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[3]_i_1/O, cell uut/myip_0/inst/myip_v1_0_S00_AXI_inst/led_out_reg_reg[3]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
+PDRC-153#2 Warning
+Gated clock check  
+Net uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[12]_i_1_n_0 is a gated clock net sourced by a combinational pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[12]_i_1/O, cell uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv1_reg_reg[12]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
+PDRC-153#3 Warning
+Gated clock check  
+Net uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[12]_i_1_n_0 is a gated clock net sourced by a combinational pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[12]_i_1/O, cell uut/myip_0/inst/myip_v1_0_S00_AXI_inst/pwmv2_reg_reg[12]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
+PDRC-153#4 Warning
+Gated clock check  
+Net uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[31]_i_2_n_0 is a gated clock net sourced by a combinational pin uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[31]_i_2/O, cell uut/myip_0/inst/myip_v1_0_S00_AXI_inst/reg_data_out_reg[31]_i_2. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+Related violations: <none>
+
 

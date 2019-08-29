@@ -1,0 +1,47 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Mon Aug 26 16:43:40 2019
+# Process ID: 44446
+# Current directory: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1
+# Command line: vivado project_1.xpr
+# Log file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/vivado.log
+# Journal file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project project_1.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:10 . Memory (MB): peak = 6691.691 ; gain = 161.625 ; free physical = 113892 ; free virtual = 130958
+update_compile_order -fileset sources_1
+open_bd_design {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd}
+Adding cell -- xilinx.com:ip:processing_system7:5.5 - processing_system7_0
+Adding cell -- xilinx.com:ip:axi_interconnect:2.1 - ps7_0_axi_periph
+Adding cell -- xilinx.com:ip:axi_protocol_converter:2.1 - auto_pc
+Adding cell -- xilinx.com:ip:proc_sys_reset:5.0 - rst_ps7_0_50M
+Adding cell -- pcalab:user:myip:1.0 - myip_0
+Successfully read diagram <design_1> from BD file </home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1.bd>
+ipx::edit_ip_in_project -upgrade true -name myip_v1_0_project -directory /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.tmp/myip_v1_0_project /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/component.xml
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+create_project: Time (s): cpu = 00:00:14 ; elapsed = 00:00:09 . Memory (MB): peak = 6858.719 ; gain = 0.000 ; free physical = 113815 ; free virtual = 130880
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0'.
+INFO: [IP_Flow 19-795] Syncing license key meta-data
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v:]
+WARNING: [filemgmt 56-99] Vivado Synthesis ignores library specification for Verilog or SystemVerilog files. [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0.v:]
+ipx::edit_ip_in_project: Time (s): cpu = 00:00:18 ; elapsed = 00:00:11 . Memory (MB): peak = 6858.719 ; gain = 0.000 ; free physical = 113810 ; free virtual = 130876
+update_compile_order -fileset sources_1
+set_property source_mgmt_mode All [current_project]
+add_files -norecurse -copy_to /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/src {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/hdl/astray.sv /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/hdl/pwmc.sv}
+ERROR: [Vivado 12-3630] The destination file '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/src/astray.sv' already exists, please use -force if you want to overwrite!
+add_files -norecurse -copy_to /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/src {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/pwmc.sv /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/astray.sv}
+ERROR: [Vivado 12-3630] The destination file '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0/src/pwmc.sv' already exists, please use -force if you want to overwrite!
+close_project
+exit
+INFO: [Common 17-206] Exiting Vivado at Mon Aug 26 16:49:20 2019...

@@ -1,4 +1,88 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Thu Aug 29 15:49:16 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
+| Command      : upgrade_ip
+| Device       : xc7z020clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_myip_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_myip_0_0 (pcalab:user:myip:1.0) from (Rev. 34) to (Rev. 35)
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Thu Aug 29 15:43:15 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
+| Command      : upgrade_ip
+| Device       : xc7z020clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_myip_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_myip_0_0 (pcalab:user:myip:1.0) from (Rev. 33) to (Rev. 34)
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Thu Aug 29 15:06:06 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
+| Command      : upgrade_ip
+| Device       : xc7z020clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_myip_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_myip_0_0 (pcalab:user:myip:1.0) from (Rev. 32) to (Rev. 33)
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Thu Aug 29 14:53:05 2019
+| Host         : flamingo running 64-bit CentOS release 6.10 (Final)
+| Command      : upgrade_ip
+| Device       : xc7z020clg400-1
+------------------------------------------------------------------------------------
+
+Upgrade Log for IP 'design_1_myip_0_0'
+
+1. Summary
+----------
+
+SUCCESS in the upgrade of design_1_myip_0_0 (pcalab:user:myip:1.0) from (Rev. 31) to (Rev. 32)
+
+
+
+
+
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 --------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
 | Date         : Tue Aug 27 16:19:55 2019

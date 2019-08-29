@@ -2,49 +2,53 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Tue Aug 27 16:20:16 2019
-# Process ID: 11489
+# Start of session at: Thu Aug 29 15:49:29 2019
+# Process ID: 8181
 # Current directory: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1
 # Command line: vivado -log design_1.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1.tcl
 # Log file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/design_1.vds
 # Journal file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/vivado.jou
 #-----------------------------------------------------------
 source design_1.tcl -notrace
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:08 . Memory (MB): peak = 1426.770 ; gain = 3.012 ; free physical = 113005 ; free virtual = 130140
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/ip_repo/myip_1.0'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+update_ip_catalog: Time (s): cpu = 00:00:02 ; elapsed = 00:00:08 . Memory (MB): peak = 1440.520 ; gain = 13.750 ; free physical = 112977 ; free virtual = 130112
 Command: synth_design -top design_1 -part xc7z020clg400-1 -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 11571 
-WARNING: [Synth 8-2611] redeclaration of ansi port pwmv is not allowed [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:8]
-WARNING: [Synth 8-976] pwmv has already been declared [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:8]
-WARNING: [Synth 8-2654] second declaration of pwmv ignored [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:8]
-INFO: [Synth 8-994] pwmv is declared here [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:4]
+INFO: Helper process launched with PID 8333 
+WARNING: [Synth 8-2611] redeclaration of ansi port pwmv is not allowed [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:8]
+WARNING: [Synth 8-976] pwmv has already been declared [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:8]
+WARNING: [Synth 8-2654] second declaration of pwmv ignored [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:8]
+INFO: [Synth 8-994] pwmv is declared here [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:4]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:09 ; elapsed = 00:00:28 . Memory (MB): peak = 1568.598 ; gain = 94.504 ; free physical = 411 ; free virtual = 3508
+Starting RTL Elaboration : Time (s): cpu = 00:00:05 ; elapsed = 00:00:24 . Memory (MB): peak = 1559.984 ; gain = 92.504 ; free physical = 112846 ; free virtual = 129981
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'design_1' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/synth/design_1.v:13]
 INFO: [Synth 8-6157] synthesizing module 'design_1_myip_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_myip_0_0/synth/design_1_myip_0_0.v:56]
-INFO: [Synth 8-6157] synthesizing module 'myip_v1_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0.v:3]
+INFO: [Synth 8-6157] synthesizing module 'myip_v1_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0.v:3]
 	Parameter C_S00_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_S00_AXI_ADDR_WIDTH bound to: 4 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'myip_v1_0_S00_AXI' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v:3]
+INFO: [Synth 8-6157] synthesizing module 'myip_v1_0_S00_AXI' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:3]
 	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
 	Parameter C_S_AXI_ADDR_WIDTH bound to: 4 - type: integer 
 	Parameter ADDR_LSB bound to: 2 - type: integer 
 	Parameter OPT_MEM_ADDR_BITS bound to: 1 - type: integer 
-INFO: [Synth 8-226] default block is never used [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v:239]
-INFO: [Synth 8-226] default block is never used [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v:380]
-INFO: [Synth 8-6157] synthesizing module 'astray' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:1]
-INFO: [Synth 8-6157] synthesizing module 'pwmc' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/pwmc.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'pwmc' (1#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/pwmc.sv:3]
-INFO: [Synth 8-6155] done synthesizing module 'astray' (2#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/src/astray.sv:1]
-WARNING: [Synth 8-6014] Unused sequential element slv_reg3_reg was removed.  [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v:234]
-INFO: [Synth 8-6155] done synthesizing module 'myip_v1_0_S00_AXI' (3#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0_S00_AXI.v:3]
-INFO: [Synth 8-6155] done synthesizing module 'myip_v1_0' (4#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/b565/hdl/myip_v1_0.v:3]
+INFO: [Synth 8-226] default block is never used [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:234]
+INFO: [Synth 8-226] default block is never used [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:379]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:386]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:426]
+INFO: [Synth 8-6157] synthesizing module 'astray' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'pwmc' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/pwmc.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'pwmc' (1#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/pwmc.sv:3]
+INFO: [Synth 8-6155] done synthesizing module 'astray' (2#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/src/astray.sv:1]
+WARNING: [Synth 8-6014] Unused sequential element slv_reg3_reg was removed.  [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:229]
+INFO: [Synth 8-6155] done synthesizing module 'myip_v1_0_S00_AXI' (3#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:3]
+INFO: [Synth 8-6155] done synthesizing module 'myip_v1_0' (4#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0.v:3]
 INFO: [Synth 8-6155] done synthesizing module 'design_1_myip_0_0' (5#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_myip_0_0/synth/design_1_myip_0_0.v:56]
 INFO: [Synth 8-6157] synthesizing module 'design_1_processing_system7_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/synth/design_1_processing_system7_0_0.v:60]
 INFO: [Synth 8-6157] synthesizing module 'processing_system7_v5_5_processing_system7' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_processing_system7_0_0/hdl/verilog/processing_system7_v5_5_processing_system7.v:161]
@@ -1079,7 +1083,7 @@ WARNING: [Synth 8-3331] design axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm has
 WARNING: [Synth 8-3331] design axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm has unconnected port s_arlen[2]
 INFO: [Common 17-14] Message 'Synth 8-3331' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:30 ; elapsed = 00:01:07 . Memory (MB): peak = 1705.844 ; gain = 231.750 ; free physical = 411 ; free virtual = 3512
+Finished RTL Elaboration : Time (s): cpu = 00:00:25 ; elapsed = 00:01:02 . Memory (MB): peak = 1698.230 ; gain = 230.750 ; free physical = 112850 ; free virtual = 129987
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1092,10 +1096,10 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:30 ; elapsed = 00:01:08 . Memory (MB): peak = 1705.844 ; gain = 231.750 ; free physical = 416 ; free virtual = 3516
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:25 ; elapsed = 00:01:02 . Memory (MB): peak = 1698.230 ; gain = 230.750 ; free physical = 112855 ; free virtual = 129992
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:30 ; elapsed = 00:01:08 . Memory (MB): peak = 1705.844 ; gain = 231.750 ; free physical = 416 ; free virtual = 3516
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:25 ; elapsed = 00:01:02 . Memory (MB): peak = 1698.230 ; gain = 230.750 ; free physical = 112855 ; free virtual = 129992
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 13 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -1315,31 +1319,31 @@ Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_com
 Finished Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_0/design_1_rst_ps7_0_50M_0_board.xdc] for cell 'rst_ps7_0_50M/U0'
 Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_0/design_1_rst_ps7_0_50M_0.xdc] for cell 'rst_ps7_0_50M/U0'
 Finished Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_0/design_1_rst_ps7_0_50M_0.xdc] for cell 'rst_ps7_0_50M/U0'
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1966.117 ; gain = 0.000 ; free physical = 116 ; free virtual = 3191
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1984.520 ; gain = 0.000 ; free physical = 112520 ; free virtual = 129657
 Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/dont_touch.xdc]
 Finished Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/dont_touch.xdc]
 INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/dont_touch.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/design_1_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/design_1_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1966.117 ; gain = 0.000 ; free physical = 116 ; free virtual = 3192
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1984.520 ; gain = 0.000 ; free physical = 112520 ; free virtual = 129657
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1966.117 ; gain = 0.000 ; free physical = 116 ; free virtual = 3192
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1984.520 ; gain = 0.000 ; free physical = 112520 ; free virtual = 129657
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 13 instances were transformed.
   FDR => FDRE: 12 instances
   SRL16 => SRL16E: 1 instances
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1967.117 ; gain = 0.000 ; free physical = 116 ; free virtual = 3192
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.09 . Memory (MB): peak = 1967.117 ; gain = 1.000 ; free physical = 116 ; free virtual = 3192
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1985.520 ; gain = 0.000 ; free physical = 112520 ; free virtual = 129657
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.10 ; elapsed = 00:00:00.09 . Memory (MB): peak = 1985.520 ; gain = 1.000 ; free physical = 112520 ; free virtual = 129657
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1967.117 ; gain = 493.023 ; free physical = 247 ; free virtual = 3323
+Finished Constraint Validation : Time (s): cpu = 00:00:32 ; elapsed = 00:01:14 . Memory (MB): peak = 1985.520 ; gain = 518.039 ; free physical = 112658 ; free virtual = 129795
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1967.117 ; gain = 493.023 ; free physical = 240 ; free virtual = 3324
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:32 ; elapsed = 00:01:14 . Memory (MB): peak = 1985.520 ; gain = 518.039 ; free physical = 112658 ; free virtual = 129795
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -1352,14 +1356,22 @@ Applied set_property DONT_TOUCH = true for ps7_0_axi_periph. (constraint file  a
 Applied set_property DONT_TOUCH = true for rst_ps7_0_50M. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for ps7_0_axi_periph/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:37 ; elapsed = 00:01:19 . Memory (MB): peak = 1967.117 ; gain = 493.023 ; free physical = 240 ; free virtual = 3325
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:32 ; elapsed = 00:01:14 . Memory (MB): peak = 1985.520 ; gain = 518.039 ; free physical = 112658 ; free virtual = 129795
 ---------------------------------------------------------------------------------
+INFO: [Synth 8-5545] ROM "reg_data_out" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "led_out_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pwmv1_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "pwmv2_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm'
 INFO: [Synth 8-5544] ROM "next_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "next_state" won't be mapped to Block RAM because address size (1) smaller than threshold (5)
 INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2870]
 INFO: [Synth 8-5818] HDL ADVISOR - The operator resource <adder> is shared. To prevent sharing consider applying a KEEP on the output of the operator [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v:2870]
 INFO: [Synth 8-4471] merging register 'seq_cnt_en_reg' into 'from_sys_reg' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd:377]
+WARNING: [Synth 8-327] inferring latch for variable 'led_out_reg_reg' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:427]
+WARNING: [Synth 8-327] inferring latch for variable 'reg_data_out_reg' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:380]
+WARNING: [Synth 8-327] inferring latch for variable 'pwmv1_reg_reg' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:428]
+WARNING: [Synth 8-327] inferring latch for variable 'pwmv2_reg_reg' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/ipshared/5260/hdl/myip_v1_0_S00_AXI.v:429]
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
@@ -1370,7 +1382,7 @@ INFO: [Synth 8-4471] merging register 'seq_cnt_en_reg' into 'from_sys_reg' [/hom
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'axi_protocol_converter_v2_1_18_b2s_rd_cmd_fsm'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:38 ; elapsed = 00:01:20 . Memory (MB): peak = 1968.117 ; gain = 494.023 ; free physical = 230 ; free virtual = 3316
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:33 ; elapsed = 00:01:15 . Memory (MB): peak = 1985.520 ; gain = 518.039 ; free physical = 112650 ; free virtual = 129788
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1408,7 +1420,7 @@ Detailed RTL Component Info :
 +---Muxes : 
 	   2 Input     66 Bit        Muxes := 4     
 	   2 Input     47 Bit        Muxes := 2     
-	   2 Input     32 Bit        Muxes := 11    
+	   2 Input     32 Bit        Muxes := 13    
 	   4 Input     32 Bit        Muxes := 4     
 	   2 Input     14 Bit        Muxes := 2     
 	   2 Input     12 Bit        Muxes := 6     
@@ -1418,7 +1430,9 @@ Detailed RTL Component Info :
 	   2 Input      4 Bit        Muxes := 18    
 	   2 Input      2 Bit        Muxes := 14    
 	   4 Input      2 Bit        Muxes := 4     
-	   2 Input      1 Bit        Muxes := 34    
+	   2 Input      1 Bit        Muxes := 37    
+	   4 Input      1 Bit        Muxes := 3     
+	   6 Input      1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -1438,9 +1452,11 @@ Detailed RTL Component Info :
 	                2 Bit    Registers := 2     
 	                1 Bit    Registers := 6     
 +---Muxes : 
-	   2 Input     32 Bit        Muxes := 3     
+	   2 Input     32 Bit        Muxes := 5     
 	   4 Input     32 Bit        Muxes := 4     
-	   2 Input      1 Bit        Muxes := 5     
+	   2 Input      1 Bit        Muxes := 8     
+	   4 Input      1 Bit        Muxes := 3     
+	   6 Input      1 Bit        Muxes := 1     
 Module axi_protocol_converter_v2_1_18_b2s_incr_cmd 
 Detailed RTL Component Info : 
 +---Adders : 
@@ -1631,7 +1647,7 @@ WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_EXT.ACT_LO_EXT/GE
 WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d5) is unused and will be removed from module proc_sys_reset.
 WARNING: [Synth 8-3332] Sequential element (EXT_LPF/ACTIVE_LOW_AUX.ACT_LO_AUX/GENERATE_LEVEL_P_S_CDC.SINGLE_BIT.CROSS_PLEVEL_IN2SCNDRY_s_level_out_d6) is unused and will be removed from module proc_sys_reset.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:40 ; elapsed = 00:01:22 . Memory (MB): peak = 1968.117 ; gain = 494.023 ; free physical = 208 ; free virtual = 3297
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:35 ; elapsed = 00:01:17 . Memory (MB): peak = 1985.520 ; gain = 518.039 ; free physical = 112627 ; free virtual = 129769
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1645,13 +1661,13 @@ Start Applying XDC Timing Constraints
 INFO: [Synth 8-5578] Moved timing constraint from pin 'processing_system7_0/FCLK_CLK0' to pin 'processing_system7_0/inst/buffer_fclk_clk_0.FCLK_CLK_0_BUFG/O'
 INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2097.117 ; gain = 623.023 ; free physical = 114 ; free virtual = 3020
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:40 ; elapsed = 00:01:23 . Memory (MB): peak = 2090.504 ; gain = 623.023 ; free physical = 112352 ; free virtual = 129493
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:46 ; elapsed = 00:01:29 . Memory (MB): peak = 2163.156 ; gain = 689.062 ; free physical = 121 ; free virtual = 2979
+Finished Timing Optimization : Time (s): cpu = 00:00:42 ; elapsed = 00:01:25 . Memory (MB): peak = 2156.543 ; gain = 689.062 ; free physical = 112311 ; free virtual = 129452
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1663,7 +1679,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:48 ; elapsed = 00:01:31 . Memory (MB): peak = 2163.156 ; gain = 689.062 ; free physical = 120 ; free virtual = 2978
+Finished Technology Mapping : Time (s): cpu = 00:00:43 ; elapsed = 00:01:26 . Memory (MB): peak = 2164.551 ; gain = 697.070 ; free physical = 112310 ; free virtual = 129452
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1688,7 +1704,7 @@ INFO: [Synth 8-5365] Flop inst/gen_axilite.gen_b2s_conv.axilite_b2s/SI_REG/ar.ar
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished IO Insertion : Time (s): cpu = 00:00:45 ; elapsed = 00:01:27 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -1701,7 +1717,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:45 ; elapsed = 00:01:27 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -1713,25 +1729,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP and Shift Register Reporting
@@ -1772,9 +1788,9 @@ Report Cell Usage:
 |4     |LUT1    |   126|
 |5     |LUT2    |    56|
 |6     |LUT3    |   242|
-|7     |LUT4    |    65|
-|8     |LUT5    |    82|
-|9     |LUT6    |   132|
+|7     |LUT4    |    73|
+|8     |LUT5    |    93|
+|9     |LUT6    |   133|
 |10    |PS7     |     1|
 |11    |SRL16   |     1|
 |12    |SRL16E  |    18|
@@ -1782,16 +1798,17 @@ Report Cell Usage:
 |14    |FDR     |     8|
 |15    |FDRE    |   727|
 |16    |FDSE    |    20|
+|17    |LD      |    62|
 +------+--------+------+
 
 Report Instance Areas: 
 +------+-------------------------------------------------+---------------------------------------------------------------+------+
 |      |Instance                                         |Module                                                         |Cells |
 +------+-------------------------------------------------+---------------------------------------------------------------+------+
-|1     |top                                              |                                                               |  1686|
-|2     |  myip_0                                         |design_1_myip_0_0                                              |   247|
-|3     |    inst                                         |myip_v1_0                                                      |   247|
-|4     |      myip_v1_0_S00_AXI_inst                     |myip_v1_0_S00_AXI                                              |   247|
+|1     |top                                              |                                                               |  1768|
+|2     |  myip_0                                         |design_1_myip_0_0                                              |   329|
+|3     |    inst                                         |myip_v1_0                                                      |   329|
+|4     |      myip_v1_0_S00_AXI_inst                     |myip_v1_0_S00_AXI                                              |   329|
 |5     |        astray_inst1                             |astray                                                         |    52|
 |6     |          mp                                     |pwmc                                                           |    52|
 |7     |  processing_system7_0                           |design_1_processing_system7_0_0                                |   244|
@@ -1831,30 +1848,31 @@ Report Instance Areas:
 |41    |        SEQ_COUNTER                              |upcnt_n                                                        |    13|
 +------+-------------------------------------------------+---------------------------------------------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.160 ; gain = 689.066 ; free physical = 121 ; free virtual = 2978
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.555 ; gain = 697.074 ; free physical = 112312 ; free virtual = 129453
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 126 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:44 ; elapsed = 00:01:25 . Memory (MB): peak = 2163.160 ; gain = 427.793 ; free physical = 168 ; free virtual = 3036
-Synthesis Optimization Complete : Time (s): cpu = 00:00:49 ; elapsed = 00:01:32 . Memory (MB): peak = 2163.164 ; gain = 689.066 ; free physical = 179 ; free virtual = 3047
+Synthesis finished with 0 errors, 0 critical warnings and 130 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:40 ; elapsed = 00:01:20 . Memory (MB): peak = 2164.555 ; gain = 409.785 ; free physical = 112369 ; free virtual = 129510
+Synthesis Optimization Complete : Time (s): cpu = 00:00:45 ; elapsed = 00:01:28 . Memory (MB): peak = 2164.559 ; gain = 697.074 ; free physical = 112379 ; free virtual = 129520
 INFO: [Project 1-571] Translating synthesized netlist
-INFO: [Netlist 29-17] Analyzing 39 Unisim elements for replacement
+INFO: [Netlist 29-17] Analyzing 101 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2291.219 ; gain = 0.000 ; free physical = 158 ; free virtual = 2976
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2324.629 ; gain = 0.000 ; free physical = 112301 ; free virtual = 129442
 INFO: [Project 1-111] Unisim Transformation Summary:
-  A total of 9 instances were transformed.
+  A total of 71 instances were transformed.
   FDR => FDRE: 8 instances
+  LD => LDCE: 62 instances
   SRL16 => SRL16E: 1 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-164 Infos, 115 Warnings, 100 Critical Warnings and 0 Errors encountered.
+170 Infos, 119 Warnings, 100 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:52 ; elapsed = 00:01:37 . Memory (MB): peak = 2291.219 ; gain = 828.578 ; free physical = 372 ; free virtual = 3193
+synth_design: Time (s): cpu = 00:00:48 ; elapsed = 00:01:32 . Memory (MB): peak = 2324.629 ; gain = 868.602 ; free physical = 112519 ; free virtual = 129660
 INFO: [Coretcl 2-1174] Renamed 40 cell refs.
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2291.219 ; gain = 0.000 ; free physical = 353 ; free virtual = 3196
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2324.629 ; gain = 0.000 ; free physical = 112519 ; free virtual = 129660
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint '/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/design_1_synth_1/design_1.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file design_1_utilization_synth.rpt -pb design_1_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Aug 27 16:22:16 2019...
+INFO: [Common 17-206] Exiting Vivado at Thu Aug 29 15:51:35 2019...

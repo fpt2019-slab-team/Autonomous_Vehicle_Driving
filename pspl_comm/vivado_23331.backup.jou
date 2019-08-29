@@ -1,0 +1,70 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Tue Aug 27 18:20:49 2019
+# Process ID: 23331
+# Current directory: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm
+# Command line: vivado project_1/project_1.xpr
+# Log file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/vivado.log
+# Journal file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project project_1/project_1.xpr
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+open_run synth_1 -name synth_1
+create_debug_core u_ila_0 ila
+set_property C_DATA_DEPTH 1024 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+set_property port_width 1 [get_debug_ports u_ila_0/clk]
+connect_debug_port u_ila_0/clk [get_nets [list uut/processing_system7_0/inst/FCLK_CLK0 ]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe0]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list pulse1_OBUF ]]
+save_constraints -force
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+reset_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw
+connect_hw_server
+open_hw_target
+set_property PROGRAM.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+set_property PROBES.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.ltx} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.ltx} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROBES.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.ltx} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.ltx} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.runs/impl_1/top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bR [get_hw_probes pulse1_OBUF -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+set_property TRIGGER_COMPARE_VALUE eq1'bX [get_hw_probes pulse1_OBUF -of_objects [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+run_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+wait_on_hw_ila [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]
+display_hw_ila_data [upload_hw_ila_data [get_hw_ilas -of_objects [get_hw_devices xc7z020_1] -filter {CELL_NAME=~"u_ila_0"}]]
+reset_run impl_1
+save_wave_config {/home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wcfg}

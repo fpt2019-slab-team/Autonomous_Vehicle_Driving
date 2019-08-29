@@ -1,8 +1,8 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Tue Aug 27 16:22:15 2019
--- Host        : swan.cis.nagasaki-u.ac.jp running 64-bit CentOS release 6.10 (Final)
+-- Date        : Thu Aug 29 15:51:34 2019
+-- Host        : flamingo running 64-bit CentOS release 6.10 (Final)
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/users/saikai/Project/Autonomous_Vehicle_Driving/pspl_comm/project_1/project_1.srcs/sources_1/bd/design_1/design_1_stub.vhdl
 -- Design      : design_1

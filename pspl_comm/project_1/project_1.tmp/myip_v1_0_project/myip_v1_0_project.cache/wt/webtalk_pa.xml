@@ -3,9 +3,9 @@
 <!--The data in this file is primarily intended for consumption by Xilinx tools.
 The structure and the elements are likely to change over the next few releases.
 This means code written to parse this file will need to be revisited each subsequent release.-->
-<application name="pa" timeStamp="Tue Aug 27 16:07:28 2019">
+<application name="pa" timeStamp="Thu Aug 29 15:49:10 2019">
 <section name="Project Information" visible="false">
-<property name="ProjectID" value="c37702df8f3e491486c81514558ae941" type="ProjectID"/>
+<property name="ProjectID" value="d5307de3e1b1436fbf93db2a3250948e" type="ProjectID"/>
 <property name="ProjectIteration" value="1" type="ProjectIteration"/>
 </section>
 <section name="PlanAhead Usage" visible="true">
@@ -19,22 +19,21 @@ This means code written to parse this file will need to be revisited each subseq
 <item name="Java Command Handlers">
 <property name="EditInIPPackagerHandler" value="1" type="JavaHandler"/>
 <property name="IPPackagerHandler" value="1" type="JavaHandler"/>
+<property name="ShowView" value="1" type="JavaHandler"/>
 </item>
 <item name="Gui Handlers">
-<property name="BaseDialog_OK" value="1" type="GuiHandlerData"/>
-<property name="FileSetPanel_FILE_SET_PANEL_TREE" value="3" type="GuiHandlerData"/>
+<property name="BaseDialog_OK" value="2" type="GuiHandlerData"/>
+<property name="FileSetPanel_FILE_SET_PANEL_TREE" value="2" type="GuiHandlerData"/>
 <property name="MessageBanner_CHANGES_DETECTED_IN_VIVADO_PROJECT_THAT" value="1" type="GuiHandlerData"/>
+<property name="MsgTreePanel_MESSAGE_VIEW_TREE" value="1" type="GuiHandlerData"/>
 <property name="PACommandNames_EDIT_IN_IP_PACKAGER" value="1" type="GuiHandlerData"/>
-<property name="PAViews_CODE" value="1" type="GuiHandlerData"/>
-<property name="PackagerStepsPanel_PACKAGER_STEPS_LIST" value="2" type="GuiHandlerData"/>
+<property name="PackagerStepsPanel_PACKAGER_STEPS_LIST" value="5" type="GuiHandlerData"/>
 <property name="ReviewContentPanel_RE_PACKAGE_IP" value="1" type="GuiHandlerData"/>
-<property name="SystemBuilderView_ORIENTATION" value="2" type="GuiHandlerData"/>
-<property name="SystemBuilderView_PINNING" value="1" type="GuiHandlerData"/>
 </item>
 <item name="Other">
-<property name="GuiMode" value="43" type="GuiMode"/>
+<property name="GuiMode" value="48" type="GuiMode"/>
 <property name="BatchMode" value="0" type="BatchMode"/>
-<property name="TclMode" value="28" type="TclMode"/>
+<property name="TclMode" value="30" type="TclMode"/>
 </item>
 </section>
 </application>
