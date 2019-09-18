@@ -11,127 +11,13 @@ import numpy as np
 from math import sin,cos,pi,asin,acos,sqrt
 from PIL import Image
 import datetime
-import copy
+import io
+
+from linalg import Linalg
+from car import Car
 
 # memo #########################################################################
 ##########################################################################################
-
-class Linalg:
-    def get_R(self, theta):
-        R_x = np.array([[          1  ,            0  ,            0  ],
-                        [          0  ,  cos(theta[0]), -sin(theta[0])],
-                        [          0  ,  sin(theta[0]),  cos(theta[0])]])
-
-        R_y = np.array([[cos(theta[1]),            0  , -sin(theta[1])],
-                        [          0  ,            1  ,            0  ],
-                        [sin(theta[1]),            0  ,  cos(theta[1])]])
-
-        R_z = np.array([[cos(theta[2]), -sin(theta[2]),            0  ],
-                        [sin(theta[2]),  cos(theta[2]),            0  ],
-                        [          0  ,              0,            1  ]])
-
-        R = np.dot(R_y, R_x)
-
-        return R
-
-    def get_normalized(self, direction):
-        return direction / np.linalg.norm(direction)
-
-    def get_n(self, eye, center):
-        return self.get_normalized(center - eye)
-
-    def get_theta(self, eye, center):
-        n = self.get_n(eye, center)
-        n_xz = self.get_normalized(np.array([n[0], 0, n[2]]))
-        theta_y = -sign(n_xz[0]) * acos(n_xz[2])
-        # -pi <= theta_y < pi
-        theta_x = -sign(n[1]) * acos(np.clip(np.dot(n, n_xz), -1, 1))
-        # -pi / 2 <= theta_x < pi / 2
-        theta = np.array([theta_x, theta_y , 0])
-        #print(theta / pi * 180)
-        return theta
-
-    def get_center(self, eye, theta):
-        return eye + np.dot(linalg.get_R(theta), np.array([0, 0, 1]))
-
-class Animation:
-    def __init__(self, eye, theta, odmetries):
-        self.stop()
-        self.__eye = np.array(eye)
-        self.__theta = np.array(theta)
-        self.__odmetries = odmetries
-        self.__linalg = Linalg()
-        # (accel, handle, time_len)
-
-    def stop(self):
-        self.__is_playing = False
-        self.__sec_progress = 0
-        self.__odmetry_i = 0
-        self.__time_before = -1
-
-    def is_playing(self):
-        return self.__is_playing
-
-    def play(self):
-        self.__time_before = datetime.datetime.now()
-        self.__is_playing = True
-        #self.__timer(0)
-
-    def pause(self):
-        self.__is_playing = False
-
-    def toggle(self):
-        if self.is_playing():
-            self.pause()
-        else:
-            self.play()
-
-    def get_sample(self):
-        if not self.is_playing():
-            return np.copy(self.__eye), np.copy(self.__theta)
-
-        DISTANCE_PER_SEC = 100
-        RAD_PER_SEC = pi / 4
-
-        time_now = datetime.datetime.now()
-        sec_diff = (time_now - self.__time_before).total_seconds()
-        self.__time_before = time_now
-
-        self.__sec_progress = self.__sec_progress + sec_diff
-        if self.__sec_progress > self.__odmetries[self.__odmetry_i][2]:
-            self.__sec_progress = 0
-            self.__odmetry_i = self.__odmetry_i + 1
-            if self.__odmetry_i >= len(self.__odmetries):
-                self.stop()
-                return np.copy(self.__eye), np.copy(self.__theta)
-
-        accel, handle, duration = self.__odmetries[self.__odmetry_i]
-        eye, theta = self.__eye, self.__theta
-
-        center = self.__linalg.get_center(eye, theta)
-
-        n = self.__linalg.get_n(eye, center)
-        n_xz = self.__linalg.get_normalized(np.array([n[0], 0, n[2]]))
-        eye = eye + n_xz * DISTANCE_PER_SEC * sec_diff * accel
-
-        theta_y_diff = RAD_PER_SEC * sec_diff * handle / 128.0
-        theta[1] = (theta[1] + theta_y_diff) % (pi * 2)
-
-        sample = (eye, theta)
-
-        self.__eye, self.__theta = sample
-
-        return np.copy(self.__eye), np.copy(self.__theta)
-
-    def get_status(self):
-        return {
-            "is_playing":   copy.copy(self.__is_playing),
-            "theta":        copy.copy(self.__theta),
-            "eye":          copy.copy(self.__eye),
-            "odmetry_i":    copy.copy(self.__odmetry_i),
-            "odmetry":      copy.copy(self.__odmetries[self.__odmetry_i]),
-            "sec_progress": copy.copy(self.__sec_progress),
-        }
 
 def init():
     global linalg
@@ -147,17 +33,15 @@ def init():
     global arrow_r
     global sphere_r
     global up
-    global eye
     global map_tex
     global is_plot_axis
     global is_plot_tick
     global is_im_car
-    global theta
-    global animation
     global time_before
+    global car
 
-    glutInitWindowPosition(0, 0);
-    glutInitWindowSize(800, 800);
+    glutInitWindowPosition(0, 0)
+    glutInitWindowSize(800, 800)
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
     glutCreateWindow(sys.argv[0].split('/')[-1])
@@ -187,7 +71,7 @@ def init():
     #eye_init = np.array([365, lims[2] / 16, 470])
     #eye_init = np.array([lims[0] / 1, lims[1] / 1, lims[2] / 1])
     eye_init = np.array([200, 800, 1100])
-    eye = eye_init
+    set_eye(eye_init)
 
     #center_init = np.array([lims[0] / 2, 0, 0])
     #center_init = np.array([0, 0, 0]) # debug
@@ -197,27 +81,19 @@ def init():
     #theta_init= linalg.get_theta(eye, center_init)
     theta_init = np.array([45, 180, 0]) / 180 * pi
     #theta_init = np.array([20, 180, 0]) / 180 * pi
-    theta = theta_init
+    set_theta(theta_init)
 
     is_plot_axis = True
     is_plot_tick = True
 
     time_before = datetime.datetime.now()
 
-    is_im_car = False
+    is_im_car = False # never True here
 
-    # animation_init
-    animation = Animation(
-        np.array([370, sphere_r * 4, 470]),
-        np.array([20, 180, 0]) / 180 * pi,
-        [
-            [1.0,    0, 3.5],
-            [0.5, -128,   2],
-            [1.0,    0, 1.9],
-            [0.5, -128,   2],
-        ] * 100
+    car = Car(
+        np.array([370, sphere_r * 4, 470]), # eye
+        np.array([0, 180, 0]) / 180 * pi,   # theta
     )
-    animation.play()
 
 def get_powered_size(size):
     width = size[0]
@@ -373,8 +249,6 @@ def draw_sphere(point):
     glPopAttrib()
 
 def display():
-    global eye
-    global theta
     global time_before
 
     glPushMatrix()
@@ -387,31 +261,35 @@ def display():
 
     glLoadIdentity()
 
-    sample = animation.get_sample()
+    # car { ####################################################################
+    sample = car.get_sample()
 
-    if is_im_car and animation.is_playing():
-        eye, theta = sample
+    if is_im_car:
+        set_eye(sample[0])
+        set_theta(sample[1])
+        #theta[1] = theta[1] + pi
 
     gluLookAt(*eye, *linalg.get_center(eye, theta), *up)
 
     if not is_im_car:
         draw_sphere([sample[0][0], 0, sample[0][2]])
 
-    animation_status = animation.get_status()
     glPushMatrix()
-    car_eye = animation_status['eye']
+    car_status = car.get_status()
+    car_eye = car_status['eye']
     car_eye[1] = sphere_r * 3
-    car_theta = animation_status['theta']
+    car_theta = car_status['theta']
     car_center = linalg.get_center(car_eye, car_theta)
     car_n = linalg.get_n(car_eye, car_center)
     car_distance = car_n * sphere_r
 
     glTranslated(*car_eye)
     glRotated(-car_theta[1] / pi * 180, 0, 1, 0)
-    glRotated(car_theta[0] / pi * 180, 1, 0, 0)
+    glRotated( car_theta[0] / pi * 180, 1, 0, 0)
 
     glutSolidCone(arrow_r / 4, arrow_h / 4, 8, 8)
     glPopMatrix()
+    # car } ####################################################################
 
     if is_plot_axis:
         plot_axis()
@@ -447,12 +325,18 @@ def display():
 
     glViewport(int(window_w / 2), 0, window_w, status_window_h)
     glRasterPos(-int(window_w / 4), status_window_h, 0)
-    putstr('odmetry_i: ' + str(animation_status['odmetry_i']))
-    putstr('odmetry:   ' + str(animation_status['odmetry']))
-    putstr('progress:  ' + str(animation_status['sec_progress'])[0:4])
+    putstr('eye:       ' + str(car_status['eye'].astype(np.int)))
+    putstr('theta:     ' + str((car_status['theta'] / pi * 180).astype(np.int)))
+    putstr('odmetry:   ' + str(car_status['odmetry']))
 
     glPopMatrix()
     # show_status } ############################################################
+
+    #pixels = glReadPixels(0, 100, window_w, window_h, GL_RGB, GL_UNSIGNED_BYTE)
+    #image = Image.frombytes('RGB', (window_w, window_h - 100), pixels, 'raw')
+    #image.show()
+    #exit()
+    car.set_odmetry(drive())
 
     glutSwapBuffers()
 
@@ -460,13 +344,11 @@ def putstr(string):
     glutBitmapString(GLUT_BITMAP_HELVETICA_18, str(string + '\n').encode())
 
 def keyboard(key, x, y):
-    global eye
-    global theta
     global is_key_pressing
     global is_plot_axis
     global is_plot_tick
     global is_im_car
-    global tab_before
+    global sample_before
 
     char = key.decode('utf-8')
     keycode = int.from_bytes(key, "big")
@@ -476,14 +358,14 @@ def keyboard(key, x, y):
     if keycode == 3 or keycode == 23 or keycode == 13: # C-c C-w Enter
         exit(0)
     if keycode == 9: # Tab
-        #if is_im_car and 'tab_before' in globals():
         if is_im_car:
-            eye, theta = tab_before
+            set_eye(sample_before[0])
+            set_theta(sample_before[1])
         else:
-            tab_before = eye, theta
+            sample_before = eye, theta
         is_im_car = not is_im_car
     elif char == ' ':
-        animation.toggle()
+        pass
     elif char == 'x':
         is_plot_axis = not is_plot_axis
     elif char == 't':
@@ -503,14 +385,13 @@ def keyboard(key, x, y):
 
     sign = 1 if char in '3hk2-' else -1 if char in '4jl0+=;' else 0
     n = linalg.get_n(eye, linalg.get_center(eye, theta))
-    n[1] = 0 if char in '34hjkl' else n[1]
+    n[1] = 0 if char in 'hjkl' else n[1]
     n = -np.cross(n, np.array([0, 1, 0])) if char in 'hl' else n
     n = np.array([0, 1, 0]) if char in '20-+=;'             else n
     diff = sign * n * lims_mean / 100 * 1
-    eye = eye + diff
+    set_eye(eye + diff)
 
 def mouse(button, state, x, y):
-    global eye
     global is_mouse_pressing
     global mx, my
     global mx_push, my_push
@@ -532,7 +413,6 @@ def mouse(button, state, x, y):
 def motion(x, y):
     global mx
     global my
-    global theta
 
     if is_mouse_pressing or is_key_pressing:
         dx = mx - x
@@ -543,7 +423,34 @@ def motion(x, y):
 
         n = linalg.get_n(eye, linalg.get_center(eye, theta))
 
-        theta = (theta + np.array([dy, dx, 0]) * 0.001) % (pi * 2)
+        set_theta((theta + np.array([dy, dx, 0]) * 0.001) % (pi * 2))
+
+def set_eye(eye_in):
+    global eye
+    eye = eye_in
+
+def set_theta(theta_in):
+    global theta
+    theta = theta_in
+
+def drive():
+    status = car.get_status()
+    car_eye = status['eye']
+    car_theta = status['theta'] / pi * 180
+
+    if False:
+        odmetry = (0, 0)
+    elif \
+        90 < car_theta[1] <= 180 and car_eye[2] <  90 or \
+         0 < car_theta[1] <=  90 and car_eye[0] <  90 or \
+       270 < car_theta[1] <= 360 and car_eye[2] > 505 or \
+       180 < car_theta[1] <= 270 and car_eye[0] > 335 or \
+       False:
+        odmetry = (0.25, -128)
+    else:
+        odmetry = (1.0,    0)
+
+    return odmetry
 
 def main():
     init()
