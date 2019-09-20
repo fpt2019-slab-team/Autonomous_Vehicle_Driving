@@ -1,174 +1,278 @@
 #!/usr/bin/python3
 
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
+import cv2
 import numpy as np
 from math import sin,cos,pi
+from itertools import product
+
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-import cv2
+from functools import reduce
+from PIL import Image
 
-# init #########################################################################
-fig = plt.figure()
-ax = Axes3D(fig)
-#ax.set_zscale('linear')
-ax.set_axis_off()
-#ax.autoscale(enable=False)
-#ax.auto_scale_xyz(1, 1, 1)
+# wm_p:  1 point    of point cloud on map             on world  coodinate
+# wm_ps: N points   of point cloud on map             on world  coodinate
+# wm_v:  1 vertex                  on map             on world  coodinate
+# wm_vs: N vertexes                on map             on world  coodinate
+# wf_p:  1 point    of point cloud on focused surface on world  coodinate
+# wf_ps: N points   of point cloud on focused surface on world  coodinate
+# wf_v:  1 vertex                  of focused surface on world  coodinate
+# wf_vs: N vertexes                of focused surface on world  coodinate
+# cf_p:  1 point    of point cloud on focused surface on camera coodinate
+# cf_ps: N points   of point cloud on focused surface on camera coodinate
+# cf_v:  1 vertex                  of focused surface on camera coodinate
+# cf_vs: N vertexes                of focused surface on camera coodinate
 
-# plot map #####################################################################
-img = cv2.imread("ref_map.png",0)
+# calculate rotation matrix by theta
+# theta: [theta_x, theta_y, theta_z] (float, rad)
+def get_r(theta):
+    r_x = np.array([[          1  ,            0  ,            0  ],
+                    [          0  ,  cos(theta[0]), -sin(theta[0])],
+                    [          0  ,  sin(theta[0]),  cos(theta[0])]])
+    r_y = np.array([[cos(theta[1]),            0  , -sin(theta[1])],
+                    [          0  ,            1  ,            0  ],
+                    [sin(theta[1]),            0  ,  cos(theta[1])]])
+    r_z = np.array([[cos(theta[2]), -sin(theta[2]),            0  ],
+                    [sin(theta[2]),  cos(theta[2]),            0  ],
+                    [          0  ,            0  ,            1  ]])
+    r = np.dot(r_y, r_x)
+    return r
 
-lsd = cv2.createLineSegmentDetector(0)
-lines = lsd.detect(img)[0]
-lines = np.array(lines).reshape(len(lines), 4)
-print(lines)
-lines = np.array([
-    lines[0:,0], lines[0:,2],
-    np.zeros(len(lines)), np.zeros(len(lines)),
-    lines[0:,1], lines[0:,3]]).T.reshape(len(lines), 3, 2)
-print(lines)
-print(lines.shape)
+# convert camera coodinate to world coodinate
+# c:   np.array.shape == (3,)
+# eye: np.array.shape == (3,)
+# r:   np.array.shape == (3, 3)
+def c2w(c, eye, r):
+    w = np.dot(r, c) + eye
+    return w
 
-for line in lines:
-    ax.plot(*line, "-", c='red', linewidth=0.5)
+# convert point on focused surface on camere coodinate to
+# point on map on world coodinate
+# cf:  np.array.shape == (3,)
+# eye: np.array.shape == (3,)
+# r:   np.array.shape == (3, 3)
+def cf2wm(cf, eye, r):
+    wf = c2w(cf, eye, r)
+    n = wf - eye
+    x = -eye[1] / n[1] * n[0] + eye[0]
+    y = 0
+    z = -eye[1] / n[1] * n[2] + eye[2]
+    wm = np.array([x, y, z])
+    return wm
+
+# uv -> cf
+# u:      scalar int
+# v:      scalar int
+# F:      scalar float
+# WIDTH:  scalar int
+# HEIGHT: scalar int
+# SCALE:  scalar float
+def uv2cf(u, v, F, WIDTH, HEIGHT, SCALE):
+    c = np.array([(WIDTH / 2 - u) / SCALE, (HEIGHT / 2 - v) / SCALE, F])
+    return c
+
+#def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
+#    img_view = Image.new('L', (WIDTH, HEIGHT), 0)
+#
+#    for v, u in product(range(0, HEIGHT), range(0, WIDTH)):
+#        cf_p = uv2cf(u, v, F, WIDTH, HEIGHT, SCALE)
+#        wm_p = cf2wm(cf_p, eye, r).astype(int)
+#
+#        if 0 < wm_p[0] < IMG_MAP.shape[0] and 0 < wm_p[2] < IMG_MAP.shape[1]:
+#            img_view.putpixel((u, v), (IMG_MAP[wm_p[2]][wm_p[0]],))
+#
+#    return img_view
+
+# eye:     np.array.shape == (3,)
+# r:       np.array.shape == (3, 3)
+# F:       scalar float
+# WIDTH:   scalar int
+# HEIGHT:  scalar int
+# SCALE:   scalar float
+# IMG_MAP: np.array.shape == (*, *) (must be grayscale, use cv2.imread())
+# ret:     np.array.shape == (WIDTH, HEIGHT) (img_view)
+def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
+    img_view = np.zeros((HEIGHT, WIDTH))
+
+    map_x_len = IMG_MAP.shape[0]
+    map_z_len = IMG_MAP.shape[1]
+
+    for v, u in product(range(0, HEIGHT), range(0, WIDTH)):
+        cf_p = uv2cf(u, v, F, WIDTH, HEIGHT, SCALE)
+        wm_p = cf2wm(cf_p, eye, r).astype(int)
+
+        x, z = wm_p[0], wm_p[2]
+        if 0 <= x < map_x_len and 0 < z <= map_z_len:
+            img_view[v][u] = IMG_MAP[z][x]
+
+    return img_view
+
+# gui { ########################################################################
+
+def plot_axis(ax, lims):
+    #ax.set_xlim3d(0, lims[0])
+    #ax.set_ylim3d(0, lims[1])
+    #ax.set_zlim3d(0, lims[2])
+
+    ax.set_xlim3d(0, max(lims))
+    ax.set_ylim3d(0, max(lims))
+    ax.set_zlim3d(0, max(lims))
+
+    # plot axis
+    ax.plot([0, lims[0]], [0,       0], [0,       0] , "-", c='000000')
+    ax.plot([0,       0], [0, lims[1]], [0,       0] , "-", c='000000')
+    ax.plot([0,       0], [0,       0], [0, lims[2]] , "-", c='000000')
+
+    # label x, y, z, O
+    ax.text(lims[0] * 1.08,              0,              0, "x", color='black')
+    ax.text(             0, lims[1] * 1.08,              0, "y", color='black')
+    ax.text(             0,              0, lims[2] * 1.08, "z", color='black')
+    ax.text(             0,              0,              0, "O", color='black')
+
+    # plot tick
+    DIFF = 50
+    lims_axis = []
+    for axis in range(3):
+        for i in range(0, lims[axis] + 1, DIFF):
+            begin = [0, 0, 0]
+            begin[axis - 0] = i
+            begin[axis - 2] = lims[axis - 2]
+            begin[axis - 1] = 0
+            end = list(begin)
+            end[axis - 2] = 0
+            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+
+            begin[axis - 2] = 0
+            begin[axis - 1] = lims[axis - 1]
+            end = list(begin)
+            end[axis - 1] = 0
+            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+
+            labelpos = [0, 0, 0]
+            labelpos[axis - 0] = i
+            labelpos[axis - 2] = 0
+            labelpos[axis - 1] = 0
+            ax.text(*labelpos, str(i), color='black')
+
+def plot_rectangle(ax, points, line_type='-', c='000000'):
+    ax.plot(*list(zip(*points, points[0])), line_type, c=c)
+
+# gui } ########################################################################
+
+def main():
+    #eye = np.array([400, 75, 600])
+    eye = np.array([200, 100, 350])
+
+    #theta_x = pi / 180 * 35
+    theta_x = pi / 180 * 70
+    #theta_y = pi / 180 * 210
+    theta_y = pi / 180 * 180
+    theta_z = 0
+    theta = [theta_x, theta_y, theta_z]
+    r = get_r(theta)
+
+    F = 75
+
+    WIDTH, HEIGHT = (np.array((640, 480)) / 4).astype(int)
+    SCALE = 2
+
+    IMG_MAP = cv2.imread("ref_map.png", 0)
+
+    img_view = get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP)
+    img_view = Image.fromarray(img_view)
+    img_view.show()
+
+    DIFF = int(1 + WIDTH / 100 * 5)
+    wm_ps = [] # point cloud of projected region on map
+    for v, u in product(range(0, HEIGHT, DIFF), range(0, WIDTH, DIFF)):
+        cf_p = uv2cf(u, v, F, WIDTH, HEIGHT, SCALE)
+        wm_p = cf2wm(cf_p, eye, r)
+        wm_ps.append(wm_p)
+
+    wf_vs = [] # 4 vertexes of focused surface
+    wm_vs = [] # 4 vertexes of projected region on map
+    for v, u in ((0, 0), (HEIGHT, 0), (HEIGHT, WIDTH), (0, WIDTH)):
+        cf_v = uv2cf(u, v, F, WIDTH, HEIGHT, SCALE)
+        wf_v =   c2w(cf_v, eye, r); wf_vs.append(wf_v)
+        wm_v = cf2wm(cf_v, eye, r); wm_vs.append(wm_v)
+
+    # init #####################################################################
+    fig = plt.figure()
+    ax = Axes3D(fig)
+    ax.set_axis_off()
+
+    # plot map #################################################################
+    img = cv2.imread("ref_map.png",0)
+
+    lsd = cv2.createLineSegmentDetector(0)
+    lines = lsd.detect(img)[0]
+    lines = np.array(lines).reshape(len(lines), 4)
+    lines = np.array(
+        [
+            lines[0:,0], lines[0:,2],
+            np.zeros(len(lines)), np.zeros(len(lines)),
+            lines[0:,1], lines[0:,3]
+        ]
+    ).T.reshape(len(lines), 3, 2)
+
+    for line in lines:
+        ax.plot(*line, "-", c='red', linewidth=0.5)
 
 
-# axis #########################################################################
-ax.set_aspect(img.shape[0] / img.shape[1])
+    # ax #######################################################################
 
-# set x, y, z range
-lims = (img.shape[1], 300, img.shape[0])
-ax.set_xlim3d(0, lims[0])
-ax.set_ylim3d(0, lims[1])
-ax.set_zlim3d(0, lims[2])
+    # axis
+    lims = (img.shape[1], 300, img.shape[0])
+    plot_axis(ax, lims)
 
-# plot axis
-ax.plot([0, lims[0]], [0,       0], [0,       0] , "-", c='000000')
-ax.plot([0,       0], [0, lims[1]], [0,       0] , "-", c='000000')
-ax.plot([0,       0], [0,       0], [0, lims[2]] , "-", c='000000')
+    # eye
+    ax.plot(*zip(eye), "o")
+    ax.plot(*list(zip(eye, c2w(np.array([0, 50, 0]), eye, r))), '-', c='blue')
 
-# label x, y, z, O
-ax.text(lims[0] * 1.08,              0,              0, "x", color='black')
-ax.text(             0, lims[1] * 1.08,              0, "y", color='black')
-ax.text(             0,              0, lims[2] * 1.08, "z", color='black')
-ax.text(             0,              0,              0, "O", color='black')
+    # rectangle on F
+    plot_rectangle(ax, wf_vs)
 
-# plot tick
-diff = 50
-for axis in range(3):
-    for i in range(0, lims[axis] + 1, diff):
-        begin = [0, 0, 0]
-        begin[axis - 0] = i
-        begin[axis - 2] = lims[axis - 2]
-        begin[axis - 1] = 0
-        end = list(begin)
-        end[axis - 2] = 0
-        ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+    # point cloud on map
+    for wm_p in wm_ps:
+        if 0 < wm_p[0] < lims[0] and 0 < wm_p[2] < lims[2]:
+            ax.plot([wm_p[0]], [wm_p[1]], [wm_p[2]], "o", c='000000', ms=2)
 
-        begin[axis - 2] = 0
-        begin[axis - 1] = lims[axis - 1]
-        end = list(begin)
-        end[axis - 1] = 0
-        ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+    # lines from eye to vertexes on map
+    for wm_v in wm_vs:
+        ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
 
-        labelpos = [0, 0, 0]
-        labelpos[axis - 0] = i
-        labelpos[axis - 2] = 0 #int(diff / 10)
-        labelpos[axis - 1] = 0
-        ax.text(*labelpos, str(i), color='black')
+    # rectangle on map
+    plot_rectangle(ax, wm_vs)
 
-# parameter ####################################################################
-T = np.array([400, 75, 600])
+    def to_affine(matrix):
+        if matrix.shape == (3, 3):
+            r = matrix
+            r = np.vstack((r, np.array([0, 0, 0])))
+            r = np.hstack((r, np.array([[0, 0, 0, 1]]).T))
+            return r
 
-f = 75
+        print('error: graph.py: to_affine: unknown shape')
+        exit(1)
 
-theta_x = pi / 180 * 35
-theta_y = pi / 180 * 135
-theta_z = 0
+    ax.set_aspect('equal')
 
-width = 320
-height = 240
-scale = 0.25
+    AFS = [
+        to_affine(get_r([pi / 180 * 90, 0, 0])),
+        to_affine(get_r([0, -pi / 180 * 30, 0])),
+        np.diag([*([1.6] * 3), 1]),
+        np.array([
+            [1, 0, 0, 60],
+            [0, 1, 0, 250],
+            [0, 0, 1, 1],
+            [0, 0, 0, 1],
+        ]),
+    ]
+    AF = reduce(lambda res, x: np.dot(res, x), AFS, np.eye(4))
+    ax.get_proj = lambda: np.dot(Axes3D.get_proj(ax), AF)
 
-ax.plot(*zip(T), "o")
+    plt.show()
 
-# R ############################################################################
+if __name__ == '__main__':
+    main()
 
-R_x = np.array([[           1,            0,              0],
-                [           0,  cos(theta_x), -sin(theta_x)],
-                [           0,  sin(theta_x),  cos(theta_x)]])
-
-R_y = np.array([[cos(theta_y),             0, -sin(theta_y)],
-                [           0,             1,             0],
-                [sin(theta_y),             0,  cos(theta_y)]])
-
-R_z = np.array([[cos(theta_z), -sin(theta_z),             0],
-                [sin(theta_z),  cos(theta_z),             0],
-                [           0,             0,             1]])
-
-R = np.dot(R_y, R_x)
-
-# qoints_f #####################################################################
-points_f = []
-
-w = int(width / 2 * scale)
-h = int(height / 2 * scale)
-for u, v in (-w, -h), (-w, h), (w, h), (w, -h): #range(-w, w, 10):
-    C = np.array([u, v, f])
-    W_f = np.dot(R, C) + T
-    points_f.append(W_f)
-
-points_f.append(points_f[0])
-
-ax.plot(*list(zip(*points_f)), "-", c='000000')
-
-for point in points_f:
-    ax.plot(*zip(T, point) , "--", c='000000')
-
-# u, v -> x, z #################################################################
-diff = int(width * scale * 5 / 100 + 1)
-for u in range(-w, w, diff):
-    for v in range(-h, h, diff):
-        C = np.array([u, v, f])
-        W_f = np.dot(R, C) + T
-        n = W_f - T
-        x = -T[1] / n[1] * n[0] + T[0]
-        y = 0
-        z = -T[1] / n[1] * n[2] + T[2]
-        if 0 < x < lims[0] and 0 < z < lims[2]:
-            ax.plot([x], [y], [z], "o", c='000000', ms=2)
-
-#ax.view_init(90 + 20, -90 + 30);plt.show();exit()
-
-# points_w #####################################################################
-# (x - x0) / a = (y - y0) / b = (z - z0) / c
-# n = np.array([a, b, c])
-# T = np.array([x0, y0, z0])
-# y = 0
-# x = -y0 / b * a + x0
-# z = -y0 / b * c + z0
-# x0 = T[0]
-# y0 = T[1]
-# z0 = T[2]
-# a = n[0]
-# b = n[1]
-# c = n[2]
-ns = points_f - T
-xs = -T[1] / ns[:,1] * ns[:,0] + T[0]
-ys = np.zeros(len(points_f))
-zs = -T[1] / ns[:,1] * ns[:,2] + T[2]
-points_w = np.array(list(zip(xs, ys, zs)))
-for point in points_w:
-    ax.plot(*zip(T, point) , "--", c='000000')
-ax.plot(xs, ys, zs, "--", c='000000')
-
-# view #########################################################################
-ax.view_init(90 + 30, -90);plt.show();exit()
-
-# animation  ###################################################################
-for i in range(0, 30):
-    ax.view_init(90 - i, -90)
-    plt.draw()
-    plt.pause(0.001)
-
-plt.show()
