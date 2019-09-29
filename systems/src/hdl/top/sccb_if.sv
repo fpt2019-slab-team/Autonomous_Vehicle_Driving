@@ -43,7 +43,6 @@ module sccb_if
            clk_div_cnt <= clk_div_cnt + 1'b1;
       end
    end
-   // assign clk_div = (clk_div_cnt < CLOCK_DIV / 2)? 1'b1: 1'b0;
    assign clk_div = (clk_div_cnt < (CLOCK_DIV / 2));
 
    // get pulse of request
@@ -54,9 +53,7 @@ module sccb_if
         req_reg <= 2'b0;
       else begin
          if (clk_div_cnt == CLOCK_DIV - 1) begin
-            if (!busy) begin // not accept request when running
-               req_reg <= {req_reg[0], req};
-            end            
+            req_reg <= {req_reg[0], req};
          end
       end         
    end
@@ -108,8 +105,8 @@ module sccb_if
    
    // busy
    assign busy = (wr == 1'b0)? 
-                 ((scl_cnt <= 'd16)? 1'b0: 1'b1): // write 
-                 ((scl_cnt ==  'b0)? 1'b0: 1'b1); // read
+                 ((sda_cnt >  'd16)): // write 
+                 ((sda_cnt !=  'b0)); // read
    
    // serial clock enable
    wire scl_en;

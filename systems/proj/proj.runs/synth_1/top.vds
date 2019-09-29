@@ -2,15 +2,14 @@
 # Vivado v2018.3 (64-bit)
 # SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
 # IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
-# Start of session at: Mon Sep 30 01:14:07 2019
-# Process ID: 25741
+# Start of session at: Mon Sep 30 01:54:00 2019
+# Process ID: 11360
 # Current directory: /home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1
 # Command line: vivado -log top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source top.tcl
 # Log file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/top.vds
 # Journal file: /home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/vivado.jou
 #-----------------------------------------------------------
 source top.tcl -notrace
-create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:07 . Memory (MB): peak = 1459.031 ; gain = 3.012 ; free physical = 112396 ; free virtual = 129931
 INFO: [IP_Flow 19-234] Refreshing IP repositories
 INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/ip_repo'.
 INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
@@ -19,9 +18,9 @@ Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 25776 
+INFO: Helper process launched with PID 11393 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1554.758 ; gain = 90.000 ; free physical = 112238 ; free virtual = 129773
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1554.750 ; gain = 90.000 ; free physical = 112847 ; free virtual = 130350
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'top' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/src/hdl/top/top.sv:4]
 	Parameter CLOCK_FREQ bound to: 125000000 - type: integer 
@@ -31,22 +30,22 @@ INFO: [Synth 8-6157] synthesizing module 'top' [/home/users/saikai/Project/Auton
 	Parameter DATA_WIDTH bound to: 8 - type: integer 
 	Parameter PIXELS bound to: 307200 - type: integer 
 	Parameter PW_CNT_MAX bound to: 500000 - type: integer 
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/clk_wiz_0_stub.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/clk_wiz_0_stub.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (1#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/clk_wiz_0_stub.v:5]
 INFO: [Synth 8-6157] synthesizing module 'design_1' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:13]
-INFO: [Synth 8-6157] synthesizing module 'design_1_myip_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_myip_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_myip_0_0' (2#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_myip_0_0_stub.v:6]
-INFO: [Synth 8-6157] synthesizing module 'design_1_processing_system7_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_processing_system7_0_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_processing_system7_0_0' (3#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_processing_system7_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_myip_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_myip_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_myip_0_0' (2#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_myip_0_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_processing_system7_0_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_processing_system7_0_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_processing_system7_0_0' (3#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_processing_system7_0_0_stub.v:6]
 WARNING: [Synth 8-350] instance 'processing_system7_0' of module 'design_1_processing_system7_0_0' requires 65 connections, but only 63 given [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:231]
 INFO: [Synth 8-6157] synthesizing module 'design_1_ps7_0_axi_periph_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:368]
 INFO: [Synth 8-6157] synthesizing module 's00_couplers_imp_UYSKKA' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:683]
-INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_auto_pc_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (4#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_auto_pc_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_auto_pc_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_auto_pc_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_auto_pc_0' (4#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_auto_pc_0_stub.v:6]
 INFO: [Synth 8-6155] done synthesizing module 's00_couplers_imp_UYSKKA' (5#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:683]
 INFO: [Synth 8-6155] done synthesizing module 'design_1_ps7_0_axi_periph_0' (6#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:368]
-INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps7_0_50M_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_rst_ps7_0_50M_0_stub.v:6]
-INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps7_0_50M_0' (7#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-25741-flamingo/realtime/design_1_rst_ps7_0_50M_0_stub.v:6]
+INFO: [Synth 8-6157] synthesizing module 'design_1_rst_ps7_0_50M_0' [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_rst_ps7_0_50M_0_stub.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'design_1_rst_ps7_0_50M_0' (7#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/.Xil/Vivado-11360-flamingo/realtime/design_1_rst_ps7_0_50M_0_stub.v:6]
 WARNING: [Synth 8-350] instance 'rst_ps7_0_50M' of module 'design_1_rst_ps7_0_50M_0' requires 10 connections, but only 6 given [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:359]
 INFO: [Synth 8-6155] done synthesizing module 'design_1' (8#1) [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.srcs/sources_1/bd/design_1/synth/design_1.v:13]
 WARNING: [Synth 8-350] instance 'design_1_inst' of module 'design_1' requires 35 connections, but only 14 given [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/src/hdl/top/top.sv:47]
@@ -73,7 +72,7 @@ WARNING: [Synth 8-3331] design top has unconnected port btn[3]
 WARNING: [Synth 8-3331] design top has unconnected port btn[2]
 WARNING: [Synth 8-3331] design top has unconnected port btn[1]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1602.508 ; gain = 137.750 ; free physical = 112251 ; free virtual = 129786
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1601.500 ; gain = 136.750 ; free physical = 112861 ; free virtual = 130365
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -95,10 +94,10 @@ WARNING: [Synth 8-3295] tying undriven pin design_1_inst:w_busy to constant 0 [/
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1602.508 ; gain = 137.750 ; free physical = 112251 ; free virtual = 129786
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1601.500 ; gain = 136.750 ; free physical = 112860 ; free virtual = 130364
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1602.508 ; gain = 137.750 ; free physical = 112251 ; free virtual = 129786
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1601.500 ; gain = 136.750 ; free physical = 112860 ; free virtual = 130364
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7z020clg400-1
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -123,24 +122,24 @@ Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/
 Finished Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/src/xdc/target.xdc]
 Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/dont_touch.xdc]
 Finished Parsing XDC File [/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/dont_touch.xdc]
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1972.570 ; gain = 0.000 ; free physical = 111952 ; free virtual = 129487
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1972.570 ; gain = 0.000 ; free physical = 112558 ; free virtual = 130062
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1972.570 ; gain = 0.000 ; free physical = 111952 ; free virtual = 129487
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1972.570 ; gain = 0.000 ; free physical = 112559 ; free virtual = 130062
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1973.570 ; gain = 0.000 ; free physical = 111953 ; free virtual = 129488
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1973.570 ; gain = 1.000 ; free physical = 111953 ; free virtual = 129488
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1973.570 ; gain = 0.000 ; free physical = 112559 ; free virtual = 130062
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.02 . Memory (MB): peak = 1973.570 ; gain = 1.000 ; free physical = 112559 ; free virtual = 130062
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 112053 ; free virtual = 129588
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112664 ; free virtual = 130168
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 112053 ; free virtual = 129588
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112664 ; free virtual = 130168
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -155,14 +154,13 @@ Applied set_property DONT_TOUCH = true for design_1_inst/rst_ps7_0_50M. (constra
 Applied set_property DONT_TOUCH = true for design_1_inst/ps7_0_axi_periph/s00_couplers/auto_pc. (constraint file  auto generated constraint, line ).
 Applied set_property DONT_TOUCH = true for clk_wiz_inst0. (constraint file  auto generated constraint, line ).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 112055 ; free virtual = 129590
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112665 ; free virtual = 130169
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-5546] ROM "busy0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "scl_cnt" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "req_reg" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "sda_cnt" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "CAM_PWUP_reg" won't be mapped to RAM because it is too sparse
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 112046 ; free virtual = 129581
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112656 ; free virtual = 130160
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -191,7 +189,6 @@ Detailed RTL Component Info :
 	   2 Input     20 Bit        Muxes := 1     
 	   2 Input      6 Bit        Muxes := 4     
 	   2 Input      3 Bit        Muxes := 2     
-	   3 Input      1 Bit        Muxes := 1     
 	   2 Input      1 Bit        Muxes := 6     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
@@ -225,7 +222,6 @@ Detailed RTL Component Info :
 	   2 Input     58 Bit        Muxes := 3     
 	   2 Input      6 Bit        Muxes := 4     
 	   2 Input      3 Bit        Muxes := 2     
-	   3 Input      1 Bit        Muxes := 1     
 	   2 Input      1 Bit        Muxes := 5     
 ---------------------------------------------------------------------------------
 Finished RTL Hierarchical Component Statistics
@@ -243,7 +239,7 @@ Finished Part Resource Summary
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
-INFO: [Synth 8-5546] ROM "sccb_if_inst/scl_cnt" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "sccb_if_inst/req_reg" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "sccb_if_inst/sda_cnt" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "CAM_PWUP_reg" won't be mapped to RAM because it is too sparse
 WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_0 has unconnected port ACLK
@@ -253,64 +249,64 @@ WARNING: [Synth 8-3331] design design_1_ps7_0_axi_periph_0 has unconnected port 
 WARNING: [Synth 8-3331] design top has unconnected port btn[3]
 WARNING: [Synth 8-3331] design top has unconnected port btn[2]
 WARNING: [Synth 8-3331] design top has unconnected port btn[1]
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[57]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[56]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[55]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[54]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[53]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[52]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[51]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[50]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[49]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[48]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[47]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[46]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[45]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[44]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[43]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[42]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[41]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[40]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[39]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[38]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[37]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[36]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[35]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[34]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[33]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[32]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[31]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[30]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[29]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[28]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[27]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[26]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[57]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[56]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[55]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[54]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[53]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[52]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[51]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[50]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[49]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[48]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[47]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[46]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[45]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[44]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[43]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[42]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[41]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[40]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[39]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[38]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[37]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[36]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[35]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[34]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[33]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[32]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[31]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[30]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[29]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[28]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[27]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[26]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[25]' (FDS) to 'sccb_if_inst/sda_en_reg_reg[24]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[24]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[23]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[23]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[22]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[21]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[20]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[23]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[22]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[21]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[20]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[19]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[16]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[18]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[17]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[55]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[18]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[17]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[16]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[15]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[15]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[14]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[14]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[4]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[13]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[12]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[11]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[10]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[9]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[8]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[7]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[6]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[5]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[13]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[12]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[11]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[10]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[9]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[8]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[7]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[6]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[5]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[4]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[3]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[3]' (FDR) to 'sccb_if_inst/sda_en_reg_reg[2]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[2]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[4]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[1]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[0]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[57]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[1]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_en_reg_reg[0]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[57]' (FD) to 'sccb_if_inst/sda_reg_reg[56]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[56]' (FD) to 'sccb_if_inst/sda_reg_reg[14]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[55]' (FD) to 'sccb_if_inst/sda_reg_reg[46]'
@@ -331,35 +327,35 @@ INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[4]' (FD) to 'scc
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[2]' (FD) to 'sccb_if_inst/sda_reg_reg[1]'
 INFO: [Synth 8-3886] merging instance 'sccb_if_inst/sda_reg_reg[1]' (FD) to 'sccb_if_inst/sda_reg_reg[0]'
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sccb_if_inst/sda_reg_reg[0] )
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[57]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[56]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[56]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[3]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[55]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[54]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[54]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[53]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[53]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[52]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[52]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[51]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[51]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[50]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[50]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[49]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[49]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[48]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[48]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[47]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[47]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[46]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[46]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[45]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[45]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[44]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[44]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[43]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[43]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[42]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[42]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[41]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[41]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[40]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[40]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[39]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[39]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[38]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[38]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[37]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[37]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[36]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[36]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[35]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[35]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[34]'
-INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[34]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[33]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[57]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[56]' (FDR) to 'sccb_if_inst/scl_en_reg_reg[0]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[55]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[54]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[53]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[52]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[51]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[50]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[49]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[48]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[47]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[46]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[45]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[44]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[43]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[42]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[41]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[40]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[39]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[38]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[37]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[36]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[35]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
+INFO: [Synth 8-3886] merging instance 'sccb_if_inst/scl_en_reg_reg[34]' (FDS) to 'sccb_if_inst/scl_en_reg_reg[19]'
 INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (\sccb_if_inst/scl_en_reg_reg[19] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\sccb_if_inst/scl_en_reg_reg[0] )
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:18 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 112034 ; free virtual = 129571
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:09 ; elapsed = 00:00:18 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112638 ; free virtual = 130144
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -374,13 +370,13 @@ INFO: [Synth 8-5578] Moved timing constraint from pin 'design_1_inst/processing_
 INFO: [Synth 8-5578] Moved timing constraint from pin 'clk_wiz_inst0/clk_out1' to pin 'clk_wiz_inst0/bbstub_clk_out1/O'
 INFO: [Synth 8-5819] Moved 2 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111908 ; free virtual = 129445
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:23 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112512 ; free virtual = 130018
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112505 ; free virtual = 130011
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -392,7 +388,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111900 ; free virtual = 129438
+Finished Technology Mapping : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112508 ; free virtual = 130014
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -425,7 +421,7 @@ WARNING: [Synth 8-3295] tying undriven pin design_1_inst:r_data[1] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin design_1_inst:r_data[0] to constant 0
 WARNING: [Synth 8-3295] tying undriven pin design_1_inst:w_busy to constant 0
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -438,7 +434,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -450,25 +446,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -497,10 +493,10 @@ Report Cell Usage:
 |6     |CARRY4                          |     5|
 |7     |LUT1                            |     4|
 |8     |LUT2                            |    11|
-|9     |LUT3                            |     8|
-|10    |LUT4                            |    14|
-|11    |LUT5                            |    16|
-|12    |LUT6                            |    52|
+|9     |LUT3                            |     9|
+|10    |LUT4                            |    13|
+|11    |LUT5                            |    13|
+|12    |LUT6                            |    55|
 |13    |MUXF7                           |     6|
 |14    |FDRE                            |    85|
 |15    |FDSE                            |     8|
@@ -520,29 +516,29 @@ Report Instance Areas:
 |5     |  sccb_if_inst       |sccb_if                     |   157|
 +------+---------------------+----------------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:15 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111901 ; free virtual = 129438
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112509 ; free virtual = 130015
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 16 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:18 . Memory (MB): peak = 1973.570 ; gain = 137.750 ; free physical = 111961 ; free virtual = 129498
-Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.812 ; free physical = 111972 ; free virtual = 129510
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:17 . Memory (MB): peak = 1973.570 ; gain = 136.750 ; free physical = 112568 ; free virtual = 130074
+Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1973.570 ; gain = 508.820 ; free physical = 112579 ; free virtual = 130085
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 12 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-140] Inserted 1 IBUFs to IO ports without IO buffers.
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1980.578 ; gain = 0.000 ; free physical = 111900 ; free virtual = 129438
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1980.578 ; gain = 0.000 ; free physical = 112506 ; free virtual = 130012
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 1 instances were transformed.
   IOBUF => IOBUF (IBUF, OBUFT): 1 instances
 
 INFO: [Common 17-83] Releasing license: Synthesis
-151 Infos, 37 Warnings, 0 Critical Warnings and 0 Errors encountered.
+150 Infos, 37 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:17 ; elapsed = 00:00:27 . Memory (MB): peak = 1980.578 ; gain = 521.547 ; free physical = 111955 ; free virtual = 129493
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1980.578 ; gain = 0.000 ; free physical = 111946 ; free virtual = 129484
+synth_design: Time (s): cpu = 00:00:17 ; elapsed = 00:00:26 . Memory (MB): peak = 1980.578 ; gain = 521.555 ; free physical = 112561 ; free virtual = 130068
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1980.578 ; gain = 0.000 ; free physical = 112562 ; free virtual = 130068
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
 INFO: [Common 17-1381] The checkpoint '/home/users/saikai/Project/Autonomous_Vehicle_Driving/systems/proj/proj.runs/synth_1/top.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file top_utilization_synth.rpt -pb top_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Mon Sep 30 01:15:00 2019...
+INFO: [Common 17-206] Exiting Vivado at Mon Sep 30 01:54:50 2019...

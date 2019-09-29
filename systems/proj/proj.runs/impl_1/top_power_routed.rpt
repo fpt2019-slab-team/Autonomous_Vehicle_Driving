@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-| Date             : Mon Sep 30 01:16:32 2019
+| Date             : Mon Sep 30 01:56:26 2019
 | Host             : flamingo running 64-bit CentOS release 6.10 (Final)
 | Command          : report_power -file top_power_routed.rpt -pb top_power_summary_routed.pb -rpx top_power_routed.rpx
 | Design           : top
@@ -30,10 +30,10 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.507        |
+| Total On-Chip Power (W)  | 1.506        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.367        |
+| Dynamic (W)              | 1.366        |
 | Device Static (W)        | 0.140        |
 | Effective TJA (C/W)      | 11.5         |
 | Max Ambient (C)          | 67.6         |
@@ -60,12 +60,12 @@ Table of Contents
 |   F7/F8 Muxes           |    <0.001 |        6 |     53200 |            0.01 |
 |   LUT as Shift Register |    <0.001 |       60 |     17400 |            0.34 |
 |   Others                |     0.000 |      194 |       --- |             --- |
-| Signals                 |     0.002 |     1197 |       --- |             --- |
+| Signals                 |     0.002 |     1196 |       --- |             --- |
 | MMCM                    |     0.096 |        1 |         4 |           25.00 |
 | I/O                     |     0.006 |       15 |       125 |           12.00 |
 | PS7                     |     1.256 |        1 |       --- |             --- |
 | Static Power            |     0.140 |          |           |                 |
-| Total                   |     1.507 |          |           |                 |
+| Total                   |     1.506 |          |           |                 |
 +-------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -75,7 +75,7 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.023 |       0.009 |      0.014 |
+| Vccint    |       1.000 |     0.022 |       0.008 |      0.014 |
 | Vccaux    |       1.800 |     0.068 |       0.054 |      0.014 |
 | Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
@@ -155,17 +155,17 @@ Table of Contents
 +--------------------------+-----------+
 | Name                     | Power (W) |
 +--------------------------+-----------+
-| top                      |     1.367 |
+| top                      |     1.366 |
 |   CAM_SDA_IOBUF_inst     |     0.002 |
 |   clk_wiz_inst0          |     0.096 |
 |     inst                 |     0.096 |
-|   design_1_inst          |     1.262 |
+|   design_1_inst          |     1.261 |
 |     myip_0               |     0.001 |
 |       inst               |     0.001 |
 |     processing_system7_0 |     1.256 |
 |       inst               |     1.256 |
-|     ps7_0_axi_periph     |     0.005 |
-|       s00_couplers       |     0.005 |
+|     ps7_0_axi_periph     |     0.004 |
+|       s00_couplers       |     0.004 |
 |   sccb_if_inst           |     0.002 |
 +--------------------------+-----------+
 

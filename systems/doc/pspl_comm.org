@@ -1,0 +1,91 @@
+ #+TITLE: description.org
+
+* pspl_comm 
+
+  - Abstruct 
+
+    PS-PL 通信を実装したディレクトリです．
+    PS 側から LED や PWM を制御したり，PL 側のスイッチの値を PS 側から読み取ったりすることができます．
+    
+  - How to use 
+    
+    Vivado の Hardware Manager を開き，
+
+    ./pspl_comm/project_1/project_1.runs/impl_1/top.bit 
+
+    を PYNQ にのせます．PYNQ は現在 swan に繋がっています．
+    
+    ビットストリームファイルがのったら PYNQ にアクセスします．
+    .ssh/config に
+    
+    Host pynq
+      Hostname crene
+      User xilinx
+      Port 12200  
+    
+    と記述しておき，
+
+    $ ssh pynq
+
+    で PYNQ ボードにアクセスします．
+    パスワードが聞かれるので研究室のいつものパスワードを入力しログインします．
+    
+    /saikai/pspl_comm
+
+    にディレクトリを移動して，C プログラムを実行してみます．
+    例えば，process.c を実行したいときは，
+    
+    $ sudo ./process 
+
+    と入力します．
+    addr と value を聞かれるので，例えば addr に 0，value に 3 と入力すると，
+    PYNQ の LED の左 2 つ（i.e., 4'b0011）が光ります．
+
+    LED の制御に slv_reg0 というレジスタが使われており，その addr は 0 です．
+    その addr のレジスタに PS 側から value を与えることで LED に変化が起こります．
+    詳しくは
+      ./pspl_comm/ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v  
+    を参照してください（ここでの説明は割愛します）．        
+
+    以上が PS -> PL 通信です．
+    次に PL -> PS 通信の確認をするために，sw.c を実行してみます．
+
+    $ sudo ./sw
+
+    実行すると，PYNQ ボードの SW の状態が PS 側から確認できます．
+    プログラムはしばらく経つと終了します．
+
+    最後に，addr とその対象を次にまとめておきます．
+
+    addr | object 
+    -----+-----------------------------------
+    0    | led_out[3:0]
+    1    | PWM の波形 pulse1 を制御する値(vq)
+    2    | PWM の波形 pulse2 を制御する値(vq)
+    3    | sw[1:0]
+
+  - Modules 
+    - top.v 
+      トップモジュール
+    - pwmc.sv 
+      PWM 制御するモジュール
+    - astray.sv 
+      よくわかんないモジュール
+      詳しくはモーター班へ
+    - ip_repo/myip_1.0/hdl/myip_v1_0.v, ip_repo/myip_1.0/hdl/myip_v1_0_S00_AXI.v 
+      Vivado IP が作ったモジュール
+      主に myip_v1_0_S00_AXI.v を変更しました．
+
+* update 
+  
+  - 2019/8/29
+  
+    レジスタの使用方法を変更しました．
+
+    map_addr[0] : ps から指定する PL のオブジェクトのアドレス
+    0: led_out, 1: pulse1, 2: pulse2
+    map_addr[1] : map_addr[0] で指定したオブジェクトに格納する値
+    map_addr[2] : PS が読みたい PL のオブジェクトのアドレス
+    0: sw[0], 1: sw[1]
+    map_addr[3] : map_addr[2] で指定したオブジェクトの値
+
