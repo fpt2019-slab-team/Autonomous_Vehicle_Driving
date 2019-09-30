@@ -9,7 +9,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define BUF_SIZE         64
+#define MSG_SIZE         256
+#define PROCEDURE        14
 #define PS_PL_ADDR       0x0000
 #define PS_PL_VALUE      0x0001
 #define PL_PS_ADDR       0x0002
@@ -25,15 +26,28 @@ void writeReg(const uint16_t sub_address, const uint8_t write_data);
 void sendReg(const uint16_t sub_address, const uint8_t data);
 
 uint32_t *map_addr;
+char msg[PROCEDURE][MSG_SIZE] = {
+  " 1. Execute a power-cycle by applying a low pulse of 100ms on CAM_PWUP, then driving it high.",
+  " 2. Wait for 50ms.", 
+  " 3. Read sensor ID from registers 0x300A and 0x300B and check against 0x56 and 0x40, respectively.", 
+  " 4. Choose system input clock from pad by writing 0x11 to register address 0x3103.", 
+  " 5. Execute software reset by writing 0x82 to register address 0x3008.", 
+  " 6. Wait for 10ms.", 
+  " 7. De-assert reset and enable power down until configuration is done by writing 0x42 to register address 0x3008.", 
+  " 8. Choose system input clock from PLL by writing 0x03 to register address 0x3103.", 
+  " 9. Set PLL registers for desired MIPI data rate and sensor timing (frame rate).", 
+  "10. Set imaging configuration registers.", 
+  "11. Enable MIPI interface by writing either 0x45 for two-lane mode or 0x25 for one-lane mode to register address 0x300E.", 
+  "12. Let MIPI clock free-run, and force LP11 when no packet transmission by writing 0x14 to register address 0x4800.", 
+  "13. Set output format to RAW10 by writing 0x00 to register address 0x4300 and 0x03 to register address 0x501F.", 
+  "14. Wake up sensor by writing 0x02 to register address 0x3800."
+};
 
 int main(void)
 {
   int uiofd;
-  char buf[BUF_SIZE];
-  char option[BUF_SIZE]; // option (write, read or quit)
-  uint16_t sub_address;
-  uint8_t read_data, write_data;
-
+  int seq = 0; // sequence number (0 ~ 13)
+  
   uiofd = open("/dev/uio0", O_RDWR);
   if (uiofd < 0) {
     printf("uio open failed. \n");
@@ -46,45 +60,49 @@ int main(void)
     return 1;
   }
 
-  while (1) {
-    printf("> Select read ('r') or write ('w'), 'q' to quit: ");
-    fgets(option, BUF_SIZE, stdin);
-
-    if (strncmp(option, "r", 1) == 0) {
-      // input sub_address
-      printf("> Sub-address (4 Bytes): 0x");
-      fgets(buf, BUF_SIZE, stdin);
-
-      // convert string to hexadecimal
-      sub_address = strtol(buf, NULL, 16);
-
-      // send SCCB data to register
-      read_data = readReg(sub_address);
-      printf("Sub-address: 0x%04X, Read Data: 0x%02X \n\n", sub_address, read_data);
-    } else if (strncmp(option, "w", 1) == 0) {
-      // input sub_address
-      printf("> Sub-address (4 Bytes): 0x");
-      fgets(buf, BUF_SIZE, stdin);
-
-      // convert string to hexadecimal
-      sub_address = strtol(buf, NULL, 16);
-
-      // input write_data
-      printf("> Write Data (2 Bytes): 0x");
-      fgets(buf, BUF_SIZE, stdin);
-
-      // convert string to hexadecimal
-      write_data = strtol(buf, NULL, 16);
-
-      // send SCCB data to register
-      writeReg(sub_address, write_data);
-
-      printf("Sub-address: 0x%04X, Write Data: 0x%02X \n\n", sub_address, write_data);
-    } else if (strncmp(option, "q", 1) == 0) {
-      break;
-    }
-  }
-
+  printf("> Start Power-up and Reset. \n");
+  printf(" %s ... ", msg[seq++]); // 1
+  printf("[done] \n");            
+  printf(" %s ... ", msg[seq++]); // 2
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 3
+  printf("[done] \n");
+  while (readReg(0x300A) != 0x56 || readReg(0x300B) != 0x40);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 4
+  sendReg(0x3103, 0x03);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 5
+  sendReg(0x3008, 0x82);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 6
+  usleep(10000);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 7
+  sendReg(0x3008, 0x42);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 8
+  sendReg(0x3103, 0x03);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 9
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 10
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 11
+  sendReg(0x300E, 0x45); // 0x45 or 0x25
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 12
+  sendReg(0x4800, 0x14);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 13
+  sendReg(0x4300, 0x00);
+  sendReg(0x501F, 0x03);
+  printf("[done] \n");
+  printf(" %s ... ", msg[seq++]); // 13
+  sendReg(0x3800, 0x02);
+  printf("[done] \n");  
+  printf("> Complete Power-up and Reset. \n");
+  
   close(uiofd);
   return 0;
 }
@@ -99,7 +117,7 @@ uint8_t readReg(const uint16_t sub_address)
   map_addr[PS_PL_ADDR] = PS_PL_SCCB_WR;
   map_addr[PS_PL_VALUE] = 1; // read
     
-  // set SCCB data to PL
+  // set SCCB data to sccb_if module
   map_addr[PS_PL_ADDR] = PS_PL_SCCB_WDATA;
   map_addr[PS_PL_VALUE] = send_data;
 
@@ -149,7 +167,7 @@ void writeReg(const uint16_t sub_address, const uint8_t write_data)
   map_addr[PS_PL_ADDR] = PS_PL_SCCB_REQ;
   map_addr[PS_PL_VALUE] = 1;
 
-  usleep(300);
+  usleep(10);
   
   // set reqest 0
   map_addr[PS_PL_ADDR] = PS_PL_SCCB_REQ;
