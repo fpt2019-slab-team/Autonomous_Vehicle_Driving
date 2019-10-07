@@ -95,15 +95,12 @@ def uv2cf(u, v, F, WIDTH, HEIGHT, SCALE):
 def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
     img_view = np.zeros((HEIGHT, WIDTH))
 
-    map_x_len = IMG_MAP.shape[0]
-    map_z_len = IMG_MAP.shape[1]
-
     for v, u in product(range(0, HEIGHT), range(0, WIDTH)):
         cf_p = uv2cf(u, v, F, WIDTH, HEIGHT, SCALE)
         wm_p = cf2wm(cf_p, eye, r).astype(int)
 
         x, z = wm_p[0], wm_p[2]
-        if 0 <= x < map_x_len and 0 < z <= map_z_len:
+        if 0 <= z < IMG_MAP.shape[0] and 0 <= x < IMG_MAP.shape[1]:
             img_view[v][u] = IMG_MAP[z][x]
 
     return img_view
@@ -158,30 +155,37 @@ def plot_axis(ax, lims):
 def plot_rectangle(ax, points, line_type='-', c='000000'):
     ax.plot(*list(zip(*points, points[0])), line_type, c=c)
 
+def to_affine(matrix):
+    if matrix.shape == (3, 3):
+        r = matrix
+        r = np.vstack((r, np.array([0, 0, 0])))
+        r = np.hstack((r, np.array([[0, 0, 0, 1]]).T))
+        return r
+
+    print('error: graph.py: to_affine: unknown shape')
+    exit(1)
+
 # gui } ########################################################################
 
 def main():
-    #eye = np.array([400, 75, 600])
-    eye = np.array([200, 100, 350])
+    eye = np.array([300, 100, 400])
 
-    #theta_x = pi / 180 * 35
-    theta_x = pi / 180 * 70
-    #theta_y = pi / 180 * 210
-    theta_y = pi / 180 * 180
-    theta_z = 0
-    theta = [theta_x, theta_y, theta_z]
+    # 0 <= theta_x <= 90, 0 <= theta_y <= 180
+    theta = np.array([40, 180, 0]) / 180 * pi
     r = get_r(theta)
 
-    F = 75
+    REDUCE = 4
+    F = 50
 
-    WIDTH, HEIGHT = (np.array((640, 480)) / 4).astype(int)
-    SCALE = 2
+    WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int)
+    SCALE = 600 / F / REDUCE
 
     IMG_MAP = cv2.imread("ref_map.png", 0)
 
     img_view = get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP)
     img_view = Image.fromarray(img_view)
     img_view.show()
+    #img_view.convert('RGB').save('a.png')
 
     DIFF = int(1 + WIDTH / 100 * 5)
     wm_ps = [] # point cloud of projected region on map
@@ -203,27 +207,30 @@ def main():
     ax.set_axis_off()
 
     # plot map #################################################################
-    img = cv2.imread("ref_map.png",0)
+    #img = cv2.imread("ref_map.png",0)
+    #shape = img.shape
+    #lsd = cv2.createLineSegmentDetector(0)
+    #lines = lsd.detect(img)[0]
+    #lines = np.array(lines).reshape(len(lines), 4)
 
-    lsd = cv2.createLineSegmentDetector(0)
-    lines = lsd.detect(img)[0]
-    lines = np.array(lines).reshape(len(lines), 4)
+    lines = np.load('map.npy')
+    shape = (600, 428)
+
     lines = np.array(
         [
-            lines[0:,0], lines[0:,2],
-            np.zeros(len(lines)), np.zeros(len(lines)),
-            lines[0:,1], lines[0:,3]
+            lines[0:,0], lines[0:,2],                   # x
+            np.zeros(len(lines)), np.zeros(len(lines)), # y = 0
+            lines[0:,1], lines[0:,3]                    # z
         ]
     ).T.reshape(len(lines), 3, 2)
 
     for line in lines:
         ax.plot(*line, "-", c='red', linewidth=0.5)
 
-
     # ax #######################################################################
 
     # axis
-    lims = (img.shape[1], 300, img.shape[0])
+    lims = (shape[1], 300, shape[0])
     plot_axis(ax, lims)
 
     # eye
@@ -245,17 +252,8 @@ def main():
     # rectangle on map
     plot_rectangle(ax, wm_vs)
 
-    def to_affine(matrix):
-        if matrix.shape == (3, 3):
-            r = matrix
-            r = np.vstack((r, np.array([0, 0, 0])))
-            r = np.hstack((r, np.array([[0, 0, 0, 1]]).T))
-            return r
-
-        print('error: graph.py: to_affine: unknown shape')
-        exit(1)
-
-    ax.set_aspect('equal')
+    #vaio
+    #ax.set_aspect('equal')
 
     AFS = [
         to_affine(get_r([pi / 180 * 90, 0, 0])),

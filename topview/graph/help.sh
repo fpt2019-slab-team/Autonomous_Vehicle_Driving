@@ -1,6 +1,6 @@
 #!/bin/bash
 python3 -i <(
-    grep import gl.py |
+    grep import graph.py |
     sed 's/^ *//g' |
     cat
 )
