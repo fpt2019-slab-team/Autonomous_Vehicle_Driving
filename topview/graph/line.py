@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 
+# todo separate lib.py
+# todo img_view F hide bihind of camera
+# todo line of sight from camera to map
+# todo clip 0, 480, 0, 640
+# todo theta_v perspective theta
+
 import cv2
 import numpy as np
 from math import sin,cos,pi
@@ -26,8 +32,8 @@ from PIL import Image, ImageDraw
 # cf_vs: N vertexes                of focused surface on camera coodinate
 
 ################################################################################
-# calculate rotation matrix by theta
-# theta: [theta_x, theta_y, theta_z] (float, rad)
+# theta:    (theta_x, theta_y, theta_z) (rad)
+# r:        np.shape == (3, 3) (rotation matrix)
 def get_r(theta):
     r_x = np.array([[          1  ,            0  ,            0  ],
                     [          0  ,  cos(theta[0]), -sin(theta[0])],
@@ -45,7 +51,7 @@ def get_r(theta):
 # w:   np.array([x, y, z])
 # c:   np.array([x, y, z])
 # eye: np.array([x, y, z])
-# r:   np.array.shape == (3, 3)
+# r:   np.shape == (3, 3)
 
 def w2c(w, eye, r):
     c = np.dot(np.linalg.inv(r), (w - eye))
@@ -83,7 +89,7 @@ def uv2cf(uv, F, WIDTH, HEIGHT, SCALE):
 # wm:     np.array([x, 0, z])
 # uv:     (float, float)
 # eye:    np.array([x, y, z])
-# r:      np.array.shape == (3, 3)
+# r:      np.shape == (3, 3)
 # F:      float
 # WIDTH:  int
 # HEIGHT: int
@@ -107,36 +113,36 @@ def uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE):
     # uv, cf, wf, wm
 
 ################################################################################
-# cm: np.array([x, y, z])
-# F:  float
+# cm:      np.array([x, y, z])
+# F:       float
+# ret: cf: np.array([x, y, F])
 def cm2cf(cm, F):
     x = F / cm[2] * cm[0]
     y = F / cm[2] * cm[1]
-    z = F
-    cf = np.array([x, y, z])
+    cf = np.array([x, y, F])
     return cf
 
 ################################################################################
-# wf:  np.array([x, y, z])
-# eye: np.array([x, y, z])
-# r:   np.array.shape == (3, 3)
+# wf:      np.array([x, y, z])
+# eye:     np.array([x, y, z])
+# r:       np.shape == (3, 3)
+# ret: wm: np.array([x, 0, z])
 def wf2wm(wf, eye, r):
     n = wf - eye
     x = -eye[1] / n[1] * n[0] + eye[0]
-    y = 0
     z = -eye[1] / n[1] * n[2] + eye[2]
-    wm = np.array([x, y, z])
+    wm = np.array([x, 0, z])
     return wm
 
 ################################################################################
-# eye:     np.array([x, y, z])
-# r:       np.array.shape == (3, 3)
-# F:       scalar float
-# WIDTH:   scalar int
-# HEIGHT:  scalar int
-# SCALE:   scalar float
-# IMG_MAP: np.array.shape == (*, *) (must be grayscale, use cv2.imread())
-# ret:     np.array.shape == (WIDTH, HEIGHT) (img_view)
+# eye:           np.array([x, y, z])
+# r:             np.shape == (3, 3)
+# F:             float
+# WIDTH:         int
+# HEIGHT:        int
+# SCALE:         float
+# IMG_MAP:       np.shape == (*, *) (must be grayscale, use cv2.imread())
+# ret: img_view: np.shape == (WIDTH, HEIGHT)
 def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
     img_view = np.zeros((HEIGHT, WIDTH))
 
@@ -152,6 +158,8 @@ def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
 
 # gui { ########################################################################
 
+# ax:   Axes3D
+# lims: (lim_x, lim_y, lim_z)
 def plot_axis(ax, lims):
     #ax.set_xlim3d(0, lims[0])
     #ax.set_ylim3d(0, lims[1])
@@ -197,9 +205,15 @@ def plot_axis(ax, lims):
             labelpos[axis - 1] = 0
             ax.text(*labelpos, str(i), color='black')
 
+# ax:        Axes3D
+# points:    np.shape == (4, 3) (4 points)
+# line_type: (optional) str ('-' or '--')
+# c:         (optional) str (6 hex digits, color code)
 def plot_rectangle(ax, points, line_type='-', c='000000'):
     ax.plot(*list(zip(*points, points[0])), line_type, c=c)
 
+# matrix: np.shape == (3, 3)
+# ret:    np.shape == (4, 4)
 def to_affine(matrix):
     if matrix.shape == (3, 3):
         r = matrix
@@ -212,13 +226,18 @@ def to_affine(matrix):
 
 # gui } ########################################################################
 
-# added
-def is_inside(u, v, WIDTH, HEIGHT):
+# uv:     (float, float)
+# WIDTH:  int
+# HEIGHT: int
+# ret:    bool
+def is_inside(uv, WIDTH, HEIGHT):
+    u, v = uv
     return 0 <= u <= WIDTH - 1 and 0 <= v <= HEIGHT - 1
 
-# added
 # https://www.hiramine.com/programming/graphics/2d_segmentintersection.html
-# line: np.shape == (2, 2)
+# line_0:            np.shape == (2, 2)
+# line_1:            np.shape == (2, 2)
+# ret: intersection: np.shape == (2,) if intersection exists else None
 def get_intersection(line_0, line_1):
     pa = line_0[0]
     pb = line_0[1]
@@ -242,123 +261,201 @@ def get_intersection(line_0, line_1):
     else:
         return None
 
-def get_true_indexes(array):
-    indexes = []
+# array:        iterable
+# ret: indicies: [bool, ...] (evaluate array elements as bool)
+def get_true_indicies(array):
+    indicies = []
     for i in range(len(array)):
         if hasattr(array[i], '__iter__'):
             if len(array[i]) != 0:
-                indexes.append(i)
+                indicies.append(i)
         elif bool(array[i]):
-            indexes.append(i)
+            indicies.append(i)
 
-    return indexes
+    return indicies
 
+# line:   np.shape == (2, N) (2 points on N-dimentions space)
+# ret: n: np.shape == (N,)   (unit vector of line)
+def line2n(line):
+    d = line[1] - line[0]
+    n = d / np.linalg.norm(d)
+    return n
+
+def get_UV_VS(WIDTH, HEIGHT):
+    UV_VS = np.array((
+        (        0, HEIGHT - 1),
+        (WIDTH - 1, HEIGHT - 1),
+        (WIDTH - 1,          0),
+        (        0,          0),
+    ))
+    return UV_VS
+
+################################################################################
+# uv_lines:      np.shape == (293 - *, 2, 2)
+# WIDTH:         int
+# HEIGHT:        int
+# ret: uv_lines: np.shape == (293 - * - *, 2, 2)
+def filter_uv_lines(uv_lines, WIDTH, HEIGHT):
+    UV_VS = get_UV_VS(WIDTH, HEIGHT)
+
+    is_insides = [] # (293 - *, 2)
+    for uv_line in uv_lines:
+        is_insides.append([
+            is_inside(uv_line[0], WIDTH, HEIGHT),
+            is_inside(uv_line[1], WIDTH, HEIGHT),
+        ])
+
+    uv_edges = np.array((
+        (UV_VS[0], UV_VS[1]),
+        (UV_VS[1], UV_VS[2]),
+        (UV_VS[2], UV_VS[3]),
+        (UV_VS[3], UV_VS[0]),
+    ))
+
+    intersections = [] # (293 - *, 4, 2)
+    for uv_line in uv_lines:
+        intersections.append([
+            get_intersection(uv_line, uv_edges[0]),
+            get_intersection(uv_line, uv_edges[1]),
+            get_intersection(uv_line, uv_edges[2]),
+            get_intersection(uv_line, uv_edges[3]),
+        ])
+
+    uv_lines_filtered = [] # (293 - * - *, 2, 2)
+    for i in range(len(uv_lines)):
+        true_indicies_is_inside = get_true_indicies(is_insides[i])
+        true_indicies_intersection = get_true_indicies(intersections[i])
+        if len(true_indicies_is_inside) == 2:
+            line = uv_lines[i]
+        elif len(true_indicies_is_inside) == 1: # len(intersections[i]) == 1
+            pa = uv_lines[i][true_indicies_is_inside[0]]
+            pb = intersections[i][true_indicies_intersection[0]]
+            line = (pa, pb) if true_indicies_is_inside[0] == 0 else (pb, pa)
+        elif len(true_indicies_intersection) == 2: # 0 or 2
+            pa = intersections[i][true_indicies_intersection[0]]
+            pb = intersections[i][true_indicies_intersection[1]]
+            norm_pa_0 = np.linalg.norm(uv_lines[i][0] - pa)
+            norm_pa_1 = np.linalg.norm(uv_lines[i][1] - pa)
+            line = (pa, pb) if norm_pa_0 <= norm_pa_1 else (pb, pa)
+        else:
+            continue
+        uv_lines_filtered.append(line)
+    uv_lines_filtered = np.array(uv_lines_filtered)
+    uv_lines_filtered = np.clip(uv_lines_filtered, 0, WIDTH)
+    uv_lines_filtered[uv_lines_filtered[:, :, 1] > HEIGHT - 1, 1] = HEIGHT - 1
+
+    return uv_lines_filtered
+
+################################################################################
+# wm_line:      np.array([(x, 0, z), (x, 0, z)])
+# wm_edge0:     np.array([(x, 0, z), (x, 0, z)])
+# eye:          np.array([x, y, z])
+# r:            np.shape == (3, 3)
+# F:            float
+# WIDTH:        int
+# HEIGHT:       int
+# SCALE:        float
+# ret: uv_line: np.array([(u, v), (u, v)]) or
+#               None (behind of camera and parallel)
+def wm_line2uv_line(wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE):
+    uv_line = [] # (2, 2)
+    for wm in wm_line: # (2,)
+        cm = w2c(wm, eye, r)
+        if cm[2] < F: # behind of camera
+            edge = np.array((
+                (wm_edge0[0][0], wm_edge0[0][2]),
+                (wm_edge0[1][0], wm_edge0[1][2]),
+            ))
+            line = np.array((
+                ( wm_line[0][0],  wm_line[0][2]),
+                ( wm_line[1][0],  wm_line[1][2]),
+            ))
+            # y = a * x + b
+            if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
+                return None # parallel
+            edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
+            line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
+            edge_b = edge[0][1] - edge_a * edge[0][0]
+            line_b = line[0][1] - line_a * line[0][0]
+            x = (line_b - edge_b) / (edge_a - line_a)
+            z = edge_a * x + edge_b
+            wm = np.array((x, 0, z))
+        uv = wm2uv(wm, eye, r, F, WIDTH, HEIGHT, SCALE) # (2,)
+        uv_line.append(uv)
+
+    if np.linalg.norm(uv_line[0] - uv_line[1]) < WIDTH * 0.0001:
+        return None # both points are behind of camera
+
+    return uv_line
+
+# wm_lines:      np.array([([x, 0, z], [x, 0, z]), ...]), np.shape == (293,2,3)
+# eye:           np.array([x, y, z])
+# r:             np.shape == (3, 3)
+# F:             float
+# WIDTH:         int
+# HEIGHT:        int
+# SCALE:         float
+# ret: uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2)
+def wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE):
+    UV_VS = get_UV_VS(WIDTH, HEIGHT)
+
+    wm_vs = [] # 4 vertexes of projected region on map
+    for uv in UV_VS:
+        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
+        wm_vs.append(wm_v)
+    wm_vs = np.array(wm_vs)
+
+    wm_edge0 = np.array((wm_vs[0], wm_vs[1]))
+
+    uv_lines = [] # (293 - *, 2, 2) (*: behind of camera and parallel)
+    for wm_line in WM_LINES: # (2, 3)
+        uv_line = wm_line2uv_line(
+                wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE)
+        if uv_line != None:
+            uv_lines.append(uv_line)
+    uv_lines = np.array(uv_lines)
+
+    uv_lines = filter_uv_lines(uv_lines, WIDTH, HEIGHT)
+
+    return uv_lines
+
+################################################################################
 def main():
     eye = np.array([300, 100, 350])
 
     # 0 <= theta_x <= 90, 0 <= theta_y <= 180
-    theta = np.array([40, 180, 0]) / 180 * pi
+    theta = np.array([50, 100, 0]) / 180 * pi
     r = get_r(theta)
 
     REDUCE = 1
-    F = 50
+    F = 50 # length
 
-    WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int)
-    SCALE = 600 / F / REDUCE
+    WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int) # pixel
+    SCALE = HEIGHT / F / REDUCE
 
-    eye_m = c2w(np.array([0, 0, 2 * F]), eye, r)
-    theta_m = pi - theta
-    #theta_m = np.array([pi - theta[0], pi - theta[1], theta[2]])
-    r_m = get_r(theta_m)
+    #print(REDUCE, F, WIDTH, HEIGHT, SCALE)
 
-    ############################################################################
-    #wm = np.array([300, 0, 0])
-    #uv = wm2uv(wm, eye, r, F, WIDTH, HEIGHT, SCALE)
-    #wm = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
-    #print(uv, wm)
-    #exit()
+    LINES_LSD_XZ  = np.load('map.npy') #[29:30] # (293, 4)
+    LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
+    WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
 
-    ############################################################################
-    lines_lsd = np.load('map.npy')[29:30] # (293, 4)
-    lines_tmp = lines_lsd
-    lines_tmp = np.insert(lines_tmp, 1, 0, axis=1)
-    lines_tmp = np.insert(lines_tmp, 4, 0, axis=1)
-    lines_wm  = lines_tmp.reshape(len(lines_tmp), 2, 3) # (293, 2, 3)
+    # for imamura: use uv_lines
+    # uv_lines:
+    #     uv_lines..shape == (*, 2, 2)
+    #     uv_lines == np.array([([u, v], [u, v]), ...])
+    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE)
 
-    lines_uv = [] # (293, 2, 2)
-    for line_wm in lines_wm: # (2, 3)
-        line_uv = [] # (2, 2)
-        for wm in line_wm: # (2,)
-            cm = w2c(wm, eye, r)
-            if cm[2] >= F:
-                uv = wm2uv(wm, eye,   r,   F, WIDTH, HEIGHT, SCALE) # (2,)
-            else:
-                uv = wm2uv(wm, eye_m, r_m, F, WIDTH, HEIGHT, SCALE) # (2,)
-            line_uv.append(uv)
-        lines_uv.append(line_uv)
-    lines_uv = np.array(lines_uv)
-
+    # debug ####################################################################
     img_line = Image.fromarray(np.zeros((HEIGHT, WIDTH)))
     draw_line = ImageDraw.Draw(img_line)
-    for i in range(len(lines_uv)):
-        #line_uv = lines_uv_filtered[i]
-        line_uv = lines_uv[i]
-        uv0 = line_uv[0]
-        uv1 = line_uv[1]
+    for i in range(len(uv_lines)):
+        #uv_line = uv_lines_filtered[i]
+        uv_line = uv_lines[i]
+        uv0 = uv_line[0]
+        uv1 = uv_line[1]
         draw_line.line((*uv0, *uv1), fill=255, width=1)
     img_line.show()
-
-    ############################################################################
-    edges_uv = np.array([
-        [[    0,      0], [WIDTH,      0]],
-        [[WIDTH,      0], [WIDTH, HEIGHT]], 
-        [[WIDTH, HEIGHT], [    0, HEIGHT]],
-        [[    0, HEIGHT], [    0,      0]],
-    ])
-
-    is_insides = [] # (293, 2)
-    for line_uv in lines_uv:
-        is_insides.append([
-            is_inside(line_uv[0][0], line_uv[0][1], WIDTH, HEIGHT),
-            is_inside(line_uv[1][0], line_uv[1][1], WIDTH, HEIGHT),
-        ])
-
-    intersections = [] # (293, 4, 2)
-    for line_uv in lines_uv:
-        intersections.append([
-            get_intersection(line_uv, edges_uv[0]),
-            get_intersection(line_uv, edges_uv[1]),
-            get_intersection(line_uv, edges_uv[2]),
-            get_intersection(line_uv, edges_uv[3]),
-        ])
-
-    #lines_uv_filtered = [] # (293 - *, 2, 2)
-    #for i in range(len(lines_uv)):
-    #    indexes_is_inside = get_true_indexes(is_insides[i])
-    #    indexes_intersection = get_true_indexes(intersections[i])
-    #    if len(indexes_is_inside) == 2:
-    #        lines_uv_filtered.append(lines_uv[i])
-    #    elif len(indexes_is_inside) == 1: # len(intersections[i]) == 1
-    #        pa = lines_uv[i][indexes_is_inside[0]]
-    #        pb = intersections[i][indexes_intersection[0]]
-    #        if indexes_is_inside[0] == 1:
-    #            pa, pb = np.copy(pb), np.copy(pa)
-    #        lines_uv_filtered.append(np.array([pa, pb]))
-    #    elif len(indexes_intersection) == 2: # 0 or 2
-    #        pa = intersections[i][indexes_intersection[0]]
-    #        pb = intersections[i][indexes_intersection[1]]
-    #        norm_pa_0 = np.linalg.norm(lines_uv[i][0] - pa)
-    #        norm_pa_1 = np.linalg.norm(lines_uv[i][1] - pa)
-    #        if norm_pa_0 > norm_pa_1:
-    #            pa, pb = pb, pa
-    #        lines_uv_filtered.append(np.array([pa, pb]))
-    #    if len(lines_uv_filtered) == 3:
-    #        print(i)
-    #        print(lines_uv[i])
-    ##lines_uv_filtered = lines_uv_filtered[:int(len(lines_uv_filtered) / 4)]
-    #lines_uv_filtered = lines_uv_filtered[2:4]
-    #print(lines_uv_filtered[0])
-    #print(len(lines_uv_filtered))
+    #exit()
 
     ############################################################################
 
@@ -369,38 +466,48 @@ def main():
     #img_view.show()
     #exit()
 
-    ############################################################################
     DIFF = int(1 + WIDTH / 100 * 5)
     wm_ps = [] # point cloud of projected region on map
     for v, u in product(range(0, HEIGHT, DIFF), range(0, WIDTH, DIFF)):
-        wm_p = uv2wm((u, v), eye, r, F, WIDTH, HEIGHT, SCALE)
+        uv = (u, v)
+        wm_p = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
         wm_ps.append(wm_p)
 
-    wf_vs = [] # 4 vertexes of focused surface
-    for v, u in ((0, 0), (HEIGHT, 0), (HEIGHT, WIDTH), (0, WIDTH)):
-        cf_v = uv2cf((u, v), F, WIDTH, HEIGHT, SCALE)
+    UV_VS = get_UV_VS(WIDTH, HEIGHT)
+
+    wf_vs = [] # 4 vertexes of focused surface (4, 3)
+    for uv in UV_VS:
+        cf_v = uv2cf(uv, F, WIDTH, HEIGHT, SCALE)
         wf_v =   c2w(cf_v, eye, r);
         wf_vs.append(wf_v)
 
     wm_vs = [] # 4 vertexes of projected region on map
-    for v, u in ((0, 0), (HEIGHT, 0), (HEIGHT, WIDTH), (0, WIDTH)):
-        wm_v = uv2wm((u, v), eye, r, F, WIDTH, HEIGHT, SCALE)
+    for uv in UV_VS:
+        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
         wm_vs.append(wm_v)
+    wm_vs = np.array(wm_vs)
 
     # init #####################################################################
-    fig = plt.figure()
-    ax = Axes3D(fig)
+    FIG = plt.figure()
+    ax = Axes3D(FIG)
     ax.set_axis_off()
 
     # plot map #################################################################
 
-    map_size = (600, 428)
+    MAP_SIZE = (600, 428)
 
-    lines = np.array([
-        lines_lsd[:,0],           lines_lsd[:,2],           # x
-        np.zeros(len(lines_lsd)), np.zeros(len(lines_lsd)), # y = 0
-        lines_lsd[:,1],           lines_lsd[:,3]            # z
-    ]).T.reshape(len(lines_lsd), 3, 2)
+    #zeros = np.zeros(len(LINES_LSD_XZ))
+    #lines = np.array((
+    #    (LINES_LSD_XZ[:,0], LINES_LSD_XZ[:,2]), # x
+    #    (            zeros,             zeros), # y = 0
+    #    (LINES_LSD_XZ[:,1], LINES_LSD_XZ[:,3]), # z
+    #)).T.reshape(len(LINES_LSD_XZ), 3, 2)
+
+    lines = np.array((
+        LINES_LSD_XYZ[:,0], LINES_LSD_XYZ[:,3], # x
+        LINES_LSD_XYZ[:,1], LINES_LSD_XYZ[:,4], # y
+        LINES_LSD_XYZ[:,2], LINES_LSD_XYZ[:,5], # z
+    )).T.reshape(len(LINES_LSD_XYZ), 3, 2)
 
     for line in lines:
         ax.plot(*line, "-", c='red', linewidth=0.5)
@@ -408,15 +515,24 @@ def main():
     # ax #######################################################################
 
     # axis
-    lims = (map_size[1], 300, map_size[0])
+    lims = (MAP_SIZE[1], 300, MAP_SIZE[0])
     plot_axis(ax, lims)
 
     # eye
     ax.plot(*zip(eye), "o")
-    ax.plot(*list(zip(eye, c2w(np.array([0, 50, 0]), eye, r))), '-', c='blue')
+    ax.plot(*list(zip(eye, c2w(np.array([F, 0, 0]), eye, r))), '-', c='green')
+    ax.plot(*list(zip(eye, c2w(np.array([0, F, 0]), eye, r))), '-', c='green')
+    ax.plot(*list(zip(eye, c2w(np.array([0, 0, F]), eye, r))), '-', c='green')
+
+    # lines from eye to vertexes on map
+    for wm_v in wm_vs:
+        ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
 
     # rectangle on F
     plot_rectangle(ax, wf_vs)
+
+    # rectangle on map
+    plot_rectangle(ax, wm_vs)
 
     # point cloud on map
     for wm_p in wm_ps:
@@ -424,14 +540,6 @@ def main():
             #ax.plot([wm_p[0]], [wm_p[1]], [wm_p[2]], "o", c='000000', ms=2)
             pass
 
-    # lines from eye to vertexes on map
-    for wm_v in wm_vs:
-        ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
-
-    # rectangle on map
-    plot_rectangle(ax, wm_vs)
-
-    #vaio
     #ax.set_aspect('equal')
 
     AFS = [
