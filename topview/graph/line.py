@@ -17,6 +17,76 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from functools import reduce
 from PIL import Image, ImageDraw
 
+# gui { ########################################################################
+
+# ax:   Axes3D
+# lims: (lim_x, lim_y, lim_z)
+def plot_axis(ax, lims):
+    #ax.set_xlim3d(0, lims[0])
+    #ax.set_ylim3d(0, lims[1])
+    #ax.set_zlim3d(0, lims[2])
+
+    ax.set_xlim3d(0, max(lims))
+    ax.set_ylim3d(0, max(lims))
+    ax.set_zlim3d(0, max(lims))
+
+    # plot axis
+    ax.plot([0, lims[0]], [0,       0], [0,       0] , "-", c='000000')
+    ax.plot([0,       0], [0, lims[1]], [0,       0] , "-", c='000000')
+    ax.plot([0,       0], [0,       0], [0, lims[2]] , "-", c='000000')
+
+    # label x, y, z, O
+    ax.text(lims[0] * 1.08,              0,              0, "x", color='black')
+    ax.text(             0, lims[1] * 1.08,              0, "y", color='black')
+    ax.text(             0,              0, lims[2] * 1.08, "z", color='black')
+    ax.text(             0,              0,              0, "O", color='black')
+
+    # plot tick
+    DIFF = 50
+    lims_axis = []
+    for axis in range(3):
+        for i in range(0, lims[axis] + 1, DIFF):
+            begin = [0, 0, 0]
+            begin[axis - 0] = i
+            begin[axis - 2] = lims[axis - 2]
+            begin[axis - 1] = 0
+            end = list(begin)
+            end[axis - 2] = 0
+            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+
+            begin[axis - 2] = 0
+            begin[axis - 1] = lims[axis - 1]
+            end = list(begin)
+            end[axis - 1] = 0
+            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
+
+            labelpos = [0, 0, 0]
+            labelpos[axis - 0] = i
+            labelpos[axis - 2] = 0
+            labelpos[axis - 1] = 0
+            ax.text(*labelpos, str(i), color='black')
+
+# ax:        Axes3D
+# points:    np.shape == (4, 3) (4 points)
+# line_type: (optional) str ('-' or '--')
+# c:         (optional) str (6 hex digits, color code)
+def plot_rectangle(ax, points, line_type='-', c='000000'):
+    ax.plot(*list(zip(*points, points[0])), line_type, c=c)
+
+# matrix: np.shape == (3, 3)
+# ret:    np.shape == (4, 4)
+def to_affine(matrix):
+    if matrix.shape == (3, 3):
+        r = matrix
+        r = np.vstack((r, np.array([0, 0, 0])))
+        r = np.hstack((r, np.array([[0, 0, 0, 1]]).T))
+        return r
+
+    print('error: graph.py: to_affine: unknown shape')
+    exit(1)
+
+# gui } ########################################################################
+
 ################################################################################
 # wm_p:  1 point    of point cloud on map             on world  coodinate
 # wm_ps: N points   of point cloud on map             on world  coodinate
@@ -30,6 +100,7 @@ from PIL import Image, ImageDraw
 # cf_ps: N points   of point cloud on focused surface on camera coodinate
 # cf_v:  1 vertex                  of focused surface on camera coodinate
 # cf_vs: N vertexes                of focused surface on camera coodinate
+################################################################################
 
 ################################################################################
 # theta:    (theta_x, theta_y, theta_z) (rad)
@@ -113,26 +184,129 @@ def uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE):
     # uv, cf, wf, wm
 
 ################################################################################
-# cm:      np.array([x, y, z])
-# F:       float
-# ret: cf: np.array([x, y, F])
+# cm: np.array([x, y, z])
+# cf: np.array([x, y, F])
+# F:  float
 def cm2cf(cm, F):
     x = F / cm[2] * cm[0]
     y = F / cm[2] * cm[1]
     cf = np.array([x, y, F])
     return cf
 
+def cf2cm(cf, eye, r):
+    wf = c2w(cf, eye, r)
+    wm = wf2wm(wf, eye, r)
+    cm = w2c(wm, eye, r)
+    return cm
+
 ################################################################################
-# wf:      np.array([x, y, z])
-# eye:     np.array([x, y, z])
-# r:       np.shape == (3, 3)
-# ret: wm: np.array([x, 0, z])
+# wm:  np.array([x, 0, z])
+# wf:  np.array([x, y, z])
+# eye: np.array([x, y, z])
+# r:   np.shape == (3, 3)
+
+def wm2wf(wm, eye, r, F):
+    cm = w2c(wm, eye, r)
+    cf = cm2cf(cm, F)
+    wf = c2w(cf, eye, r)
+    return wf
+
 def wf2wm(wf, eye, r):
     n = wf - eye
     x = -eye[1] / n[1] * n[0] + eye[0]
     z = -eye[1] / n[1] * n[2] + eye[2]
     wm = np.array([x, 0, z])
     return wm
+
+################################################################################
+# wm_line:  np.array([(x, 0, z), (x, 0, z)])
+# uv_line:  np.array([(u, v), (u, v)]) or None (behind of camera and parallel)
+# wm_edge0: np.array([(x, 0, z), (x, 0, z)])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# F:        float
+# WIDTH:    int
+# HEIGHT:   int
+# SCALE:    float
+
+def wm_line2uv_line(wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE):
+    uv_line = [] # (2, 2)
+    for wm in wm_line: # (2,)
+        cm = w2c(wm, eye, r)
+        if cm[2] < F: # behind of camera
+            edge = np.array((
+                (wm_edge0[0][0], wm_edge0[0][2]),
+                (wm_edge0[1][0], wm_edge0[1][2]),
+            ))
+            line = np.array((
+                ( wm_line[0][0],  wm_line[0][2]),
+                ( wm_line[1][0],  wm_line[1][2]),
+            ))
+            # y = a * x + b
+            if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
+                return None # parallel
+            edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
+            line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
+            edge_b = edge[0][1] - edge_a * edge[0][0]
+            line_b = line[0][1] - line_a * line[0][0]
+            x = (line_b - edge_b) / (edge_a - line_a)
+            z = edge_a * x + edge_b
+            wm = np.array((x, 0, z))
+        uv = wm2uv(wm, eye, r, F, WIDTH, HEIGHT, SCALE) # (2,)
+        uv_line.append(uv)
+
+    if np.linalg.norm(uv_line[0] - uv_line[1]) < WIDTH * 0.0001:
+        return None # both points are behind of camera
+
+    return uv_line
+
+def uv_line2wm_line(uv_line, eye, r, F, WIDTH, HEIGHT, SCALE):
+    wm_line = []
+    for uv in uv_line:
+        wm = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
+        wm_line.append(wm)
+    return np.array(wm_line)
+
+################################################################################
+# wm_lines: np.array([([x, 0, z], [x, 0, z]), ...]), np.shape == (293,2,3)
+# uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2)
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# F:        float
+# WIDTH:    int
+# HEIGHT:   int
+# SCALE:    float
+
+def wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE):
+    UV_VS = get_UV_VS(WIDTH, HEIGHT)
+
+    wm_vs = [] # 4 vertexes of projected region on map
+    for uv in UV_VS:
+        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
+        wm_vs.append(wm_v)
+    wm_vs = np.array(wm_vs)
+
+    wm_edge0 = np.array((wm_vs[0], wm_vs[1]))
+
+    uv_lines = [] # (293 - *, 2, 2) (*: behind of camera and parallel)
+    for wm_line in WM_LINES: # (2, 3)
+        uv_line = wm_line2uv_line(
+                wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE)
+        if uv_line != None:
+            uv_lines.append(uv_line)
+    uv_lines = np.array(uv_lines)
+
+    uv_lines = filter_uv_lines(uv_lines, WIDTH, HEIGHT)
+
+    return uv_lines
+
+def uv_lines2wm_lines(uv_lines, eye, r, F, WIDTH, HEIGHT, SCALE):
+    wm_lines = []
+    for uv_line in uv_lines:
+        wm_line = uv_line2wm_line(uv_line, eye, r, F, WIDTH, HEIGHT, SCALE)
+        wm_lines.append(wm_line)
+    wm_lines = np.array(wm_lines)
+    return wm_lines
 
 ################################################################################
 # eye:           np.array([x, y, z])
@@ -156,76 +330,7 @@ def get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP):
 
     return img_view
 
-# gui { ########################################################################
-
-# ax:   Axes3D
-# lims: (lim_x, lim_y, lim_z)
-def plot_axis(ax, lims):
-    #ax.set_xlim3d(0, lims[0])
-    #ax.set_ylim3d(0, lims[1])
-    #ax.set_zlim3d(0, lims[2])
-
-    ax.set_xlim3d(0, max(lims))
-    ax.set_ylim3d(0, max(lims))
-    ax.set_zlim3d(0, max(lims))
-
-    # plot axis
-    ax.plot([0, lims[0]], [0,       0], [0,       0] , "-", c='000000')
-    ax.plot([0,       0], [0, lims[1]], [0,       0] , "-", c='000000')
-    ax.plot([0,       0], [0,       0], [0, lims[2]] , "-", c='000000')
-
-    # label x, y, z, O
-    ax.text(lims[0] * 1.08,              0,              0, "x", color='black')
-    ax.text(             0, lims[1] * 1.08,              0, "y", color='black')
-    ax.text(             0,              0, lims[2] * 1.08, "z", color='black')
-    ax.text(             0,              0,              0, "O", color='black')
-
-    # plot tick
-    DIFF = 50
-    lims_axis = []
-    for axis in range(3):
-        for i in range(0, lims[axis] + 1, DIFF):
-            begin = [0, 0, 0]
-            begin[axis - 0] = i
-            begin[axis - 2] = lims[axis - 2]
-            begin[axis - 1] = 0
-            end = list(begin)
-            end[axis - 2] = 0
-            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
-
-            begin[axis - 2] = 0
-            begin[axis - 1] = lims[axis - 1]
-            end = list(begin)
-            end[axis - 1] = 0
-            ax.plot(*list(zip(begin, end)), "--", c='black', linewidth=0.5)
-
-            labelpos = [0, 0, 0]
-            labelpos[axis - 0] = i
-            labelpos[axis - 2] = 0
-            labelpos[axis - 1] = 0
-            ax.text(*labelpos, str(i), color='black')
-
-# ax:        Axes3D
-# points:    np.shape == (4, 3) (4 points)
-# line_type: (optional) str ('-' or '--')
-# c:         (optional) str (6 hex digits, color code)
-def plot_rectangle(ax, points, line_type='-', c='000000'):
-    ax.plot(*list(zip(*points, points[0])), line_type, c=c)
-
-# matrix: np.shape == (3, 3)
-# ret:    np.shape == (4, 4)
-def to_affine(matrix):
-    if matrix.shape == (3, 3):
-        r = matrix
-        r = np.vstack((r, np.array([0, 0, 0])))
-        r = np.hstack((r, np.array([[0, 0, 0, 1]]).T))
-        return r
-
-    print('error: graph.py: to_affine: unknown shape')
-    exit(1)
-
-# gui } ########################################################################
-
+################################################################################
 # uv:     (float, float)
 # WIDTH:  int
 # HEIGHT: int
@@ -234,6 +339,7 @@ def is_inside(uv, WIDTH, HEIGHT):
     u, v = uv
     return 0 <= u <= WIDTH - 1 and 0 <= v <= HEIGHT - 1
 
+################################################################################
 # https://www.hiramine.com/programming/graphics/2d_segmentintersection.html
 # line_0:            np.shape == (2, 2)
 # line_1:            np.shape == (2, 2)
@@ -261,6 +367,7 @@ def get_intersection(line_0, line_1):
     else:
         return None
 
+################################################################################
 # array:        iterable
 # ret: indicies: [bool, ...] (evaluate array elements as bool)
 def get_true_indicies(array):
@@ -274,6 +381,7 @@ def get_true_indicies(array):
 
     return indicies
 
+################################################################################
 # line:   np.shape == (2, N) (2 points on N-dimentions space)
 # ret: n: np.shape == (N,)   (unit vector of line)
 def line2n(line):
@@ -281,6 +389,7 @@ def line2n(line):
     n = d / np.linalg.norm(d)
     return n
 
+################################################################################
 def get_UV_VS(WIDTH, HEIGHT):
     UV_VS = np.array((
         (        0, HEIGHT - 1),
@@ -347,105 +456,26 @@ def filter_uv_lines(uv_lines, WIDTH, HEIGHT):
     return uv_lines_filtered
 
 ################################################################################
-# wm_line:      np.array([(x, 0, z), (x, 0, z)])
-# wm_edge0:     np.array([(x, 0, z), (x, 0, z)])
-# eye:          np.array([x, y, z])
-# r:            np.shape == (3, 3)
-# F:            float
-# WIDTH:        int
-# HEIGHT:       int
-# SCALE:        float
-# ret: uv_line: np.array([(u, v), (u, v)]) or
-#               None (behind of camera and parallel)
-def wm_line2uv_line(wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE):
-    uv_line = [] # (2, 2)
-    for wm in wm_line: # (2,)
-        cm = w2c(wm, eye, r)
-        if cm[2] < F: # behind of camera
-            edge = np.array((
-                (wm_edge0[0][0], wm_edge0[0][2]),
-                (wm_edge0[1][0], wm_edge0[1][2]),
-            ))
-            line = np.array((
-                ( wm_line[0][0],  wm_line[0][2]),
-                ( wm_line[1][0],  wm_line[1][2]),
-            ))
-            # y = a * x + b
-            if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
-                return None # parallel
-            edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
-            line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
-            edge_b = edge[0][1] - edge_a * edge[0][0]
-            line_b = line[0][1] - line_a * line[0][0]
-            x = (line_b - edge_b) / (edge_a - line_a)
-            z = edge_a * x + edge_b
-            wm = np.array((x, 0, z))
-        uv = wm2uv(wm, eye, r, F, WIDTH, HEIGHT, SCALE) # (2,)
-        uv_line.append(uv)
+def bird_view(uv_lines, BIRD, eye, theta, F, WIDTH, HEIGHT, SCALE):
+    r = get_r(theta)
 
-    if np.linalg.norm(uv_line[0] - uv_line[1]) < WIDTH * 0.0001:
-        return None # both points are behind of camera
+    wm_lines = uv_lines2wm_lines(uv_lines, eye, r, F, WIDTH, HEIGHT, SCALE)
 
-    return uv_line
+    # n_x=c2w(np.array([1, 0, 0]), eye, get_r(np.array([0, theta[1], 0]))) - eye
+    n_z = c2w(np.array([0, 0, 1]), eye, get_r(np.array([0, theta[1], 0]))) - eye
+    # eye_b = np.array([eye[0], eye[1] + BIRD[1], eye[2]] +
+    #         n_x * BIRD[0] + n_z * BIRD[2])
+    eye_b = np.array([eye[0], eye[1] + BIRD[1], eye[2]] + n_z * BIRD[2])
+    r_b = get_r(np.array([pi / 2, theta[1], 0]))
 
-# wm_lines:      np.array([([x, 0, z], [x, 0, z]), ...]), np.shape == (293,2,3)
-# eye:           np.array([x, y, z])
-# r:             np.shape == (3, 3)
-# F:             float
-# WIDTH:         int
-# HEIGHT:        int
-# SCALE:         float
-# ret: uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2)
-def wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE):
-    UV_VS = get_UV_VS(WIDTH, HEIGHT)
-
-    wm_vs = [] # 4 vertexes of projected region on map
-    for uv in UV_VS:
-        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
-        wm_vs.append(wm_v)
-    wm_vs = np.array(wm_vs)
-
-    wm_edge0 = np.array((wm_vs[0], wm_vs[1]))
-
-    uv_lines = [] # (293 - *, 2, 2) (*: behind of camera and parallel)
-    for wm_line in WM_LINES: # (2, 3)
-        uv_line = wm_line2uv_line(
-                wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE)
-        if uv_line != None:
-            uv_lines.append(uv_line)
-    uv_lines = np.array(uv_lines)
+    uv_lines = wm_lines2uv_lines(wm_lines, eye_b, r_b, F, WIDTH, HEIGHT, SCALE)
 
     uv_lines = filter_uv_lines(uv_lines, WIDTH, HEIGHT)
 
     return uv_lines
 
 ################################################################################
-def main():
-    eye = np.array([300, 100, 350])
-
-    # 0 <= theta_x <= 90, 0 <= theta_y <= 180
-    theta = np.array([50, 100, 0]) / 180 * pi
-    r = get_r(theta)
-
-    REDUCE = 1
-    F = 50 # length
-
-    WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int) # pixel
-    SCALE = HEIGHT / F / REDUCE
-
-    #print(REDUCE, F, WIDTH, HEIGHT, SCALE)
-
-    LINES_LSD_XZ  = np.load('map.npy') #[29:30] # (293, 4)
-    LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
-    WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
-
-    # for imamura: use uv_lines
-    # uv_lines:
-    #     uv_lines..shape == (*, 2, 2)
-    #     uv_lines == np.array([([u, v], [u, v]), ...])
-    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE)
-
-    # debug ####################################################################
+def debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines):
     img_line = Image.fromarray(np.zeros((HEIGHT, WIDTH)))
     draw_line = ImageDraw.Draw(img_line)
     for i in range(len(uv_lines)):
@@ -525,8 +555,8 @@ def main():
     ax.plot(*list(zip(eye, c2w(np.array([0, 0, F]), eye, r))), '-', c='green')
 
     # lines from eye to vertexes on map
-    for wm_v in wm_vs:
-        ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
+    #for wm_v in wm_vs:
+        #ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
 
     # rectangle on F
     plot_rectangle(ax, wf_vs)
@@ -557,6 +587,31 @@ def main():
     ax.get_proj = lambda: np.dot(Axes3D.get_proj(ax), AF)
 
     plt.show()
+
+################################################################################
+def main():
+    BIRD = np.array([0, 400, 200])
+
+    eye = np.array([300, 100, 350])
+
+    # 0 <= theta_x <= 90, 0 <= theta_y <= 180
+    theta = np.array([50, 100, 0]) / 180 * pi
+    r = get_r(theta)
+
+    REDUCE = 1
+    F = 50
+
+    WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int) # pixel
+    SCALE = HEIGHT / F / REDUCE
+
+    LINES_LSD_XZ  = np.load('map.npy') #[29:30] # (293, 4)
+    LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
+    WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
+
+    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE)
+    uv_lines = bird_view(uv_lines, BIRD, eye, theta, F, WIDTH, HEIGHT, SCALE)
+
+    debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines)
 
 if __name__ == '__main__':
     main()
