@@ -1,5 +1,5 @@
 #!/bin/bash
 
 chmod 644 *
-chmod 744 .
+chmod 755 .
 chmod +x *.py *.sh
