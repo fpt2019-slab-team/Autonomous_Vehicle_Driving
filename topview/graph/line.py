@@ -1,10 +1,6 @@
 #!/usr/bin/python3
 
-# todo separate lib.py
 # todo img_view F hide bihind of camera
-# todo line of sight from camera to map
-# todo clip 0, 480, 0, 640
-# todo theta_v perspective theta
 
 import cv2
 import numpy as np
@@ -238,7 +234,7 @@ def wm_line2uv_line(wm_line, wm_edge0, eye, r, F, WIDTH, HEIGHT, SCALE):
             ))
             # y = a * x + b
             if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
-                return None # parallel
+                return None # edge and line are parallel
             edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
             line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
             edge_b = edge[0][1] - edge_a * edge[0][0]
@@ -263,13 +259,15 @@ def uv_line2wm_line(uv_line, eye, r, F, WIDTH, HEIGHT, SCALE):
 
 ################################################################################
 # wm_lines: np.array([([x, 0, z], [x, 0, z]), ...]), np.shape == (293,2,3)
-# uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2)
+# uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2) or
+#           None if no lines are projected to F
 # eye:      np.array([x, y, z])
 # r:        np.shape == (3, 3)
 # F:        float
 # WIDTH:    int
 # HEIGHT:   int
 # SCALE:    float
+
 
 def wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE):
     UV_VS = get_UV_VS(WIDTH, HEIGHT)
@@ -384,6 +382,9 @@ def line2n(line):
     return n
 
 ################################################################################
+# WIDTH:      int
+# HEIGHT:     int
+# ret: UV_VS: np.shape == (4, 2) 4 verticies of uv surface
 def get_UV_VS(WIDTH, HEIGHT):
     UV_VS = np.array((
         (        0, HEIGHT - 1),
@@ -444,12 +445,24 @@ def filter_uv_lines(uv_lines, WIDTH, HEIGHT):
             continue
         uv_lines_filtered.append(line)
     uv_lines_filtered = np.array(uv_lines_filtered)
+
+    if len(uv_lines_filtered) == 0:
+        return uv_lines_filtered
+
+    # remove points out of ((0, 0), (WIDTH, HEIGHT))
     uv_lines_filtered = np.clip(uv_lines_filtered, 0, WIDTH)
     uv_lines_filtered[uv_lines_filtered[:, :, 1] > HEIGHT - 1, 1] = HEIGHT - 1
+
+    # remove lines shorter than LENGTH
+    LENGTH = 1
+    f = np.sum((uv_lines_filtered[:,0,:] - uv_lines_filtered[:,1,:])
+            ** 2, axis=1) ** 0.5 > LENGTH
+    uv_lines_filtered = uv_lines_filtered[f]
 
     return uv_lines_filtered
 
 ################################################################################
+# todo
 def bird_view(uv_lines, BIRD, eye, theta, F, WIDTH, HEIGHT, SCALE):
     r = get_r(theta)
 
@@ -469,103 +482,87 @@ def bird_view(uv_lines, BIRD, eye, theta, F, WIDTH, HEIGHT, SCALE):
     return uv_lines
 
 ################################################################################
-def debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines):
-    img_line = Image.fromarray(np.zeros((HEIGHT, WIDTH)))
-    draw_line = ImageDraw.Draw(img_line)
+# WIDTH:    int
+# HEIGHT:   int
+# uv_lines: np.shape == (*, 2, 2)
+# ret: img: Image
+def uv_lines2img(uv_lines, WIDTH, HEIGHT):
+    img = Image.fromarray(np.zeros((HEIGHT, WIDTH)))
+    draw = ImageDraw.Draw(img)
     for i in range(len(uv_lines)):
-        #uv_line = uv_lines_filtered[i]
         uv_line = uv_lines[i]
-        uv0 = uv_line[0]
-        uv1 = uv_line[1]
-        draw_line.line((*uv0, *uv1), fill=255, width=1)
-    img_line.show()
-    #exit()
+        draw.line((*uv_line[0], *uv_line[1]), fill=255, width=1)
+    return img
 
-    ############################################################################
+################################################################################
+def debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines):
+    # plot uv_lines
+    img = uv_lines2img(uv_lines, WIDTH, HEIGHT)
+    img.show()
 
-    #IMG_MAP = cv2.imread("ref_map.png", 0)
-
-    #img_view = get_img_view(eye, r, F, WIDTH, HEIGHT, SCALE, IMG_MAP)
-    #img_view = Image.fromarray(img_view)
-    #img_view.show()
-    #exit()
-
-    DIFF = int(1 + WIDTH / 100 * 5)
-    wm_ps = [] # point cloud of projected region on map
-    for v, u in product(range(0, HEIGHT, DIFF), range(0, WIDTH, DIFF)):
-        uv = (u, v)
-        wm_p = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
-        wm_ps.append(wm_p)
-
-    UV_VS = get_UV_VS(WIDTH, HEIGHT)
-
-    wf_vs = [] # 4 verticies of focused surface (4, 3)
-    for uv in UV_VS:
-        cf_v = uv2cf(uv, F, WIDTH, HEIGHT, SCALE)
-        wf_v =   c2w(cf_v, eye, r);
-        wf_vs.append(wf_v)
-
-    wm_vs = [] # 4 verticies of projected region on map
-    for uv in UV_VS:
-        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
-        wm_vs.append(wm_v)
-    wm_vs = np.array(wm_vs)
-
-    # init #####################################################################
-    FIG = plt.figure()
-    ax = Axes3D(FIG)
+    # init ax
+    ax = Axes3D(plt.figure())
     ax.set_axis_off()
 
-    # plot map #################################################################
-
+    # plot map
     MAP_SIZE = (600, 428)
-
-    #zeros = np.zeros(len(LINES_LSD_XZ))
-    #lines = np.array((
-    #    (LINES_LSD_XZ[:,0], LINES_LSD_XZ[:,2]), # x
-    #    (            zeros,             zeros), # y = 0
-    #    (LINES_LSD_XZ[:,1], LINES_LSD_XZ[:,3]), # z
-    #)).T.reshape(len(LINES_LSD_XZ), 3, 2)
-
     lines = np.array((
         LINES_LSD_XYZ[:,0], LINES_LSD_XYZ[:,3], # x
         LINES_LSD_XYZ[:,1], LINES_LSD_XYZ[:,4], # y
         LINES_LSD_XYZ[:,2], LINES_LSD_XYZ[:,5], # z
     )).T.reshape(len(LINES_LSD_XYZ), 3, 2)
-
     for line in lines:
         ax.plot(*line, "-", c='red', linewidth=0.5)
 
-    # ax #######################################################################
-
-    # axis
-    lims = (MAP_SIZE[1], 300, MAP_SIZE[0])
+    # plot axis
+    lims = (np.array((MAP_SIZE[1], 300, MAP_SIZE[0]))).astype(int)
     plot_axis(ax, lims)
 
-    # eye
+    # plot eye, axis of c
     ax.plot(*zip(eye), "o")
     ax.plot(*list(zip(eye, c2w(np.array([F, 0, 0]), eye, r))), '-', c='green')
     ax.plot(*list(zip(eye, c2w(np.array([0, F, 0]), eye, r))), '-', c='green')
     ax.plot(*list(zip(eye, c2w(np.array([0, 0, F]), eye, r))), '-', c='green')
 
-    # lines from eye to verticies on map
-    for wm_v in wm_vs:
-        ax.plot(*list(zip(eye, wm_v)), "--", c='000000')
+    # UV_VS
+    UV_VS = get_UV_VS(WIDTH, HEIGHT)
 
-    # rectangle on F
+    # rectangle of F
+    wf_vs = [] # 4 verticies of focused surface (4, 3)
+    for uv in UV_VS:
+        cf_v = uv2cf(uv, F, WIDTH, HEIGHT, SCALE)
+        wf_v =   c2w(cf_v, eye, r);
+        wf_vs.append(wf_v)
     plot_rectangle(ax, wf_vs)
 
-    # rectangle on map
-    plot_rectangle(ax, wm_vs)
+    # rectangle of map, lines from eye to rectangle of map
+    wm_vs = [] # 4 verticies of projected region on map
+    for uv in UV_VS:
+        wm_v = uv2wm(uv, eye, r, F, WIDTH, HEIGHT, SCALE)
+        wm_vs.append(wm_v)
+    if w2c(wm_vs[3], eye, r)[2] >= 0:
+        wm_vs = np.array(wm_vs)
+        plot_rectangle(ax, wm_vs)
+        for wm_v in wm_vs:
+            ax.plot(*list(zip(eye, wm_v)), '--', c='000000')
+    else:
+        d21 = wm_vs[1] - wm_vs[2]
+        d30 = wm_vs[0] - wm_vs[3]
+        wm_vs[2] = wm_vs[2] + d21 * 2
+        wm_vs[3] = wm_vs[3] + d30 * 2
+        wm_vs = np.array(wm_vs)
+        ax.plot(*list(zip(wm_vs[0], wm_vs[1])), '-', c='000000')
+        ax.plot(*list(zip(wm_vs[1], wm_vs[2])), '-', c='000000')
+        ax.plot(*list(zip(wm_vs[3], wm_vs[0])), '-', c='000000')
+        ax.plot(*list(zip(eye, wm_vs[0])), '--', c='000000')
+        ax.plot(*list(zip(eye, wm_vs[1])), '--', c='000000')
+        ax.plot(*list(zip(eye, wf_vs[2])), '--', c='000000')
+        ax.plot(*list(zip(eye, wf_vs[3])), '--', c='000000')
 
-    # point cloud on map
-    for wm_p in wm_ps:
-        if 0 < wm_p[0] < lims[0] and 0 < wm_p[2] < lims[2]:
-            #ax.plot([wm_p[0]], [wm_p[1]], [wm_p[2]], "o", c='000000', ms=2)
-            pass
-
+    # aspect
     #ax.set_aspect('equal')
 
+    # affine
     AFS = [
         to_affine(get_r([pi / 180 * 90, 0, 0])),
         to_affine(get_r([0, -pi / 180 * 30, 0])),
@@ -584,26 +581,33 @@ def debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines):
 
 ################################################################################
 def main():
-    F = 50 * sqrt(3) / 1 # l
-    THETA_W = 60 / 180 * pi
-    REDUCE = 1
+    # definition
+    EYE = np.array([100, 400, 600])
+    THETA = np.array([40, 180, 0]) / 180 * pi # 0 <= theta_x <= 90
 
+    THETA_W = 30 / 180 * pi
+    BIRD = np.array([0, 400, 200])
+
+    REDUCE = 1
+    F = 100 # l
+
+    # initialization
     WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int) # px
-    SCALE = WIDTH / 2 / F / tan(THETA_W / 2) # px / l
+    SCALE = WIDTH / 2 / tan(THETA_W / 2) / F # px / l
 
     LINES_LSD_XZ  = np.load('map.npy') #[29:30] # (293, 4)
     LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
     WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
 
-    BIRD = np.array([0, 400, 200])
-
-    eye = np.array([100, 100 * sqrt(3), 350])
-    theta = np.array([90, 180, 0]) / 180 * pi # 0 <= theta_x <= 90
+    # body
+    eye = EYE
+    theta = THETA
     r = get_r(theta)
 
     uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, F, WIDTH, HEIGHT, SCALE)
     #uv_lines = bird_view(uv_lines, BIRD, eye, theta, F, WIDTH, HEIGHT, SCALE)
 
+    # debug
     debug(eye, r, F, WIDTH, HEIGHT, SCALE, BIRD, LINES_LSD_XYZ, uv_lines)
 
 if __name__ == '__main__':
