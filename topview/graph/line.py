@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 
-# todo img_view F hide bihind of camera
-
 import cv2
 import numpy as np
-from math import sin, cos, tan, pi, sqrt, asin, atan2
+from math import sin, cos, tan, pi, sqrt, asin, acos, atan2
 from itertools import product
 
 from mpl_toolkits.mplot3d import Axes3D
@@ -100,7 +98,8 @@ def to_affine(matrix):
 ################################################################################
 # a / b
 def divide(a, b):
-    return a / b if b > NEAR_ZERO else np.sign(a) * BIG_NUMBER
+    #return a / b if b > NEAR_ZERO else np.sign(a) * BIG_NUMBER
+    return a / b
 
 ################################################################################
 # line:   np.shape == (2, N) (2 points on N-dimentions space)
@@ -113,22 +112,33 @@ def line2n(line):
     return n
 
 ################################################################################
-# theta:    (theta_x, theta_y, theta_z) (rad)
-# r:        np.shape == (3, 3) (rotation matrix)
-def get_r(theta):
+# theta:    np.array([theta_x, theta_y, theta_z]) [rad]
+# ret: r:   np.shape == (3, 3) (rotation matrix)
+# Note: only works with theta_z == 0
+# [ cos(theta[1]), sin(theta[1]) * sin(theta[0]), sin(theta[1]) * cos(theta[0])]
+# [           0  ,                 cos(theta[0]),                -sin(theta[0])]
+# [-sin(theta[1]), cos(theta[1]) * sin(theta[0]), cos(theta[1]) * cos(theta[0])]
+def theta2r(theta):
     r_x = np.array([[           1  ,            0  ,            0  ],
                     [           0  ,  cos(theta[0]), -sin(theta[0])],
                     [           0  ,  sin(theta[0]),  cos(theta[0])]])
     r_y = np.array([[ cos(theta[1]),            0  ,  sin(theta[1])],
                     [           0  ,            1  ,            0  ],
                     [-sin(theta[1]),            0  ,  cos(theta[1])]])
-    r_z = np.array([[ cos(theta[2]), -sin(theta[2]),            0  ],
-                    [ sin(theta[2]),  cos(theta[2]),            0  ],
-                    [           0  ,            0  ,            1  ]])
-    r = np.dot(r_y, r_x)
-    #r = np.dot(r_x, r_y)
-    #r = np.linalg.multi_dot((r_z, r_y, r_x))
+    #r_z = np.array([[ cos(theta[2]), -sin(theta[2]),            0  ],
+    #                [ sin(theta[2]),  cos(theta[2]),            0  ],
+    #                [           0  ,            0  ,            1  ]])
+    r = np.linalg.multi_dot((r_y, r_x))
     return r
+
+# r:            np.shape == (3, 3)
+# ret: theta:   np.array([theta_x, theta_y, 0]) [rad]
+# Note: only works with theta_z == 0
+def r2theta(r):
+    theta_x = acos(r[1][1]) * np.sign(-r[1][2])
+    theta_y = acos(r[0][0]) * np.sign(-r[2][0])
+    theta_z = 0
+    return np.array((theta_x, theta_y, theta_z)) % (2 * pi)
 
 ################################################################################
 # w:    np.array([x, y, z])
@@ -249,13 +259,16 @@ def wm_line2uv_line(wm_line, wm_edge0, eye, r, CONTEXT):
             # y = a * x + b
             if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
                 return None # edge and line are parallel
-            edge_a = divide(edge[1][1] - edge[0][1], edge[1][0] - edge[0][0])
-            line_a = divide(line[1][1] - line[0][1], line[1][0] - line[0][0])
-            edge_b = edge[0][1] - edge_a * edge[0][0]
-            line_b = line[0][1] - line_a * line[0][0]
-            x = divide(line_b - edge_b, edge_a - line_a)
-            z = edge_a * x + edge_b
-            wm = np.array((x, 0, z))
+            try:
+                edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
+                line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
+                edge_b = edge[0][1] - edge_a * edge[0][0]
+                line_b = line[0][1] - line_a * line[0][0]
+                x = (line_b - edge_b) / (edge_a - line_a)
+                z = edge_a * x + edge_b
+                wm = np.array((x, 0, z))
+            except FloatingPointError:
+                return None
         uv = wm2uv(wm, eye, r, CONTEXT) # (2,)
         uv_line.append(uv)
 
@@ -406,6 +419,11 @@ def get_UV_VS(CONTEXT):
 # v
 
 ################################################################################
+# lines:        np.shape == (N, 2, 2)
+# ret: lines:   np.shape == (N - *, 2, 2)
+def delete_nan(lines):
+    return lines[~np.isnan(lines).any(axis=(2,1))]
+
 # uv_lines:      np.shape == (293 - *, 2, 2)
 # CONTEXT:
 # ret: uv_lines: np.shape == (293 - * - *, 2, 2)
@@ -441,8 +459,7 @@ def filter_uv_lines(uv_lines, CONTEXT):
     uv_lines_filtered = np.array(uv_lines)
 
     # remove rows containing an nan
-    non_nan_row_index = ~np.isnan(uv_lines_filtered).any(axis=(2,1))
-    uv_lines_filtered = uv_lines[non_nan_row_index]
+    uv_lines_filtered = delete_nan(uv_lines_filtered)
 
     # remove lines out of view
     uv_lines_filtered_tmp = []
@@ -486,53 +503,90 @@ def filter_uv_lines(uv_lines, CONTEXT):
 
 ################################################################################
 
-def eye_r_2eye_b_r_b(eye, theta, BIRD):
-    # n_x = c2w(np.array([1, 0, 0]), eye,
-    #         get_r(np.array([0, theta[1], 0]))) - eye
-    # eye_b = np.array([eye[0], eye[1] + BIRD[1], eye[2]] +
-    #         n_x * BIRD[0] + n_z * BIRD[2])
-    r = get_r(np.array([0, theta[1], 0]))
-    deye = np.dot(r, BIRD)
-    eye_b = eye + deye
-    #c_nz = np.array([0, 0, 1])
-    #w_nz = c2w(c_nz, eye, r)
-    #n_z =  w_nz - eye
-    #n_z =  line2n((eye, w_nz))
-    #eye_b = np.array([eye[0], eye[1] + BIRD[1], eye[2]] + n_z * BIRD[2])
+# eye:                 np.array([x, y, z])
+# theta:               np.array([theta_x, theta_y, theta_z]) [rad]
+# BIRD:                np.array([X, Y, Z])
+# ret: (eye_b, eye_r): (np.array([x', y', z']), np.shape == (3, 3))
+def eye_r2eye_r_b(eye, r, BIRD):
+    theta = r2theta(r)
+    r_deye  = theta2r(np.array([0, theta[1], 0]))
+    deye    = np.dot(r_deye, BIRD)
+    eye_b   = eye + deye
     theta_b = np.array([pi / 2, theta[1], 0])
-    r_b = get_r(theta_b)
+    r_b     = theta2r(theta_b)
     return eye_b, r_b
 
-# todo
-def bird_view(uv_lines, BIRD, eye, theta, CONTEXT):
-    r = get_r(theta)
-    eye_b, r_b = eye_r_2eye_b_r_b(eye, theta, BIRD)
-    wm_lines = uv_lines2wm_lines(uv_lines, eye, r, CONTEXT)
-    uv_lines = wm_lines2uv_lines(wm_lines, eye_b, r_b, CONTEXT)
-    uv_lines = filter_uv_lines(uv_lines, CONTEXT)
+# uv_lines:      np.shape == (N, 2, 2)
+# eye:           np.array([x, y, z])
+# theta:         np.array([theta_x, theta_y, theta_z]) [rad]
+# BIRD:          np.array([X, Y, Z])
+# CONTEXT:
+# ret: uv_lines: np.shape == (N - *, 2, 2)
+def bird_view(uv_lines, eye, r, BIRD, CONTEXT):
+    theta            = r2theta(r)
+    r_virtual        = theta2r(np.array([theta[0], 0, theta[2]]))
+    wm_lines_virtual = uv_lines2wm_lines(uv_lines, eye, r_virtual, CONTEXT)
+    eye_b            = eye + BIRD
+    r_b              = theta2r(np.array([pi / 2, 0, 0]))
+    uv_lines         = wm_lines2uv_lines(wm_lines_virtual, eye_b, r_b, CONTEXT)
+    uv_lines         = filter_uv_lines(uv_lines, CONTEXT)
     return uv_lines
+
+# (theta_x = 0, theta_y = *, theta_z = 0)
+# uv_lines:      np.shape == (N, 2, 2)
+# eye:           np.array([x, y, z])
+# BIRD:          np.array([X, Y, Z])
+# CONTEXT:
+# ret: uv_lines: np.shape == (N - *, 2, 2)
+def bird_view_fixed(uv_lines, eye, BIRD, CONTEXT):
+    theta = np.array([0, 0, 0])
+    return bird_view(uv_lines, eye, theta, BIRD, CONTEXT)
 
 ################################################################################
 # WIDTH:    int
 # HEIGHT:   int
 # uv_lines: np.shape == (*, 2, 2)
 # ret: img: Image
-def uv_lines2img(uv_lines, CONTEXT):
+def uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH):
     img = Image.fromarray(np.zeros((CONTEXT['HEIGHT'], CONTEXT['WIDTH'])))
     draw = ImageDraw.Draw(img)
     for i in range(len(uv_lines)):
         uv_line = uv_lines[i]
-        draw.line((*uv_line[0], *uv_line[1]), fill=255, width=1)
+        draw.line((*uv_line[0], *uv_line[1]), fill=255, width=LINE_WIDTH)
     return img
 
 ################################################################################
-def debug(eye, r, theta, CONTEXT, BIRD, LINES_LSD_XYZ, uv_lines, MAP_SIZE):
+def debug(
+        eye,
+        r,
+        CONTEXT,
+        BIRD,
+        LINES_LSD_XYZ,
+        uv_lines,
+        MAP_SIZE,
+        IS_SPLIT_WINDOW,
+        LINE_WIDTH, # line width of img [px]
+        FIGSIZE, # inch
+        FIGPOS, # ([left_edge_pos, bottom_edge_pos, width, height], [...]) (0-1)
+        AFS, # list of affine
+        ):
     # plot uv_lines
-    img = uv_lines2img(uv_lines, CONTEXT)
-    img.show()
+    img = uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH)
 
-    # init ax
-    ax = Axes3D(plt.figure())
+    if IS_SPLIT_WINDOW:
+        ax = Axes3D(plt.figure(figsize=FIGSIZE))
+        img.show()
+    else:
+        fig = plt.figure(figsize=FIGSIZE)
+
+        aw = fig.add_subplot(1, 2, 1)
+        ax = fig.add_subplot(1, 2, 2, projection='3d')
+
+        aw.set_position([0.05, 0.05, 0.4, 0.9])
+        ax.set_position([0.40, 0.05, 0.6, 0.9])
+
+        aw.imshow(img, cmap='gray', vmin=0, vmax=255, interpolation='none')
+
     ax.set_axis_off()
 
     # plot map
@@ -608,7 +662,7 @@ def debug(eye, r, theta, CONTEXT, BIRD, LINES_LSD_XYZ, uv_lines, MAP_SIZE):
         ax.plot(*list(zip(eye, wf_vs[3])), '--', c='000000')
 
     # plot eye_b
-    eye_b, r_b = eye_r_2eye_b_r_b(eye, theta, BIRD)
+    eye_b, r_b = eye_r2eye_r_b(eye, r, BIRD)
     ax.plot(*zip(eye_b), "o")
     ax.plot([eye_b[0]], [0], [eye_b[2]], "o")
     # plot rectangle of bird
@@ -631,102 +685,82 @@ def debug(eye, r, theta, CONTEXT, BIRD, LINES_LSD_XYZ, uv_lines, MAP_SIZE):
     #ax.set_aspect('equal')
 
     # affine
-    AFS = [
-        to_affine(get_r(np.array([90,   0, 0]) * pi / 180)),
-        to_affine(get_r(np.array([ 0,  30, 0]) * pi / 180)),
-        np.diag([*([1.6] * 3), 1]),
-        np.array([
-            [1, 0, 0,  600],
-            [0, 1, 0, 3500],
-            [0, 0, 1,    1],
-            [0, 0, 0,    1],
-        ]),
-    ]
     AF = reduce(lambda res, x: np.dot(res, x), AFS, np.eye(4))
     ax.get_proj = lambda: np.dot(Axes3D.get_proj(ax), AF)
 
     plt.show()
 
-def theta2r(theta):
-    return get_r(theta)
-
-# r[0][0] =  cosy*cosz - sinx*siny*sinz
-# r[0][1] = -cosx*sinz
-# r[0][2] =  siny*cosz + sinx*cosy*sinz
-# r[1][0] =  cosy*sinz + sinx*siny*cosz
-# r[1][1] =  cosx*cosz
-# r[1][2] =  siny*sinz - sinx*cosy*cosz
-# r[2][0] = -cosx*siny
-# r[2][1] =  sinx
-# r[2][2] =  cosx*cosy
-
-def r2theta(r):
-    THRE = 0.0001
-    if abs(r[2][1] - 1.0) < THRE: # sinx == 1
-        print(1)
-        theta_x = pi / 2
-        theta_y = 0
-        theta_z = atan2(r[1][0], r[0][0])
-    elif abs(r[2][1] + 1.0) < THRE: # sinx == -1
-        print(2)
-        theta_x = - pi / 2
-        theta_y = 0
-        theta_z = atan2(r[1][0], r[0][0])
-    else:
-        print(3)
-        theta_x = asin(r[2][1])
-        theta_y = atan2(-r[2][0], r[2][2])
-        theta_z = atan2(-r[0][1], r[1][1])
-    return np.array((theta_x, theta_y, theta_z)) % (2 * pi)
-
 ################################################################################
 def main():
-    #theta = np.array([40, 70, 0]) / 180 * pi # 0 <= theta_x <= 90
-    #print(theta / pi * 180)
-    #print(r2theta(theta2r(theta)) / pi * 180)
-    #exit()
+    # setup
+    np.seterr(divide='raise')
 
-    # definition
-    EYE = np.array([1000, 100, 7000])
-    THETA = np.array([0, 135, 0]) / 180 * pi # 0 <= theta_x <= 90
-    BIRD = np.array([0, 3000, 3000])
-
-    eye_b, r_b = eye_r_2eye_b_r_b(EYE, THETA, BIRD)
-    print(EYE)
-    print(BIRD)
-    print(eye_b)
-
+    # definition: never changed on actual driving
+    Y = 100 # mm
+    BIRD = np.array([0, 2000, 2000])
     THETA_H = 35 / 180 * pi
-
     REDUCE = 1
     F = 100 # l
+    MAP_SIZE = (3500, 4900) # x, z
 
-    # initialization
+    # initialization: never changed on actual driving, calculated by definition
     WIDTH, HEIGHT = (np.array((480, 640)) / REDUCE).astype(int) # px
-    SCALE = WIDTH / 2 / tan(THETA_H / 2) / F # px / l
+    SCALE = HEIGHT / 2 / tan(THETA_H / 2) / F # px / l
     CONTEXT = {
         'F'     : F     ,
         'WIDTH' : WIDTH ,
         'HEIGHT': HEIGHT,
         'SCALE' : SCALE ,
     }
-
-    # body
-    MAP_SIZE = (5000, 7000) # x, z
-    LINES_LSD_XZ = np.load('map.large_18522x13230.npy') #[29:30] # (293, 2, 2)
-    LINES_LSD_XZ = LINES_LSD_XZ * max(MAP_SIZE) / 18522
+    LINES_LSD_XZ = np.load('map.large_18522x13230.npy') / 18522 * max(MAP_SIZE)
+            # (293, 2, 2)
     LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
     WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
 
-    eye = EYE
-    theta = THETA
-    r = get_r(theta)
+    # definition: can be changed on actual driving
+    x, z = 3500 / 2, 4900
+    theta_y = 180
+
+    # body
+    eye = np.array([x, Y, z])
+    theta = np.array([0, theta_y, 0]) / 180 * pi # 0 <= theta_x <= 90
+    r = theta2r(theta)
 
     uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
-    uv_lines = bird_view(uv_lines, BIRD, eye, theta, CONTEXT)
+    uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
+    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     # debug
-    debug(eye, r, theta, CONTEXT, BIRD, LINES_LSD_XYZ, uv_lines, MAP_SIZE)
+    IS_SPLIT_WINDOW = False
+    LINE_WIDTH = 3
+    FIGSIZE=np.array((1 * 2, 1)) * 6 # (width, height) [inches]
+    FIGPOS=([0.05, 0.05, 0.4, 0.9], # [left_edge_pos, bottom_edge_pos,
+            [0.40, 0.05, 0.6, 0.9]),#     width, height]
+    AFS = [ # list of affine matrix
+        to_affine(theta2r(np.array([90,   0, 0]) * pi / 180)),
+        to_affine(theta2r(np.array([ 0,  30, 0]) * pi / 180)),
+        np.diag([*([1.6] * 3), 1]),
+        np.array([
+            [1, 0, 0,  600],
+            [0, 1, 0, 2500],
+            [0, 0, 1,    1],
+            [0, 0, 0,    1],
+        ]),
+    ]
+    debug(
+            eye,
+            r,
+            CONTEXT,
+            BIRD,
+            LINES_LSD_XYZ,
+            uv_lines,
+            MAP_SIZE,
+            IS_SPLIT_WINDOW,
+            LINE_WIDTH,
+            FIGSIZE,
+            FIGPOS,
+            AFS,
+    )
 
 if __name__ == '__main__':
     main()
