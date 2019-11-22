@@ -1,0 +1,195 @@
+`default_nettype none
+
+/* SCCB (Serial Camera Control Bus) interface module */
+module sccb_if
+  #(
+    parameter integer CLOCK_FREQ = 125 * 10 ** 6, // system clock of 125 MHz
+    parameter integer SCL_FREQ = 200 * 10 ** 3 // sccb clk of 20 kHz (max: 400 kHz)
+    )
+   (
+    input wire        sysclk, // system clock
+    input wire        n_rst, // negative reset
+    input wire        req, // send request
+    input wire [23:0] send_data, // 8-bit ID Address 8-bit Sub-address, and 8-bit Write Data
+    output wire [7:0] recv_data, // 8-bit Read Data 
+    output wire       busy, // high when running (= be writing or reading)
+    output wire       scl, // serial clock
+    (* mark_dedug = "true" *) inout wire sda  // serial data
+    );
+   
+   /* parameters */
+   localparam integer CLOCK_DIV = CLOCK_FREQ / SCL_FREQ;
+   localparam integer START_COND_BIT = 3, STOP_COND_BIT = 3, IDLE_BIT = 1;
+   localparam integer BIT_PER_PHASE = 9;
+   localparam integer SDA_WRITE_BIT =
+                      START_COND_BIT + BIT_PER_PHASE * 3 + STOP_COND_BIT + IDLE_BIT;
+   localparam integer SDA_READ_BIT =
+                      START_COND_BIT + BIT_PER_PHASE * 2 + STOP_COND_BIT +
+                      START_COND_BIT + BIT_PER_PHASE * 2 + STOP_COND_BIT +
+                      IDLE_BIT;
+   localparam integer SDA_COUNT = (SDA_WRITE_BIT > SDA_READ_BIT)? SDA_WRITE_BIT: SDA_READ_BIT;
+   localparam integer SCL_COUNT = SDA_COUNT;     
+   
+   /* get pulse of requst */
+   wire               flag;
+   reg [1:0]          req_reg;
+   always_ff @(posedge sysclk) begin
+      if (!n_rst) begin
+         req_reg <= 2'd0;
+      end else begin
+         if (!busy) begin
+            req_reg <= {req_reg[0], req};
+         end
+      end
+   end
+   assign flag = req_reg[0] & (!req_reg[1]);
+
+   /* base clock generator */
+   wire               clk_div;
+   reg [$clog2(CLOCK_DIV) - 1:0] clk_div_cnt;
+   always_ff @(posedge sysclk) begin
+      if (!n_rst) 
+        clk_div_cnt <= 'b0;
+      else if (flag) begin
+         clk_div_cnt <= 'b0;
+      end else begin
+         if (clk_div_cnt == CLOCK_DIV - 1)
+           clk_div_cnt <= 'b0;
+         else
+           clk_div_cnt <= clk_div_cnt + 1'b1;
+      end
+   end
+   assign clk_div = (clk_div_cnt < CLOCK_DIV / 2)? 1'b1: 1'b0;
+
+   /* get write-bit (write: 1, read: 0) */
+   wire write_bit;
+   assign write_bit = ~send_data[16];
+   
+   /* serial clock count */
+   reg [$clog2(SCL_COUNT) - 1:0] scl_cnt;
+   always_ff @(posedge sysclk) begin
+      if (!n_rst)
+        scl_cnt <= 'b0;
+      else if (flag) begin
+         scl_cnt <= SDA_COUNT - 1;
+      end else if (clk_div_cnt == CLOCK_DIV - 1) begin
+         if (scl_cnt == 'b0) 
+           scl_cnt <= 'b0;
+         else 
+           scl_cnt <= scl_cnt - 1;
+      end
+   end
+   
+   /* serial data count */
+   reg [$clog2(SDA_COUNT) - 1:0] sda_cnt;
+   always_ff @(posedge sysclk) begin
+      if (!n_rst)
+        sda_cnt <= 'b0;
+      else if (flag) begin
+         sda_cnt <= SDA_COUNT - 1;
+      end else if (clk_div_cnt == CLOCK_DIV / 2) begin
+         if (sda_cnt == 'b0) 
+           sda_cnt <= 'b0;
+         else 
+           sda_cnt <= sda_cnt - 1;
+      end
+   end
+   
+   /* read data */
+   reg [7:0] recv_data_reg;
+   always_ff @(posedge sysclk) begin
+      if (!n_rst)
+        recv_data_reg <= 8'd0;
+      else if (!write_bit) begin // read 
+         if (clk_div_cnt == 'b0) begin
+            if (('d5 <= scl_cnt) && (scl_cnt <= 'd12)) // Read Data phase
+              recv_data_reg <= {recv_data_reg[6:0], sda};
+            else 
+              recv_data_reg <= recv_data_reg;
+         end
+      end
+   end
+   assign recv_data = recv_data_reg;
+   
+   /* busy */
+   assign busy = (write_bit)?
+                 ((scl_cnt <= 'd16)? 1'b0: 1'b1): // write
+                 ((scl_cnt ==  'b0)? 1'b0: 1'b1); // read
+   
+   /* serial clock enable */
+   wire scl_en;
+   reg [SCL_COUNT - 1:0] scl_en_reg;
+   always_ff @(posedge sysclk) begin
+      if (write_bit) // write 
+        scl_en_reg <= {3'b001,            // start-cond
+                       8'b11111111, 1'b1, // ID Address and 1'bz
+                       8'b11111111, 1'b1, // Sub-address2048 and 1'bz
+                       8'b11111111, 1'b1, // Write Data and 1'bz
+                       3'b000,            // stop-cond
+                       16'd0};            // idle
+      else // read
+        scl_en_reg <= {3'b001,            // start-cond
+                       8'b11111111, 1'b1, // ID Address and 1'bz
+                       8'b11111111, 1'b1, // Sub-address and 1'bz
+                       3'b000,            // stop-cond
+                       3'b001,            // start-cond
+                       8'b11111111, 1'b1, // ID Address and 1'bz
+                       8'b11111111, 1'b1, // Read Data and 1'bz
+                       3'b000,            // stop-cond
+                       1'b0};             // idle
+   end
+   assign scl_en = scl_en_reg[scl_cnt];
+
+   /* serial clock */
+   assign scl = (scl_en)? clk_div: 1'b1;
+
+   /* serial data enable */
+   (* mark_dedug = "true" *) wire sda_en;
+   reg [SDA_COUNT - 1:0] sda_en_reg;
+   always_ff @(posedge sysclk) begin
+      if (write_bit) // write
+        sda_en_reg <= {3'b011,            // start-cond
+                       8'b11111111, 1'b0, // ID Address and 1'bz
+                       8'b11111111, 1'b0, // Sub-address and 1'bz
+                       8'b11111111, 1'b0, // Write Data and 1'bz
+                       3'b110,            // stop-cond
+                       16'd0};           // idle
+      else // read
+        sda_en_reg <= {3'b011,            // start-cond
+                       8'b11111111, 1'b0, // ID Address and 1'bz
+                       8'b11111111, 1'b0, // Sub-address and 1'bz
+                       3'b110,            // stop-cond
+                       3'b011,            // start-cond
+                       8'b11111111, 1'b0, // ID Address and 1'bz
+                       8'b00000000, 1'b1, // Read Data and 1'b1
+                       3'b110,            // stop-cond
+                       1'b0};             // idle
+   end
+   assign sda_en = sda_en_reg[sda_cnt];
+   
+   /* serial data */
+   (* mark_dedug = "true" *) reg [SDA_COUNT - 1:0] sda_reg;
+   always_ff @(posedge sysclk) begin
+      if (write_bit)
+        sda_reg <= {3'b110,                 // start-cond
+                    send_data[23:16], 1'bx, // ID Address and 1'bz
+                    send_data[15: 8], 1'bx, // Sub-address and 1'bz
+                    send_data[ 7: 0], 1'bx, // Write Data and 1'bz
+                    3'b011,                 // stop-cond
+                    ~16'd0};                // idle
+      else
+        sda_reg <= {3'b110,                       // start-cond
+                    send_data[23:17], 1'b0, 1'bx, // ID Address and 1'bz
+                    send_data[15: 8], 1'bx,       // Sub-address and 1'bz
+                    3'b011,                       // stop-cond
+                    3'b110,                       // start-cond
+                    send_data[23:17], 1'b1, 1'bx, // ID Address and 1'bz
+                    8'bxxxxxxxx, 1'b1,            // Read Data and 1'b1
+                    3'b011,                       // stop-cond
+                    1'b1};                        // idle
+   end
+   assign sda = (sda_en)? sda_reg[sda_cnt]: 1'bz;
+
+endmodule
+
+`default_nettype wire

@@ -1,0 +1,256 @@
+# SimVision Command Script (月  9月 09 17時27分12秒 JST 2019)
+#
+# Version 18.09.s011
+#
+# You can restore this configuration with:
+#
+#     simvision -input layout.svcf
+#  or simvision -input layout.svcf database1 database2 ...
+#
+
+
+#
+# Preferences
+#
+preferences set toolbar-Standard-WatchWindow {
+  usual
+  shown 0
+}
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-Windows-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-Standard-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-SimControl-WatchWindow {
+  usual
+  shown 0
+}
+preferences set savedlg-simulator ppe
+preferences set whats-new-dont-show-at-startup 1
+preferences set toolbar-TimeSearch-WatchWindow {
+  usual
+  shown 0
+}
+
+#
+# Databases
+#
+database require simple_lsd -search {
+	./simple_lsd.shm/simple_lsd.trn
+	/home/users/manabe/2019/auto_drive/lsd/hdl/sim/simple_lsd/simple_lsd.shm/simple_lsd.trn
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1327x886+33+55}] != ""} {
+    window geometry "Waveform 1" 1327x886+33+55
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar select designbrowser
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.clock
+	} ]
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.vcnt[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.hcnt[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.seg_map[0]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.seg_map[1]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.seg_map[2]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.angle[0][1]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.angle[0][2]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.angle[0][3]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.angle[1][2]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.found
+	} ]
+waveform format $id -color #9900ff
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.vld
+	} ]
+waveform format $id -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.seg_id[17:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.pn[18:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.ps_v[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.ps_h[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.pe_v[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.pe_h[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.pmin[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.pmax[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.min_a_tmp3[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.max_a_tmp3[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.num[18:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.start_v[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.start_h[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.end_v[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.end_h[9:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.min_a[7:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.max_a[7:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.ram_wr_en
+	} ]
+waveform format $id -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.ram_wr_addr[16:0]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.ram_wr_data[75:0]}
+	} ]
+waveform format $id -color #0099ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.ram_rd_addr[16:0]}
+	} ]
+waveform format $id -radix %d -color #0099ff
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.outputting
+	} ]
+waveform format $id -color #9900ff
+set id [waveform add -signals  {
+	simple_lsd::sim_simple_lsd.lsd_0.out_valid
+	} ]
+waveform format $id -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_start_v[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_start_h[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_end_v[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_end_h[9:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_min_a[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+set id [waveform add -signals  {
+	{simple_lsd::sim_simple_lsd.lsd_0.out_max_a[7:0]}
+	} ]
+waveform format $id -radix %d -color #9900ff
+
+waveform xview limits 1288190ns 1288222ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 600x250+1+28
+
+#
+# Layout selection
+#
+

@@ -1,0 +1,91 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Fri Sep 27 10:24:50 2019
+# Process ID: 18715
+# Current directory: /home/users/manabe/2019/auto_drive/lsd/hdl/project
+# Command line: vivado
+# Log file: /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado.log
+# Journal file: /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado.jou
+#-----------------------------------------------------------
+start_gui
+create_project project_1 . -part xc7z020clg400-1
+set_property simulator_language Verilog [current_project]
+add_files -norecurse {/home/users/manabe/2019/auto_drive/lsd/hdl/atan_calc.sv /home/users/manabe/2019/auto_drive/lsd/hdl/simple_lsd.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/ram_dc.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/fifo_dc.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/stream_patch.v /home/users/manabe/2019/auto_drive/lsd/hdl/visualizer.v /home/users/manabe/2019/auto_drive/lsd/hdl/gaussian.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/tree_adder.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/coord_adjuster.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/ram_sc.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/delay.v /home/users/manabe/2019/auto_drive/lsd/hdl/common/rgb2ycbcr.v}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2019/auto_drive/lsd/hdl/visualizer.v] -no_script -reset -force -quiet
+remove_files  /home/users/manabe/2019/auto_drive/lsd/hdl/visualizer.v
+file mkdir /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1.srcs/constrs_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1
+add_files -norecurse /home/users/manabe/2019/auto_drive/lsd/hdl/top.v
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1
+open_run synth_1 -name synth_1
+file mkdir /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1.srcs/constrs_1/new
+close [ open /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1.srcs/constrs_1/new/const.xdc w ]
+add_files -fileset constrs_1 /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1.srcs/constrs_1/new/const.xdc
+set_property target_constrs_file /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1.srcs/constrs_1/new/const.xdc [current_fileset -constrset]
+refresh_design
+close_design
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2019/auto_drive/lsd/hdl/top.v] -no_script -reset -force -quiet
+remove_files  /home/users/manabe/2019/auto_drive/lsd/hdl/top.v
+update_compile_order -fileset sources_1
+add_files {/home/users/manabe/2018/lfif/src/device/kc705/top.v /home/users/manabe/2018/lfif/src/hdl/clock/vcxo_clock_manager.v /home/users/manabe/2018/lfif/src/hdl/cam_if/cam_calibration.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_command.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_add.v /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_core.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/cam_if_lvds_rx.v /home/users/manabe/2018/lfif/src/hdl/hdmi/hdmi16_tx.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_write_one.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/bitslip8.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1.v /home/users/manabe/2018/lfif/src/hdl/filter/user_filter.v /home/users/manabe/2018/lfif/src/hdl/filter/color_conv/bayer_to_rgb.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_clk_mmcm_s8_sdr.v /home/users/manabe/2018/lfif/src/hdl/util/sync_dff.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_ss_444to422.v /home/users/manabe/2018/lfif/src/hdl/i2c/i2c_master_write.v /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/video_through.v /home/users/manabe/2018/lfif/src/hdl/util/srl_template.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_sdr.v /home/users/manabe/2018/lfif/src/hdl/util/bram_template_with_reset.v /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/luminance.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_i2c_init.v /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/user_filter.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_mul.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_RGB2CrYCb.v /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_es.v /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/user_filter.v}
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/device/kc705/top.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/filter/user_filter.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/user_filter.v] -no_script -reset -force -quiet
+remove_files  {/home/users/manabe/2018/lfif/src/device/kc705/top.v /home/users/manabe/2018/lfif/src/hdl/filter/user_filter.v /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/user_filter.v}
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_i2c_init.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/filter/color_conv/bayer_to_rgb.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/cam_if_lvds_rx.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/hdmi16_tx.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/user_filter.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/cam_if/cam_calibration.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/luminance.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/util/sync_dff.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/clock/vcxo_clock_manager.v] -no_script -reset -force -quiet
+remove_files  {/home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_i2c_init.v /home/users/manabe/2018/lfif/src/hdl/filter/color_conv/bayer_to_rgb.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/cam_if_lvds_rx.v /home/users/manabe/2018/lfif/src/hdl/hdmi/hdmi16_tx.v /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/user_filter.v /home/users/manabe/2018/lfif/src/hdl/cam_if/cam_calibration.v /home/users/manabe/2018/lfif/src/hdl/user_filter/luminance/luminance.v /home/users/manabe/2018/lfif/src/hdl/util/sync_dff.v /home/users/manabe/2018/lfif/src/hdl/clock/vcxo_clock_manager.v}
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_core.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_command.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_write_one.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_sdr.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/util/srl_template.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_clk_mmcm_s8_sdr.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/video_through.v] -no_script -reset -force -quiet
+remove_files  {/home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_core.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_command.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_write_one.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_sdr.v /home/users/manabe/2018/lfif/src/hdl/util/srl_template.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_clk_mmcm_s8_sdr.v /home/users/manabe/2018/lfif/src/hdl/user_filter/video_through/video_through.v}
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_RGB2CrYCb.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_ss_444to422.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_es.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/bitslip8.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/util/bram_template_with_reset.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/i2c/i2c_master_write.v] -no_script -reset -force -quiet
+remove_files  {/home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_RGB2CrYCb.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_ss_444to422.v /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_es.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/bitslip8.v /home/users/manabe/2018/lfif/src/hdl/util/bram_template_with_reset.v /home/users/manabe/2018/lfif/src/hdl/i2c/i2c_master_write.v}
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1.v] -no_script -reset -force -quiet
+remove_files  /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1.v
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_add.v] -no_script -reset -force -quiet
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_mul.v] -no_script -reset -force -quiet
+remove_files  {/home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_add.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_mul.v}
+add_files -norecurse {/home/users/manabe/2018/lfif/src/hdl/clock/vcxo_clock_manager.v /home/users/manabe/2018/lfif/kc705_simple_lsd/user_filter.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_ss_444to422.v /home/users/manabe/2018/lfif/src/hdl/cam_if/cam_calibration.v /home/users/manabe/2018/lfif/src/hdl/i2c/i2c_master_write.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_command.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_sdr.v /home/users/manabe/2018/lfif/src/hdl/util/srl_template.v /home/users/manabe/2018/lfif/src/hdl/util/bram_template_with_reset.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_add.v /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_core.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_i2c_init.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/cam_if_lvds_rx.v /home/users/manabe/2018/lfif/src/device/kc705/top.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1_mul.v /home/users/manabe/2018/lfif/src/hdl/hdmi/hdmi16_tx.v /home/users/manabe/2018/lfif/src/hdl/adv7511_init/adv7511_write_one.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/bitslip8.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_1.v /home/users/manabe/2018/lfif/src/hdl/hdmi/ad_csc_RGB2CrYCb.v /home/users/manabe/2018/lfif/src/hdl/hdmi/axi_hdmi_tx_es.v /home/users/manabe/2018/lfif/src/hdl/cam_if/rx/serdes_1_to_8_clk_mmcm_s8_sdr.v /home/users/manabe/2018/lfif/src/hdl/filter/color_conv/bayer_to_rgb.v /home/users/manabe/2018/lfif/src/hdl/util/sync_dff.v}
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1
+open_run synth_1 -name synth_1
+close_design
+set_property  ip_repo_paths  /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado-library.git [current_project]
+update_ip_catalog
+ipx::open_ipxact_file /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado-library.git/branches/feature/axi_dynclk_driver/if/pmod_v1_0/pmod.xml
+ipx::unload_abstraction_definition /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado-library.git/branches/feature/axi_dynclk_driver/if/pmod_v1_0/pmod_rtl.xml
+ipx::unload_bus_definition /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado-library.git/branches/feature/axi_dynclk_driver/if/pmod_v1_0/pmod.xml
+set_property  ip_repo_paths  {} [current_project]
+update_ip_catalog
+set_property  ip_repo_paths  /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado-library-master [current_project]
+update_ip_catalog

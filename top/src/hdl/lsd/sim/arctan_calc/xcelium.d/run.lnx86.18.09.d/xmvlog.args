@@ -1,0 +1,23 @@
+//
+// File created by:  xmverilog
+// Do not modify this file
+//
+-XLMODE
+./xcelium.d/run.lnx86.18.09.d
+-RUNMODE
+-NOWARN
+NONPRT
+-LIBEXT
+.v
+sim_arctan_calc.v
+../../common/arctan_calc.v
+../../common/delay.v
+-CDSLIB
+./xcelium.d/run.lnx86.18.09.d/cdsrun.lib
+-HDLVAR
+./xcelium.d/run.lnx86.18.09.d/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./xcelium.d/run.lnx86.18.09.d/xllibs
+-ALLOWUNBOUND

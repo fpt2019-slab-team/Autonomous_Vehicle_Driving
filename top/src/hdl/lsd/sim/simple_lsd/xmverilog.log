@@ -1,0 +1,61 @@
+xmverilog: 18.09-s011: (c) Copyright 1995-2019 Cadence Design Systems, Inc.
+TOOL:	xmverilog	18.09-s011: Started on Nov 08, 2019 at 17:08:55 JST
+xmverilog
+	+access+r
+	+nowarn+NONPRT
+	+libext+.v
+	sim_simple_lsd.v
+	../../simple_lsd.v
+	../../gaussian.v
+	../../common/coord_adjuster.v
+	../../common/delay.v
+	../../common/fifo_dc.v
+	../../common/ram_sc.v
+	../../common/ram_dc.v
+	../../common/rgb2ycbcr.v
+	../../common/stream_patch.v
+	../../common/tree_adder.v
+	../../common/arctan_calc.v
+Recompiling... reason: file './sim_simple_lsd.v' is newer than expected.
+	expected: Fri Nov  8 17:08:02 2019
+	actual:   Fri Nov  8 17:08:53 2019
+file: sim_simple_lsd.v
+	module worklib.sim_simple_lsd:v
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+   r2y_0
+       |
+xmelab: *W,CUVWSP (./sim_simple_lsd.v,96|7): 2 output ports were not connected:
+xmelab: (/home/users/manabe/2019/auto_drive/lsd/hdl/common/rgb2ycbcr.v,22): out_cb
+xmelab: (/home/users/manabe/2019/auto_drive/lsd/hdl/common/rgb2ycbcr.v,22): out_cr
+
+	.in_data(cond_do_trace ? up2_seg_id : -1), .out_data(prev_id_out) );
+	                       |
+xmelab: *W,CUVMPW (/home/users/manabe/2019/auto_drive/lsd/hdl/simple_lsd.v,358|24): port sizes differ in port connection (32/16).
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.sim_simple_lsd:v <0x05cb189b>
+			streams:  27, words:  8112
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                37      12
+		Registers:             415     154
+		Scalar wires:           41       -
+		Expanded wires:        256      12
+		Vectored wires:        181       -
+		Always blocks:         127      38
+		Initial blocks:          7       7
+		Cont. assignments:     125      67
+		Pseudo assignments:     17      15
+		Simulation timescale:  1ns
+	Writing initial simulation snapshot: worklib.sim_simple_lsd:v
+Loading snapshot worklib.sim_simple_lsd:v .................... Done
+xcelium> source /home/cad/cadence-xcelium-18.09.001/tools/xcelium/files/xmsimrc
+xcelium> run
+Simulation complete via $finish(1) at time 1430 US + 0
+./sim_simple_lsd.v:42 	$finish;
+xcelium> exit
+TOOL:	xmverilog	18.09-s011: Exiting on Nov 08, 2019 at 17:09:06 JST  (total: 00:00:11)
