@@ -1,0 +1,12 @@
+//
+// File created by:  xmverilog
+// Do not modify this file
+//
+-YDIR
+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/verilog/src/unisims
+-YDIR
+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/verilog/src/unimacro
+-LIBEXT
+.v
+-LIBEXT
+.v

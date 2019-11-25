@@ -1,0 +1,1051 @@
+
+*** Running vivado
+    with args -log alltop.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source alltop.tcl -notrace
+
+
+****** Vivado v2018.3 (64-bit)
+  **** SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+  **** IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source alltop.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/ip_repo/pspl_comm_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+Command: link_design -top alltop -part xc7z020clg400-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Project 1-454] Reading design checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.dcp' for cell 'clk_wiz_0_inst'
+INFO: [Project 1-454] Reading design checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.dcp' for cell 'pspl_comm_inst/processing_system7_0'
+INFO: [Project 1-454] Reading design checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_pspl_comm_0_0_1/pspl_comm_pspl_comm_0_0.dcp' for cell 'pspl_comm_inst/pspl_comm_0'
+INFO: [Project 1-454] Reading design checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0.dcp' for cell 'pspl_comm_inst/rst_ps7_0_50M'
+INFO: [Project 1-454] Reading design checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_auto_pc_0_1/pspl_comm_auto_pc_0.dcp' for cell 'pspl_comm_inst/ps7_0_axi_periph/s00_couplers/auto_pc'
+INFO: [Netlist 29-17] Analyzing 3119 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Opt 31-35] Removing redundant IBUF, clk_wiz_0_inst/inst/clkin1_ibufg, from the path connected to top-level port: sysclk 
+Resolution: The tool has removed redundant IBUF. To resolve this warning, check for redundant IBUF in the input design.
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_0_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc] for cell 'pspl_comm_inst/processing_system7_0/inst'
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:29]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:30]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:31]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:32]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:33]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:34]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:35]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:36]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:37]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:38]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:39]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:40]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:41]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:42]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:43]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:44]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:45]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:46]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:47]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:48]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:49]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:50]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:51]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:52]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:53]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:54]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:55]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:56]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:57]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:58]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:59]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:60]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:61]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:62]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:63]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:64]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:65]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:66]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:67]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:68]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:69]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:70]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:71]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:72]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:73]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:74]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:75]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:76]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:77]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:78]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:79]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:80]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:81]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:82]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:83]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:84]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:85]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:86]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:87]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:88]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:89]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:90]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:91]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:92]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:93]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:94]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:95]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:96]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:97]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:98]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:99]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:100]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:101]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:102]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:103]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:104]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:105]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:106]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:107]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:108]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:109]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:110]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:111]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:112]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:113]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:114]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:115]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:116]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:117]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:118]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:119]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:120]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:121]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:122]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:123]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:124]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'iostandard', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:125]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PACKAGE_PIN', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:126]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'slew', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:127]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+CRITICAL WARNING: [Netlist 29-160] Cannot set property 'PIO_DIRECTION', because the property does not exist for objects of type 'pin'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:128]
+Resolution: Modify the set_property command to apply the property on the correct object type. Since the property is being applied as a scoped constraint, ensure the proper connectivity of the object port objects can be translated into pin objects. This could be due to the insertion of IO Buffers between the top level terminal and cell pin. If the goal is to apply constraints that will migrate to top level ports it is required that IO Buffers manually be instanced.
+INFO: [Common 17-14] Message 'Netlist 29-160' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc:128]
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc] for cell 'pspl_comm_inst/processing_system7_0/inst'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0_board.xdc] for cell 'pspl_comm_inst/rst_ps7_0_50M/U0'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0_board.xdc] for cell 'pspl_comm_inst/rst_ps7_0_50M/U0'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0.xdc] for cell 'pspl_comm_inst/rst_ps7_0_50M/U0'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0.xdc] for cell 'pspl_comm_inst/rst_ps7_0_50M/U0'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_0_inst/inst'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'clk_wiz_0_inst/inst'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_0_inst/inst'
+INFO: [Timing 38-35] Done setting XDC timing constraints. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+INFO: [Timing 38-2] Deriving generated clocks [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc:57]
+get_clocks: Time (s): cpu = 00:00:09 ; elapsed = 00:00:07 . Memory (MB): peak = 2407.477 ; gain = 556.594 ; free physical = 116022 ; free virtual = 126780
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'clk_wiz_0_inst/inst'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/camera.xdc]
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/camera.xdc]
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc]
+WARNING: [Vivado 12-507] No nets matched 'clk_24m_IBUF'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc:14]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc:14]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+WARNING: [Vivado 12-507] No nets matched 'clk_12m_IBUF'. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc:15]
+CRITICAL WARNING: [Common 17-55] 'set_property' expects at least one object. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc:15]
+Resolution: If [get_<value>] was used to populate the object, check to make sure this command returns at least one valid object.
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc]
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/PPAM_v3_2.xdc]
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/PPAM_v3_2.xdc]
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/target.xdc]
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/target.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 116069 ; free virtual = 126827
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  RAM16X1D => RAM32X1D (RAMD32, RAMD32): 2 instances
+
+18 Infos, 4 Warnings, 102 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:18 ; elapsed = 00:00:19 . Memory (MB): peak = 2519.531 ; gain = 1063.184 ; free physical = 116069 ; free virtual = 126827
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port siod_f expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port siod_r expects both input and output buffering but the buffers are incomplete.
+INFO: [Project 1-461] DRC finished with 0 Errors, 2 Warnings
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+
+Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 116063 ; free virtual = 126821
+
+Starting Cache Timing Information Task
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Ending Cache Timing Information Task | Checksum: 208ef488b
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:00.73 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 116037 ; free virtual = 126796
+
+Starting Logic Optimization Task
+
+Phase 1 Retarget
+INFO: [Opt 31-138] Pushed 2 inverter(s) to 2 load pin(s).
+INFO: [Opt 31-49] Retargeted 0 cell(s).
+Phase 1 Retarget | Checksum: 103dbad0e
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115997 ; free virtual = 126755
+INFO: [Opt 31-389] Phase Retarget created 19 cells and removed 81 cells
+INFO: [Opt 31-1021] In phase Retarget, 38 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 2 Constant propagation
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Phase 2 Constant propagation | Checksum: 1a5cb5583
+
+Time (s): cpu = 00:00:03 ; elapsed = 00:00:01 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115997 ; free virtual = 126755
+INFO: [Opt 31-389] Phase Constant propagation created 2 cells and removed 44 cells
+INFO: [Opt 31-1021] In phase Constant propagation, 66 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 3 Sweep
+Phase 3 Sweep | Checksum: 14254c765
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115996 ; free virtual = 126754
+INFO: [Opt 31-389] Phase Sweep created 3 cells and removed 499 cells
+INFO: [Opt 31-1021] In phase Sweep, 133 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+
+Phase 4 BUFG optimization
+INFO: [Opt 31-194] Inserted BUFG clk_wiz_0_inst/inst/clk_out1_clk_wiz_0_BUFG_inst to drive 0 load(s) on clock net clk_wiz_0_inst/inst/clk_out1_clk_wiz_0_BUFG
+INFO: [Opt 31-194] Inserted BUFG clk_wiz_0_inst/inst/clk_out2_clk_wiz_0_BUFG_inst to drive 0 load(s) on clock net clk_wiz_0_inst/inst/clk_out2_clk_wiz_0_BUFG
+INFO: [Opt 31-194] Inserted BUFG sysclk_IBUF_BUFG_inst to drive 220 load(s) on clock net sysclk_IBUF_BUFG
+INFO: [Opt 31-193] Inserted 3 BUFG(s) on clock nets
+Phase 4 BUFG optimization | Checksum: 1b45a905a
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:03 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115997 ; free virtual = 126755
+INFO: [Opt 31-662] Phase BUFG optimization created 1 cells of which 1 are BUFGs and removed 0 cells.
+
+Phase 5 Shift Register Optimization
+Phase 5 Shift Register Optimization | Checksum: 1b69c5693
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115996 ; free virtual = 126755
+INFO: [Opt 31-389] Phase Shift Register Optimization created 0 cells and removed 0 cells
+
+Phase 6 Post Processing Netlist
+Phase 6 Post Processing Netlist | Checksum: 14df69e87
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115996 ; free virtual = 126755
+INFO: [Opt 31-389] Phase Post Processing Netlist created 0 cells and removed 0 cells
+INFO: [Opt 31-1021] In phase Post Processing Netlist, 32 netlist objects are constrained preventing optimization. Please run opt_design with -debug_log to get more detail. 
+Opt_design Change Summary
+=========================
+
+
+-------------------------------------------------------------------------------------------------------------------------
+|  Phase                        |  #Cells created  |  #Cells Removed  |  #Constrained objects preventing optimizations  |
+-------------------------------------------------------------------------------------------------------------------------
+|  Retarget                     |              19  |              81  |                                             38  |
+|  Constant propagation         |               2  |              44  |                                             66  |
+|  Sweep                        |               3  |             499  |                                            133  |
+|  BUFG optimization            |               1  |               0  |                                              0  |
+|  Shift Register Optimization  |               0  |               0  |                                              0  |
+|  Post Processing Netlist      |               0  |               0  |                                             32  |
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+Starting Connectivity Check Task
+
+Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115996 ; free virtual = 126755
+Ending Logic Optimization Task | Checksum: 1a7050f2f
+
+Time (s): cpu = 00:00:06 ; elapsed = 00:00:04 . Memory (MB): peak = 2519.531 ; gain = 0.000 ; free physical = 115996 ; free virtual = 126755
+
+Starting Power Optimization Task
+INFO: [Pwropt 34-132] Skipping clock gating for clocks with a period < 2.00 ns.
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Pwropt 34-9] Applying IDT optimizations ...
+INFO: [Pwropt 34-10] Applying ODC optimizations ...
+INFO: [Physopt 32-619] Estimated Timing Summary | WNS=-2.069 | TNS=-211.368 |
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+
+
+Starting PowerOpt Patch Enables Task
+INFO: [Pwropt 34-162] WRITE_MODE attribute of 0 BRAM(s) out of a total of 44 has been updated to save power. Run report_power_opt to get a complete listing of the BRAMs updated.
+INFO: [Pwropt 34-201] Structural ODC has moved 0 WE to EN ports
+Number of BRAM Ports augmented: 0 newly gated: 4 Total Ports: 88
+Ending PowerOpt Patch Enables Task | Checksum: 12666a928
+
+Time (s): cpu = 00:00:00.17 ; elapsed = 00:00:00.17 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115940 ; free virtual = 126698
+Ending Power Optimization Task | Checksum: 12666a928
+
+Time (s): cpu = 00:00:16 ; elapsed = 00:00:05 . Memory (MB): peak = 2989.719 ; gain = 470.188 ; free physical = 115960 ; free virtual = 126719
+
+Starting Final Cleanup Task
+Ending Final Cleanup Task | Checksum: 12666a928
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115960 ; free virtual = 126719
+
+Starting Netlist Obfuscation Task
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115960 ; free virtual = 126719
+Ending Netlist Obfuscation Task | Checksum: 14601712c
+
+Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115960 ; free virtual = 126719
+INFO: [Common 17-83] Releasing license: Implementation
+48 Infos, 6 Warnings, 102 Critical Warnings and 0 Errors encountered.
+opt_design completed successfully
+opt_design: Time (s): cpu = 00:00:27 ; elapsed = 00:00:13 . Memory (MB): peak = 2989.719 ; gain = 470.188 ; free physical = 115961 ; free virtual = 126719
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115961 ; free virtual = 126719
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:00.23 ; elapsed = 00:00:00.07 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115955 ; free virtual = 126716
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115956 ; free virtual = 126718
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_opt.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:05 ; elapsed = 00:00:05 . Memory (MB): peak = 2989.719 ; gain = 0.000 ; free physical = 115959 ; free virtual = 126721
+INFO: [runtcl-4] Executing : report_drc -file alltop_drc_opted.rpt -pb alltop_drc_opted.pb -rpx alltop_drc_opted.rpx
+Command: report_drc -file alltop_drc_opted.rpt -pb alltop_drc_opted.pb -rpx alltop_drc_opted.rpx
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_drc_opted.rpt.
+report_drc completed successfully
+Command: place_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+Running DRC as a precondition to command place_design
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port siod_f expects both input and output buffering but the buffers are incomplete.
+WARNING: [DRC RPBF-3] IO port buffering is incomplete: Device port siod_r expects both input and output buffering but the buffers are incomplete.
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors, 2 Warnings
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+Starting Placer Task
+INFO: [Place 30-611] Multithreading enabled for place_design using a maximum of 8 CPUs
+
+Phase 1 Placer Initialization
+
+Phase 1.1 Placer Initialization Netlist Sorting
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115943 ; free virtual = 126704
+Phase 1.1 Placer Initialization Netlist Sorting | Checksum: e214568d
+
+Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.04 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115943 ; free virtual = 126704
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115943 ; free virtual = 126704
+
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+WARNING: [Place 30-574] Poor placement for routing between an IO pin and BUFG. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	pclk_f_IBUF_inst (IBUF.O) is locked to IOB_X1Y93
+	pclk_f_IBUF_BUFG_inst (BUFG.I) is provisionally placed by clockplacer on BUFGCTRL_X0Y3
+Resolution: Poor placement of an IO pin and a BUFG has resulted in the router using a non-dedicated path between the two.  There are several things that could trigger this DRC, each of which can cause unpredictable clock insertion delays that result in poor timing.  This DRC could be caused by any of the following: (a) a clock port was placed on a pin that is not a CCIO-pin (b)the BUFG has not been placed in the same half of the device or SLR as the CCIO-pin (c) a single ended clock has been placed on the N-Side of a differential pair CCIO-pin.
+WARNING: [Place 30-574] Poor placement for routing between an IO pin and BUFG. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	pclk_r_IBUF_inst (IBUF.O) is locked to IOB_X0Y18
+	pclk_r_IBUF_BUFG_inst (BUFG.I) is provisionally placed by clockplacer on BUFGCTRL_X0Y4
+Resolution: Poor placement of an IO pin and a BUFG has resulted in the router using a non-dedicated path between the two.  There are several things that could trigger this DRC, each of which can cause unpredictable clock insertion delays that result in poor timing.  This DRC could be caused by any of the following: (a) a clock port was placed on a pin that is not a CCIO-pin (b)the BUFG has not been placed in the same half of the device or SLR as the CCIO-pin (c) a single ended clock has been placed on the N-Side of a differential pair CCIO-pin.
+Phase 1.2 IO Placement/ Clock Placement/ Build Placer Device | Checksum: a3546769
+
+Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115915 ; free virtual = 126676
+
+Phase 1.3 Build Placer Netlist Model
+Phase 1.3 Build Placer Netlist Model | Checksum: 1506d6152
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:05 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115899 ; free virtual = 126660
+
+Phase 1.4 Constrain Clocks/Macros
+Phase 1.4 Constrain Clocks/Macros | Checksum: 1506d6152
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:05 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115899 ; free virtual = 126660
+Phase 1 Placer Initialization | Checksum: 1506d6152
+
+Time (s): cpu = 00:00:12 ; elapsed = 00:00:05 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115899 ; free virtual = 126660
+
+Phase 2 Global Placement
+
+Phase 2.1 Floorplanning
+Phase 2.1 Floorplanning | Checksum: 6870ee43
+
+Time (s): cpu = 00:00:17 ; elapsed = 00:00:07 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115881 ; free virtual = 126643
+
+Phase 2.2 Physical Synthesis In Placer
+INFO: [Physopt 32-65] No nets found for high-fanout optimization.
+INFO: [Physopt 32-232] Optimized 0 net. Created 0 new instance.
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-457] Pass 1. Identified 4 candidate cells for DSP register optimization.
+INFO: [Physopt 32-665] Processed cell topview_inst_f/topview_trans_inst0/g1_reg. 19 registers were pushed out.
+INFO: [Physopt 32-665] Processed cell topview_inst_r/topview_trans_inst0/g1_reg. 19 registers were pushed out.
+INFO: [Physopt 32-665] Processed cell topview_inst_f/topview_trans_inst1/g1_reg. 19 registers were pushed out.
+INFO: [Physopt 32-665] Processed cell topview_inst_r/topview_trans_inst1/g1_reg. 19 registers were pushed out.
+INFO: [Physopt 32-775] End 2 Pass. Optimized 4 nets or cells. Created 76 new cells, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115854 ; free virtual = 126616
+INFO: [Physopt 32-677] No candidate cells for Shift Register optimization found in the design
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-526] No candidate cells for BRAM register optimization found in the design
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+INFO: [Physopt 32-949] No candidate nets found for HD net replication
+INFO: [Physopt 32-775] End 1 Pass. Optimized 0 net or cell. Created 0 new cell, deleted 0 existing cell and moved 0 existing cell
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115854 ; free virtual = 126616
+
+Summary of Physical Synthesis Optimizations
+============================================
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+|  Optimization                  |  Added Cells  |  Removed Cells  |  Optimized Cells/Nets  |  Dont Touch  |  Iterations  |  Elapsed   |
+----------------------------------------------------------------------------------------------------------------------------------------
+|  Very High Fanout              |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  DSP Register                  |           76  |              0  |                     4  |           0  |           1  |  00:00:01  |
+|  Shift Register                |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  BRAM Register                 |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  HD Interface Net Replication  |            0  |              0  |                     0  |           0  |           1  |  00:00:00  |
+|  Total                         |           76  |              0  |                     4  |           0  |           5  |  00:00:01  |
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+Phase 2.2 Physical Synthesis In Placer | Checksum: a574a9d9
+
+Time (s): cpu = 00:01:09 ; elapsed = 00:00:26 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115852 ; free virtual = 126614
+Phase 2 Global Placement | Checksum: 12e838c7d
+
+Time (s): cpu = 00:01:10 ; elapsed = 00:00:27 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115854 ; free virtual = 126616
+
+Phase 3 Detail Placement
+
+Phase 3.1 Commit Multi Column Macros
+Phase 3.1 Commit Multi Column Macros | Checksum: 12e838c7d
+
+Time (s): cpu = 00:01:10 ; elapsed = 00:00:27 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115855 ; free virtual = 126617
+
+Phase 3.2 Commit Most Macros & LUTRAMs
+Phase 3.2 Commit Most Macros & LUTRAMs | Checksum: 1d66bc4b4
+
+Time (s): cpu = 00:01:21 ; elapsed = 00:00:32 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115849 ; free virtual = 126611
+
+Phase 3.3 Area Swap Optimization
+Phase 3.3 Area Swap Optimization | Checksum: 18619e161
+
+Time (s): cpu = 00:01:21 ; elapsed = 00:00:32 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115849 ; free virtual = 126611
+
+Phase 3.4 Pipeline Register Optimization
+Phase 3.4 Pipeline Register Optimization | Checksum: 1b99fdce3
+
+Time (s): cpu = 00:01:21 ; elapsed = 00:00:32 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115849 ; free virtual = 126611
+
+Phase 3.5 Fast Optimization
+Phase 3.5 Fast Optimization | Checksum: 17c6018e6
+
+Time (s): cpu = 00:01:27 ; elapsed = 00:00:34 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115849 ; free virtual = 126611
+
+Phase 3.6 Small Shape Detail Placement
+Phase 3.6 Small Shape Detail Placement | Checksum: 76fa88f3
+
+Time (s): cpu = 00:01:30 ; elapsed = 00:00:36 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115846 ; free virtual = 126608
+
+Phase 3.7 Re-assign LUT pins
+Phase 3.7 Re-assign LUT pins | Checksum: 11dd09e23
+
+Time (s): cpu = 00:01:30 ; elapsed = 00:00:37 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115848 ; free virtual = 126610
+
+Phase 3.8 Pipeline Register Optimization
+Phase 3.8 Pipeline Register Optimization | Checksum: 112d92f35
+
+Time (s): cpu = 00:01:31 ; elapsed = 00:00:37 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115848 ; free virtual = 126610
+
+Phase 3.9 Fast Optimization
+Phase 3.9 Fast Optimization | Checksum: 1999fce3c
+
+Time (s): cpu = 00:01:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115848 ; free virtual = 126610
+Phase 3 Detail Placement | Checksum: 1999fce3c
+
+Time (s): cpu = 00:01:38 ; elapsed = 00:00:40 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115848 ; free virtual = 126610
+
+Phase 4 Post Placement Optimization and Clean-Up
+
+Phase 4.1 Post Commit Optimization
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+
+Phase 4.1.1 Post Placement Optimization
+Post Placement Optimization Initialization | Checksum: 229c122fc
+
+Phase 4.1.1.1 BUFG Insertion
+INFO: [Place 46-46] BUFG insertion identified 0 candidate nets, 0 success, 0 bufg driver replicated, 0 skipped for placement/routing, 0 skipped for timing, 0 skipped for netlist change reason
+Phase 4.1.1.1 BUFG Insertion | Checksum: 229c122fc
+
+Time (s): cpu = 00:01:48 ; elapsed = 00:00:43 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115853 ; free virtual = 126614
+INFO: [Place 30-746] Post Placement Timing Summary WNS=-4.624. For the most accurate timing information please run report_timing.
+Phase 4.1.1 Post Placement Optimization | Checksum: 1907a41de
+
+Time (s): cpu = 00:02:35 ; elapsed = 00:01:24 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+Phase 4.1 Post Commit Optimization | Checksum: 1907a41de
+
+Time (s): cpu = 00:02:35 ; elapsed = 00:01:24 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+
+Phase 4.2 Post Placement Cleanup
+Phase 4.2 Post Placement Cleanup | Checksum: 1907a41de
+
+Time (s): cpu = 00:02:36 ; elapsed = 00:01:24 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+
+Phase 4.3 Placer Reporting
+Phase 4.3 Placer Reporting | Checksum: 1907a41de
+
+Time (s): cpu = 00:02:36 ; elapsed = 00:01:24 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+
+Phase 4.4 Final Placement Cleanup
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+Phase 4.4 Final Placement Cleanup | Checksum: 102668d5f
+
+Time (s): cpu = 00:02:36 ; elapsed = 00:01:25 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+Phase 4 Post Placement Optimization and Clean-Up | Checksum: 102668d5f
+
+Time (s): cpu = 00:02:36 ; elapsed = 00:01:25 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115858 ; free virtual = 126620
+Ending Placer Task | Checksum: c6cfef50
+
+Time (s): cpu = 00:02:36 ; elapsed = 00:01:25 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115881 ; free virtual = 126643
+INFO: [Common 17-83] Releasing license: Implementation
+82 Infos, 10 Warnings, 102 Critical Warnings and 0 Errors encountered.
+place_design completed successfully
+place_design: Time (s): cpu = 00:02:39 ; elapsed = 00:01:27 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115881 ; free virtual = 126643
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115881 ; free virtual = 126643
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115864 ; free virtual = 126636
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115843 ; free virtual = 126633
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_placed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115871 ; free virtual = 126639
+INFO: [runtcl-4] Executing : report_io -file alltop_io_placed.rpt
+report_io: Time (s): cpu = 00:00:00.09 ; elapsed = 00:00:00.26 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115860 ; free virtual = 126628
+INFO: [runtcl-4] Executing : report_utilization -file alltop_utilization_placed.rpt -pb alltop_utilization_placed.pb
+INFO: [runtcl-4] Executing : report_control_sets -verbose -file alltop_control_sets_placed.rpt
+report_control_sets: Time (s): cpu = 00:00:00.05 ; elapsed = 00:00:00.16 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115870 ; free virtual = 126638
+Command: route_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command route_design
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC PLCK-12] Clock Placer Checks: Poor placement for routing between an IO pin and BUFG. 
+Resolution: Poor placement of an IO pin and a BUFG has resulted in the router using a non-dedicated path between the two.  There are several things that could trigger this DRC, each of which can cause unpredictable clock insertion delays that result in poor timing.  This DRC could be caused by any of the following: (a) a clock port was placed on a pin that is not a CCIO-pin (b)the BUFG has not been placed in the same half of the device or SLR as the CCIO-pin (c) a single ended clock has been placed on the N-Side of a differential pair CCIO-pin.
+ This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	pclk_f_IBUF_inst (IBUF.O) is locked to IOB_X1Y93
+	pclk_f_IBUF_BUFG_inst (BUFG.I) is provisionally placed by clockplacer on BUFGCTRL_X0Y3
+WARNING: [DRC PLCK-12] Clock Placer Checks: Poor placement for routing between an IO pin and BUFG. 
+Resolution: Poor placement of an IO pin and a BUFG has resulted in the router using a non-dedicated path between the two.  There are several things that could trigger this DRC, each of which can cause unpredictable clock insertion delays that result in poor timing.  This DRC could be caused by any of the following: (a) a clock port was placed on a pin that is not a CCIO-pin (b)the BUFG has not been placed in the same half of the device or SLR as the CCIO-pin (c) a single ended clock has been placed on the N-Side of a differential pair CCIO-pin.
+ This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint is set to FALSE allowing your design to continue. The use of this override is highly discouraged as it may lead to very poor timing results. It is recommended that this error condition be corrected in the design.
+
+	pclk_r_IBUF_inst (IBUF.O) is locked to IOB_X0Y18
+	pclk_r_IBUF_BUFG_inst (BUFG.I) is provisionally placed by clockplacer on BUFGCTRL_X0Y4
+INFO: [Vivado_Tcl 4-198] DRC finished with 0 Errors, 2 Warnings
+INFO: [Vivado_Tcl 4-199] Please refer to the DRC report (report_drc) for more information.
+
+
+Starting Routing Task
+INFO: [Route 35-254] Multithreading enabled for route_design using a maximum of 8 CPUs
+Checksum: PlaceDB: 7421b892 ConstDB: 0 ShapeSum: 52ae36be RouteDB: 0
+
+Phase 1 Build RT Design
+Phase 1 Build RT Design | Checksum: 100d8d4f8
+
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:16 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115732 ; free virtual = 126501
+Post Restoration Checksum: NetGraph: 8317c72b NumContArr: 7dc10dcd Constraints: 0 Timing: 0
+
+Phase 2 Router Initialization
+
+Phase 2.1 Create Timer
+Phase 2.1 Create Timer | Checksum: 100d8d4f8
+
+Time (s): cpu = 00:00:20 ; elapsed = 00:00:16 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115701 ; free virtual = 126469
+
+Phase 2.2 Fix Topology Constraints
+Phase 2.2 Fix Topology Constraints | Checksum: 100d8d4f8
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115669 ; free virtual = 126437
+
+Phase 2.3 Pre Route Cleanup
+Phase 2.3 Pre Route Cleanup | Checksum: 100d8d4f8
+
+Time (s): cpu = 00:00:21 ; elapsed = 00:00:16 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115668 ; free virtual = 126436
+ Number of Nodes with overlaps = 0
+
+Phase 2.4 Update Timing
+Phase 2.4 Update Timing | Checksum: 125b850c5
+
+Time (s): cpu = 00:00:32 ; elapsed = 00:00:20 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115646 ; free virtual = 126414
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-2.769 | TNS=-122.091| WHS=-2.404 | THS=-371.631|
+
+Phase 2 Router Initialization | Checksum: ee091d4f
+
+Time (s): cpu = 00:00:41 ; elapsed = 00:00:22 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115642 ; free virtual = 126411
+
+Phase 3 Initial Routing
+Phase 3 Initial Routing | Checksum: 282afbd84
+
+Time (s): cpu = 00:00:54 ; elapsed = 00:00:27 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115624 ; free virtual = 126392
+
+Phase 4 Rip-up And Reroute
+
+Phase 4.1 Global Iteration 0
+ Number of Nodes with overlaps = 2983
+ Number of Nodes with overlaps = 296
+ Number of Nodes with overlaps = 35
+ Number of Nodes with overlaps = 1
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-7.982 | TNS=-1924.015| WHS=N/A    | THS=N/A    |
+
+Phase 4.1 Global Iteration 0 | Checksum: 13b52b3ec
+
+Time (s): cpu = 00:01:36 ; elapsed = 00:00:44 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115596 ; free virtual = 126365
+
+Phase 4.2 Global Iteration 1
+ Number of Nodes with overlaps = 3
+ Number of Nodes with overlaps = 0
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-8.336 | TNS=-1935.131| WHS=N/A    | THS=N/A    |
+
+Phase 4.2 Global Iteration 1 | Checksum: c7f95a0d
+
+Time (s): cpu = 00:01:37 ; elapsed = 00:00:44 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115621 ; free virtual = 126390
+Phase 4 Rip-up And Reroute | Checksum: c7f95a0d
+
+Time (s): cpu = 00:01:37 ; elapsed = 00:00:44 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115621 ; free virtual = 126390
+
+Phase 5 Delay and Skew Optimization
+
+Phase 5.1 Delay CleanUp
+
+Phase 5.1.1 Update Timing
+Phase 5.1.1 Update Timing | Checksum: 13a96aec8
+
+Time (s): cpu = 00:01:39 ; elapsed = 00:00:45 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115622 ; free virtual = 126390
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-7.867 | TNS=-1920.335| WHS=N/A    | THS=N/A    |
+
+ Number of Nodes with overlaps = 0
+Phase 5.1 Delay CleanUp | Checksum: 18b900ef9
+
+Time (s): cpu = 00:02:03 ; elapsed = 00:00:48 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115566 ; free virtual = 126335
+
+Phase 5.2 Clock Skew Optimization
+Phase 5.2 Clock Skew Optimization | Checksum: 18b900ef9
+
+Time (s): cpu = 00:02:03 ; elapsed = 00:00:48 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115566 ; free virtual = 126335
+Phase 5 Delay and Skew Optimization | Checksum: 18b900ef9
+
+Time (s): cpu = 00:02:03 ; elapsed = 00:00:48 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115566 ; free virtual = 126335
+
+Phase 6 Post Hold Fix
+
+Phase 6.1 Hold Fix Iter
+
+Phase 6.1.1 Update Timing
+Phase 6.1.1 Update Timing | Checksum: 111de1f17
+
+Time (s): cpu = 00:02:06 ; elapsed = 00:00:49 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115570 ; free virtual = 126339
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-7.867 | TNS=-1925.143| WHS=-0.344 | THS=-13.776|
+
+
+Phase 6.1.2 Lut RouteThru Assignment for hold
+Phase 6.1.2 Lut RouteThru Assignment for hold | Checksum: 1ec441153
+
+Time (s): cpu = 00:02:10 ; elapsed = 00:00:53 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115571 ; free virtual = 126339
+Phase 6.1 Hold Fix Iter | Checksum: 1ec441153
+
+Time (s): cpu = 00:02:10 ; elapsed = 00:00:53 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115571 ; free virtual = 126339
+
+Phase 6.2 Additional Hold Fix
+INFO: [Route 35-416] Intermediate Timing Summary | WNS=-7.867 | TNS=-2083.946| WHS=-0.046 | THS=-0.046 |
+
+Phase 6.2 Additional Hold Fix | Checksum: 171553d4b
+
+Time (s): cpu = 00:02:12 ; elapsed = 00:00:54 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115571 ; free virtual = 126340
+WARNING: [Route 35-468] The router encountered 152 pins that are both setup-critical and hold-critical and tried to fix hold violations at the expense of setup slack. Such pins are:
+	cam_top_inst_f/sccb_if_inst/req_reg_reg[0]/R
+	cam_top_inst_f/sccb_if_inst/scl_cnt_reg[5]/R
+	cam_top_inst_r/camera_if_inst/vcnt_reg[1]/R
+	cam_top_inst_r/camera_if_inst/vcnt_reg[5]/R
+	cam_top_inst_r/camera_if_inst/vcnt_reg[6]/R
+	cam_top_inst_r/camera_if_inst/vcnt_reg[7]/R
+	cam_top_inst_r/camera_if_inst/fifo_0/wr_addr_reg[0]/R
+	cam_top_inst_r/sccb_if_inst/req_reg_reg[0]/R
+	cam_top_inst_r/sccb_if_inst/scl_cnt_reg[4]/R
+	cam_top_inst_r/sccb_if_inst/sda_cnt_reg[4]/R
+	.. and 142 more pins.
+
+Phase 6 Post Hold Fix | Checksum: 1b3c03196
+
+Time (s): cpu = 00:02:13 ; elapsed = 00:00:54 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115572 ; free virtual = 126341
+
+Phase 7 Route finalize
+
+Router Utilization Summary
+  Global Vertical Routing Utilization    = 5.7231 %
+  Global Horizontal Routing Utilization  = 5.3941 %
+  Routable Net Status*
+  *Does not include unroutable nets such as driverless and loadless.
+  Run report_route_status for detailed report.
+  Number of Failed Nets               = 0
+  Number of Unrouted Nets             = 0
+  Number of Partially Routed Nets     = 0
+  Number of Node Overlaps             = 0
+
+Congestion Report
+North Dir 1x1 Area, Max Cong = 54.955%, No Congested Regions.
+South Dir 1x1 Area, Max Cong = 75.6757%, No Congested Regions.
+East Dir 1x1 Area, Max Cong = 67.6471%, No Congested Regions.
+West Dir 1x1 Area, Max Cong = 61.7647%, No Congested Regions.
+
+------------------------------
+Reporting congestion hotspots
+------------------------------
+Direction: North
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: South
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: East
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+Direction: West
+----------------
+Congested clusters found at Level 0
+Effective congestion level: 0 Aspect Ratio: 1 Sparse Ratio: 0
+
+Phase 7 Route finalize | Checksum: 1ca2fcee4
+
+Time (s): cpu = 00:02:13 ; elapsed = 00:00:54 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115572 ; free virtual = 126341
+
+Phase 8 Verifying routed nets
+
+ Verification completed successfully
+Phase 8 Verifying routed nets | Checksum: 1ca2fcee4
+
+Time (s): cpu = 00:02:13 ; elapsed = 00:00:55 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115572 ; free virtual = 126340
+
+Phase 9 Depositing Routes
+Phase 9 Depositing Routes | Checksum: 1bcefe4ff
+
+Time (s): cpu = 00:02:15 ; elapsed = 00:00:56 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115572 ; free virtual = 126341
+
+Phase 10 Post Router Timing
+
+Phase 10.1 Update Timing
+Phase 10.1 Update Timing | Checksum: 20d84f392
+
+Time (s): cpu = 00:02:17 ; elapsed = 00:00:57 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115573 ; free virtual = 126342
+INFO: [Route 35-57] Estimated Timing Summary | WNS=-7.867 | TNS=-2083.946| WHS=0.050  | THS=0.000  |
+
+WARNING: [Route 35-328] Router estimated timing not met.
+Resolution: For a complete and accurate timing signoff, report_timing_summary must be run after route_design. Alternatively, route_design can be run with the -timing_summary option to enable a complete timing signoff at the end of route_design.
+Phase 10 Post Router Timing | Checksum: 20d84f392
+
+Time (s): cpu = 00:02:17 ; elapsed = 00:00:57 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115573 ; free virtual = 126342
+INFO: [Route 35-16] Router Completed Successfully
+
+Time (s): cpu = 00:02:17 ; elapsed = 00:00:57 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115664 ; free virtual = 126433
+
+Routing Is Done.
+INFO: [Common 17-83] Releasing license: Implementation
+101 Infos, 14 Warnings, 102 Critical Warnings and 0 Errors encountered.
+route_design completed successfully
+route_design: Time (s): cpu = 00:02:21 ; elapsed = 00:00:59 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115664 ; free virtual = 126433
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115667 ; free virtual = 126435
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Writing placer database...
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115650 ; free virtual = 126429
+Writing XDEF routing.
+Writing XDEF routing logical nets.
+Writing XDEF routing special nets.
+Write XDEF Complete: Time (s): cpu = 00:00:04 ; elapsed = 00:00:02 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115627 ; free virtual = 126431
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_routed.dcp' has been generated.
+write_checkpoint: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2997.863 ; gain = 0.000 ; free physical = 115662 ; free virtual = 126438
+INFO: [runtcl-4] Executing : report_drc -file alltop_drc_routed.rpt -pb alltop_drc_routed.pb -rpx alltop_drc_routed.rpx
+Command: report_drc -file alltop_drc_routed.rpt -pb alltop_drc_routed.pb -rpx alltop_drc_routed.rpx
+INFO: [IP_Flow 19-1839] IP Catalog is up to date.
+INFO: [DRC 23-27] Running DRC with 8 threads
+INFO: [Coretcl 2-168] The results of DRC are in file /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_drc_routed.rpt.
+report_drc completed successfully
+INFO: [runtcl-4] Executing : report_methodology -file alltop_methodology_drc_routed.rpt -pb alltop_methodology_drc_routed.pb -rpx alltop_methodology_drc_routed.rpx
+Command: report_methodology -file alltop_methodology_drc_routed.rpt -pb alltop_methodology_drc_routed.pb -rpx alltop_methodology_drc_routed.rpx
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [DRC 23-133] Running Methodology with 8 threads
+INFO: [Coretcl 2-1520] The results of Report Methodology are in file /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop_methodology_drc_routed.rpt.
+report_methodology completed successfully
+report_methodology: Time (s): cpu = 00:00:15 ; elapsed = 00:00:05 . Memory (MB): peak = 3053.867 ; gain = 0.000 ; free physical = 115616 ; free virtual = 126394
+INFO: [runtcl-4] Executing : report_power -file alltop_power_routed.rpt -pb alltop_power_summary_routed.pb -rpx alltop_power_routed.rpx
+Command: report_power -file alltop_power_routed.rpt -pb alltop_power_summary_routed.pb -rpx alltop_power_routed.rpx
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+Running Vector-less Activity Propagation...
+
+Finished Running Vector-less Activity Propagation
+113 Infos, 14 Warnings, 102 Critical Warnings and 0 Errors encountered.
+report_power completed successfully
+INFO: [runtcl-4] Executing : report_route_status -file alltop_route_status.rpt -pb alltop_route_status.pb
+INFO: [runtcl-4] Executing : report_timing_summary -max_paths 10 -file alltop_timing_summary_routed.rpt -pb alltop_timing_summary_routed.pb -rpx alltop_timing_summary_routed.rpx -warn_on_violation 
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+CRITICAL WARNING: [Timing 38-282] The design failed to meet the timing requirements. Please see the timing summary report for details on the timing violations.
+INFO: [runtcl-4] Executing : report_incremental_reuse -file alltop_incremental_reuse_routed.rpt
+INFO: [Vivado_Tcl 4-1062] Incremental flow is disabled. No incremental reuse Info to report.
+INFO: [runtcl-4] Executing : report_clock_utilization -file alltop_clock_utilization_routed.rpt
+INFO: [runtcl-4] Executing : report_bus_skew -warn_on_violation -file alltop_bus_skew_routed.rpt -pb alltop_bus_skew_routed.pb -rpx alltop_bus_skew_routed.rpx
+INFO: [Timing 38-91] UpdateTimingParams: Speed grade: -1, Delay Type: min_max.
+INFO: [Timing 38-191] Multithreading enabled for timing update using a maximum of 8 CPUs
+INFO: [Common 17-206] Exiting Vivado at Mon Nov 25 22:14:42 2019...
+
+*** Running vivado
+    with args -log alltop.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source alltop.tcl -notrace
+
+
+****** Vivado v2018.3 (64-bit)
+  **** SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+  **** IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source alltop.tcl -notrace
+Command: open_checkpoint alltop_routed.dcp
+
+Starting open_checkpoint Task
+
+Time (s): cpu = 00:00:00.04 ; elapsed = 00:00:00.11 . Memory (MB): peak = 1457.027 ; gain = 0.000 ; free physical = 116870 ; free virtual = 127659
+INFO: [Netlist 29-17] Analyzing 3104 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+WARNING: [Constraints 18-550] Could not create 'IBUF_LOW_PWR' constraint because net 'clk_wiz_0_inst/clk_in1' is not directly connected to top level port. Synthesis is ignored for IBUF_LOW_PWR but preserved for implementation.
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2321.414 ; gain = 25.668 ; free physical = 115962 ; free virtual = 126751
+Restored from archive | CPU: 1.450000 secs | Memory: 25.759254 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:01 ; elapsed = 00:00:01 . Memory (MB): peak = 2321.414 ; gain = 25.668 ; free physical = 115962 ; free virtual = 126751
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2321.414 ; gain = 0.000 ; free physical = 115964 ; free virtual = 126753
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  RAM16X1D => RAM32X1D (RAMD32, RAMD32): 2 instances
+
+INFO: [Project 1-604] Checkpoint was created with Vivado v2018.3 (64-bit) build 2405991
+open_checkpoint: Time (s): cpu = 00:00:16 ; elapsed = 00:00:21 . Memory (MB): peak = 2321.414 ; gain = 864.391 ; free physical = 115964 ; free virtual = 126753
+Command: write_bitstream -force alltop.bit
+Attempting to get a license for feature 'Implementation' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7z020'
+Running DRC as a precondition to command write_bitstream
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+INFO: [DRC 23-27] Running DRC with 8 threads
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/atan_0/s3_addr3 input simple_lsd_inst_f/atan_0/s3_addr3/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist20_return0 input simple_lsd_inst_f/calc_dist20_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist20_return0 input simple_lsd_inst_f/calc_dist20_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist21_return input simple_lsd_inst_f/calc_dist21_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist21_return input simple_lsd_inst_f/calc_dist21_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist21_return0 input simple_lsd_inst_f/calc_dist21_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist21_return0 input simple_lsd_inst_f/calc_dist21_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist22_return input simple_lsd_inst_f/calc_dist22_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist22_return input simple_lsd_inst_f/calc_dist22_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist22_return0 input simple_lsd_inst_f/calc_dist22_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist22_return0 input simple_lsd_inst_f/calc_dist22_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist23_return input simple_lsd_inst_f/calc_dist23_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist23_return input simple_lsd_inst_f/calc_dist23_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist23_return0 input simple_lsd_inst_f/calc_dist23_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist23_return0 input simple_lsd_inst_f/calc_dist23_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist24_return input simple_lsd_inst_f/calc_dist24_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist24_return input simple_lsd_inst_f/calc_dist24_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist24_return0 input simple_lsd_inst_f/calc_dist24_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist24_return0 input simple_lsd_inst_f/calc_dist24_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist2_return0 input simple_lsd_inst_f/calc_dist2_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_f/calc_dist2_return0 input simple_lsd_inst_f/calc_dist2_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/atan_0/s3_addr3 input simple_lsd_inst_r/atan_0/s3_addr3/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist20_return0 input simple_lsd_inst_r/calc_dist20_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist20_return0 input simple_lsd_inst_r/calc_dist20_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist21_return input simple_lsd_inst_r/calc_dist21_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist21_return input simple_lsd_inst_r/calc_dist21_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist21_return0 input simple_lsd_inst_r/calc_dist21_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist21_return0 input simple_lsd_inst_r/calc_dist21_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist22_return input simple_lsd_inst_r/calc_dist22_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist22_return input simple_lsd_inst_r/calc_dist22_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist22_return0 input simple_lsd_inst_r/calc_dist22_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist22_return0 input simple_lsd_inst_r/calc_dist22_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist23_return input simple_lsd_inst_r/calc_dist23_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist23_return input simple_lsd_inst_r/calc_dist23_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist23_return0 input simple_lsd_inst_r/calc_dist23_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist23_return0 input simple_lsd_inst_r/calc_dist23_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist24_return input simple_lsd_inst_r/calc_dist24_return/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist24_return input simple_lsd_inst_r/calc_dist24_return/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist24_return0 input simple_lsd_inst_r/calc_dist24_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist24_return0 input simple_lsd_inst_r/calc_dist24_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist2_return0 input simple_lsd_inst_r/calc_dist2_return0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPIP-1] Input pipelining: DSP simple_lsd_inst_r/calc_dist2_return0 input simple_lsd_inst_r/calc_dist2_return0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/atan_0/s3_addr3 output simple_lsd_inst_f/atan_0/s3_addr3/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist20_return0 output simple_lsd_inst_f/calc_dist20_return0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist21_return output simple_lsd_inst_f/calc_dist21_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist22_return output simple_lsd_inst_f/calc_dist22_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist23_return output simple_lsd_inst_f/calc_dist23_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist24_return output simple_lsd_inst_f/calc_dist24_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_f/calc_dist2_return0 output simple_lsd_inst_f/calc_dist2_return0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/atan_0/s3_addr3 output simple_lsd_inst_r/atan_0/s3_addr3/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist20_return0 output simple_lsd_inst_r/calc_dist20_return0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist21_return output simple_lsd_inst_r/calc_dist21_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist22_return output simple_lsd_inst_r/calc_dist22_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist23_return output simple_lsd_inst_r/calc_dist23_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist24_return output simple_lsd_inst_r/calc_dist24_return/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP simple_lsd_inst_r/calc_dist2_return0 output simple_lsd_inst_r/calc_dist2_return0/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP topview_inst_f/topview_trans_inst0/g1_reg output topview_inst_f/topview_trans_inst0/g1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP topview_inst_f/topview_trans_inst1/g1_reg output topview_inst_f/topview_trans_inst1/g1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP topview_inst_r/topview_trans_inst0/g1_reg output topview_inst_r/topview_trans_inst0/g1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-1] PREG Output pipelining: DSP topview_inst_r/topview_trans_inst1/g1_reg output topview_inst_r/topview_trans_inst1/g1_reg/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP cam_top_inst_f/camera_if_inst/r2y_0/s2_y_g_reg multiplier stage cam_top_inst_f/camera_if_inst/r2y_0/s2_y_g_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP cam_top_inst_r/camera_if_inst/r2y_0/s2_y_g_reg multiplier stage cam_top_inst_r/camera_if_inst/r2y_0/s2_y_g_reg/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/atan_0/s3_addr3 multiplier stage simple_lsd_inst_f/atan_0/s3_addr3/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist20_return0 multiplier stage simple_lsd_inst_f/calc_dist20_return0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist21_return multiplier stage simple_lsd_inst_f/calc_dist21_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist22_return multiplier stage simple_lsd_inst_f/calc_dist22_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist23_return multiplier stage simple_lsd_inst_f/calc_dist23_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist24_return multiplier stage simple_lsd_inst_f/calc_dist24_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_f/calc_dist2_return0 multiplier stage simple_lsd_inst_f/calc_dist2_return0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/atan_0/s3_addr3 multiplier stage simple_lsd_inst_r/atan_0/s3_addr3/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist20_return0 multiplier stage simple_lsd_inst_r/calc_dist20_return0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist21_return multiplier stage simple_lsd_inst_r/calc_dist21_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist22_return multiplier stage simple_lsd_inst_r/calc_dist22_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist23_return multiplier stage simple_lsd_inst_r/calc_dist23_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist24_return multiplier stage simple_lsd_inst_r/calc_dist24_return/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC DPOP-2] MREG Output pipelining: DSP simple_lsd_inst_r/calc_dist2_return0 multiplier stage simple_lsd_inst_r/calc_dist2_return0/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_accel_reg_reg[6]_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_accel_reg_reg[6]_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_accel_reg_reg[6]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_steer_reg_reg[7]_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_steer_reg_reg[7]_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/kl_steer_reg_reg[7]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_req_reg_reg_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_req_reg_reg_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_req_reg_reg_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_send_data_reg_reg[23]_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_send_data_reg_reg[23]_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/sccb_send_data_reg_reg[23]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_f_reg_reg[31]_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_f_reg_reg[31]_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_f_reg_reg[31]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+WARNING: [DRC PDRC-153] Gated clock check: Net pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_r_reg_reg[31]_i_1_n_0 is a gated clock net sourced by a combinational pin pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_r_reg_reg[31]_i_1/O, cell pspl_comm_inst/pspl_comm_0/inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_r_reg_reg[31]_i_1. This is not good design practice and will likely impact performance. For SLICE registers, for example, use the CE pin to control the loading of data.
+INFO: [DRC REQP-31] enum_PREG_0_connects_CEP_GND: topview_inst_f/topview_trans_inst0/g1_reg: When the DSP48E1 PREG attribute is set to 0, the CEP input pin should be tied to GND to save power.
+INFO: [DRC REQP-31] enum_PREG_0_connects_CEP_GND: topview_inst_f/topview_trans_inst1/g1_reg: When the DSP48E1 PREG attribute is set to 0, the CEP input pin should be tied to GND to save power.
+INFO: [DRC REQP-31] enum_PREG_0_connects_CEP_GND: topview_inst_r/topview_trans_inst0/g1_reg: When the DSP48E1 PREG attribute is set to 0, the CEP input pin should be tied to GND to save power.
+INFO: [DRC REQP-31] enum_PREG_0_connects_CEP_GND: topview_inst_r/topview_trans_inst1/g1_reg: When the DSP48E1 PREG attribute is set to 0, the CEP input pin should be tied to GND to save power.
+INFO: [Vivado 12-3199] DRC finished with 0 Errors, 82 Warnings, 4 Advisories
+INFO: [Vivado 12-3200] Please refer to the DRC report (report_drc) for more information.
+INFO: [Designutils 20-2272] Running write_bitstream with 8 threads.
+Loading data files...
+Loading site data...
+Loading route data...
+Processing options...
+Creating bitmap...
+Creating bitstream...
+Writing bitstream ./alltop.bit...
+INFO: [Vivado 12-1842] Bitgen Completed Successfully.
+INFO: [Project 1-118] WebTalk data collection is enabled (User setting is ON. Install Setting is ON.).
+INFO: [Common 17-186] '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/usage_statistics_webtalk.xml' has been successfully sent to Xilinx on Mon Nov 25 22:16:52 2019. For additional details about this file, please refer to the WebTalk help file at /home/cad/xilinx-vivado-2018.3/Vivado/2018.3/doc/webtalk_introduction.html.
+INFO: [Common 17-83] Releasing license: Implementation
+27 Infos, 83 Warnings, 0 Critical Warnings and 0 Errors encountered.
+write_bitstream completed successfully
+write_bitstream: Time (s): cpu = 00:00:31 ; elapsed = 00:01:23 . Memory (MB): peak = 2849.668 ; gain = 528.254 ; free physical = 115862 ; free virtual = 126655
+INFO: [Common 17-206] Exiting Vivado at Mon Nov 25 22:16:53 2019...

@@ -1,0 +1,35 @@
+//
+// File created by:  xmverilog
+// Do not modify this file
+//
+-XLMODE
+./xcelium.d/run.lnx8664.18.09.d
+-RUNMODE
+-YDIR
+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/verilog/src/unisims
+-LIBEXT
+.v
+-YDIR
+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/verilog/src/unimacro
+-LIBEXT
+.v
+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/verilog/src/glbl.v
+sim_testset.sv
+../../hdl/motor/testset.sv
+../../hdl/motor/pbsbf4_Top.v
+../../hdl/motor/pbsbf4_renew.v
+../../hdl/motor/pbsbf4.v
+../../hdl/motor/clock_gen.v
+../../hdl/motor/apamod.sv
+../../hdl/motor/fbmod_v1.1.v
+../../hdl/motor/hoge.sv
+../../hdl/motor/pwm14.sv
+-CDSLIB
+./xcelium.d/run.lnx8664.18.09.d/cdsrun.lib
+-HDLVAR
+./xcelium.d/run.lnx8664.18.09.d/hdlrun.var
+-MESSAGES
+-UPDATE
+-XLLIBSTORE
+./xcelium.d/run.lnx8664.18.09.d/xllibs
+-ALLOWUNBOUND

@@ -3,15 +3,15 @@ module testset(
   input wire          n_rst,        //using botton ,botton always sends low signal
 //  input wire [1:0]    sw,         //control speed with swith
   input wire          btn,        //for brake action
-  input wire          fbr,        //con to PMOD
-  input wire          fbl,        //con to PMOD
+  (* mark_debug = "true" *) input wire          fbr,        //con to PMOD
+  (* mark_debug = "true" *) input wire          fbl,        //con to PMOD
   input wire  [6:0]   psv,        //con to PS
   input wire  [7:0]   ste,        //con to PS
   // input wire  [6:0]   rvw,        //con to PS
   // input wire  [6:0]   lvw,        //con to PS
 
-  output wire [15:0]  out_edge_l, //con to PS 
-  output wire [15:0]  out_edge_r, //con to PS 
+  (* mark_debug = "true" *) output wire [15:0]  out_edge_l, //con to PS 
+  (* mark_debug = "true" *) output wire [15:0]  out_edge_r, //con to PS 
   output wire         pwma,       //con to PMOD        
   output wire         pwmb,       //con to PMOD
   output wire         ain1,       //con to PMOD

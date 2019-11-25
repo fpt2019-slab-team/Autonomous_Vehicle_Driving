@@ -102,7 +102,7 @@ wire [7:0]  kl_steer;
 
 /// degub     ///
 
-assign led[1:0] = {fbl, fbr};
+assign led = speed_r[3:0];
 
 /// debug end ///
 
@@ -491,7 +491,6 @@ testset_inst
   .bin2       (bin2),
   .stnby      (stnby)
 );
-
 endmodule
 
 `default_nettype wire

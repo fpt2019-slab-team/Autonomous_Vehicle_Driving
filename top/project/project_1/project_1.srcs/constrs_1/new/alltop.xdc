@@ -1,0 +1,106 @@
+
+connect_debug_port u_ila_0/probe0 [get_nets [list {testset_inst/fbl_inst/edge_out[0]} {testset_inst/fbl_inst/edge_out[1]} {testset_inst/fbl_inst/edge_out[2]} {testset_inst/fbl_inst/edge_out[3]} {testset_inst/fbl_inst/edge_out[4]} {testset_inst/fbl_inst/edge_out[5]} {testset_inst/fbl_inst/edge_out[6]} {testset_inst/fbl_inst/edge_out[7]} {testset_inst/fbl_inst/edge_out[8]} {testset_inst/fbl_inst/edge_out[9]} {testset_inst/fbl_inst/edge_out[10]} {testset_inst/fbl_inst/edge_out[11]} {testset_inst/fbl_inst/edge_out[12]} {testset_inst/fbl_inst/edge_out[13]} {testset_inst/fbl_inst/edge_out[14]} {testset_inst/fbl_inst/edge_out[15]}]]
+connect_debug_port u_ila_0/probe1 [get_nets [list {testset_inst/fbr_inst/edge_out[0]} {testset_inst/fbr_inst/edge_out[1]} {testset_inst/fbr_inst/edge_out[2]} {testset_inst/fbr_inst/edge_out[3]} {testset_inst/fbr_inst/edge_out[4]} {testset_inst/fbr_inst/edge_out[5]} {testset_inst/fbr_inst/edge_out[6]} {testset_inst/fbr_inst/edge_out[7]} {testset_inst/fbr_inst/edge_out[8]} {testset_inst/fbr_inst/edge_out[9]} {testset_inst/fbr_inst/edge_out[10]} {testset_inst/fbr_inst/edge_out[11]} {testset_inst/fbr_inst/edge_out[12]} {testset_inst/fbr_inst/edge_out[13]} {testset_inst/fbr_inst/edge_out[14]} {testset_inst/fbr_inst/edge_out[15]}]]
+connect_debug_port u_ila_1/probe5 [get_nets [list testset_inst/fbl_inst/inp_fbp]]
+connect_debug_port u_ila_1/probe6 [get_nets [list testset_inst/fbr_inst/inp_fbp]]
+
+
+
+create_debug_core u_ila_0 ila
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_0]
+set_property C_DATA_DEPTH 4096 [get_debug_cores u_ila_0]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_0]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_0]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_0]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
+set_property port_width 1 [get_debug_ports u_ila_0/clk]
+connect_debug_port u_ila_0/clk [get_nets [list clk_wiz_0_inst/inst/clk_out1]]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
+set_property port_width 14 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {testset_inst/pwm14l/vq[0]} {testset_inst/pwm14l/vq[1]} {testset_inst/pwm14l/vq[2]} {testset_inst/pwm14l/vq[3]} {testset_inst/pwm14l/vq[4]} {testset_inst/pwm14l/vq[5]} {testset_inst/pwm14l/vq[6]} {testset_inst/pwm14l/vq[7]} {testset_inst/pwm14l/vq[8]} {testset_inst/pwm14l/vq[9]} {testset_inst/pwm14l/vq[10]} {testset_inst/pwm14l/vq[11]} {testset_inst/pwm14l/vq[12]} {testset_inst/pwm14l/vq[13]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
+set_property port_width 14 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {testset_inst/pwm14l/cnt[0]} {testset_inst/pwm14l/cnt[1]} {testset_inst/pwm14l/cnt[2]} {testset_inst/pwm14l/cnt[3]} {testset_inst/pwm14l/cnt[4]} {testset_inst/pwm14l/cnt[5]} {testset_inst/pwm14l/cnt[6]} {testset_inst/pwm14l/cnt[7]} {testset_inst/pwm14l/cnt[8]} {testset_inst/pwm14l/cnt[9]} {testset_inst/pwm14l/cnt[10]} {testset_inst/pwm14l/cnt[11]} {testset_inst/pwm14l/cnt[12]} {testset_inst/pwm14l/cnt[13]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
+set_property port_width 14 [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {testset_inst/pwm14r/vq[0]} {testset_inst/pwm14r/vq[1]} {testset_inst/pwm14r/vq[2]} {testset_inst/pwm14r/vq[3]} {testset_inst/pwm14r/vq[4]} {testset_inst/pwm14r/vq[5]} {testset_inst/pwm14r/vq[6]} {testset_inst/pwm14r/vq[7]} {testset_inst/pwm14r/vq[8]} {testset_inst/pwm14r/vq[9]} {testset_inst/pwm14r/vq[10]} {testset_inst/pwm14r/vq[11]} {testset_inst/pwm14r/vq[12]} {testset_inst/pwm14r/vq[13]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
+set_property port_width 14 [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {testset_inst/pwm14r/cnt[0]} {testset_inst/pwm14r/cnt[1]} {testset_inst/pwm14r/cnt[2]} {testset_inst/pwm14r/cnt[3]} {testset_inst/pwm14r/cnt[4]} {testset_inst/pwm14r/cnt[5]} {testset_inst/pwm14r/cnt[6]} {testset_inst/pwm14r/cnt[7]} {testset_inst/pwm14r/cnt[8]} {testset_inst/pwm14r/cnt[9]} {testset_inst/pwm14r/cnt[10]} {testset_inst/pwm14r/cnt[11]} {testset_inst/pwm14r/cnt[12]} {testset_inst/pwm14r/cnt[13]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
+set_property port_width 16 [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list {testset_inst/fbr__0/edge_out[0]} {testset_inst/fbr__0/edge_out[1]} {testset_inst/fbr__0/edge_out[2]} {testset_inst/fbr__0/edge_out[3]} {testset_inst/fbr__0/edge_out[4]} {testset_inst/fbr__0/edge_out[5]} {testset_inst/fbr__0/edge_out[6]} {testset_inst/fbr__0/edge_out[7]} {testset_inst/fbr__0/edge_out[8]} {testset_inst/fbr__0/edge_out[9]} {testset_inst/fbr__0/edge_out[10]} {testset_inst/fbr__0/edge_out[11]} {testset_inst/fbr__0/edge_out[12]} {testset_inst/fbr__0/edge_out[13]} {testset_inst/fbr__0/edge_out[14]} {testset_inst/fbr__0/edge_out[15]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
+set_property port_width 16 [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list {testset_inst/fbl__0/edge_out[0]} {testset_inst/fbl__0/edge_out[1]} {testset_inst/fbl__0/edge_out[2]} {testset_inst/fbl__0/edge_out[3]} {testset_inst/fbl__0/edge_out[4]} {testset_inst/fbl__0/edge_out[5]} {testset_inst/fbl__0/edge_out[6]} {testset_inst/fbl__0/edge_out[7]} {testset_inst/fbl__0/edge_out[8]} {testset_inst/fbl__0/edge_out[9]} {testset_inst/fbl__0/edge_out[10]} {testset_inst/fbl__0/edge_out[11]} {testset_inst/fbl__0/edge_out[12]} {testset_inst/fbl__0/edge_out[13]} {testset_inst/fbl__0/edge_out[14]} {testset_inst/fbl__0/edge_out[15]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
+set_property port_width 16 [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list {testset_inst/out_edge_l[0]} {testset_inst/out_edge_l[1]} {testset_inst/out_edge_l[2]} {testset_inst/out_edge_l[3]} {testset_inst/out_edge_l[4]} {testset_inst/out_edge_l[5]} {testset_inst/out_edge_l[6]} {testset_inst/out_edge_l[7]} {testset_inst/out_edge_l[8]} {testset_inst/out_edge_l[9]} {testset_inst/out_edge_l[10]} {testset_inst/out_edge_l[11]} {testset_inst/out_edge_l[12]} {testset_inst/out_edge_l[13]} {testset_inst/out_edge_l[14]} {testset_inst/out_edge_l[15]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
+set_property port_width 16 [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list {testset_inst/out_edge_r[0]} {testset_inst/out_edge_r[1]} {testset_inst/out_edge_r[2]} {testset_inst/out_edge_r[3]} {testset_inst/out_edge_r[4]} {testset_inst/out_edge_r[5]} {testset_inst/out_edge_r[6]} {testset_inst/out_edge_r[7]} {testset_inst/out_edge_r[8]} {testset_inst/out_edge_r[9]} {testset_inst/out_edge_r[10]} {testset_inst/out_edge_r[11]} {testset_inst/out_edge_r[12]} {testset_inst/out_edge_r[13]} {testset_inst/out_edge_r[14]} {testset_inst/out_edge_r[15]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
+set_property port_width 1 [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list pwmb_OBUF]]
+create_debug_core u_ila_1 ila
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_1]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_1]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_1]
+set_property C_DATA_DEPTH 4096 [get_debug_cores u_ila_1]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_1]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_1]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_1]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_1]
+set_property port_width 1 [get_debug_ports u_ila_1/clk]
+connect_debug_port u_ila_1/clk [get_nets [list clk_wiz_0_inst/inst/clk_out2]]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_1/probe0]
+set_property port_width 9 [get_debug_ports u_ila_1/probe0]
+connect_debug_port u_ila_1/probe0 [get_nets [list {end_v_f[0]} {end_v_f[1]} {end_v_f[2]} {end_v_f[3]} {end_v_f[4]} {end_v_f[5]} {end_v_f[6]} {end_v_f[7]} {end_v_f[8]}]]
+create_debug_core u_ila_2 ila
+set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_2]
+set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_2]
+set_property C_ADV_TRIGGER false [get_debug_cores u_ila_2]
+set_property C_DATA_DEPTH 4096 [get_debug_cores u_ila_2]
+set_property C_EN_STRG_QUAL false [get_debug_cores u_ila_2]
+set_property C_INPUT_PIPE_STAGES 0 [get_debug_cores u_ila_2]
+set_property C_TRIGIN_EN false [get_debug_cores u_ila_2]
+set_property C_TRIGOUT_EN false [get_debug_cores u_ila_2]
+set_property port_width 1 [get_debug_ports u_ila_2/clk]
+connect_debug_port u_ila_2/clk [get_nets [list pspl_comm_inst/processing_system7_0/inst/FCLK_CLK0]]
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe0]
+set_property port_width 8 [get_debug_ports u_ila_2/probe0]
+connect_debug_port u_ila_2/probe0 [get_nets [list {kl_steer[0]} {kl_steer[1]} {kl_steer[2]} {kl_steer[3]} {kl_steer[4]} {kl_steer[5]} {kl_steer[6]} {kl_steer[7]}]]
+create_debug_port u_ila_2 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe1]
+set_property port_width 7 [get_debug_ports u_ila_2/probe1]
+connect_debug_port u_ila_2/probe1 [get_nets [list {kl_accel[0]} {kl_accel[1]} {kl_accel[2]} {kl_accel[3]} {kl_accel[4]} {kl_accel[5]} {kl_accel[6]}]]
+create_debug_port u_ila_2 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe2]
+set_property port_width 1 [get_debug_ports u_ila_2/probe2]
+connect_debug_port u_ila_2/probe2 [get_nets [list testset_inst/fbl]]
+create_debug_port u_ila_2 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe3]
+set_property port_width 1 [get_debug_ports u_ila_2/probe3]
+connect_debug_port u_ila_2/probe3 [get_nets [list testset_inst/fbr]]
+create_debug_port u_ila_2 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe4]
+set_property port_width 1 [get_debug_ports u_ila_2/probe4]
+connect_debug_port u_ila_2/probe4 [get_nets [list testset_inst/fbl__0/inp_fbp]]
+create_debug_port u_ila_2 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_2/probe5]
+set_property port_width 1 [get_debug_ports u_ila_2/probe5]
+connect_debug_port u_ila_2/probe5 [get_nets [list testset_inst/fbr__0/inp_fbp]]
+set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
+set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
+set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
+connect_debug_port dbg_hub/clk [get_nets u_ila_2_FCLK_CLK0]

@@ -1,0 +1,76 @@
+$date
+        2019-Nov-25 20:21:15
+$end
+$version
+        Vivado v2018.3 (64-bit)
+$end
+$timescale
+        1ps
+$end
+$scope module dut $end
+$var reg 12 " testset_inst/fbr_inst/edge_out [11:0] $end
+$var reg 4 . speed_r_1 [15:12] $end
+$var reg 16 2 testset_inst/fbr_inst/cnt_edge [15:0] $end
+$var reg 16 B testset_inst/fbr_inst/cnt_edge_reg__0 [15:0] $end
+$var reg 12 R testset_inst/out_edge_l [11:0] $end
+$var reg 4 ^ speed_l_1 [15:12] $end
+$var reg 12 b testset_inst/out_edge_r [11:0] $end
+$var reg 4 n speed_r [15:12] $end
+$var reg 12 r testset_inst/fbl_inst/edge_out [11:0] $end
+$var reg 4 ~ speed_l [15:12] $end
+$var reg 16 $" testset_inst/fbl_inst/cnt_edge [15:0] $end
+$var reg 16 4" testset_inst/fbl_inst/cnt_edge_reg__0 [15:0] $end
+$var reg 1 D" testset_inst/fbr_inst/clk_1 $end
+$var reg 1 E" testset_inst/fbl_inst/clk_1 $end
+$var reg 1 F" testset_inst/fbl $end
+$var reg 1 G" testset_inst/fbr $end
+$var reg 1 H" testset_inst/fbr_inst/inp_fbp $end
+$var reg 1 I" testset_inst/fbl_inst/inp_fbp $end
+$var reg 1 J" _TRIGGER $end
+$var reg 1 K" _WINDOW $end
+$var reg 1 L" _GAP $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b10010 "
+b0 .
+b100000110 2
+b10010 B
+b0 R
+b0 ^
+b10010 b
+b0 n
+b0 r
+b0 ~
+b100000101 $"
+b0 4"
+0D"
+0E"
+0F"
+0G"
+0H"
+0I"
+0J"
+1K"
+0L"
+$end
+#100
+1D"
+1E"
+1J"
+#101
+b100000110 "
+b0 2
+b100000110 B
+b100000101 R
+b100000110 b
+b100000101 r
+b0 $"
+b100000101 4"
+0D"
+0E"
+#125
+b0 R
+b0 r
+b0 4"

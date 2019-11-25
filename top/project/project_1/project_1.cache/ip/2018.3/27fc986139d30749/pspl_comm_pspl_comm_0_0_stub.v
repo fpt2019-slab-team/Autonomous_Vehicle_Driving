@@ -1,0 +1,73 @@
+// Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+// --------------------------------------------------------------------------------
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Thu Nov 14 15:59:57 2019
+// Host        : flamingo running 64-bit CentOS release 6.10 (Final)
+// Command     : write_verilog -force -mode synth_stub -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+//               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ pspl_comm_pspl_comm_0_0_stub.v
+// Design      : pspl_comm_pspl_comm_0_0
+// Purpose     : Stub declaration of top-level module interface
+// Device      : xc7z020clg400-1
+// --------------------------------------------------------------------------------
+
+// This empty module with port declaration file causes synthesis tools to infer a black box for IP.
+// The synthesis directives are for Synopsys Synplify support to prevent IO buffer insertion.
+// Please paste the declaration into a Verilog source file or add the file as an additional source.
+(* X_CORE_INFO = "pspl_comm_v1_0,Vivado 2018.3" *)
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix(sw, led, sccb_busy, sccb_req, sccb_send_data, 
+  lsd_ready_f, lsd_ready_r, lsd_line_num_f, lsd_line_num_r, lsd_line_data_f, lsd_line_data_r, 
+  lsd_line_addr_f, lsd_line_addr_r, topview_ready_f, topview_ready_r, topview_line_num_f, 
+  topview_line_num_r, topview_line_data_f, topview_line_data_r, topview_line_addr_f, 
+  topview_line_addr_r, motor_speed_l, motor_speed_r, kl_accel, kl_steer, s00_axi_awaddr, 
+  s00_axi_awprot, s00_axi_awvalid, s00_axi_awready, s00_axi_wdata, s00_axi_wstrb, 
+  s00_axi_wvalid, s00_axi_wready, s00_axi_bresp, s00_axi_bvalid, s00_axi_bready, 
+  s00_axi_araddr, s00_axi_arprot, s00_axi_arvalid, s00_axi_arready, s00_axi_rdata, 
+  s00_axi_rresp, s00_axi_rvalid, s00_axi_rready, s00_axi_aclk, s00_axi_aresetn)
+/* synthesis syn_black_box black_box_pad_pin="sw[1:0],led[3:0],sccb_busy,sccb_req,sccb_send_data[23:0],lsd_ready_f,lsd_ready_r,lsd_line_num_f[31:0],lsd_line_num_r[31:0],lsd_line_data_f[39:0],lsd_line_data_r[39:0],lsd_line_addr_f[31:0],lsd_line_addr_r[31:0],topview_ready_f,topview_ready_r,topview_line_num_f[31:0],topview_line_num_r[31:0],topview_line_data_f[38:0],topview_line_data_r[38:0],topview_line_addr_f[31:0],topview_line_addr_r[31:0],motor_speed_l[15:0],motor_speed_r[15:0],kl_accel[6:0],kl_steer[7:0],s00_axi_awaddr[3:0],s00_axi_awprot[2:0],s00_axi_awvalid,s00_axi_awready,s00_axi_wdata[31:0],s00_axi_wstrb[3:0],s00_axi_wvalid,s00_axi_wready,s00_axi_bresp[1:0],s00_axi_bvalid,s00_axi_bready,s00_axi_araddr[3:0],s00_axi_arprot[2:0],s00_axi_arvalid,s00_axi_arready,s00_axi_rdata[31:0],s00_axi_rresp[1:0],s00_axi_rvalid,s00_axi_rready,s00_axi_aclk,s00_axi_aresetn" */;
+  input [1:0]sw;
+  output [3:0]led;
+  input sccb_busy;
+  output sccb_req;
+  output [23:0]sccb_send_data;
+  input lsd_ready_f;
+  input lsd_ready_r;
+  input [31:0]lsd_line_num_f;
+  input [31:0]lsd_line_num_r;
+  input [39:0]lsd_line_data_f;
+  input [39:0]lsd_line_data_r;
+  output [31:0]lsd_line_addr_f;
+  output [31:0]lsd_line_addr_r;
+  input topview_ready_f;
+  input topview_ready_r;
+  input [31:0]topview_line_num_f;
+  input [31:0]topview_line_num_r;
+  input [38:0]topview_line_data_f;
+  input [38:0]topview_line_data_r;
+  output [31:0]topview_line_addr_f;
+  output [31:0]topview_line_addr_r;
+  input [15:0]motor_speed_l;
+  input [15:0]motor_speed_r;
+  output [6:0]kl_accel;
+  output [7:0]kl_steer;
+  input [3:0]s00_axi_awaddr;
+  input [2:0]s00_axi_awprot;
+  input s00_axi_awvalid;
+  output s00_axi_awready;
+  input [31:0]s00_axi_wdata;
+  input [3:0]s00_axi_wstrb;
+  input s00_axi_wvalid;
+  output s00_axi_wready;
+  output [1:0]s00_axi_bresp;
+  output s00_axi_bvalid;
+  input s00_axi_bready;
+  input [3:0]s00_axi_araddr;
+  input [2:0]s00_axi_arprot;
+  input s00_axi_arvalid;
+  output s00_axi_arready;
+  output [31:0]s00_axi_rdata;
+  output [1:0]s00_axi_rresp;
+  output s00_axi_rvalid;
+  input s00_axi_rready;
+  input s00_axi_aclk;
+  input s00_axi_aresetn;
+endmodule

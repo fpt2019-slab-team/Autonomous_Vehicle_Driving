@@ -1,0 +1,6 @@
+define LIB_MAP ( $LIB_MAP \
+, ../../../../../../../../../../../cad/xilinx-vivado-2018.3/Vivado/2018.3/data/verilog/src/unisims => unisims \
+)
+define LIB_MAP ( $LIB_MAP \
+, ../../../../../../../../../../../cad/xilinx-vivado-2018.3/Vivado/2018.3/data/verilog/src/unisims => unisims \
+)

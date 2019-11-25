@@ -1,0 +1,37 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Mon Nov 25 16:48:08 2019
+# Process ID: 3271
+# Current directory: /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1
+# Command line: vivado -mode tcl -source config_bitstream.tcl
+# Log file: /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/vivado.log
+# Journal file: /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/vivado.jou
+#-----------------------------------------------------------
+source config_bitstream.tcl
+# open_hw
+# connect_hw_server
+INFO: [Labtools 27-2285] Connecting to hw_server url TCP:localhost:3121
+INFO: [Labtools 27-2222] Launching hw_server...
+INFO: [Labtools 27-2221] Launch Output:
+
+****** Xilinx hw_server v2018.3
+  **** Build date : Dec  6 2018-23:53:53
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+
+# open_hw_target
+INFO: [Labtoolstcl 44-466] Opening hw_target localhost:3121/xilinx_tcf/Digilent/003017A939B6A
+# current_hw_device [get_hw_devices xc7z020_1]
+# refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+# set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+# set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+# set_property PROGRAM.FILE {/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/impl_1/alltop.bit} [get_hw_devices xc7z020_1]
+# program_hw_devices [get_hw_devices xc7z020_1]
+INFO: [Labtools 27-3164] End of startup status: HIGH
+# refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+INFO: [Labtools 27-1434] Device xc7z020 (JTAG device index = 1) is programmed with a design that has no supported debug core(s) in it.
+# exit
+INFO: [Common 17-206] Exiting Vivado at Mon Nov 25 16:48:30 2019...
