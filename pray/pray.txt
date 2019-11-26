@@ -14,3 +14,4 @@
 2019-10-28 mo line.py: remove short lines
 2019-11-16 sa line.py: context
 2019-11-19 tu line.py add arguments of debug()
+2019-11-27 we line.py animation
