@@ -2,11 +2,15 @@
 
 import cv2
 import numpy as np
+import matplotlib.animation as animation
+import time
+import matplotlib.pyplot as plt
+import sys
+
+from multiprocessing import Manager, Value, Process
 from math import sin, cos, tan, pi, sqrt, asin, acos, atan2
 from itertools import product
-
 from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from functools import reduce
 from PIL import Image, ImageDraw
@@ -540,7 +544,8 @@ def bird_view(uv_lines, eye, r, BIRD, CONTEXT):
 # ret: uv_lines: np.shape == (N - *, 2, 2)
 def bird_view_fixed(uv_lines, eye, BIRD, CONTEXT):
     theta = np.array([0, 0, 0])
-    return bird_view(uv_lines, eye, theta, BIRD, CONTEXT)
+    r = theta2r(theta)
+    return bird_view(uv_lines, eye, r, BIRD, CONTEXT)
 
 ################################################################################
 # WIDTH:    int
@@ -556,36 +561,30 @@ def uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH):
     return img
 
 ################################################################################
-def debug(
-        eye,
-        r,
-        CONTEXT,
-        BIRD,
-        LINES_LSD_XYZ,
-        uv_lines,
-        MAP_SIZE,
-        IS_SPLIT_WINDOW,
-        LINE_WIDTH, # line width of img [px]
-        FIGSIZE, # inch
-        FIGPOS, # ([left_edge_pos, bottom_edge_pos, width, height], [...]) (0-1)
-        AFS, # list of affine
-        ):
-    # plot uv_lines
+def func_draw(_, dargs, aw, ax):
+    eye             = dargs['eye']
+    r               = dargs['r']
+    CONTEXT         = dargs['CONTEXT']
+    BIRD            = dargs['BIRD']
+    LINES_LSD_XYZ   = dargs['LINES_LSD_XYZ']
+    MAP_SIZE        = dargs['MAP_SIZE']
+    LINE_WIDTH      = dargs['LINE_WIDTH']
+    FIGSIZE         = dargs['FIGSIZE']
+    FIGPOS          = dargs['FIGPOS']
+    AFS             = dargs['AFS']
+    WM_LINES        = dargs['WM_LINES']
+
+    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
+    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
     img = uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH)
 
-    if IS_SPLIT_WINDOW:
-        ax = Axes3D(plt.figure(figsize=FIGSIZE))
-        img.show()
-    else:
-        fig = plt.figure(figsize=FIGSIZE)
+    aw.cla()
+    ax.cla()
 
-        aw = fig.add_subplot(1, 2, 1)
-        ax = fig.add_subplot(1, 2, 2, projection='3d')
+    aw.set_position([0.05, 0.05, 0.4, 0.9])
+    ax.set_position([0.40, 0.05, 0.6, 0.9])
 
-        aw.set_position([0.05, 0.05, 0.4, 0.9])
-        ax.set_position([0.40, 0.05, 0.6, 0.9])
-
-        aw.imshow(img, cmap='gray', vmin=0, vmax=255, interpolation='none')
+    aw.imshow(img, cmap='gray', vmin=0, vmax=255, interpolation='none')
 
     ax.set_axis_off()
 
@@ -619,7 +618,7 @@ def debug(
         cf_v = uv2cf(uv, CONTEXT)
         wf_v =   c2w(cf_v, eye, r);
         wf_vs.append(wf_v)
-    #plot_rectangle(ax, wf_vs)
+    plot_rectangle(ax, wf_vs)
 
     # plot rectangle of map, lines from eye to rectangle of map
     wm_vs = [] # 4 verticies of projected region on map
@@ -681,16 +680,33 @@ def debug(
     ax.plot(*list(zip(eye_b, c2w(np.array([0, l, 0]), eye_b, r_b))), '-', c=c)
     ax.plot(*list(zip(eye_b, c2w(np.array([0, 0, l]), eye_b, r_b))), '-', c=c)
 
-    # aspect
-    #ax.set_aspect('equal')
-
     # affine
     AF = reduce(lambda res, x: np.dot(res, x), AFS, np.eye(4))
     ax.get_proj = lambda: np.dot(Axes3D.get_proj(ax), AF)
 
+def debug(dargs):
+    fig = plt.figure(figsize=dargs['FIGSIZE'])
+    aw = fig.add_subplot(1, 2, 1)
+    ax = fig.add_subplot(1, 2, 2, projection='3d')
+
+    process_update = Process(target=func_update_wrap, kwargs={'dargs': dargs})
+    process_update.start()
+
+    #interval=100
+    _ = animation.FuncAnimation(fig, func_draw, fargs=(dargs, aw, ax))
     plt.show()
 
+def func_update_wrap(dargs):
+    while True:
+        func_update(dargs)
+
 ################################################################################
+def func_update(dargs):
+    eye = dargs['eye']
+    eye = np.array([eye[0], eye[1], eye[2] - 1])
+    dargs['eye'] = eye
+    time.sleep(0.01)
+
 def main():
     # setup
     np.seterr(divide='raise')
@@ -713,7 +729,7 @@ def main():
         'SCALE' : SCALE ,
     }
     LINES_LSD_XZ = np.load('map.large_18522x13230.npy') / 18522 * max(MAP_SIZE)
-            # (293, 2, 2)
+            # (293, 4)
     LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1) # (293, 6)
     WM_LINES  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3) # (293, 2, 3)
 
@@ -726,13 +742,12 @@ def main():
     theta = np.array([0, theta_y, 0]) / 180 * pi # 0 <= theta_x <= 90
     r = theta2r(theta)
 
-    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
-    uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
+    #uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
+    #uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
     #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     # debug
-    IS_SPLIT_WINDOW = False
-    LINE_WIDTH = 3
+    LINE_WIDTH = 3 # line width of img [px]
     FIGSIZE=np.array((1 * 2, 1)) * 6 # (width, height) [inches]
     FIGPOS=([0.05, 0.05, 0.4, 0.9], # [left_edge_pos, bottom_edge_pos,
             [0.40, 0.05, 0.6, 0.9]),#     width, height]
@@ -747,20 +762,22 @@ def main():
             [0, 0, 0,    1],
         ]),
     ]
-    debug(
-            eye,
-            r,
-            CONTEXT,
-            BIRD,
-            LINES_LSD_XYZ,
-            uv_lines,
-            MAP_SIZE,
-            IS_SPLIT_WINDOW,
-            LINE_WIDTH,
-            FIGSIZE,
-            FIGPOS,
-            AFS,
-    )
+
+    dargs = Manager().dict({
+        'eye'               : eye, # modified by func_update
+        'r'                 : r,   # modified by func_update
+        'CONTEXT'           : CONTEXT,
+        'BIRD'              : BIRD,
+        'LINES_LSD_XYZ'     : LINES_LSD_XYZ,
+        'MAP_SIZE'          : MAP_SIZE,
+        'LINE_WIDTH'        : LINE_WIDTH,
+        'FIGSIZE'           : FIGSIZE,
+        'FIGPOS'            : FIGPOS,
+        'AFS'               : AFS,
+        'WM_LINES'          : WM_LINES,
+    })
+
+    debug(dargs)
 
 if __name__ == '__main__':
     main()
