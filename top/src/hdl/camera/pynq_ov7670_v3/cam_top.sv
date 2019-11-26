@@ -10,7 +10,6 @@ module cam_top
         parameter integer DATA_SIZE = 8
     )
 	(
-		input wire        sysclk,
 		input wire				clk_12m,	
 		input wire				n_rst,
 		output wire       cam_SIOC,
@@ -56,12 +55,12 @@ module cam_top
 	//
 	sccb_if
 	#( 
-		.CLOCK_FREQ(125 * 10 ** 6),
+		.CLOCK_FREQ(12 * 10 ** 6),
 		.SCL_FREQ(200 * 10 ** 3)
 	)  
 	sccb_if_inst
 	(  
-		.sysclk(sysclk),
+		.sysclk(clk_12m),
 		.n_rst(n_rst),
 		.req(sccb_req),
 		.send_data(sccb_send_data),

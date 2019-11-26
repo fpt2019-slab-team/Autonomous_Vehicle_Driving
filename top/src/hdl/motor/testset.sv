@@ -3,15 +3,15 @@ module testset(
   input wire          n_rst,        //using botton ,botton always sends low signal
 //  input wire [1:0]    sw,         //control speed with swith
   input wire          btn,        //for brake action
-  (* mark_debug = "true" *) input wire          fbr,        //con to PMOD
-  (* mark_debug = "true" *) input wire          fbl,        //con to PMOD
+  input wire          fbr,        //con to PMOD
+  input wire          fbl,        //con to PMOD
   input wire  [6:0]   psv,        //con to PS
   input wire  [7:0]   ste,        //con to PS
   // input wire  [6:0]   rvw,        //con to PS
   // input wire  [6:0]   lvw,        //con to PS
 
-  (* mark_debug = "true" *) output wire [15:0]  out_edge_l, //con to PS 
-  (* mark_debug = "true" *) output wire [15:0]  out_edge_r, //con to PS 
+  output wire [15:0]  out_edge_l, //con to PS 
+  output wire [15:0]  out_edge_r, //con to PS 
   output wire         pwma,       //con to PMOD        
   output wire         pwmb,       //con to PMOD
   output wire         ain1,       //con to PMOD
@@ -37,10 +37,10 @@ module testset(
   assign out_edge_l = cnt_edge_l;
   assign out_edge_r = cnt_edge_r;
 
-  clock_gen clock_gen(
+  clock_gen clock_gen_inst (
     .clk(clk),        //in
     .n_rst(n_rst),
-    .clk_14(clk_8)    //out
+    .clk_8(clk_8)    //out
   );
 
   wire clk_8_bufg;
@@ -59,21 +59,6 @@ module testset(
       lvr <= lvw;  
     end
   end
-
-  //always @(posedge clk_8) begin
-  //  if (sw == 2'd0) begin
-  //    psv <= 7'b0;
-  //  end else if (sw == 2'd1) begin
-  //    psv <= 7'd42;
-  //  end else if (sw == 2'd2) begin
-  //    psv <= 7'd85;
-  //  end else begin
-  //    psv <= 7'd127;
-  //  end
-
-  //  rvr <= rvw;
-  //  lvr <= lvw;
-  //end
 
   /* steering */
   hoge hg(

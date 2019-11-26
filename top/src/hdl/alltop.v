@@ -79,7 +79,7 @@ clk_wiz_0 clk_wiz_0_inst
 );
 
 reg [3:0]         sys_reset_n_sync_regs = 4'h0;
-always @(posedge clk_24m) begin
+always @(posedge clk_12m) begin
   sys_reset_n_sync_regs <= {sys_reset_n_sync_regs[2:0], locked};
 end
 assign sys_reset_n = sys_reset_n_sync_regs[3];
@@ -184,7 +184,6 @@ cam_top
 )
 cam_top_inst_f
 (
-  .sysclk         (sysclk),
   .clk_12m        (clk_12m),
   .n_rst          (sys_reset_n),
   .cam_SIOC       (sioc),
@@ -209,7 +208,6 @@ cam_top
 )
 cam_top_inst_r
 (
-  .sysclk         (sysclk),
   .clk_12m        (clk_12m),
   .n_rst          (sys_reset_n),
   .cam_SIOC       (),
@@ -292,6 +290,7 @@ lsd_output_buffer_inst_f
   .in_start_h   (start_h_f),
   .in_end_h     (end_h_f),
   .in_rd_addr   (lsd_line_addr_f),
+  .in_write_project (),
   .out_ready    (lsd_ready_f),
   .out_line_num (lsd_line_num_f),
   .out_data     (),
@@ -299,6 +298,26 @@ lsd_output_buffer_inst_f
   .out_end_v    (lsd_end_v_f),
   .out_start_h  (lsd_start_h_f),
   .out_end_h    (lsd_end_h_f)
+);
+lsd_output_buffer_inst_r
+(
+  .clock        (clk_12m),
+  .n_rst        (sys_reset_n),
+  .in_flag      (lsd_flag_f),
+  .in_valid     (lsd_valid_r),
+  .in_start_v   (start_v_r),
+  .in_end_v     (end_v_r),
+  .in_start_h   (start_h_r),
+  .in_end_h     (end_h_r),
+  .in_rd_addr   (lsd_line_addr_r),
+  .in_write_project (),
+  .out_ready    (lsd_ready_r),
+  .out_line_num (lsd_line_num_r),
+  .out_data     (),
+  .out_start_v  (lsd_start_v_r),
+  .out_end_v    (lsd_end_v_r),
+  .out_start_h  (lsd_start_h_r),
+  .out_end_h    (lsd_end_h_r)
 );
 
 /*
@@ -330,35 +349,6 @@ simple_lsd_inst_r
   .out_start_h (start_h_r),
   .out_end_h   (end_h_r),
   .out_angle   (lsd_angle_r)
-);
-
-lsd_output_buffer
-#(
-  .BIT_WIDTH    (),
-  .IMAGE_HEIGHT (IMAGE_HEIGHT),
-  .IMAGE_WIDTH  (IMAGE_WIDTH),
-  .FRAME_HEIGHT (FRAME_HEIGHT),
-  .FRAME_WIDTH  (FRAME_WIDTH),
-  .RAM_SIZE     ()
-)
-lsd_output_buffer_inst_r
-(
-  .clock        (clk_12m),
-  .n_rst        (sys_reset_n),
-  .in_flag      (lsd_flag_f),
-  .in_valid     (lsd_valid_r),
-  .in_start_v   (start_v_r),
-  .in_end_v     (end_v_r),
-  .in_start_h   (start_h_r),
-  .in_end_h     (end_h_r),
-  .in_rd_addr   (lsd_line_addr_r),
-  .out_ready    (lsd_ready_r),
-  .out_line_num (lsd_line_num_r),
-  .out_data     (),
-  .out_start_v  (lsd_start_v_r),
-  .out_end_v    (lsd_end_v_r),
-  .out_start_h  (lsd_start_h_r),
-  .out_end_h    (lsd_end_h_r)
 );
 
 /*
@@ -473,7 +463,7 @@ assign led = {
 testset
 testset_inst
 (
-  .clk        (sysclk),
+  .clk        (clk_12m),
   .n_rst      (sys_reset_n),
   // .sw         (sw),
   .btn        (sw[0]),      // brake signal 

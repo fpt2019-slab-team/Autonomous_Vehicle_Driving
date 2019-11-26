@@ -1,4 +1,0 @@
-vhdl xil_defaultlib  \
-"../../../bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/sim/pspl_comm_rst_ps7_0_50M_0.vhd" \
-
-nosort

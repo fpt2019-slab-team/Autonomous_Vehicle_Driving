@@ -1,18 +1,17 @@
 module fbmod (
 	input wire          clk,		  //125MHz
 	input wire          n_rst,			
-	(* mark_debug = "true" *) input wire          inp_fbp,	
-
-  (* mark_debug = "true" *) output wire [15:0]  edge_out
+	input wire          inp_fbp,	
+  output wire [15:0]  edge_out
 );
 
-  localparam integer CLK_CNT_MAX = 27'd124999999;
+  localparam integer CLK_CNT_MAX = 23'd5999999;
 
   reg         inp_fbp_tmp, inp_fbp_sync;
 	reg         sta_fbp;
-  reg [26:0]  clk_cnt;
-  (* mark_debug = "true" *) reg [15:0]  cnt_edge_reg; 
-  (* mark_debug = "true" *) reg [15:0]  cnt_edge;     // to Fukui
+  reg [22:0]  clk_cnt;
+  reg [15:0]  cnt_edge_reg; 
+  reg [15:0]  cnt_edge;     // to Fukui
 
   assign edge_out = cnt_edge_reg;
 
@@ -46,11 +45,11 @@ module fbmod (
 
   always @(posedge clk)begin
     if (!n_rst)begin
-      clk_cnt <= 27'b0;
+      clk_cnt <= 23'b0;
     end else if(clk_cnt == CLK_CNT_MAX)begin
-      clk_cnt <= 27'b0;
+      clk_cnt <= 23'b0;
     end else begin
-      clk_cnt <= clk_cnt + 27'b1;
+      clk_cnt <= clk_cnt + 23'b1;
     end 
   end
 
