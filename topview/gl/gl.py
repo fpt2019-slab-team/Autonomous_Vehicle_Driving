@@ -69,12 +69,10 @@ def init():
     my = 0.0
     is_mouse_pressing = False
 
-    #map_tex = get_tex('ref_map.png')
-    map_tex = get_tex('ref_map_m.png')
-    #map_tex = get_tex('batsun.jpg')
+    map_tex = get_tex('map_3500x4900.png')
 
     lims = np.array([map_img.size[0], 500, map_img.size[1]])
-    diff_tick = 100
+    diff_tick = 250
     lims_mean = statistics.mean(lims)
     ARROW_H = min(lims) / 100 * 15
     ARROW_R = ARROW_H / 5
