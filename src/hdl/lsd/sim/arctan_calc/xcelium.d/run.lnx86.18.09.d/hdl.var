@@ -1,7 +1,0 @@
-define XMSIMRC	( /home/cad/cadence-xcelium-18.09.001/tools/xcelium/files/xmsimrc, ~/.xmsimrc )
-include ./hdlrun.var
-define SNAPSHOT worklib.sim_arctan_calc:v
-DEFINE RUNMODEDEFAULT 1
-DEFINE LIB_MAP ( + => worklib )
-define ELAB_SNAPSHOT
-define SNAPSHOT worklib.sim_arctan_calc:v
