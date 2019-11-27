@@ -41,3 +41,8 @@ class Linalg:
     def get_center(self, eye, theta):
         return eye + np.dot(self.get_R(theta), np.array([0, 0, 1]))
 
+    def R3toR4(self, r_in):
+        r = r_in
+        r = np.hstack((r, np.array([[0], [0], [0]])))
+        r = np.vstack((r, np.array([0, 0, 0, 1])))
+        return r

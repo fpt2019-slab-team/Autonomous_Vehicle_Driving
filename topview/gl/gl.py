@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import random
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
@@ -12,16 +11,20 @@ from math import sin,cos,pi,asin,acos,sqrt
 from PIL import Image
 import datetime
 import io
+from stl import mesh
+import glm
 
 from linalg import Linalg
 from car import Car
+from vao.lib import *
 
 # memo #########################################################################
-##########################################################################################
+# https://github.com/SausageTaste/practiceOpenGL-FirstPerson/blob/master/src/main_v2.py
+################################################################################
 
 def init():
     global linalg
-    global status_window_h
+    global STATUS_WINDOW_H
     global mx
     global my
     global is_mouse_pressing
@@ -29,19 +32,30 @@ def init():
     global lims
     global diff_tick
     global lims_mean
-    global arrow_h
-    global arrow_r
-    global sphere_r
-    global up
+    global ARROW_H
+    global ARROW_R
+    global SPHERE_R
+    global UP
     global map_tex
     global is_plot_axis
     global is_plot_tick
     global is_im_car
+    global is_front_camera
+    global is_view_car
+    global is_capturing
+    global is_driving
     global time_before
     global car
+    global VIEWPORT_W
+    global VIEWPORT_H
+    global THETA_H
+
+    VIEWPORT_W = 480
+    VIEWPORT_H = 640
+    THETA_H = 15
 
     glutInitWindowPosition(0, 0)
-    glutInitWindowSize(800, 800)
+    glutInitWindowSize(VIEWPORT_W, VIEWPORT_H)
     glutInit(sys.argv)
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH)
     glutCreateWindow(sys.argv[0].split('/')[-1])
@@ -49,38 +63,31 @@ def init():
 
     linalg = Linalg()
 
-    status_window_h = 100
+    STATUS_WINDOW_H = 100
 
     mx = 0.0
     my = 0.0
     is_mouse_pressing = False
 
-    map_tex = get_tex('ref_map.png')
+    #map_tex = get_tex('ref_map.png')
+    map_tex = get_tex('ref_map_m.png')
     #map_tex = get_tex('batsun.jpg')
 
     lims = np.array([map_img.size[0], 500, map_img.size[1]])
     diff_tick = 100
     lims_mean = statistics.mean(lims)
-    arrow_h = min(lims) / 100 * 15
-    arrow_r = arrow_h / 5
+    ARROW_H = min(lims) / 100 * 15
+    ARROW_R = ARROW_H / 5
 
-    sphere_r = lims_mean / 100 * 1
+    SPHERE_R = lims_mean / 100 * 1
 
-    up = np.array([0, 1, 0])
+    UP = np.array([0, 1, 0])
 
-    #eye_init = np.array([365, lims[2] / 16, 470])
-    #eye_init = np.array([lims[0] / 1, lims[1] / 1, lims[2] / 1])
-    eye_init = np.array([200, 800, 1100])
+    # overview
+    eye_init = np.array([200, 100, 1100])
+    theta_init = np.array([0, 170, 0]) / 180 * pi
+
     set_eye(eye_init)
-
-    #center_init = np.array([lims[0] / 2, 0, 0])
-    #center_init = np.array([0, 0, 0]) # debug
-    #center_init = eye + (center_init - eye) / np.linalg.norm(center_init - eye)
-    #center_init = eye + get_n(eye, center_init)
-
-    #theta_init= linalg.get_theta(eye, center_init)
-    theta_init = np.array([45, 180, 0]) / 180 * pi
-    #theta_init = np.array([20, 180, 0]) / 180 * pi
     set_theta(theta_init)
 
     is_plot_axis = True
@@ -89,11 +96,46 @@ def init():
     time_before = datetime.datetime.now()
 
     is_im_car = False # never True here
+    is_front_camera = True
+    is_view_car = True
+    is_capturing = False # never True here
+    is_driving = True
 
     car = Car(
-        np.array([370, sphere_r * 4, 470]), # eye
+        np.array([370, SPHERE_R * 4, 470]), # eye
         np.array([0, 180, 0]) / 180 * pi,   # theta
     )
+
+    #init_yukicotan()
+
+    return
+
+def init_yukicotan():
+    global YUKICOTAN
+    global vao
+    global SHADER_PROGRAM
+    global UNIFORM_PROJECTION
+    global UNIFORM_MODEL
+    global UNIFORM_VIEW
+
+    #YUKICOTAN = mesh.Mesh.from_file('yukicotan_3dData.stl').vectors[::10]
+    YUKICOTAN = mesh.Mesh.from_file('yukicotan_3dData.stl').vectors
+    YUKICOTAN = YUKICOTAN[len(YUKICOTAN) // 100 * 90::]
+    #YUKICOTAN = YUKICOTAN[]
+    YUKICOTAN = YUKICOTAN / np.max(YUKICOTAN) * SPHERE_R
+    #print(np.max(YUKICOTAN));exit()
+    #print(YUKICOTAN.shape);exit()
+
+    SHADER_PROGRAM = \
+        create_program('vao/simple/shader.vert', 'vao/simple/shader.frag')
+    #print(GL_COMPILE_STATUS);exit()
+    #print(glGetProgramInfoLog(SHADER_PROGRAM));exit()
+
+    UNIFORM_PROJECTION = glGetUniformLocation(SHADER_PROGRAM, 'projection')
+    UNIFORM_MODEL      = glGetUniformLocation(SHADER_PROGRAM, 'model')
+    UNIFORM_VIEW       = glGetUniformLocation(SHADER_PROGRAM, 'view')
+
+    vao = create_vao()
 
 def get_powered_size(size):
     width = size[0]
@@ -158,9 +200,9 @@ def plot_axis():
         glEnd()
 
         glTranslated(0, 0, lims[axis])
-        glRasterPos(0, 0, arrow_h * 1.5)
+        glRasterPos(0, 0, ARROW_H * 1.5)
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, ord('x') + axis)
-        glutSolidCone(arrow_r, arrow_h, 8, 8)
+        glutSolidCone(ARROW_R, ARROW_H, 8, 8)
 
         glPopMatrix()
 
@@ -207,13 +249,17 @@ def plot_tick():
 def reshape(w, h):
     global window_w
     global window_h
+    global perspective
+
+    perspective = (THETA_H, w/h, 1.0, max(lims) * 10)
 
     window_w, window_h = w, h
 
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
-    gluPerspective(30.0, w/h, 1.0, max(lims) * 10)
-    glMatrixMode (GL_MODELVIEW)
+    #gluPerspective(THETA_H, w/h, 1.0, max(lims) * 10)
+    gluPerspective(*perspective)
+    glMatrixMode(GL_MODELVIEW)
 
 def draw_tex(tex, img):
     glEnable(GL_TEXTURE_2D)
@@ -239,104 +285,213 @@ def draw_tex(tex, img):
 
     glBindTexture(GL_TEXTURE_2D, 0)
 
+def draw_yukicotan(point):
+    glPushAttrib(GL_CURRENT_BIT)
+    glColor3d(1, 0, 0)
+    glPushMatrix()
+    glTranslated(point[0], point[1] + SPHERE_R, point[2])
+
+    #glutSolidSphere(SPHERE_R / 4, 10, 10)
+
+    glUseProgram(SHADER_PROGRAM)
+    projection = np.array(glm.perspective(*perspective)).transpose().astype(np.float32)
+    view = np.array(glm.lookAt(*lookAt)).transpose().astype(np.float32)
+    model = np.matrix([
+        [100.0, 0.0, 0.0, 0.0],
+        [0.0, 100.0, 0.0, 0.0],
+        [0.0, 0.0, 100.0, 0.0],
+        [0.0, 0.0, 0.0, 1.0],
+    ], dtype=np.float32).transpose()
+    #glUniformMatrix4fv(UNIFORM_MODEL,      1, GL_FALSE, model);
+    #glUniformMatrix4fv(UNIFORM_VIEW,       1, GL_FALSE, view);
+    #glUniformMatrix4fv(UNIFORM_PROJECTION, 1, GL_FALSE, projection);
+    # marker
+
+    glBindVertexArray(vao)
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, None)
+    glBindVertexArray(0)
+    glUseProgram(0)
+
+    glPopMatrix()
+    glPopAttrib()
+    return
+
+    glPushMatrix()
+    projection = np.array(glm.perspective(*perspective)).astype(np.float32)
+    #print(projection.transpose());exit()
+    view = np.array(glm.lookAtLH(*lookAt)).astype(np.float32)
+    model = np.matrix([
+        [100.0, 0.0, 0.0, 0.0],
+        [0.0, 100.0, 0.0, 0.0],
+        [0.0, 0.0, 100.0, 0.0],
+        [0.0, 0.0, 0.0, 1.0],
+    ], dtype=np.float32).transpose()
+
+    points = np.array((
+        ( 0.0,  0.5, 0.0),
+        ( 0.5, -0.5, 0.0),
+        (-0.5, -0.5, 0.0),
+        #lookAt[0],
+        #lookAt[1],
+    )) * 100
+    points = np.hstack((points, np.array([[1]] * len(points))))
+    points = np.linalg.multi_dot((
+        #np.linalg.inv(projection),
+        #np.linalg.inv(model),
+        points,
+        view,
+        projection,
+        #projection.transpose(),
+        #np.linalg.inv(projection),
+        #np.linalg.inv(projection.transpose()),
+    ))
+    points = points / points[:,3][:,np.newaxis]
+    #print(points);exit()
+    #return
+    glBegin(GL_TRIANGLES)
+    glVertex3f(*points[0][:3])
+    glVertex3f(*points[1][:3])
+    glVertex3f(*points[2][:3])
+    glEnd()
+    glPopMatrix()
+
+    return
+
 def draw_sphere(point):
     glPushAttrib(GL_CURRENT_BIT)
     glColor3d(1, 0, 0)
     glPushMatrix()
-    glTranslated(point[0], point[1] + sphere_r, point[2])
-    glutSolidSphere(sphere_r, 10, 10)
+    glTranslated(point[0], point[1] + SPHERE_R, point[2])
+    glutSolidSphere(SPHERE_R, 10, 10)
     glPopMatrix()
     glPopAttrib()
 
 def display():
     global time_before
-
-    glPushMatrix()
-    glViewport(0, 100, window_w, window_h)
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    default_color = np.array([1, 1, 1]) * 0
-    glClearColor(*default_color, 0.0)
-    glColor3f(*(1 - default_color))
-
-    glLoadIdentity()
-
-    # car { ####################################################################
-    sample = car.get_sample()
-
-    if is_im_car:
-        set_eye(sample[0])
-        set_theta(sample[1])
-        #theta[1] = theta[1] + pi
-
-    gluLookAt(*eye, *linalg.get_center(eye, theta), *up)
-
-    if not is_im_car:
-        draw_sphere([sample[0][0], 0, sample[0][2]])
-
-    glPushMatrix()
-    car_status = car.get_status()
-    car_eye = car_status['eye']
-    car_eye[1] = sphere_r * 3
-    car_theta = car_status['theta']
-    car_center = linalg.get_center(car_eye, car_theta)
-    car_n = linalg.get_n(car_eye, car_center)
-    car_distance = car_n * sphere_r
-
-    glTranslated(*car_eye)
-    glRotated(-car_theta[1] / pi * 180, 0, 1, 0)
-    glRotated( car_theta[0] / pi * 180, 1, 0, 0)
-
-    glutSolidCone(arrow_r / 4, arrow_h / 4, 8, 8)
-    glPopMatrix()
-    # car } ####################################################################
-
-    if is_plot_axis:
-        plot_axis()
-
-    if is_plot_tick:
-        plot_tick()
-
-    draw_tex(map_tex, map_img)
+    global is_capturing
 
     if select.select([sys.stdin], [], [], 0)[0]:
         for i in sys.stdin.readline():
             pass
         exit(0)
 
-    glPopMatrix()
+    glViewport(0, STATUS_WINDOW_H, window_w, window_h)
 
-    # fps { ####################################################################
+    default_color = np.array([1, 1, 1]) * 0
+    glClearColor(*default_color, 0.0)
+    glColor3f(*(1 - default_color))
+
+    glLoadIdentity()
+
+    glPushMatrix() # pushpop_null_0 {
+
+    # car { ####################################################################
+    #is_im_car = True
+    sample       = car.get_sample()
+
+    car_eye      = sample[0]
+
+    car_theta_f  = sample[1]
+    car_theta_r  = np.copy(car_theta_f); car_theta_r[1] += pi
+
+    car_center_f = linalg.get_center(car_eye, car_theta_f)
+    car_center_r = linalg.get_center(car_eye, car_theta_r)
+
+    glPushMatrix() # pushpop_null_1 {
+    if is_front_camera:
+        glPushMatrix()
+        img_r = draw_camera(car_eye, car_center_r); #img_r.show();exit()
+        glPopMatrix()
+        img_f = draw_camera(car_eye, car_center_f); #img_f.show();exit()
+    else:
+        glPushMatrix()
+        img_f = draw_camera(car_eye, car_center_f); #img_f.show();exit()
+        glPopMatrix()
+        img_r = draw_camera(car_eye, car_center_r); #img_r.show();exit()
+    #img_f.show();exit()
+    #img_f, img_r = None, None
+
+    additional = {'car': car, 'is_driving': is_driving}
+    car.set_odmetry(drive(img_f, img_r, additional))
+
+    if not is_im_car:
+        glPopMatrix()  # pushpop_null_1 }
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        setLookAt(eye, linalg.get_center(eye, theta), UP)
+        draw_tex(map_tex, map_img)
+
+    if is_capturing:
+        img = get_img()
+        filename = datetime.datetime.now().strftime('%Y%m%dT%H%M%S.png')
+        img.save(filename)
+        img.show()
+        is_capturing = not is_capturing
+
+    if not is_im_car:
+        if is_view_car:
+            point = [sample[0][0], 0, sample[0][2]]
+            draw_sphere(point)
+            #draw_yukicotan(point)
+            car_arrow_eye = np.copy(car_eye); car_arrow_eye[1] = SPHERE_R * 3
+            draw_arrow(car_arrow_eye, car_theta_f)
+        glPushMatrix() # pushpop_world {
+
+    # car } ####################################################################
+
+    # axis { ###################################################################
+    if is_plot_axis:
+        plot_axis()
+
+    if is_plot_tick:
+        plot_tick()
+    # axis } ###################################################################
+
+    glPopMatrix()  # pushpop_null_1 or pushpop_world }
+    glPopMatrix()  # pushpop_null_0
+
+    # show_status { ############################################################
+    car_status = car.get_status()
+
     time_now = datetime.datetime.now()
     sec_diff = (time_now - time_before).total_seconds()
     time_before = time_now
     frame_per_sec = 1 / sec_diff
-    # fps } ####################################################################
 
-    # show_status { ############################################################
-    glPushMatrix()
-    gluLookAt(0, 0, window_w, 0, 0, 0, 0, 1, 0)
+    glPushMatrix() # pushpop_status {
+    setLookAt((0, 0, window_h), (0, 0, 0), (0, 1, 0))
+    #gluPerspective(80, window_w / STATUS_WINDOW_H, 1.0, window_w * 2)
+    #glOrtho(-window_w // 2, window_w // 2, STATUS_WINDOW_H // 2, -STATUS_WINDOW_H // 2, -window_w // 2, window_w // 2)
 
-    glViewport(0, 0, int(window_w / 2), status_window_h)
-    glRasterPos(-int(window_w / 4), status_window_h, 0)
+    glViewport(0, 0, window_w // 2, STATUS_WINDOW_H)
+    #glPushMatrix()
+    #glTranslated(0, 0, 100)
+    #glutSolidCone(ARROW_R, ARROW_H, 8, 8)
+    #glPopMatrix()
+    #glRasterPos(-window_w // 4 * 0.8 // 1, STATUS_WINDOW_H, 0)
+    #glRasterPos(-window_w // 4 * 0.8 // 1, STATUS_WINDOW_H, 10)
+    #glRasterPos(0, STATUS_WINDOW_H, 0)
+    #glRasterPos(-window_w // 4, 0, 0)
+    #glRasterPos(-window_w * window_w / VIEWPORT_W ** 2 // 4, 0, 0)
+    #glRasterPos(-window_w / cos(pi/180*35) // 4 // 1, 0, 0)
+    #VIEWPORT_H = 640
+    #VIEWPORT_W = 480
+    #window_h = 
+    #STATUS_WINDOW_H = 100
+    #35
+    glRasterPos(-window_w / 1.91 // 4 // 1, 0, 0)
+    #glRasterPos(-1000, STATUS_WINDOW_H, 0)
     putstr('eye:   ' + str(eye.astype(int)))
-    putstr('theta: ' + str((theta / pi * 180).astype(int)))
+    putstr('___________________________________________________________________theta: ' + str((theta / pi * 180).astype(int)))
     putstr('fps:   ' + str(int(frame_per_sec)))
 
-    glViewport(int(window_w / 2), 0, window_w, status_window_h)
-    glRasterPos(-int(window_w / 4), status_window_h, 0)
-    putstr('eye:       ' + str(car_status['eye'].astype(np.int)))
-    putstr('theta:     ' + str((car_status['theta'] / pi * 180).astype(np.int)))
-    putstr('odmetry:   ' + str(car_status['odmetry']))
+    #glViewport(window_w // 2, 0, window_w, STATUS_WINDOW_H)
+    #glRasterPos(-window_w // 4 * 0.8 // 1, STATUS_WINDOW_H, 0)
+    #putstr('eye:       ' + str(car_status['eye'].astype(np.int)))
+    #putstr('theta:     ' + str((car_status['theta'] / pi * 180).astype(np.int)))
+    #putstr('odmetry:   ' + str(car_status['odmetry']))
 
-    glPopMatrix()
+    glPopMatrix()  # pushpop_status }
     # show_status } ############################################################
-
-    #pixels = glReadPixels(0, 100, window_w, window_h, GL_RGB, GL_UNSIGNED_BYTE)
-    #image = Image.frombytes('RGB', (window_w, window_h - 100), pixels, 'raw')
-    #image.show()
-    #exit()
-    car.set_odmetry(drive())
 
     glutSwapBuffers()
 
@@ -348,6 +503,10 @@ def keyboard(key, x, y):
     global is_plot_axis
     global is_plot_tick
     global is_im_car
+    global is_front_camera
+    global is_view_car
+    global is_capturing
+    global is_driving
     global sample_before
 
     char = key.decode('utf-8')
@@ -365,11 +524,17 @@ def keyboard(key, x, y):
             sample_before = eye, theta
         is_im_car = not is_im_car
     elif char == ' ':
-        pass
-    elif char == 'x':
-        is_plot_axis = not is_plot_axis
+        is_driving = not is_driving
+    elif char == 'b':
+        is_front_camera = not is_front_camera
+    elif char == 'c':
+        is_capturing = True
     elif char == 't':
         is_plot_tick = not is_plot_tick
+    elif char == 'v':
+        is_view_car = not is_view_car
+    elif char == 'x':
+        is_plot_axis = not is_plot_axis
     elif char in 'asdwf':
         is_key_pressing = True
         diff = 30
@@ -433,24 +598,67 @@ def set_theta(theta_in):
     global theta
     theta = theta_in
 
-def drive():
-    status = car.get_status()
-    car_eye = status['eye']
-    car_theta = status['theta'] / pi * 180
+def get_img():
+    content_w = window_w
+    content_h = window_h - STATUS_WINDOW_H
 
-    if False:
-        odmetry = (0, 0)
-    elif \
-        90 < car_theta[1] <= 180 and car_eye[2] <  90 or \
-         0 < car_theta[1] <=  90 and car_eye[0] <  90 or \
-       270 < car_theta[1] <= 360 and car_eye[2] > 505 or \
-       180 < car_theta[1] <= 270 and car_eye[0] > 335 or \
-       False:
-        odmetry = (0.25, -128)
-    else:
-        odmetry = (1.0,    0)
+    pixels = glReadPixels(
+        0,
+        STATUS_WINDOW_H,
+        content_w,
+        content_h,
+        GL_RGB,
+        GL_UNSIGNED_BYTE
+    )
 
-    return odmetry
+    array = np.frombuffer(pixels, dtype=np.uint8)
+    array = array.reshape(content_h, content_w, 3)[:,:,0]
+    array = np.flipud(array)
+
+    img = Image.fromarray(array)
+
+    return img
+
+def draw_camera(car_eye, car_center):
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    setLookAt(car_eye, car_center, UP)
+    draw_tex(map_tex, map_img)
+    img = get_img(); #img.show();exit()
+
+    return img
+
+from drive_py import drive
+#def drive(img_f, img_r):
+#    status = car.get_status()
+#    car_eye = status['eye']
+#    car_theta = status['theta'] / pi * 180
+#
+#    if not is_driving:
+#        odmetry = (0, 0)
+#    elif \
+#        90 < car_theta[1] <= 180 and car_eye[2] <  90 or \
+#         0 < car_theta[1] <=  90 and car_eye[0] <  90 or \
+#       270 < car_theta[1] <= 360 and car_eye[2] > 505 or \
+#       180 < car_theta[1] <= 270 and car_eye[0] > 335 or \
+#       False:
+#        odmetry = (0.25, -128)
+#    else:
+#        odmetry = (1.0,    0)
+#
+#    return odmetry
+
+def draw_arrow(eye, theta):
+    glPushMatrix()
+    glTranslated(*eye)
+    glRotated(-theta[1] / pi * 180, 0, 1, 0)
+    glRotated( theta[0] / pi * 180, 1, 0, 0)
+    glutSolidCone(ARROW_R / 4, ARROW_H / 4, 8, 8)
+    glPopMatrix()
+
+def setLookAt(eye, center, up):
+    global lookAt
+    lookAt = np.array((eye, center, up)).astype(np.float32)
+    gluLookAt(*eye, *center, *up)
 
 def main():
     init()
