@@ -564,6 +564,7 @@ def uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH):
 def func_draw(_, dargs, aw, ax):
     eye             = dargs['eye']
     r               = dargs['r']
+    uv_lines        = dargs['uv_lines']
     CONTEXT         = dargs['CONTEXT']
     BIRD            = dargs['BIRD']
     LINES_LSD_XYZ   = dargs['LINES_LSD_XYZ']
@@ -574,7 +575,7 @@ def func_draw(_, dargs, aw, ax):
     AFS             = dargs['AFS']
     WM_LINES        = dargs['WM_LINES']
 
-    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
+    #uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
     #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
     img = uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH)
 
@@ -702,9 +703,28 @@ def func_update_wrap(dargs):
 
 ################################################################################
 def func_update(dargs):
-    eye = dargs['eye']
+    eye           = dargs['eye']
+    r             = dargs['r']
+    uv_lines      = dargs['uv_lines']
+    CONTEXT       = dargs['CONTEXT']
+    BIRD          = dargs['BIRD']
+    #LINES_LSD_XYZ = dargs['LINES_LSD_XYZ']
+    #MAP_SIZE      = dargs['MAP_SIZE']
+    #LINE_WIDTH    = dargs['LINE_WIDTH']
+    #FIGSIZE       = dargs['FIGSIZE']
+    #FIGPOS        = dargs['FIGPOS']
+    #AFS           = dargs['AFS']
+    WM_LINES      = dargs['WM_LINES']
+
     eye = np.array([eye[0], eye[1], eye[2] - 1])
-    dargs['eye'] = eye
+
+    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
+    uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
+
+    dargs['eye']      = eye
+    dargs['r']        = r
+    dargs['uv_lines'] = uv_lines
+
     time.sleep(0.01)
 
 def main():
@@ -742,9 +762,9 @@ def main():
     theta = np.array([0, theta_y, 0]) / 180 * pi # 0 <= theta_x <= 90
     r = theta2r(theta)
 
-    #uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
+    uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
     #uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
-    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
+    uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     # debug
     LINE_WIDTH = 3 # line width of img [px]
@@ -764,8 +784,11 @@ def main():
     ]
 
     dargs = Manager().dict({
-        'eye'               : eye, # modified by func_update
-        'r'                 : r,   # modified by func_update
+        # modified by func_update
+        'eye'               : eye,
+        'r'                 : r,
+        'uv_lines'          : uv_lines,
+        # const
         'CONTEXT'           : CONTEXT,
         'BIRD'              : BIRD,
         'LINES_LSD_XYZ'     : LINES_LSD_XYZ,
