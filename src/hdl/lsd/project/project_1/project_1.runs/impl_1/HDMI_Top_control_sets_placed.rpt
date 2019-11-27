@@ -1,0 +1,92 @@
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+| Date         : Fri Nov  8 17:16:53 2019
+| Host         : cuckoo running 64-bit CentOS release 6.9 (Final)
+| Command      : report_control_sets -verbose -file HDMI_Top_control_sets_placed.rpt
+| Design       : HDMI_Top
+| Device       : xc7z020
+-------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Number of unique control sets                            |    22 |
+| Unused register locations in slices containing registers |    59 |
++----------------------------------------------------------+-------+
+
+
+2. Histogram
+------------
+
++--------+--------------+
+| Fanout | Control Sets |
++--------+--------------+
+|      2 |            1 |
+|      5 |            1 |
+|      7 |            2 |
+|     10 |            2 |
+|     12 |            2 |
+|     13 |            4 |
+|    16+ |           10 |
++--------+--------------+
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |            1327 |          424 |
+| No           | No                    | Yes                    |               9 |            3 |
+| No           | Yes                   | No                     |             677 |          206 |
+| Yes          | No                    | No                     |             204 |          100 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             212 |          102 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++------------------------------+-----------------------------+---------------------------------------------------------------------------------+------------------+----------------+
+|         Clock Signal         |        Enable Signal        |                                 Set/Reset Signal                                | Slice Load Count | Bel Load Count |
++------------------------------+-----------------------------+---------------------------------------------------------------------------------+------------------+----------------+
+|  instance_name/inst/clk_out1 |                             | rgb2dvi_1/U0/ClockGenInternal.ClockGenX/in0                                     |                1 |              2 |
+|  instance_name/inst/clk_out1 |                             | rgb2dvi_1/U0/ClockGenInternal.ClockGenX/LockLostReset/SyncAsyncx/oSyncStages[1] |                1 |              5 |
+|  instance_name/inst/clk_out1 |                             | lsd_0/stp_0/out_vcnt_reg[7]_1                                                   |                3 |              7 |
+|  instance_name/inst/clk_out1 |                             | lsd_1/stp_0/out_vcnt_reg[7]_1                                                   |                2 |              7 |
+|  instance_name/inst/clk_out1 |                             | rgb2dvi_1/U0/DataEncoders[0].DataEncoder/pDataOutRaw[9]_i_1__1_n_0              |                3 |             10 |
+|  instance_name/inst/clk_out1 | HDMI_Timing_0/v_cnt         | HDMI_Timing_0/v_cnt[9]_i_1_n_0                                                  |                5 |             10 |
+|  instance_name/inst/clk_out1 | lsd_1/read_id[0]_i_2__0_n_0 | lsd_1/stp_1/state_reg[0]                                                        |                3 |             12 |
+|  instance_name/inst/clk_out1 | lsd_0/read_id[0]_i_2_n_0    | lsd_0/stp_1/state_reg[0]                                                        |                3 |             12 |
+|  instance_name/inst/clk_out1 | lsd_1/stp_1/seg_num         | lsd_1/stp_1/seg_num0                                                            |                4 |             13 |
+|  instance_name/inst/clk_out1 | lsd_1/stp_1/ram_wr_addr     |                                                                                 |                7 |             13 |
+|  instance_name/inst/clk_out1 | lsd_0/stp_1/ram_wr_addr     |                                                                                 |                7 |             13 |
+|  instance_name/inst/clk_out1 | lsd_0/stp_1/seg_num         | lsd_0/stp_1/seg_num0                                                            |                4 |             13 |
+|  instance_name/inst/clk_out1 |                             | lsd_0/stp_0/ca_0/out_hcnt_reg[9]_0                                              |                8 |             32 |
+|  instance_name/inst/clk_out1 |                             | lsd_0/stp_0/ca_0/out_hcnt_reg[9]_1                                              |                8 |             32 |
+|  instance_name/inst/clk_out1 |                             | rgb2dvi_1/U0/DataEncoders[0].DataEncoder/SR[0]                                  |               15 |             32 |
+|  instance_name/inst/clk_out1 |                             | lsd_0/gau_0/stp_0/ca_0/SR[0]                                                    |               27 |             72 |
+|  instance_name/inst/clk_out1 |                             | lsd_1/gau_0/stp_0/ca_0/SR[0]                                                    |               27 |             72 |
+|  instance_name/inst/clk_out1 | lsd_0/stp_1/ram_wr_addr     | lsd_0/stp_1/tracing_reg_rep_2                                                   |               42 |             76 |
+|  instance_name/inst/clk_out1 | lsd_1/stp_1/ram_wr_addr     | lsd_1/stp_1/tracing_reg_rep_3                                                   |               41 |             76 |
+|  instance_name/inst/clk_out1 | instance_name/inst/locked   |                                                                                 |               86 |            178 |
+|  instance_name/inst/clk_out1 |                             | xors_0/p_0_in                                                                   |              114 |            415 |
+|  instance_name/inst/clk_out1 |                             |                                                                                 |              426 |           1374 |
++------------------------------+-----------------------------+---------------------------------------------------------------------------------+------------------+----------------+
+
+

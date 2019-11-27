@@ -1,0 +1,50 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Thu Oct 24 17:30:41 2019
+# Process ID: 5364
+# Current directory: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1
+# Command line: vivado project_1.xpr
+# Log file: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/vivado.log
+# Journal file: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project project_1.xpr
+CRITICAL WARNING: [Project 1-19] Could not find the file '/home/users/kakizaki/HDMI/PYNQ-Z1_C.xdc'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/katayama/study/hdmi/for_manabe/vivado-library-master'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:25 ; elapsed = 00:00:20 . Memory (MB): peak = 6766.383 ; gain = 187.062 ; free physical = 119063 ; free virtual = 130760
+update_compile_order -fileset sources_1
+add_files -norecurse /home/users/manabe/2019/auto_drive/lsd/hdl/project2/xorshift128plus.v
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs impl_1 -jobs 24
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP '/home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.srcs/sources_1/ip/rgb2dvi_0/rgb2dvi_0.xci' is already up-to-date
+[Thu Oct 24 17:32:17 2019] Launched synth_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/synth_1/runme.log
+[Thu Oct 24 17:32:17 2019] Launched impl_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/impl_1/runme.log
+update_files -from_files /home/users/katayama/study/hdmi/PYNQ-Z1_C.xdc -to_files /home/users/kakizaki/HDMI/PYNQ-Z1_C.xdc -filesets [get_filesets *]
+INFO: [filemgmt 20-762] Replacing file '/home/users/kakizaki/HDMI/PYNQ-Z1_C.xdc' with file '/home/users/katayama/study/hdmi/PYNQ-Z1_C.xdc'.
+reset_run synth_1
+launch_runs impl_1 -jobs 24
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP '/home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.srcs/sources_1/ip/rgb2dvi_0/rgb2dvi_0.xci' is already up-to-date
+[Thu Oct 24 17:35:01 2019] Launched synth_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/synth_1/runme.log
+[Thu Oct 24 17:35:01 2019] Launched impl_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/impl_1/runme.log
+reset_run synth_1
+launch_runs impl_1 -jobs 24
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP '/home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.srcs/sources_1/ip/rgb2dvi_0/rgb2dvi_0.xci' is already up-to-date
+[Thu Oct 24 17:36:09 2019] Launched synth_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/synth_1/runme.log
+[Thu Oct 24 17:36:09 2019] Launched impl_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project2/project_1/project_1.runs/impl_1/runme.log
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2019/auto_drive/lsd/hdl/project2/top.v] -no_script -reset -force -quiet
+remove_files  /home/users/manabe/2019/auto_drive/lsd/hdl/project2/top.v
+exit
+INFO: [Common 17-206] Exiting Vivado at Thu Oct 24 17:38:00 2019...

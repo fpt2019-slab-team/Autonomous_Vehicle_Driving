@@ -1,0 +1,44 @@
+xmverilog: 18.09-s011: (c) Copyright 1995-2019 Cadence Design Systems, Inc.
+TOOL:	xmverilog	18.09-s011: Started on Oct 30, 2019 at 16:02:20 JST
+xmverilog
+	+access+r
+	+nowarn+NONPRT
+	+libext+.v
+	sim_arctan_calc.v
+	../../common/arctan_calc.v
+	../../common/delay.v
+Recompiling... reason: file '/home/users/manabe/2019/auto_drive/lsd/hdl/common/arctan_calc.v' is newer than expected.
+	expected: Wed Oct 30 14:50:43 2019
+	actual:   Wed Oct 30 16:02:13 2019
+file: ../../common/arctan_calc.v
+	module worklib.arctan_calc:v
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.arctan_calc:v <0x28baa3fa>
+			streams:  31, words: 22382
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		                 Instances  Unique
+		Modules:                 5       5
+		Registers:              59      56
+		Scalar wires:            6       -
+		Expanded wires:         18       1
+		Vectored wires:         14       -
+		Always blocks:          13      14
+		Initial blocks:          6       6
+		Cont. assignments:       8       9
+		Pseudo assignments:      4       4
+		Simulation timescale:  1ns
+	Writing initial simulation snapshot: worklib.sim_arctan_calc:v
+Loading snapshot worklib.sim_arctan_calc:v .................... Done
+xcelium> source /home/cad/cadence-xcelium-18.09.001/tools/xcelium/files/xmsimrc
+xcelium> run
+Simulation complete via $finish(1) at time 600 US + 0
+./sim_arctan_calc.v:42 	$finish;
+xcelium> exit
+TOOL:	xmverilog	18.09-s011: Exiting on Oct 30, 2019 at 16:02:25 JST  (total: 00:00:05)

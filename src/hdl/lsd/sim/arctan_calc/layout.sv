@@ -1,0 +1,146 @@
+# SimVision Command Script (水 10月 30 16時03分47秒 JST 2019)
+#
+# Version 18.09.s011
+#
+# You can restore this configuration with:
+#
+#     simvision -input /home/users/manabe/2019/auto_drive/lsd/hdl/sim/arctan_calc/layout.sv
+#  or simvision -input /home/users/manabe/2019/auto_drive/lsd/hdl/sim/arctan_calc/layout.sv database1 database2 ...
+#
+
+
+#
+# Preferences
+#
+preferences set toolbar-Standard-WatchWindow {
+  usual
+  shown 0
+}
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-Windows-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-Standard-WaveWindow {
+  usual
+  position -pos 1
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-SimControl-WatchWindow {
+  usual
+  shown 0
+}
+preferences set savedlg-simulator ppe
+preferences set whats-new-dont-show-at-startup 1
+preferences set toolbar-TimeSearch-WatchWindow {
+  usual
+  shown 0
+}
+
+#
+# Databases
+#
+database require arctan_calc -search {
+	./arctan_calc.shm/arctan_calc.trn
+	/home/users/manabe/2019/auto_drive/lsd/hdl/sim/arctan_calc/arctan_calc.shm/arctan_calc.trn
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1748x675+89+132}] != ""} {
+    window geometry "Waveform 1" 1748x675+89+132
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar select designbrowser
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	arctan_calc::sim_arctan_calc.clock
+	} ]
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.tgt_x1[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.tgt_x2[8:0]}
+	} ]
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.ans[7:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.res[7:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.diff[7:0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[0]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[1]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[2]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[3]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[4]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[5]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[6]}
+	} ]
+waveform format $id -radix %d
+set id [waveform add -signals  {
+	{arctan_calc::sim_arctan_calc.count[7]}
+	} ]
+waveform format $id -radix %d
+
+waveform xview limits 522226ns 522290ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 600x250+0+0
+
+#
+# Layout selection
+#
+

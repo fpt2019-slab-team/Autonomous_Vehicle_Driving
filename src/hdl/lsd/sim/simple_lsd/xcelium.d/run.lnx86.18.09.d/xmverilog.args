@@ -1,0 +1,19 @@
+//
+// File created by:  xmverilog
+// Do not modify this file
+//
++access+r
++nowarn+NONPRT
++libext+.v
+sim_simple_lsd.v
+../../simple_lsd.v
+../../gaussian.v
+../../common/coord_adjuster.v
+../../common/delay.v
+../../common/fifo_dc.v
+../../common/ram_sc.v
+../../common/ram_dc.v
+../../common/rgb2ycbcr.v
+../../common/stream_patch.v
+../../common/tree_adder.v
+../../common/arctan_calc.v

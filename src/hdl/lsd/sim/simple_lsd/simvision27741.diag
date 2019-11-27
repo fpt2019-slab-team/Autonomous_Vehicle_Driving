@@ -1,0 +1,93 @@
+*** Message Type: info ***
+When: 金 11月 08 15時26分43秒 JST 2019
+SimVision started.
+Version: TOOL:  simvision       18.09-s011
+User: manabe
+Host: cuckoo
+Platform: Linux/x86_64/2.6.32-696.el6.x86_64
+Started: 金 11月 08 15時26分43秒 JST 2019
+Command: /home/cad/cadence-xcelium-18.09.001/tools.lnx86/simvision/bin/simvision.exe simple_lsd.shm
+Work Directory: /home/users/manabe/2019/auto_drive/lsd/hdl/sim/simple_lsd
+ 
+*** Message Type: info ***
+When: 金 11月 08 15時26分44秒 JST 2019
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: 金 11月 08 15時26分47秒 JST 2019
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: 金 11月 08 15時26分48秒 JST 2019
+Create utility window: "Properties"
+ 
+*** Message Type: error ***
+When: 金 11月 08 15時29分55秒 JST 2019
+bad value "7": should be tree node
+    while executing
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "maxim::Signaldata::Motion" line 1)
+    invoked from within
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "maxim::Signaldata::BeginExtend" line 1)
+    invoked from within
+"maxim::Signaldata::BeginExtend .waveWindow0.work.user.waveset.signaldata 21 67"
+    (command bound to event)
+ 
+*** Message Type: error ***
+When: 金 11月 08 15時50分51秒 JST 2019
+couldn't open "/home/users/manabe/2019/auto_drive/lsd/hdl/sim/simple_lsd/.simvision/27741_manabe_cuckoo_autosave.tcl.svcf": no such file or directory
+    while executing
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: 金 11月 08 15時50分51秒 JST 2019
+couldn't open "/home/users/manabe/2019/auto_drive/lsd/hdl/sim/simple_lsd/.simvision/27741_manabe_cuckoo_autosave.tcl.svcf": no such file or directory
+    while executing
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 
+*** Message Type: error ***
+When: 金 11月 08 15時50分51秒 JST 2019
+couldn't open "/home/users/manabe/2019/auto_drive/lsd/hdl/sim/simple_lsd/.simvision/27741_manabe_cuckoo_autosave.tcl.svcf": no such file or directory
+    while executing
+"# Compiled -- no source code available
+error "called a copy of a compiled script""
+    (procedure "::savescript::autosave" line 1)
+    invoked from within
+"::savescript::autosave $filename"
+    (object "::application" method "::Application::auto-save" body line 18)
+    invoked from within
+"::application auto-save"
+    (in namespace inscope "::Application" script line 1)
+    invoked from within
+"namespace inscope ::Application {::application auto-save}"
+    ("after" script)
+ 
+*** Message Type: info ***
+When: 金 11月 08 17時11分28秒 JST 2019
+SimVision Exit.
+ 

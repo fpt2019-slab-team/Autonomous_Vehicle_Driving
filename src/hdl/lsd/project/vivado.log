@@ -1,0 +1,54 @@
+#-----------------------------------------------------------
+# Vivado v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+# IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+# Start of session at: Fri Nov  8 17:12:23 2019
+# Process ID: 29506
+# Current directory: /home/users/manabe/2019/auto_drive/lsd/hdl/project
+# Command line: vivado
+# Log file: /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado.log
+# Journal file: /home/users/manabe/2019/auto_drive/lsd/hdl/project/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1/project_1.xpr
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/katayama/study/hdmi/for_manabe/vivado-library-master'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+open_project: Time (s): cpu = 00:00:24 ; elapsed = 00:00:22 . Memory (MB): peak = 6793.781 ; gain = 187.887 ; free physical = 121971 ; free virtual = 129977
+update_compile_order -fileset sources_1
+export_ip_user_files -of_objects  [get_files /home/users/manabe/2019/auto_drive/lsd/hdl/common/rgb2ycbcr.v] -no_script -reset -force -quiet
+remove_files  /home/users/manabe/2019/auto_drive/lsd/hdl/common/rgb2ycbcr.v
+reset_run synth_1
+launch_runs impl_1 -jobs 8
+INFO: [Vivado 12-4149] The synthesis checkpoint for IP '/home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1/project_1.srcs/sources_1/ip/rgb2dvi_0/rgb2dvi_0.xci' is already up-to-date
+[Fri Nov  8 17:14:07 2019] Launched synth_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1/project_1.runs/synth_1/runme.log
+[Fri Nov  8 17:14:07 2019] Launched impl_1...
+Run output will be captured here: /home/users/manabe/2019/auto_drive/lsd/hdl/project/project_1/project_1.runs/impl_1/runme.log
+open_run impl_1
+INFO: [Netlist 29-17] Analyzing 585 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2018.3
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+Reading XDEF placement.
+Reading placer database...
+Reading XDEF routing.
+Read XDEF File: Time (s): cpu = 00:00:00.42 ; elapsed = 00:00:00.42 . Memory (MB): peak = 7547.223 ; gain = 9.000 ; free physical = 121136 ; free virtual = 129157
+Restored from archive | CPU: 0.430000 secs | Memory: 9.054291 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00.42 ; elapsed = 00:00:00.42 . Memory (MB): peak = 7547.223 ; gain = 9.000 ; free physical = 121136 ; free virtual = 129157
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 7547.223 ; gain = 0.000 ; free physical = 121136 ; free virtual = 129158
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 2 instances were transformed.
+  RAM16X1D => RAM32X1D (RAMD32, RAMD32): 2 instances
+
+open_run: Time (s): cpu = 00:00:26 ; elapsed = 00:00:16 . Memory (MB): peak = 8105.562 ; gain = 1246.762 ; free physical = 120953 ; free virtual = 128975
+report_utilization -name utilization_1
+exit
+INFO: [Common 17-206] Exiting Vivado at Fri Nov  8 17:25:21 2019...
