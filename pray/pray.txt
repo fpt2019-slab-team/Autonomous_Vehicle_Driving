@@ -16,3 +16,4 @@
 2019-11-19 tu line.py add arguments of debug()
 2019-11-27 we line.py animation
 2019-11-27 we gl.py: aibo
+2019-11-29 fr fixed.py
