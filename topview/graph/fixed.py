@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import cv2
 import numpy as np
 import matplotlib.animation as animation
 import time
@@ -560,16 +559,6 @@ def uv_lines2img(uv_lines, CONTEXT, LINE_WIDTH):
 # theta = np.array([0,      0,      0])
 # BIRD  = np.array([0, BIRD_Y, BIRD_Z])
 
-#def bird_view(uv_lines, eye, r, BIRD, CONTEXT):
-#    theta            = r2theta(r)
-#    r_virtual        = theta2r(np.array([theta[0], 0, theta[2]]))
-#    wm_lines_virtual = uv_lines2wm_lines(uv_lines, eye, r_virtual, CONTEXT)
-#    eye_b            = eye + BIRD
-#    r_b              = theta2r(np.array([pi / 2, 0, 0]))
-#    uv_lines         = wm_lines2uv_lines(wm_lines_virtual, eye_b, r_b, CONTEXT)
-#    uv_lines         = filter_uv_lines(uv_lines, CONTEXT)
-#    return uv_lines
-
 # uv_line:  np.shape == (2, 2)
 # EYE_Y:    eye[1] (scalar)
 # BIRD:     np.array([0, BIRD_Y, BIRD_Z])
@@ -596,7 +585,9 @@ def uv_lines2tvs_fixed(uv_lines, EYE_Y, BIRD, CONTEXT):
     tvs = []
     for uv_line in uv_lines:
         tv = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
-        if not tv == None:
+        if not tv is None:
+            tv = filter_uv_line(tv, CONTEXT)
+        if not tv is None:
             tvs.append(tv)
     tvs = np.array(tvs)
     return tvs
@@ -627,6 +618,68 @@ def uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT):
     wm_lines = np.array(wm_lines)
     return wm_lines
 
+# uv_line:      np.shape == (2, 2)
+# CONTEXT:
+# ret: uv_line: np.shape == (2, 2)
+def filter_uv_line(uv_line, CONTEXT):
+    UV_VS = get_UV_VS(CONTEXT)
+
+    UV_EDGES = np.array((
+        (UV_VS[0], UV_VS[1]),
+        (UV_VS[1], UV_VS[2]),
+        (UV_VS[2], UV_VS[3]),
+        (UV_VS[3], UV_VS[0]),
+    ))
+
+    is_insides = [
+        is_inside(uv_line[0], CONTEXT),
+        is_inside(uv_line[1], CONTEXT),
+    ]
+
+    intersections = [
+        get_intersection(uv_line, UV_EDGES[0]),
+        get_intersection(uv_line, UV_EDGES[1]),
+        get_intersection(uv_line, UV_EDGES[2]),
+        get_intersection(uv_line, UV_EDGES[3]),
+    ] # (4, 2)
+
+    uv_line_filtered = np.array(uv_line)
+
+    # remove rows containing an nan
+    #uv_lines_filtered = delete_nan(uv_lines_filtered)
+
+    true_indicies_is_insides = get_true_indicies(is_insides)
+    true_indicies_intersections = get_true_indicies(intersections)
+    if len(true_indicies_is_insides) == 2:
+        line = uv_line_filtered
+    elif len(true_indicies_is_insides) == 1:
+        pa = uv_line_filtered[true_indicies_is_insides[0]]
+        #              len(true_indicies_intersections) == 1
+        pb = intersections[true_indicies_intersections[0]]
+        line = (pa, pb) if true_indicies_is_insides[0] == 0 else (pb, pa)
+    elif len(true_indicies_intersections) == 2: # 0 or 2
+        pa = intersections[true_indicies_intersections[0]]
+        pb = intersections[true_indicies_intersections[1]]
+        distance_pa_0 = np.linalg.norm(uv_line_filtered[0] - pa)
+        distance_pa_1 = np.linalg.norm(uv_line_filtered[1] - pa)
+        # if distance_pa_0 <= distance_pa_1, then uv_line_filtered[0] is pa
+        line = (pa, pb) if distance_pa_0 <= distance_pa_1 else (pb, pa)
+    else:
+        return None
+    uv_line_filtered = np.array(line)
+
+    # move points out of ((0, 0), (WIDTH, HEIGHT)) to the edge
+    invalid_u_indices = uv_line_filtered[:, 0] > CONTEXT['WIDTH' ] - 1
+    invalid_j_indices = uv_line_filtered[:, 1] > CONTEXT['HEIGHT'] - 1
+    uv_line_filtered[invalid_u_indices, 0] = CONTEXT['WIDTH' ] - 1
+    uv_line_filtered[invalid_j_indices, 1] = CONTEXT['HEIGHT'] - 1
+    #return uv_line_filtered
+
+    # reject short line
+    if np.linalg.norm(uv_line_filtered[1] - uv_line_filtered[0]) < 1:
+        return None
+
+    return uv_line_filtered
 
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:
@@ -665,7 +718,8 @@ def filter_uv_lines_pretv_fixed(uv_lines, CONTEXT):
     uv_lines_filtered = []
     for uv_line in uv_lines:
         uv_line_filtered = filter_uv_line_pretv_fixed(uv_line, CONTEXT)
-        uv_lines_filtered.append(uv_line_filtered)
+        if not uv_line is None:
+            uv_lines_filtered.append(uv_line_filtered)
     uv_lines_filtered = np.array(uv_lines_filtered)
     return uv_lines_filtered
 
@@ -687,7 +741,7 @@ def func_draw(_, dargs, aw, ax):
     WM_LINES        = dargs['WM_LINES']
     EYE_Y           = dargs['EYE_Y']
 
-    IS_TV = True
+    IS_TV = False
     uv_lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT) # get camera view
     #append_lines  = np.array([
     #    filter_uv_line_pretv_fixed(np.array([[0, 0],[640, 480]]), CONTEXT),
