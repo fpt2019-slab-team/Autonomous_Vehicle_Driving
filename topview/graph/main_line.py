@@ -20,13 +20,31 @@ def FUNC_UPDATE(dargs):
     # get top view
     tv = uv_lines2tvs_fixed(uv_lines, EYE_Y, BIRD, CONTEXT)
 
+    # op = (acc, ste)
+    #op = get_op_wrap(uv_lines, tv, dargs)
+    #deye, dr = op2deye_dr(op)
+    #eye = eye + deye
+    #r   = r   + dr
+
     eye = np.array([eye[0], eye[1], eye[2] - 10])
-    r = np.dot(r, theta2r(np.array([0, 0.1, 0]) / 180 * pi))
+    r   = r @ theta2r(np.array([0, 0.1, 0]) / 180 * pi)
 
-    dargs['eye']      = eye
-    dargs['r']        = r
+    dargs['eye'] = eye
+    dargs['r']   = r
 
-    time.sleep(0.001)
+    #time.sleep(0.001)
+
+def uv_lines2op(uv_lines, dargs):
+    return op
+
+def get_op_wrap(uv_lines, tv, dargs):
+    op = dargs['op']
+    feedback = op2feedback(op)
+    #x_hat = kalman(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback, passed_time) # imamura
+    #op = get_op(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback, x_hat)  # fukui
+    op = get_op(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback)  # fukui
+    dargs['op'] = op
+    return op
 
 def main():
     # setup
@@ -86,7 +104,7 @@ def main():
         ]),
     ]
     IS_TV = False
-    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][0]
+    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][1]
     SHOWN_IMG = ['TV', 'CAMERA'               ][0]
 
     dargs = Manager().dict({
