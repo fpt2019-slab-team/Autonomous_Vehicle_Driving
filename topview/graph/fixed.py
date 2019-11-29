@@ -269,6 +269,7 @@ def wm_line2uv_line(wm_line, wm_edge0, eye, r, CONTEXT):
                 return None
         uv = wm2uv(wm, eye, r, CONTEXT) # (2,)
         uv_line.append(uv)
+    uv_line = np.array(uv_line)
 
     if np.linalg.norm(uv_line[0] - uv_line[1]) < CONTEXT['WIDTH'] * 0.0001:
         return None # both points are behind of camera
