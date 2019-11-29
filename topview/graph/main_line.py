@@ -1,21 +1,12 @@
 #!/usr/bin/python3
 
 from line import *
-from debug_line import *
+from debug_line import debug, to_affine
 
-import matplotlib.animation as animation
 import time
-import matplotlib.pyplot as plt
-import sys
 
-from multiprocessing import Manager, Value, Process
-from itertools import product
-from mpl_toolkits.mplot3d import Axes3D
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from functools import reduce
-from PIL import Image, ImageDraw
+from multiprocessing import Manager
 
-# main { #######################################################################
 def FUNC_UPDATE(dargs):
     eye           = dargs['eye']
     r             = dargs['r']
@@ -95,7 +86,7 @@ def main():
         ]),
     ]
     IS_TV = False
-    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][2]
+    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][0]
     SHOWN_IMG = ['TV', 'CAMERA'               ][0]
 
     dargs = Manager().dict({
@@ -124,4 +115,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-# main } #######################################################################
