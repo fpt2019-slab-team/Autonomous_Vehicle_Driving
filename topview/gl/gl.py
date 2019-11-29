@@ -69,7 +69,7 @@ def init():
     my = 0.0
     is_mouse_pressing = False
 
-    map_tex = get_tex('map_3500x4900.png')
+    map_tex = get_tex('map_428x600.png')
 
     lims = np.array([map_img.size[0], 500, map_img.size[1]])
     diff_tick = 250
