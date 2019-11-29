@@ -607,7 +607,8 @@ def filter_uv_line(uv_line, CONTEXT):
 # ret: uv_line: np.shape == (2, 2) or None
 def filter_uv_line_pretv_fixed(uv_line, CONTEXT):
     HEIGHT = CONTEXT['HEIGHT']
-    THRE   = HEIGHT / 2 - HEIGHT / 100 * 10
+    THRE   = HEIGHT / 2 + HEIGHT / 100 * 5
+    return None if np.any(uv_line[:,1] < THRE) else uv_line
     u0, v0 = uv_line[0]
     u1, v1 = uv_line[1]
     if   v0 < THRE and v1 < THRE:

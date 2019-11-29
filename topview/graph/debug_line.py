@@ -39,7 +39,7 @@ def plot_axis(ax, lims):
     ax.text(             0,              0,              0, "O", color='black')
 
     # plot tick
-    DIFF = 500
+    DIFF = 700
     lims_axis = []
     for axis in range(3):
         for i in range(0, lims[axis] + 1, DIFF):
@@ -102,11 +102,20 @@ def func_draw(_, dargs, aw, ax):
     IS_TV           = dargs['IS_TV']
     SHOWN_MAP       = dargs['SHOWN_MAP']
     SHOWN_IMG       = dargs['SHOWN_IMG']
+    IS_REAR         = dargs['IS_REAR']
+
+    if IS_REAR:
+        r_f = r
+        r_r = r @ theta2r(np.array([0, pi, 0]))
+        D_EYE_CAM = 90 # mm
+        eye_f = eye + r_f @ np.array([0, 0, D_EYE_CAM])
+        eye_r = eye + r_r @ np.array([0, 0, D_EYE_CAM])
+        r   = r_r
+        eye = eye_r
 
     uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT) #  camera view
     #append_lines  = np.array([
-    #    filter_uv_line_pretv_fixed(np.array([[0, 0],[640, 480]]), CONTEXT),
-    #    np.array([[0, 240],[640, 240]]),
+        #np.array([[0, 0],[640, 480]]),
     #])
     #uv_lines = np.append(uv_lines, append_lines, axis=0)
 
@@ -117,10 +126,11 @@ def func_draw(_, dargs, aw, ax):
 
     img = uv_lines2img(tv if SHOWN_IMG == 'TV' else uv_lines, CONTEXT, LINE_WIDTH)
 
+    aw.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
     aw.cla()
     ax.cla()
-    aw.set_position([0.05, 0.05, 0.4, 0.9])
-    ax.set_position([0.40, 0.05, 0.6, 0.9])
+    aw.set_position(FIGPOS[0])
+    ax.set_position(FIGPOS[1])
     aw.imshow(img, cmap='gray', vmin=0, vmax=255, interpolation='none')
     ax.set_axis_off()
 
@@ -129,28 +139,27 @@ def func_draw(_, dargs, aw, ax):
         EYE_ZERO = np.array([0, BIRD[1], 0])
         R_ZERO = theta2r(np.array([pi / 2, 0, 0]))
         wm_lines = uv_lines2wm_lines(tv, EYE_ZERO, R_ZERO, CONTEXT)
-        wm_lines = wm_lines + np.array([BIRD[0], 0, BIRD[2]])
+        if len(wm_lines) != 0:
+            wm_lines = wm_lines + np.array([BIRD[0], 0, BIRD[2]])
     elif SHOWN_MAP == 'CAMERA':
         wm_lines = uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT)
     else:
         wm_lines = WM_LINES_MAP
-    if SHOWN_MAP in ['CAMERA', 'TV']:
-        for i in range(len(wm_lines)):
-            wm_lines[i] = np.array([
-                np.dot(r, wm_lines[i][0]),
-                np.dot(r, wm_lines[i][1]),
-            ])
-        wm_lines = wm_lines + np.array([eye[0], 0, eye[2]])
-    lines = np.array((
-        wm_lines[:,0,0], wm_lines[:,1,0], # x
-        [0] * len(wm_lines), [0] * len(wm_lines), # y
-        wm_lines[:,0,2], wm_lines[:,1,2], # z
-    )).T.reshape(len(wm_lines), 3, 2)
-    #lines = np.array((
-    #    LINES_MAP_XYZ[:,0], LINES_MAP_XYZ[:,3], # x
-    #    LINES_MAP_XYZ[:,1], LINES_MAP_XYZ[:,4], # y
-    #    LINES_MAP_XYZ[:,2], LINES_MAP_XYZ[:,5], # z
-    #)).T.reshape(len(LINES_MAP_XYZ), 3, 2)
+    if len(wm_lines) == 0:
+        lines = np.array([])
+    else:
+        if SHOWN_MAP in ['CAMERA', 'TV']:
+            for i in range(len(wm_lines)):
+                wm_lines[i] = np.array([
+                    np.dot(r, wm_lines[i][0]),
+                    np.dot(r, wm_lines[i][1]),
+                ])
+            wm_lines = wm_lines + np.array([eye[0], 0, eye[2]])
+        lines = np.array((
+            wm_lines[:,0,0], wm_lines[:,1,0], # x
+            [0] * len(wm_lines), [0] * len(wm_lines), # y
+            wm_lines[:,0,2], wm_lines[:,1,2], # z
+        )).T.reshape(len(wm_lines), 3, 2)
     for line in lines:
         ax.plot(*line, "-", c='red', linewidth=0.5)
 
@@ -254,8 +263,16 @@ def debug(dargs):
     plt.show()
 
 def func_update_wrap(dargs):
+    dargs['TIME_ORIGIN']  = time.time()
+    dargs['time_before']  = time.time()
+    dargs['accste']       = (0, 0)
+    dargs['trigger_time'] = -1
+    dargs['xhat']         = dargs['DRIVER'].INIT_XHAT
+    dargs['route_id']     = [0]
+
+    func_update = dargs['FUNC_UPDATE']
     while True:
-        dargs['FUNC_UPDATE'](dargs)
+        func_update(dargs)
 
 # debug } #######################################################################
 

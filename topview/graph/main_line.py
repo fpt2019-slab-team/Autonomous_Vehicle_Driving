@@ -2,6 +2,7 @@
 
 from line import *
 from debug_line import debug, to_affine
+import driver
 
 import time
 
@@ -14,37 +15,78 @@ def FUNC_UPDATE(dargs):
     BIRD          = dargs['BIRD']
     WM_LINES_MAP  = dargs['WM_LINES_MAP']
     EYE_Y         = dargs['EYE_Y']
+    TIME_ORIGIN   = dargs['TIME_ORIGIN']
+    DRIVER        = dargs['DRIVER']
+    D_EYE_CAM_F   = dargs['D_EYE_CAM_F']
+    D_EYE_CAM_R   = dargs['D_EYE_CAM_R']
+
+    time_before = dargs['time_before']
+    time_now    = time.time()
+    dargs['time_before'] = time_now
+    sec = time_now - time_before
+
+    r_f = r
+    r_r = r @ theta2r(np.array([0, pi, 0]))
+    eye_f = eye + r_f @ np.array([0, D_EYE_CAM_F, 0])
+    eye_r = eye + r_r @ np.array([0, D_EYE_CAM_R, 0])
 
     # get camera view
-    uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT)
+    uv_lines_f = wm_lines2uv_lines(WM_LINES_MAP, eye_f, r_f, CONTEXT)
+    uv_lines_r = wm_lines2uv_lines(WM_LINES_MAP, eye_r, r_r, CONTEXT)
     # get top view
-    tv = uv_lines2tvs_fixed(uv_lines, EYE_Y, BIRD, CONTEXT)
+    tv_f = uv_lines2tvs_fixed(uv_lines_f, EYE_Y, BIRD, CONTEXT)
+    tv_r = uv_lines2tvs_fixed(uv_lines_r, EYE_Y, BIRD, CONTEXT)
 
-    # op = (acc, ste)
-    #op = get_op_wrap(uv_lines, tv, dargs)
-    #deye, dr = op2deye_dr(op)
-    #eye = eye + deye
-    #r   = r   + dr
+    # op: (acc, ste)
+    if True:
+        elapsed_time = sec
 
-    eye = np.array([eye[0], eye[1], eye[2] - 10])
-    r   = r @ theta2r(np.array([0, 0.1, 0]) / 180 * pi)
+        accste       = dargs['accste']
+        xhat         = dargs['xhat']
+        trigger_time = dargs['trigger_time']
+        route_id     = dargs['route_id']
+
+        feedback = DRIVER.accste2rpslr(*accste)
+
+        time_from_origin = time.time() - TIME_ORIGIN
+        lsd_front_lines     = uv_lines_f
+        lsd_rear_lines      = uv_lines_r
+        topview_front_lines = tv_f
+        topview_rear_lines  = tv_r
+        xhat = DRIVER.navi(xhat, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
+
+        time_from_origin = TIME_ORIGIN - time.time()
+        accste = DRIVER.control(xhat, trigger_time, topview_front_lines, feedback, route_id)
+
+        dargs['accste']       = accste
+        dargs['xhat']         = xhat
+        dargs['trigger_time'] = trigger_time
+        dargs['route_id']     = route_id
+
+    #accste = (127, 32) # (0, 127), (-128, 127)
+
+    deye, dr = accste2deye_dr_fixed(accste, r, sec, DRIVER)
+
+    #deye   = np.array([0, 0, 0])
+    #dr     = theta2r(np.array([0, 0.01, 0]))
+
+    eye = eye + deye
+    r   = r   @ dr
 
     dargs['eye'] = eye
     dargs['r']   = r
 
-    #time.sleep(0.001)
+    #time.sleep(0.01)
 
-def uv_lines2op(uv_lines, dargs):
-    return op
-
-def get_op_wrap(uv_lines, tv, dargs):
-    op = dargs['op']
-    feedback = op2feedback(op)
-    #x_hat = kalman(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback, passed_time) # imamura
-    #op = get_op(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback, x_hat)  # fukui
-    op = get_op(uv_lines_f, uv_lines_r, tv_f, tv_r, feedback)  # fukui
-    dargs['op'] = op
-    return op
+# theta  = [0, theta_y, 0]
+# deye   = np.array([0, 0, *])
+# dtheta = np.array([0, *, 0])
+def accste2deye_dr_fixed(accste, r, sec, DRIVER):
+    rpslr = DRIVER.accste2rpslr(accste[0], accste[1])
+    distance_per_sec, dtheta_y = DRIVER.rpslr2vw(*rpslr)
+    deye = (r @ np.array([0, 0, 1])) * distance_per_sec * sec
+    dr = theta2r(np.array([0, (dtheta_y * sec), 0]))
+    return deye, dr
 
 def main():
     # setup
@@ -75,12 +117,22 @@ def main():
     WM_LINES_MAP  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3)
 
     # definition: can be changed on actual driving
-    x, z = 3500 / 2, 4900
-    theta_y = 180
+    DRIVER = driver.Driver(
+        IS_PID              = False,
+        IS_KEEPLEFT         = False,
+        IS_KALMAN           = False,
+        IS_DETECT_COURSEOUT = False,
+        IS_SIMULATION       = True,
+    )
+    INIT_XHAT = DRIVER.INIT_XHAT
+    x, z, theta_y = INIT_XHAT['x'], INIT_XHAT['z'], INIT_XHAT['th']
+    #print(x, z, theta_y);exit()
+    #x, z = 1575, 700
+    #theta_y = 180
 
     # body
     eye = np.array([x, EYE_Y, z])
-    theta = np.array([0, theta_y, 0]) / 180 * pi # 0 <= theta_x <= 90
+    theta = np.array([0, theta_y, 0]) # 0 <= theta_x <= pi / 2
     r = theta2r(theta)
 
     uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT)
@@ -90,8 +142,8 @@ def main():
     # debug
     LINE_WIDTH = 3 # line width of img [px]
     FIGSIZE=np.array((1 * 2, 1)) * 6 # (width, height) [inches]
-    FIGPOS=([0.05, 0.05, 0.4, 0.9], # [left_edge_pos, bottom_edge_pos,
-            [0.40, 0.05, 0.6, 0.9]),#     width, height]
+    FIGPOS=([0.00, 0.05, 0.40, 0.9], # [left_edge_pos, bottom_edge_pos,
+            [0.40, 0.05, 0.60, 0.9]) #     width, height]
     AFS = [ # list of affine matrix
         to_affine(theta2r(np.array([90,   0, 0]) * pi / 180)),
         to_affine(theta2r(np.array([ 0,  30, 0]) * pi / 180)),
@@ -104,8 +156,18 @@ def main():
         ]),
     ]
     IS_TV = False
-    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][1]
-    SHOWN_IMG = ['TV', 'CAMERA'               ][0]
+    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][2]
+    SHOWN_IMG = ['TV', 'CAMERA'               ][1]
+    IS_REAR = False
+    #DRIVER = driver.Driver(
+    #    IS_PID              = False,
+    #    IS_KEEPLEFT         = False,
+    #    IS_KALMAN           = False,
+    #    IS_DETECT_COURSEOUT = False,
+    #    IS_SIMULATION       = True,
+    #)
+    D_EYE_CAM_F = 90  # mm
+    D_EYE_CAM_R = 120 # mm
 
     dargs = Manager().dict({
         # modified by func_update
@@ -126,6 +188,10 @@ def main():
         'IS_TV'             : IS_TV,
         'SHOWN_MAP'         : SHOWN_MAP,
         'SHOWN_IMG'         : SHOWN_IMG,
+        'IS_REAR'           : IS_REAR,
+        'DRIVER'            : DRIVER,
+        'D_EYE_CAM_F'       : D_EYE_CAM_F,
+        'D_EYE_CAM_R'       : D_EYE_CAM_R,
     })
 
     debug(dargs)
