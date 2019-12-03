@@ -5,16 +5,20 @@ from math import sin, cos, tan, pi, sqrt, asin, acos, atan2
 
 ################################################################################
 # wm_*: a point located on the map              in the world  coordinate
+#       np.array([x, 0, z])
 # wf_*: a point located on the forcused surface in the world  coordinate
+#       np.array([x, y, z])
 # cm_*: a point located on the map              in the camera coordinate
+#       np.array([x, y, z])
 # cf_*: a point located on the forcused surface in the camera coordinate
+#       np.array([x, y, F])
 ################################################################################
 # *_line: a pair of points
 ################################################################################
 
 ################################################################################
-# line:   np.shape == (2, N) (2 points on N-dimentions space)
-# ret: n: np.shape == (N,)   (unit vector of line)
+# line:   np.shape == (2, D) (2 points on D-dimentions space)
+# ret: n: np.shape == (D,)   (unit vector of line)
 def line2n(line):
     point0 = line[0]
     point1 = line[1]
@@ -26,9 +30,6 @@ def line2n(line):
 # theta:    np.array([theta_x, theta_y, theta_z]) [rad]
 # ret: r:   np.shape == (3, 3) (rotation matrix)
 # Note: only works with theta_z == 0
-# [ cos(theta[1]), sin(theta[1]) * sin(theta[0]), sin(theta[1]) * cos(theta[0])]
-# [           0  ,                 cos(theta[0]),                -sin(theta[0])]
-# [-sin(theta[1]), cos(theta[1]) * sin(theta[0]), cos(theta[1]) * cos(theta[0])]
 def theta2r(theta):
     r_x = np.array([[           1  ,            0  ,            0  ],
                     [           0  ,  cos(theta[0]), -sin(theta[0])],
@@ -39,7 +40,8 @@ def theta2r(theta):
     #r_z = np.array([[ cos(theta[2]), -sin(theta[2]),            0  ],
     #                [ sin(theta[2]),  cos(theta[2]),            0  ],
     #                [           0  ,            0  ,            1  ]])
-    r = np.linalg.multi_dot((r_y, r_x))
+    #r = np.linalg.multi_dot((r_y, r_x))
+    r = r_y @ r_x
     return r
 
 # r:            np.shape == (3, 3)
@@ -52,24 +54,26 @@ def r2theta(r):
     return np.array((theta_x, theta_y, theta_z)) % (2 * pi)
 
 ################################################################################
-# w:    np.array([x, y, z])
-# c:    np.array([x, y, z])
-# eye:  np.array([x, y, z])
-# r:    np.shape == (3, 3)
-
+# w:        np.array([x, y, z])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# ret: c:   np.array([x, y, z])
 def w2c(w, eye, r):
     c = np.dot(np.linalg.inv(r), (w - eye))
     return c
 
+# c:        np.array([x, y, z])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# ret: w:   np.array([x, y, z])
 def c2w(c, eye, r):
     w = np.dot(r, c) + eye
     return w
 
 ################################################################################
-# uv:       (float, float)
-# cf:       np.array([float, F, float])
+# cf:       np.array([x, F, z])
 # CONTEXT:
-
+# ret: uv:  np.array([u, v])
 def cf2uv(cf, CONTEXT):
     x = cf[0]
     y = cf[1]
@@ -78,6 +82,9 @@ def cf2uv(cf, CONTEXT):
     uv = np.array([u, v])
     return uv
 
+# uv:       np.array([u, v])
+# CONTEXT:
+# ret: cf:  np.array([x, F, z])
 def uv2cf(uv, CONTEXT):
     u = uv[0]
     v = uv[1]
@@ -88,11 +95,10 @@ def uv2cf(uv, CONTEXT):
 
 ################################################################################
 # wm:       np.array([x, 0, z])
-# uv:       (float, float)
 # eye:      np.array([x, y, z])
 # r:        np.shape == (3, 3)
 # CONTEXT:
-
+# ret: uv:  np.array([u, v])
 def wm2uv(wm, eye, r, CONTEXT):
     #print('wm: ', wm.astype(int))
     cm = w2c(wm, eye, r)
@@ -103,6 +109,11 @@ def wm2uv(wm, eye, r, CONTEXT):
     #print('uv: ', uv.astype(int))
     return uv
 
+# uv:       np.array([u, v])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# CONTEXT:
+# ret: wm:  np.array([x, 0, z])
 def uv2wm(uv, eye, r, CONTEXT):
     cf = uv2cf(uv, CONTEXT)
     wf = c2w(cf, eye, r)
@@ -112,15 +123,17 @@ def uv2wm(uv, eye, r, CONTEXT):
 
 ################################################################################
 # cm:       np.array([x, y, z])
-# cf:       np.array([x, y, F])
 # CONTEXT:
-
+# ret: cf:  np.array([x, y, F])
 def cm2cf(cm, CONTEXT):
     x = CONTEXT['F'] / cm[2] * cm[0]
     y = CONTEXT['F'] / cm[2] * cm[1]
     cf = np.array([x, y, CONTEXT['F']])
     return cf
 
+# cf:       np.array([x, y, F])
+# CONTEXT:
+# ret: cm:  np.array([x, y, z])
 def cf2cm(cf, eye, r):
     wf = c2w(cf, eye, r)
     wm = wf2wm(wf, eye, r)
@@ -128,17 +141,20 @@ def cf2cm(cf, eye, r):
     return cm
 
 ################################################################################
-# wm:   np.array([x, 0, z])
-# wf:   np.array([x, y, z])
-# eye:  np.array([x, y, z])
-# r:    np.shape == (3, 3)
-
+# wm:       np.array([x, 0, z])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# ret: wf:  np.array([x, y, z])
 def wm2wf(wm, eye, r, CONTEXT):
     cm = w2c(wm, eye, r)
     cf = cm2cf(cm, CONTEXT['F'])
     wf = c2w(cf, eye, r)
     return wf
 
+# wf:       np.array([x, y, z])
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# ret: wm:  np.array([x, 0, z])
 def wf2wm(wf, eye, r):
     n = wf - eye
     try:
@@ -154,40 +170,52 @@ def wf2wm(wf, eye, r):
 
 ################################################################################
 # wm_line:  np.array([(x, 0, z), (x, 0, z)])
-# uv_line:  np.array([(u, v), (u, v)]) or None (behind of camera and parallel)
 # wm_edge0: np.array([(x, 0, z), (x, 0, z)])
 # eye:      np.array([x, y, z])
 # r:        np.shape == (3, 3)
 # CONTEXT:
-
+# ret:      uv_line:  np.array([(u, v), (u, v)]) or None
 def wm_line2uv_line(wm_line, wm_edge0, eye, r, CONTEXT):
     uv_line = [] # (2, 2)
     for wm in wm_line: # (2,)
         cm = w2c(wm, eye, r)
-        if cm[2] < CONTEXT['F']: # behind of camera
-            edge = np.array((
-                (wm_edge0[0][0], wm_edge0[0][2]),
-                (wm_edge0[1][0], wm_edge0[1][2]),
-            ))
-            line = np.array((
-                ( wm_line[0][0],  wm_line[0][2]),
-                ( wm_line[1][0],  wm_line[1][2]),
-            ))
-            # y = a * x + b
-            if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
-                return None # edge and line are parallel
-            try:
-                edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
-                line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
+        try:
+            if cm[2] < CONTEXT['F']: # behind of camera
+                edge = np.array((
+                    (wm_edge0[0][0], wm_edge0[0][2]),
+                    (wm_edge0[1][0], wm_edge0[1][2]),
+                ))
+                line = np.array((
+                    ( wm_line[0][0],  wm_line[0][2]),
+                    ( wm_line[1][0],  wm_line[1][2]),
+                ))
+                if abs(np.dot(line2n(edge), line2n(line))) > 0.9:
+                    return None # edge and line are parallel
+                # z = ax + b
+                try:
+                    edge_a = (edge[1][1] - edge[0][1]) / (edge[1][0] - edge[0][0])
+                except FloatingPointError:
+                    edge_a = 2 ** 32
+                try:
+                    line_a = (line[1][1] - line[0][1]) / (line[1][0] - line[0][0])
+                except FloatingPointError:
+                    line_a = 2 ** 32
                 edge_b = edge[0][1] - edge_a * edge[0][0]
                 line_b = line[0][1] - line_a * line[0][0]
-                x = (line_b - edge_b) / (edge_a - line_a)
+                try:
+                    x = (line_b - edge_b) / (edge_a - line_a)
+                except FloatingPointError:
+                    return None # edge and line are parallel
                 z = edge_a * x + edge_b
                 wm = np.array((x, 0, z))
-            except FloatingPointError:
-                return None
-        uv = wm2uv(wm, eye, r, CONTEXT) # (2,)
-        uv_line.append(uv)
+            uv = wm2uv(wm, eye, r, CONTEXT) # (2,)
+            uv_line.append(uv)
+        except ValueError:
+            print('wm:', wm)
+            print('cm:', cm)
+            print('CONTEXT:', CONTEXT)
+            raise ValueError
+            exit()
     uv_line = np.array(uv_line)
 
     if np.linalg.norm(uv_line[0] - uv_line[1]) < CONTEXT['WIDTH'] * 0.0001:
@@ -195,6 +223,11 @@ def wm_line2uv_line(wm_line, wm_edge0, eye, r, CONTEXT):
 
     return uv_line
 
+# uv_line:      np.array([(u, v), (u, v)])
+# eye:          np.array([x, y, z])
+# r:            np.shape == (3, 3)
+# CONTEXT:
+# ret: wm_line: np.array([(x, 0, z), (x, 0, z)])
 def uv_line2wm_line(uv_line, eye, r, CONTEXT):
     wm_line = []
     for uv in uv_line:
@@ -203,36 +236,39 @@ def uv_line2wm_line(uv_line, eye, r, CONTEXT):
     return np.array(wm_line)
 
 ################################################################################
-# wm_lines: np.array([([x, 0, z], [x, 0, z]), ...]), np.shape == (293,2,3)
-# uv_lines: np.array([([u, v], [u, v]), ...]), np.shape == (293 - *, 2, 2) or
-#           None if no lines are projected to F
-# eye:      np.array([x, y, z])
-# r:        np.shape == (3, 3)
+# wm_lines:         np.shape == (N, 2, 3)
+# eye:              np.array([x, y, z])
+# r:                np.shape == (3, 3)
 # CONTEXT:
-
+# ret: uv_lines:    np.shape == (N - *, 2, 2) or None
 def wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT):
     UV_VS = get_UV_VS(CONTEXT)
-
-    wm_vs = [] # 4 verticies of projected region on map
-    for uv in UV_VS:
-        wm_v = uv2wm(uv, eye, r, CONTEXT)
-        wm_vs.append(wm_v)
-    wm_vs = np.array(wm_vs)
-
+    wm_vs = np.array([uv2wm(uv, eye, r, CONTEXT) for uv in UV_VS])
     wm_edge0 = np.array((wm_vs[0], wm_vs[1]))
 
-    uv_lines = [] # (293 - *, 2, 2) (*: behind of camera and parallel)
+    # wm_line2uv_line
+    uv_lines = [] # (293 - *, 2, 2)
     for wm_line in WM_LINES: # (2, 3)
-        uv_line = wm_line2uv_line(
-                wm_line, wm_edge0, eye, r, CONTEXT)
+        uv_line = wm_line2uv_line(wm_line, wm_edge0, eye, r, CONTEXT)
         if not uv_line is None:
             uv_lines.append(uv_line)
     uv_lines = np.array(uv_lines)
 
-    uv_lines = filter_uv_lines(uv_lines, CONTEXT)
+    # filter_uv_line
+    uv_lines_filtered = []
+    for uv_line in uv_lines:
+        uv_line_filtered = filter_uv_line(uv_line, CONTEXT)
+        if not uv_line_filtered is None:
+            uv_lines_filtered.append(uv_line_filtered)
+    uv_lines_filtered = np.array(uv_lines_filtered)
 
-    return uv_lines
+    return uv_lines_filtered
 
+# uv_lines: np.shape == (N - *, 2, 2) or None
+# eye:      np.array([x, y, z])
+# r:        np.shape == (3, 3)
+# CONTEXT:
+# wm_lines: np.shape == (N, 2, 3)
 def uv_lines2wm_lines(uv_lines, eye, r, CONTEXT):
     wm_lines = []
     for uv_line in uv_lines:
@@ -245,9 +281,8 @@ def uv_lines2wm_lines(uv_lines, eye, r, CONTEXT):
 # eye:           np.array([x, y, z])
 # r:             np.shape == (3, 3)
 # CONTEXT:
-# IMG_MAP:       np.shape == (*, *) (must be grayscale, use cv2.imread())
+# IMG_MAP:       np.shape == (IMG_W, IMG_H) (grayscale, use cv2.imread())
 # ret: img_view: np.shape == (WIDTH, HEIGHT)
-
 def get_img_view(eye, r, CONTEXT, IMG_MAP):
     img_view = np.zeros((CONTEXT['HEIGHT'], CONTEXT['WIDTH']))
 
@@ -263,7 +298,7 @@ def get_img_view(eye, r, CONTEXT, IMG_MAP):
     return img_view
 
 ################################################################################
-# uv:       (float, float)
+# uv:       np.array([u, v])
 # CONTEXT:
 # ret:      bool
 def is_inside(uv, CONTEXT):
@@ -299,8 +334,8 @@ def get_intersection(line_0, line_1):
         return None
 
 ################################################################################
-# array:        iterable
-# ret: indicies: [bool, ...] (evaluate array elements as bool)
+# array:         iterable
+# ret: indicies: [0, 2, ...] (evaluate array elements as bool)
 def get_true_indicies(array):
     indicies = []
     for i in range(len(array)):
@@ -541,7 +576,7 @@ def uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT):
 
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:
-# ret: uv_line: np.shape == (2, 2)
+# ret: uv_line: np.shape == (2, 2) or None
 def filter_uv_line(uv_line, CONTEXT):
     UV_VS = get_UV_VS(CONTEXT)
 
@@ -608,7 +643,7 @@ def filter_uv_line(uv_line, CONTEXT):
 def filter_uv_line_pretv_fixed(uv_line, CONTEXT):
     HEIGHT = CONTEXT['HEIGHT']
     THRE   = HEIGHT / 2 + HEIGHT / 100 * 5
-    return None if np.any(uv_line[:,1] < THRE) else uv_line
+    #return None if np.any(uv_line[:,1] < THRE) else uv_line
     u0, v0 = uv_line[0]
     u1, v1 = uv_line[1]
     if   v0 < THRE and v1 < THRE:
@@ -645,5 +680,35 @@ def filter_uv_lines_pretv_fixed(uv_lines, CONTEXT):
     uv_lines_filtered = np.array(uv_lines_filtered)
     return uv_lines_filtered
 
+
+def uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, length):
+    wm_vs = np.array([uv2wm(uv, eye, r, CONTEXT) for uv in uv_vs])
+    n03 = -line2n((wm_vs[0], wm_vs[3]))
+    n12 = -line2n((wm_vs[1], wm_vs[2]))
+    wm_vs[3] = wm_vs[0] + n03 * length
+    wm_vs[2] = wm_vs[1] + n12 * length
+    return wm_vs
+
+def wm_line2uv_line_fixed(wm_line, eye, r, CONTEXT, edgenn):
+    # todo
+    uv_line_filtered = filter_uv_line(uv_line, CONTEXT)
+
+def wm_lines2uv_lines_fixed(wm_lines, eye, r, CONTEXT):
+    uv_vs = get_UV_VS(CONTEXT)
+    uv_vs[:,1] = uv_vs[0][1] - uv_vs[:,1] / 4
+    wm_vs = uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, 1)
+    edgenn = (
+        np.array([wm_vs[0], wm_vs[1]]),
+        line2n((wm_vs[0], wm_vs[3])),
+        line2n((wm_vs[1], wm_vs[2])),
+    )
+
+    uv_lines = []
+    for wm_line in wm_lines:
+        uv_line = wm_line2uv_line_fixed(wm_line, eye, r, CONTEXT, edgenn)
+        if not uv_line is None:
+            uv_lines.append(uv_line)
+    uv_lines = np.array(uv_lines)
+    return uv_lines
 # fixed } ######################################################################
 

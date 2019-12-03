@@ -10,8 +10,8 @@ import pspl
 
 from line import *
 
-# from keep_left import KeepLeft
-#from kalman import KalmanFilter
+from keepleft import KeepLeft
+# from kalman import KalmanFilter
 
 # ROAD MAP
 # z\x   0   1   2   3   4 (0-3500 [mm])
@@ -49,7 +49,7 @@ class Driver:
         IS_PID              = True,
         IS_KEEPLEFT         = True,
         IS_KALMAN           = True,
-        IS_DETECT_COURSEOUT = False,
+        IS_DETECT_COURSEOUT = True,
         IS_SIMULATION       = False,
         # }
 
@@ -71,6 +71,17 @@ class Driver:
         Ki         = 0.2,
         Kd         = 0.1,
         B          = 0,
+        # }
+
+        # keep left {
+        XRNG_SPTH        = 0,             # START PIXEL OF VALID XRANGE [px]
+        XRNG_EPTH        = 480,           # END   PIXEL OF VALID XRANGE [px] (0-640px)
+        ZRNG_SPTH        = 0,             # START PIXEL OF VALID YRANGE [px]
+        ZRNG_EPTH        = 640,           # END   PIXEL OF VALID YRANGE [px] (0-480px)
+        LLEN_PTH         = 0,             # LENGTH      OF VALID LINE   [px]
+        ANG_LTL          = np.pi * 60/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
+        ANG_TTL          = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
+        PLD_PTL          = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
         # }
 
         # kalman {
@@ -142,7 +153,18 @@ class Driver:
 
         # keep left
         self.is_keepleft = IS_KEEPLEFT
-        # self.__keep_left = KeepLeft()
+        self.__keepleft = KeepLeft(
+            WIDTH     = WIDTH,
+            HEIGHT    = HEIGHT,
+            XRNG_SPTH = XRNG_SPTH,
+            XRNG_EPTH = XRNG_EPTH,
+            ZRNG_SPTH = ZRNG_SPTH,
+            ZRNG_EPTH = ZRNG_EPTH,
+            LLEN_PTH  = LLEN_PTH,
+            ANG_LTL   = ANG_LTL,
+            ANG_TTL   = ANG_TTL,
+            PLD_PTL   = PLD_PTL
+        ) if not IS_KEEPLEFT else None
 
         # kalman {
         self.is_kalman  = IS_KALMAN
@@ -217,7 +239,7 @@ class Driver:
 
         x, z = x1 * tlen + tlen / 2 + sx, z1 * tlen + sz + tlen / 2
 
-        return x, z, theta + uth
+        return x, z, theta + uth + (-pi / 2 * 0.1) # debug
     # }
 
     # calibration {
@@ -412,8 +434,8 @@ class Driver:
         # STRAIGHT {
         elif inst == self.STRAIGHT:
             if self.is_keepleft:
-                # utheta = self.__keep_left.keep_left(topview_front_lines)
-                utheta = xhat['th']
+                utheta = self.__keepleft.keep_left(topview_front_lines)
+                # utheta = xhat['th']
             else:
                 utheta = xhat['th']
         # }

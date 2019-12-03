@@ -114,17 +114,16 @@ def func_draw(_, dargs, aw, ax):
         eye = eye_r
 
     uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT) #  camera view
+
     #append_lines  = np.array([
         #np.array([[0, 0],[640, 480]]),
     #])
     #uv_lines = np.append(uv_lines, append_lines, axis=0)
 
-    #time_before = time.time()
     tv = uv_lines2tvs_fixed(uv_lines, EYE_Y, BIRD, CONTEXT)
-    #time_after = time.time()
-    #print(time_after - time_before)
 
-    img = uv_lines2img(tv if SHOWN_IMG == 'TV' else uv_lines, CONTEXT, LINE_WIDTH)
+    uv_lines_img = tv if SHOWN_IMG == 'TV' else uv_lines
+    img = uv_lines2img(uv_lines_img, CONTEXT, LINE_WIDTH)
 
     aw.tick_params(labelbottom=False, labelleft=False, labelright=False, labeltop=False)
     aw.cla()
@@ -199,25 +198,23 @@ def func_draw(_, dargs, aw, ax):
     else: # top edge of view is at infinity (behind of camera)
         # convert wm_vs[2'], wm_vs[3'] -> wm_vs[2], wm_vs[3]
         #        2'______________________________ 3'        |
-        #          -                            -           |
-        #           \ -                      - /            |
-        #            \   -                -   /             |
-        #             \     -  camera  -     /              |
-        #              \       - /\ -       /               |
-        #               \      / -- \      /                |
-        #                \   /-      -\   /                 |
-        #                 \-____________-/                  |
+        #          \                            /           |
+        #           \                          /            |
+        #            \                        /             |
+        #             \        camera        /              |
+        #              \         /\         /               |
+        #               \      /    \      /                |
+        #                \   /        \   /                 |
+        #                 \/____________\/                  |
         #               - 0              1 -                |
         #            -           ||           -             |
         #         -             \||/             -          |
         #      -                 \/                 -       |
         # 3 -                  front                   - 2  |
         #                                                   |
-        n21 = line2n((wm_vs[2], wm_vs[1]))
-        n30 = line2n((wm_vs[3], wm_vs[0]))
-        wm_vs[2] = wm_vs[0] + n21 * max(MAP_SIZE)
-        wm_vs[3] = wm_vs[1] + n30 * max(MAP_SIZE)
-        wm_vs = np.array(wm_vs)
+        uv_vs = get_UV_VS(CONTEXT)
+        uv_vs[:,1] = uv_vs[0][1] - uv_vs[:,1] / 4
+        wm_vs = uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, max(MAP_SIZE))
         ax.plot(*list(zip(wm_vs[0], wm_vs[1])), '-', c='000000')
         ax.plot(*list(zip(wm_vs[1], wm_vs[2])), '-', c='000000')
         ax.plot(*list(zip(wm_vs[3], wm_vs[0])), '-', c='000000')
@@ -263,12 +260,12 @@ def debug(dargs):
     plt.show()
 
 def func_update_wrap(dargs):
-    dargs['TIME_ORIGIN']  = time.time()
-    dargs['time_before']  = time.time()
-    dargs['accste']       = (0, 0)
-    dargs['trigger_time'] = -1
-    dargs['xhat']         = dargs['DRIVER'].INIT_XHAT
-    dargs['route_id']     = [0]
+    dargs['TIME_ORIGIN']       = time.time()
+    dargs['time_before']       = time.time()
+    dargs['accste']            = (0, 0)
+    dargs['trigger_time']      = -1
+    dargs['xhat']              = dargs['DRIVER'].INIT_XHAT
+    dargs['route_id']          = [0]
 
     func_update = dargs['FUNC_UPDATE']
     while True:

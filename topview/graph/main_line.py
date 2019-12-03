@@ -9,21 +9,22 @@ import time
 from multiprocessing import Manager
 
 def FUNC_UPDATE(dargs):
-    eye           = dargs['eye']
-    r             = dargs['r']
-    CONTEXT       = dargs['CONTEXT']
-    BIRD          = dargs['BIRD']
-    WM_LINES_MAP  = dargs['WM_LINES_MAP']
-    EYE_Y         = dargs['EYE_Y']
-    TIME_ORIGIN   = dargs['TIME_ORIGIN']
-    DRIVER        = dargs['DRIVER']
-    D_EYE_CAM_F   = dargs['D_EYE_CAM_F']
-    D_EYE_CAM_R   = dargs['D_EYE_CAM_R']
+    eye              = dargs['eye']
+    r                = dargs['r']
+    CONTEXT          = dargs['CONTEXT']
+    BIRD             = dargs['BIRD']
+    WM_LINES_MAP     = dargs['WM_LINES_MAP']
+    EYE_Y            = dargs['EYE_Y']
+    TIME_ORIGIN      = dargs['TIME_ORIGIN']
+    DRIVER           = dargs['DRIVER']
+    D_EYE_CAM_F      = dargs['D_EYE_CAM_F']
+    D_EYE_CAM_R      = dargs['D_EYE_CAM_R']
 
     time_before = dargs['time_before']
     time_now    = time.time()
     dargs['time_before'] = time_now
-    sec = time_now - time_before
+    #sec = time_now - time_before
+    sec = 0.1
 
     r_f = r
     r_r = r @ theta2r(np.array([0, pi, 0]))
@@ -48,14 +49,12 @@ def FUNC_UPDATE(dargs):
 
         feedback = DRIVER.accste2rpslr(*accste)
 
-        time_from_origin = time.time() - TIME_ORIGIN
         lsd_front_lines     = uv_lines_f
         lsd_rear_lines      = uv_lines_r
         topview_front_lines = tv_f
         topview_rear_lines  = tv_r
         xhat = DRIVER.navi(xhat, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
 
-        time_from_origin = TIME_ORIGIN - time.time()
         accste = DRIVER.control(xhat, trigger_time, topview_front_lines, feedback, route_id)
 
         dargs['accste']       = accste
@@ -94,7 +93,7 @@ def main():
 
     # definition: never changed on actual driving
     EYE_Y = 100 # mm
-    BIRD = np.array([0, 2000, 2000])
+    BIRD = np.array([0, 2000, 1000])
     THETA_W = 35 / 180 * pi
     REDUCE = 1
     F = 100 # l
@@ -110,34 +109,17 @@ def main():
         'SCALE' : SCALE ,
     }
     # (293, 4)
-    LINES_LSD_XZ = np.load('map.large_18522x13230.npy') / 18522 * max(MAP_SIZE)
+    #LINES_LSD_XZ = np.load('map.large_18522x13230.npy') / 18522 * max(MAP_SIZE)
+    LINES = np.load('map.3500x4900.npy')
+    LINES_XZ = LINES.reshape(len(LINES), 4)
     # (293, 6)
-    LINES_LSD_XYZ = np.insert(LINES_LSD_XZ, (1, 3), 0, axis=1)
+    LINES_XYZ = np.insert(LINES_XZ, (1, 3), 0, axis=1)
     # (293, 2, 3)
-    WM_LINES_MAP  = LINES_LSD_XYZ.reshape(len(LINES_LSD_XYZ), 2, 3)
+    WM_LINES_MAP  = LINES_XYZ.reshape(len(LINES_XYZ), 2, 3)
 
     # definition: can be changed on actual driving
-    DRIVER = driver.Driver(
-        IS_PID              = False,
-        IS_KEEPLEFT         = False,
-        IS_KALMAN           = False,
-        IS_DETECT_COURSEOUT = False,
-        IS_SIMULATION       = True,
-    )
-    INIT_XHAT = DRIVER.INIT_XHAT
-    x, z, theta_y = INIT_XHAT['x'], INIT_XHAT['z'], INIT_XHAT['th']
-    #print(x, z, theta_y);exit()
     #x, z = 1575, 700
     #theta_y = 180
-
-    # body
-    eye = np.array([x, EYE_Y, z])
-    theta = np.array([0, theta_y, 0]) # 0 <= theta_x <= pi / 2
-    r = theta2r(theta)
-
-    uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT)
-    #uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
-    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     # debug
     LINE_WIDTH = 3 # line width of img [px]
@@ -156,18 +138,29 @@ def main():
         ]),
     ]
     IS_TV = False
-    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][2]
+    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][1]
     SHOWN_IMG = ['TV', 'CAMERA'               ][1]
     IS_REAR = False
-    #DRIVER = driver.Driver(
-    #    IS_PID              = False,
-    #    IS_KEEPLEFT         = False,
-    #    IS_KALMAN           = False,
-    #    IS_DETECT_COURSEOUT = False,
-    #    IS_SIMULATION       = True,
-    #)
     D_EYE_CAM_F = 90  # mm
     D_EYE_CAM_R = 120 # mm
+    DRIVER = driver.Driver(
+        IS_PID              = False,
+        IS_KEEPLEFT         = False,
+        IS_KALMAN           = False,
+        IS_DETECT_COURSEOUT = False,
+        IS_SIMULATION       = True,
+        BIRD                = BIRD,
+    )
+    INIT_XHAT = DRIVER.INIT_XHAT
+
+    x, z, theta_y = 175, 4160, INIT_XHAT['th']
+    eye = np.array([x, EYE_Y, z])
+    theta = np.array([0, theta_y, 0]) # 0 <= theta_x <= pi / 2
+    r = theta2r(theta)
+
+    uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT)
+    #uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
+    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     dargs = Manager().dict({
         # modified by func_update
