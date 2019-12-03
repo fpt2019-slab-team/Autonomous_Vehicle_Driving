@@ -56,7 +56,7 @@ class Driver:
         # map {
         TILE_LEN   =  700,         # [mm]
         DX         =  700 / 4,     # [mm]
-        DZ         =  700 / 2,     # [mm]
+        DZ         =  700 / 4 * 3, # [mm]
         ROUTE_PATH = './route.txt',
         # }
 
@@ -239,7 +239,7 @@ class Driver:
 
         x, z = x1 * tlen + tlen / 2 + sx, z1 * tlen + sz + tlen / 2
 
-        return x, z, theta + uth + (-pi / 2 * 0.1) # debug
+        return x, z, theta + uth
     # }
 
     # calibration {

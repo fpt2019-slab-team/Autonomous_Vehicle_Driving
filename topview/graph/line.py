@@ -67,7 +67,7 @@ def w2c(w, eye, r):
 # r:        np.shape == (3, 3)
 # ret: w:   np.array([x, y, z])
 def c2w(c, eye, r):
-    w = np.dot(r, c) + eye
+    w = (r @ c) + eye
     return w
 
 ################################################################################
@@ -119,7 +119,6 @@ def uv2wm(uv, eye, r, CONTEXT):
     wf = c2w(cf, eye, r)
     wm = wf2wm(wf, eye, r)
     return wm
-    # uv, cf, wf, wm
 
 ################################################################################
 # cm:       np.array([x, y, z])
@@ -160,11 +159,11 @@ def wf2wm(wf, eye, r):
     try:
         x = -eye[1] / n[1] * n[0] + eye[0]
     except FloatingPointError:
-        x = 10**10
+        x = 2 ** 32
     try:
         z = -eye[1] / n[1] * n[2] + eye[2]
     except FloatingPointError:
-        z = 10**10
+        z = 2 ** 32
     wm = np.array([x, 0, z])
     return wm
 
@@ -461,12 +460,9 @@ def filter_uv_lines(uv_lines, CONTEXT):
 # BIRD:                np.array([X, Y, Z])
 # ret: (eye_b, eye_r): (np.array([x', y', z']), np.shape == (3, 3))
 def eye_r2eye_r_b(eye, r, BIRD):
-    theta = r2theta(r)
-    r_deye  = theta2r(np.array([0, theta[1], 0]))
-    deye    = np.dot(r_deye, BIRD)
-    eye_b   = eye + deye
-    theta_b = np.array([pi / 2, theta[1], 0])
-    r_b     = theta2r(theta_b)
+    theta   = r2theta(r)
+    eye_b   = eye + theta2r(np.array([0, theta[1], 0])) @ BIRD
+    r_b     = theta2r(np.array([ pi / 2, theta[1], 0]))
     return eye_b, r_b
 
 # uv_lines:      np.shape == (N, 2, 2)
@@ -681,10 +677,13 @@ def filter_uv_lines_pretv_fixed(uv_lines, CONTEXT):
     return uv_lines_filtered
 
 
-def uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, length):
+def get_wm_vs_infinity(eye, r, CONTEXT, length):
+    uv_vs = get_UV_VS(CONTEXT)
+    uv_vs[2][1] = uv_vs[0][1] / 4 * 3
+    uv_vs[3][1] = uv_vs[0][1] / 4 * 3
     wm_vs = np.array([uv2wm(uv, eye, r, CONTEXT) for uv in uv_vs])
-    n03 = -line2n((wm_vs[0], wm_vs[3]))
-    n12 = -line2n((wm_vs[1], wm_vs[2]))
+    n03 = line2n((wm_vs[0], wm_vs[3]))
+    n12 = line2n((wm_vs[1], wm_vs[2]))
     wm_vs[3] = wm_vs[0] + n03 * length
     wm_vs[2] = wm_vs[1] + n12 * length
     return wm_vs
@@ -694,9 +693,7 @@ def wm_line2uv_line_fixed(wm_line, eye, r, CONTEXT, edgenn):
     uv_line_filtered = filter_uv_line(uv_line, CONTEXT)
 
 def wm_lines2uv_lines_fixed(wm_lines, eye, r, CONTEXT):
-    uv_vs = get_UV_VS(CONTEXT)
-    uv_vs[:,1] = uv_vs[0][1] - uv_vs[:,1] / 4
-    wm_vs = uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, 1)
+    wm_vs = get_wm_vs_infinity(eye, r, CONTEXT, 1)
     edgenn = (
         np.array([wm_vs[0], wm_vs[1]]),
         line2n((wm_vs[0], wm_vs[3])),

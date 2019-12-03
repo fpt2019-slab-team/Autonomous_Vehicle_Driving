@@ -8,6 +8,16 @@ import time
 
 from multiprocessing import Manager
 
+# for FUNC_UPDATE
+def INIT_DARGS(dargs):
+    dargs['TIME_ORIGIN']       = time.time()
+    dargs['time_before']       = time.time()
+    dargs['accste']            = (0, 0)
+    dargs['trigger_time']      = -1
+    dargs['xhat']              = dargs['DRIVER'].INIT_XHAT
+    dargs['route_id']          = [0]
+    dargs['is_turning']        = False
+
 def FUNC_UPDATE(dargs):
     eye              = dargs['eye']
     r                = dargs['r']
@@ -39,7 +49,7 @@ def FUNC_UPDATE(dargs):
     tv_r = uv_lines2tvs_fixed(uv_lines_r, EYE_Y, BIRD, CONTEXT)
 
     # op: (acc, ste)
-    if True:
+    if False:
         elapsed_time = sec
 
         accste       = dargs['accste']
@@ -62,8 +72,20 @@ def FUNC_UPDATE(dargs):
         dargs['trigger_time'] = trigger_time
         dargs['route_id']     = route_id
 
-    #accste = (127, 32) # (0, 127), (-128, 127)
+    if True:
+        is_turning = dargs['is_turning']
 
+        if is_turning:
+            pass
+        else:
+            if eye[2] < 700:
+                is_turning = True
+
+        accste = (127, -32) if is_turning else (127, 0)
+
+        dargs['is_turning'] = is_turning
+
+    #accste = (127, 32) # (0, 127), (-128, 127)
     deye, dr = accste2deye_dr_fixed(accste, r, sec, DRIVER)
 
     #deye   = np.array([0, 0, 0])
@@ -93,33 +115,34 @@ def main():
 
     # definition: never changed on actual driving
     EYE_Y = 100 # mm
-    BIRD = np.array([0, 2000, 1000])
+    #BIRD = np.array([0, 2000, 1000])
     THETA_W = 35 / 180 * pi
     REDUCE = 1
-    F = 100 # l
-    MAP_SIZE = (3500, 4900) # x, z
+    F = 1 # mm
+    MAP_SIZE  = (3500, 4900) # x, z
+    TILE_SIZE = 700
 
     # initialization: never changed on actual driving, calculated by definition
     WIDTH, HEIGHT = (np.array((640, 480)) / REDUCE).astype(int) # px
-    SCALE = WIDTH / 2 / tan(THETA_W / 2) / F # px / l
+    SCALE = WIDTH / 2 / tan(THETA_W / 2) / F # px / mm
     CONTEXT = {
         'F'     : F     ,
         'WIDTH' : WIDTH ,
         'HEIGHT': HEIGHT,
         'SCALE' : SCALE ,
     }
-    # (293, 4)
-    #LINES_LSD_XZ = np.load('map.large_18522x13230.npy') / 18522 * max(MAP_SIZE)
-    LINES = np.load('map.3500x4900.npy')
-    LINES_XZ = LINES.reshape(len(LINES), 4)
-    # (293, 6)
-    LINES_XYZ = np.insert(LINES_XZ, (1, 3), 0, axis=1)
-    # (293, 2, 3)
-    WM_LINES_MAP  = LINES_XYZ.reshape(len(LINES_XYZ), 2, 3)
 
-    # definition: can be changed on actual driving
-    #x, z = 1575, 700
-    #theta_y = 180
+    THETA_H = THETA_W / WIDTH * HEIGHT
+    CM_Z   = EYE_Y / tan(THETA_H / 2)
+    BM_Y   = TILE_SIZE
+    BIRD_Y = BM_Y / tan(THETA_H / 2)
+    BIRD_Z = BM_Y + CM_Z
+    BIRD = np.array([0, BIRD_Y, BIRD_Z])
+
+    LINES = np.load('map.3500x4900.npy')                    # (N, 2, 2)
+    LINES_XZ = LINES.reshape(len(LINES), 4)                 # (N, 4)
+    LINES_XYZ = np.insert(LINES_XZ, (1, 3), 0, axis=1)      # (N, 6)
+    WM_LINES_MAP  = LINES_XYZ.reshape(len(LINES_XYZ), 2, 3) # (N, 2, 3)
 
     # debug
     LINE_WIDTH = 3 # line width of img [px]
@@ -138,9 +161,9 @@ def main():
         ]),
     ]
     IS_TV = False
-    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][1]
-    SHOWN_IMG = ['TV', 'CAMERA'               ][1]
-    IS_REAR = False
+    SHOWN_MAP = ['TV', 'CAMERA', 'MAP', 'NONE'][0]
+    SHOWN_IMG = ['TV', 'CAMERA'               ][0]
+    IS_REAR = True
     D_EYE_CAM_F = 90  # mm
     D_EYE_CAM_R = 120 # mm
     DRIVER = driver.Driver(
@@ -150,17 +173,17 @@ def main():
         IS_DETECT_COURSEOUT = False,
         IS_SIMULATION       = True,
         BIRD                = BIRD,
+        DX                  =  700 / 4,     # [mm]
+        DZ                  =  700 / 4 * 7, # [mm]
     )
     INIT_XHAT = DRIVER.INIT_XHAT
 
-    x, z, theta_y = 175, 4160, INIT_XHAT['th']
+    x, z, theta_y = INIT_XHAT['x'], INIT_XHAT['z'], INIT_XHAT['th']
     eye = np.array([x, EYE_Y, z])
     theta = np.array([0, theta_y, 0]) # 0 <= theta_x <= pi / 2
     r = theta2r(theta)
 
     uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT)
-    #uv_lines = bird_view(uv_lines, eye, r, BIRD, CONTEXT)
-    #uv_lines = bird_view_fixed(uv_lines, eye, BIRD, CONTEXT)
 
     dargs = Manager().dict({
         # modified by func_update
@@ -178,6 +201,7 @@ def main():
         'AFS'               : AFS,
         'EYE_Y'             : EYE_Y,
         'FUNC_UPDATE'       : FUNC_UPDATE,
+        'INIT_DARGS'        : INIT_DARGS,
         'IS_TV'             : IS_TV,
         'SHOWN_MAP'         : SHOWN_MAP,
         'SHOWN_IMG'         : SHOWN_IMG,
