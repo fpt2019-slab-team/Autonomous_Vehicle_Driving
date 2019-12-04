@@ -49,7 +49,7 @@ def FUNC_UPDATE(dargs):
     tv_r = uv_lines2tvs_fixed(uv_lines_r, EYE_Y, BIRD, CONTEXT)
 
     # op: (acc, ste)
-    if False:
+    if True:
         elapsed_time = sec
 
         accste       = dargs['accste']
@@ -71,8 +71,7 @@ def FUNC_UPDATE(dargs):
         dargs['xhat']         = xhat
         dargs['trigger_time'] = trigger_time
         dargs['route_id']     = route_id
-
-    if True:
+    else:
         is_turning = dargs['is_turning']
 
         if is_turning:
@@ -168,7 +167,7 @@ def main():
     D_EYE_CAM_R = 120 # mm
     DRIVER = driver.Driver(
         IS_PID              = False,
-        IS_KEEPLEFT         = False,
+        IS_KEEPLEFT         = True,
         IS_KALMAN           = False,
         IS_DETECT_COURSEOUT = False,
         IS_SIMULATION       = True,
