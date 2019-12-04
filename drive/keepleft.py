@@ -30,8 +30,8 @@ class KeepLeft():
 		# }
 
 		# Tolerance {
-		ANG_LTL = np.pi * 60/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
-		ANG_TTL = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
+		ANG_LTL = 60 * np.pi/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
+		ANG_TTL = 5  * np.pi/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
 		PLD_PTL = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
 		# }
 		):
@@ -56,17 +56,10 @@ class KeepLeft():
 	# in:  topview lines (numpy (N, 5))
 	# out: diff angle [rad] between straight line and left line
 	def keep_left(self, tv_lines):
-
-		print("keepleft: ", np.shape(tv_lines), end=', ')
 		ilines, olines = self.tvlines2iolines(tv_lines)
-		print(np.shape(ilines), np.shape(olines), end=', ')
 		pairs          = self.detect_pair(ilines, olines)
-		print(np.shape(pairs), end=', ')
 		left_line      = self.detect_leftline(pairs)
-		print(np.shape(left_line), end=', ')
 		diff_ang       = self.decide_dang(left_line)
-		print(diff_ang)
-
 		return diff_ang
 	# } keep left
 
@@ -92,16 +85,13 @@ class KeepLeft():
 		for tv in tv_lines:
 			x1, x2 = WIDTH-tv[0,0], WIDTH-tv[1,0]
 			if not (XRNG_SPTH <= x1 <= XRNG_EPTH and XRNG_SPTH <= x2 <= XRNG_EPTH): # xrange threshold
-				print("x", XRNG_SPTH, XRNG_EPTH, x1, x2)
 				continue
 			z1, z2 = HEIGHT-tv[0,1], HEIGHT-tv[1,1]
 			if not (ZRNG_SPTH <= z1 <= ZRNG_EPTH and ZRNG_SPTH <= z2 <= ZRNG_EPTH): # zrange threshold
-				print("z", ZRNG_SPTH, ZRNG_EPTH, z1, z2)
 				continue
-		
+
 			length = (x1-x2)**2 + (z1-z2)**2
 			if (length < LLEN_PTH): # line length threshold [px]
-				print("l", LLEN_PTH, length)
 				continue
 
 			angle = math.atan2(z2-z1, x2-x1)
@@ -113,7 +103,7 @@ class KeepLeft():
 			elif -np.pi+ANG_TTL < angle < -ANG_TTL:
 				ilines.append([[x1, z1], [x2, z2], [length, angle]])
 			else:
-				print("a", np.rad2deg(np.pi-ANG_TTL), angle)
+				pass
 
 		return np.array(ilines), np.array(olines)
 	# } tvlines2iolines
@@ -143,15 +133,15 @@ class KeepLeft():
 						volume = oci + ico
 						if distance < PLD_PTL:
 							dv.append([j, distance, volume])
-		
+
 			if(len(dv) != 0):
 				dv = np.array(dv)
 				p = olines[int(dv[
 					np.argmin(np.argsort(np.argsort(dv[:,1]))*0.777 + 
-					np.argsort(np.argsort(dv[:,2]))*0.222
+						np.argsort(np.argsort(dv[:,2]))*0.222
 					),0])]
 				pair_lines.append(np.array([i, p]))
-		
+
 		return np.array(pair_lines)
 
 	# detect leftline {
