@@ -47,7 +47,7 @@ class Driver:
 		### FIXED PARAMETER ### {
 		# flag {
 		IS_PID              = True,
-		IS_KEEPLEFT         = True,
+		IS_KEEPLEFT         = False,
 		IS_KALMAN           = False,
 		IS_DETECT_COURSEOUT = True,
 		IS_SIMULATION       = False,
@@ -75,12 +75,12 @@ class Driver:
 		# }
 
 		# keep left {
-		XRNG_SPTH        = 0,             # START PIXEL OF VALID XRANGE [px]
-		XRNG_EPTH        = 640,           # END   PIXEL OF VALID XRANGE [px] (0-640px)
-		ZRNG_SPTH        = 0,             # START PIXEL OF VALID YRANGE [px]
-		ZRNG_EPTH        = 480,           # END   PIXEL OF VALID YRANGE [px] (0-480px)
-		LLEN_PTH         = 0,             # LENGTH      OF VALID LINE   [px]
-		ANG_LTL          = np.pi * 60/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
+		URNG_SPTH        = 0,              # START PIXEL OF VALID URANGE [px]
+		URNG_EPTH        = 640,            # END   PIXEL OF VALID URANGE [px] (0-640px)
+		VRNG_SPTH        = 0,              # START PIXEL OF VALID ZRANGE [px]
+		VRNG_EPTH        = 480,            # END   PIXEL OF VALID ZRANGE [px] (0-480px)
+		LLEN_PTH         = 0,              # LENGTH      OF VALID LINE   [px]
+		ANG_LTL          = np.pi * 45/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
 		ANG_TTL          = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
 		PLD_PTL          = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
 		# }
@@ -106,18 +106,25 @@ class Driver:
 		THRESHOLD_DIS   = 5,
 		PRM_ERR_CAM1    = 15,
 		PRM_ERR_CAM2    = 15,
+		REF_LINES_XZ    = np.load(REF_LINES_PATH)
 		# }
 
-		# context {
+		# topview {
 		HEIGHT          = 480, # [px]
 		WIDTH           = 640, # [px]
-		THETA_W         = 35 / 180 * math.pi,
-		F               = 1,
-		BIRD            = np.array([0, 2000, 2000])
+		THETA_W         = 35 / 180 * math.pi
 		):
 
-		SCALE           = WIDTH / 2 / math.tan(THETA_W / 2) / F # px / l
+		THETA_H         = THETA_W * (3 / 4)
+		F               = (WIDTH / 2) / math.tan(THETA_W / 2)
+		SCALE           = 1
+
+		K               = 3
 		EYE_Y           = CAMERA_DY
+		BIRD_Z          = EYE_Y / math.tan(THETA_H / 2) + (K * HEIGHT / 2)
+		BIRD_Y          = (K * HEIGHT / 2) / math.tan(THETA_H / 2)
+		BIRD            = np.array([0, BIRD_Y, BIRD_Z])
+
 		CONTEXT = {
 			'F'     : F     ,
 			'WIDTH' : WIDTH ,
@@ -126,9 +133,8 @@ class Driver:
 			}
 		# }
 
-		ROUTE      = self.__init_route(ROUTE_PATH)
-		REF_LINES_XZ    = np.load(REF_LINES_PATH)
-
+		# route
+		ROUTE = self.__init_route(ROUTE_PATH)
 		self.__fixed_param = {
 			'tile_len': TILE_LEN,
 			'radius'  : RADIUS,
@@ -164,7 +170,7 @@ class Driver:
 			ANG_LTL   = ANG_LTL,
 			ANG_TTL   = ANG_TTL,
 			PLD_PTL   = PLD_PTL
-		) if IS_KEEPLEFT else None
+		) if not IS_KEEPLEFT else None
 		# }
 
 		# calibration
@@ -423,7 +429,7 @@ class Driver:
 		#    elif trigger_time < time.time():
 		#        inst = nx_tile_inst
 
-		# print(route_id[0], tile_inst, inst)
+		print(route_id[0], tile_inst, inst)
 
 		# BEGIN
 		if inst == self.BEGIN:
@@ -462,18 +468,16 @@ class Driver:
 			elif inst == self.TURN_LEFT:  return 'TURN_LEFT'
 			elif inst == self.TURN_RIGHT: return 'TURN_RIGHT'
 
-		print("x:{:>+6,.2f}".format         (xhat['x']              ), end=', ')
-		print("z:{:>+6,.2f}".format         (xhat['z']              ), end=', ')
-		print("th:{:>+4.3f}".format         (np.rad2deg(xhat['th']) ), end=', ')
+		print("x:{:>+7,.2f}".format         (xhat['x']              ), end=', ')
+		print("z:{:>+7,.2f}".format         (xhat['z']              ), end=', ')
+		print("th:{:>+7.3f}".format         (np.rad2deg(xhat['th']) ), end=', ')
 		print("[{:^10}]".format             (inst2str(inst)         ), end=', ')
 		print("acc:{:>+3}".format           (acc                    ), end=', ')
 		print("ste:{:>+3}".format           (ste                    ), end=', ')
-		print("l:{:>4.3f}(".format          (fbrps_l                ), end='')
-		print("{:>+3.2e}, {:>+3.2e})".format(uprps_l, udrps_l       ), end=', ')
-		print("r:{:>4.3f}(".format          (fbrps_r                ), end='')
-		print("{:>+3.2e}, {:>+3.2e})".format(uprps_r, udrps_r       ), end=', ')
-		print("v:{:>6.3f}[mm/sec]".format   (v                      ), end=', ')
-		print("w:{:>+6.3f}[deg/sec]".format (math.degrees(w)        ), end=', ')
+		print("l:{:>6.5f}({:>+4.3e})".format(fbrps_l, uprps_l       ), end=', ')
+		print("r:{:>6.5f}({:>+4.3e})".format(fbrps_r, uprps_r       ), end=', ')
+		print("v:{:>7.3f}[mm/sec]".format   (v                      ), end=', ')
+		print("w:{:>+7.3f}[deg/sec]".format (math.degrees(w)        ), end=', ')
 		print()
 		return acc, ste
 	# }
@@ -543,9 +547,9 @@ class Driver:
 				'trigger_time'  : trigger_time,
 				})
 
+		print("ready...", end=' ')
 		while self.__pspl_comm.get_sw1() != 1: pass
-
-		print("start driving")
+		print("Go!")
 
 		process_ctrl.start()
 		process_navi.start()
@@ -565,9 +569,9 @@ class Driver:
 		xhat = self.INIT_XHAT.copy()
 		trigger_time = Manager().Value('f', -1)
 
+		print("ready...", end=' ')
 		while self.__pspl_comm.get_sw1() != 1: pass
-
-		print("start driving")
+		print("Go!")
 
 		route_id = [0] # for by reference
 		previos_time = time.time()
