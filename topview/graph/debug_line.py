@@ -103,18 +103,19 @@ def func_draw(_, dargs, aw, ax):
     SHOWN_MAP       = dargs['SHOWN_MAP']
     SHOWN_IMG       = dargs['SHOWN_IMG']
     IS_REAR         = dargs['IS_REAR']
+    D_EYE_CAM_F     = dargs['D_EYE_CAM_F']
+    D_EYE_CAM_R     = dargs['D_EYE_CAM_R']
 
-    if IS_REAR:
-        r_f = r
-        r_r = r @ theta2r(np.array([0, pi, 0]))
-        D_EYE_CAM = 90 # mm
-        eye_f = eye + r_f @ np.array([0, 0, D_EYE_CAM])
-        eye_r = eye + r_r @ np.array([0, 0, D_EYE_CAM])
-        r   = r_r
-        eye = eye_r
+    r_f = r
+    r_r = r @ theta2r(np.array([0, pi, 0]))
+    eye_f = eye + r_f @ np.array([0, 0, D_EYE_CAM_F])
+    eye_r = eye + r_r @ np.array([0, 0, D_EYE_CAM_R])
+
+    eye, r = (eye_f, r_f) if not IS_REAR else (eye_r, r_r)
 
     uv_lines = wm_lines2uv_lines(WM_LINES_MAP, eye, r, CONTEXT) #  camera view
 
+    # additional draw line
     #append_lines  = np.array([
         #np.array([[0, 0],[640, 480]]),
     #])
@@ -186,12 +187,10 @@ def func_draw(_, dargs, aw, ax):
     plot_rectangle(ax, wf_vs)
 
     # plot rectangle of map, lines from eye to rectangle of map
-    wm_vs = [] # 4 verticies of projected region on map
-    for uv in UV_VS:
-        wm_v = uv2wm(uv, eye, r, CONTEXT)
-        wm_vs.append(wm_v)
+    # 4 verticies of projected region on map
+    wm_vs = np.array([uv2wm(uv, eye, r, CONTEXT) for uv in UV_VS])
+
     if w2c(wm_vs[3], eye, r)[2] >= 0: # top edge of view is on map
-        wm_vs = np.array(wm_vs)
         plot_rectangle(ax, wm_vs)
         for wm_v in wm_vs:
             ax.plot(*list(zip(eye, wm_v)), '--', c='000000')
@@ -212,9 +211,7 @@ def func_draw(_, dargs, aw, ax):
         #      -                 \/                 -       |
         # 3 -                  front                   - 2  |
         #                                                   |
-        uv_vs = get_UV_VS(CONTEXT)
-        uv_vs[:,1] = uv_vs[0][1] - uv_vs[:,1] / 4
-        wm_vs = uv_vs2wm_vs_infinity(uv_vs, eye, r, CONTEXT, max(MAP_SIZE))
+        wm_vs = get_wm_vs_infinity(eye, r, CONTEXT, max(MAP_SIZE))
         ax.plot(*list(zip(wm_vs[0], wm_vs[1])), '-', c='000000')
         ax.plot(*list(zip(wm_vs[1], wm_vs[2])), '-', c='000000')
         ax.plot(*list(zip(wm_vs[3], wm_vs[0])), '-', c='000000')
@@ -224,15 +221,13 @@ def func_draw(_, dargs, aw, ax):
         ax.plot(*list(zip(eye, wf_vs[3])), '--', c='000000')
 
     # plot eye_b
+    # todo
     eye_b, r_b = eye_r2eye_r_b(eye, r, BIRD)
     ax.plot(*zip(eye_b), "o")
     ax.plot([eye_b[0]], [0], [eye_b[2]], "o")
-    # plot rectangle of bird
-    wm_bvs = [] # 4 verticies of bird (4, 3)
-    for uv in UV_VS:
-        wm_bv = uv2wm(uv, eye_b, r_b, CONTEXT)
-        wm_bvs.append(wm_bv)
-    wm_bvs = np.array(wm_bvs)
+    #ax.plot([eye_b[0], wm_vs[0][0]], [0, 0], [eye_b[2], wm_vs[0][2]])
+    # plot rectangle of bird (4 verticies of bird (4, 3))
+    wm_bvs = np.array([uv2wm(uv, eye_b, r_b, CONTEXT) for uv in UV_VS])
     plot_rectangle(ax, wm_bvs)
     # plot lines from eye_b to rectangle of bird
     for wm_bv in wm_bvs:
@@ -260,14 +255,9 @@ def debug(dargs):
     plt.show()
 
 def func_update_wrap(dargs):
-    dargs['TIME_ORIGIN']       = time.time()
-    dargs['time_before']       = time.time()
-    dargs['accste']            = (0, 0)
-    dargs['trigger_time']      = -1
-    dargs['xhat']              = dargs['DRIVER'].INIT_XHAT
-    dargs['route_id']          = [0]
-
+    init_dargs  = dargs['INIT_DARGS']
     func_update = dargs['FUNC_UPDATE']
+    init_dargs(dargs)
     while True:
         func_update(dargs)
 
