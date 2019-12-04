@@ -47,7 +47,7 @@ class Driver:
 		### FIXED PARAMETER ### {
 		# flag {
 		IS_PID              = True,
-		IS_KEEPLEFT         = False,
+		IS_KEEPLEFT         = True,
 		IS_KALMAN           = False,
 		IS_DETECT_COURSEOUT = True,
 		IS_SIMULATION       = False,
@@ -97,7 +97,7 @@ class Driver:
 		STDDEV_X        = 1.0,
 		STDDEV_Z        = 1.0,
 		STDDEV_YAW      = 0.0,
-		REF_LINES_PATH  = 'map.npy',
+		REF_LINES_PATH  = 'map.3500x4900.npy',
 		ROLLPITCH       = np.array([[1,0,0],
 																[0,1,0],
 																[0,0,1]]),
@@ -108,7 +108,7 @@ class Driver:
 		PRM_ERR_CAM2    = 15,
 		# }
 
-		# camera {
+		# context {
 		HEIGHT          = 480, # [px]
 		WIDTH           = 640, # [px]
 		THETA_W         = 35 / 180 * math.pi,
@@ -124,10 +124,10 @@ class Driver:
 			'HEIGHT': HEIGHT,
 			'SCALE' : SCALE ,
 			}
+		# }
 
 		ROUTE      = self.__init_route(ROUTE_PATH)
 		REF_LINES_XZ    = np.load(REF_LINES_PATH)
-		# }
 
 		self.__fixed_param = {
 			'tile_len': TILE_LEN,
@@ -164,7 +164,7 @@ class Driver:
 			ANG_LTL   = ANG_LTL,
 			ANG_TTL   = ANG_TTL,
 			PLD_PTL   = PLD_PTL
-		) if not IS_KEEPLEFT else None
+		) if IS_KEEPLEFT else None
 		# }
 
 		# calibration
@@ -423,7 +423,7 @@ class Driver:
 		#    elif trigger_time < time.time():
 		#        inst = nx_tile_inst
 
-		print(route_id[0], tile_inst, inst)
+		# print(route_id[0], tile_inst, inst)
 
 		# BEGIN
 		if inst == self.BEGIN:
@@ -462,16 +462,18 @@ class Driver:
 			elif inst == self.TURN_LEFT:  return 'TURN_LEFT'
 			elif inst == self.TURN_RIGHT: return 'TURN_RIGHT'
 
-		print("x:{:>+7,.2f}".format         (xhat['x']              ), end=', ')
-		print("z:{:>+7,.2f}".format         (xhat['z']              ), end=', ')
-		print("th:{:>+7.3f}".format         (np.rad2deg(xhat['th']) ), end=', ')
+		print("x:{:>+6,.2f}".format         (xhat['x']              ), end=', ')
+		print("z:{:>+6,.2f}".format         (xhat['z']              ), end=', ')
+		print("th:{:>+4.3f}".format         (np.rad2deg(xhat['th']) ), end=', ')
 		print("[{:^10}]".format             (inst2str(inst)         ), end=', ')
 		print("acc:{:>+3}".format           (acc                    ), end=', ')
 		print("ste:{:>+3}".format           (ste                    ), end=', ')
-		print("l:{:>6.5f}({:>+4.3e})".format(fbrps_l, uprps_l       ), end=', ')
-		print("r:{:>6.5f}({:>+4.3e})".format(fbrps_r, uprps_r       ), end=', ')
-		print("v:{:>7.3f}[mm/sec]".format   (v                      ), end=', ')
-		print("w:{:>+7.3f}[deg/sec]".format (math.degrees(w)        ), end=', ')
+		print("l:{:>4.3f}(".format          (fbrps_l                ), end='')
+		print("{:>+3.2e}, {:>+3.2e})".format(uprps_l, udrps_l       ), end=', ')
+		print("r:{:>4.3f}(".format          (fbrps_r                ), end='')
+		print("{:>+3.2e}, {:>+3.2e})".format(uprps_r, udrps_r       ), end=', ')
+		print("v:{:>6.3f}[mm/sec]".format   (v                      ), end=', ')
+		print("w:{:>+6.3f}[deg/sec]".format (math.degrees(w)        ), end=', ')
 		print()
 		return acc, ste
 	# }
