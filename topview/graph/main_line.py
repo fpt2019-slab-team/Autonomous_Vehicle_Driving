@@ -49,7 +49,7 @@ def FUNC_UPDATE(dargs):
     tv_r = uv_lines2tvs_fixed(uv_lines_r, EYE_Y, BIRD, CONTEXT)
 
     # op: (acc, ste)
-    if True:
+    if False:
         elapsed_time = sec
 
         accste       = dargs['accste']
@@ -72,7 +72,7 @@ def FUNC_UPDATE(dargs):
         dargs['trigger_time'] = trigger_time
         dargs['route_id']     = route_id
 
-    if False:
+    if True:
         is_turning = dargs['is_turning']
 
         if is_turning:
