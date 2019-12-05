@@ -11,7 +11,7 @@ import pspl
 from line import *
 
 from keepleft import KeepLeft
-# from kalman import KalmanFilter
+from kalman import KalmanFilter
 
 # ROAD MAP
 # z\x   0   1   2   3   4 (0-3500 [mm])
@@ -43,13 +43,12 @@ class Driver:
 
 	##### initializer ##### {
 	def __init__(
-		print("driver init begin")
 		self,
 
 		##### FIXED PARAMETER ##### {
 		# FLAG {
 		IS_PID                  = True,
-		IS_KEEPLEFT             = False,
+		IS_KEEPLEFT             = True,
 		IS_KALMAN               = False,
 		IS_DETECT_COURSEOUT     = True,
 		IS_SIMULATION           = False,
@@ -87,10 +86,10 @@ class Driver:
 		# VEHICLE }
 
 		# CAMERAVIEW and TOPVIEW {
-		CAMERAVIEW_WIDTH    = 640,                # [px]
-		CAMERAVIEW_HEIGHT   = 480,                # [px]
-		CAMERAVIEW_THETA_W  = 35 / 180 * math.pi  # [rad]
-		TOPVIEW_POS_RATIO   = 3,
+		CAMERAVIEW_WIDTH        = 640,                # [px]
+		CAMERAVIEW_HEIGHT       = 480,                # [px]
+		CAMERAVIEW_THETA_W      = 35 / 180 * math.pi, # [rad]
+		TOPVIEW_POS_RATIO       = 3,
 		# CAMERAVIEW and TOPVIEW }
 
 		# PID {
@@ -131,6 +130,8 @@ class Driver:
 		KALMAN_PRM_ERR_CAM2    = 15,
 		# KALMAN }
 		):
+		print("driver init begin")
+
 		##### FIXED PARAMETER #### }
 
 		##### INIT PRAMETER ##### {
@@ -154,7 +155,7 @@ class Driver:
 		CAMERAVIEW_SCALE   = 1
 
 		TOPVIEW_Z          = VEHICLE_FRONT_CAMERA_DY / math.tan(CAMERAVIEW_THETA_H / 2) + (TOPVIEW_POS_RATIO * CAMERAVIEW_HEIGHT / 2)
-		TOPVIEW_Y          = (TOPVIEW_POS_RATIO * CAMERAVIEW_HEIGHT / 2) / math.tan(VEHICLE_CAMERA_THETA_H / 2)
+		TOPVIEW_Y          = (TOPVIEW_POS_RATIO * CAMERAVIEW_HEIGHT / 2) / math.tan(CAMERAVIEW_THETA_H / 2)
 		TOPVIEW_POS        = np.array([0, TOPVIEW_Y, TOPVIEW_Z])
 
 		CAMERAVIEW_CONTEXT = {
@@ -169,14 +170,15 @@ class Driver:
 		MAP_ROUTE = self.__init_route(MAP_ROUTE_PATH)
 		# MAP }
 
+
 		# KEEP LEFT {
 		self.__keepleft = KeepLeft(
 			WIDTH     = CAMERAVIEW_WIDTH,
 			HEIGHT    = CAMERAVIEW_HEIGHT,
 			URNG_SPTH = KEEPLEFT_URNG_SPTH,
 			URNG_EPTH = KEEPLEFT_URNG_EPTH,
-			ZRNG_SPTH = KEEPLEFT_VRNG_SPTH,
-			ZRNG_EPTH = KEEPLEFT_VRNG_EPTH,
+			VRNG_SPTH = KEEPLEFT_VRNG_SPTH,
+			VRNG_EPTH = KEEPLEFT_VRNG_EPTH,
 			LLEN_PTH  = KEEPLEFT_LLEN_PTH,
 			ANG_LTL   = KEEPLEFT_ANG_LTL,
 			ANG_TTL   = KEEPLEFT_ANG_TTL,
@@ -184,78 +186,80 @@ class Driver:
 		) if IS_KEEPLEFT else None
 		# KEEP LEFT }
 
-		# calibration
-		uth = self.__calibration() if not IS_SIMULATION else 0
-		exit()
-
-		# XHAT {
-		x, z, theta = self.init_xhat(DX, DZ, uth)
-		INIT_XHAT = {'x': x, 'z': z, 'theta': theta}
-		print("start position: [x:{:>6.3f}, z:{:>6.3f}, theta:{:>6.3f}]".format(x, z, theta))
-		# }
-
-		# kalman {
-		if IS_KALMAN:
-			XHAT              = np.array([[x], [z], [theta]])
-			P                 = np.diag([PX, PZ, PYAW]) ** 2
-			DEV               = np.array([STDDEV_V, STDDEV_W, STDDEV_X, STDDEV_Z, STDDEV_YAW])
-			REF_LINES_XYZ     = np.insert(REF_LINES_XZ, (1, 3), 0, axis=1)
-			REF_LINES_WM      = ref_lines_xyz.reshape(len(ref_lines_xyz), 2, 3)
-			FRONT_CAMERA_RAD  = theta
-			REAR_CAMERA_RAD   = theta + np.pi if theta < 0 else theta - np.pi
-			FCPDX             = CAMERA_DX * math.cos(theta) - CAMERA_DZ * math.sin(theta)
-			FCPDZ             = CAMERA_DX * math.sin(theta) + CAMERA_DZ * math.cos(theta)
-			FRONT_CAMERA_POS  = xhat + np.array([[fcpdx], [CAMERA_DY], [fcpdz]])
-			REAR_CAMERA_POS   = xhat + np.array([[-fcpdx], [CAMERA_DY], [-fcpdz]])
-		KALMAN_REF_LINES_XZ    = np.load(REF_LINES_PATH)
-
-		self.__kalman = KalmanFilter(
-			x_hat         = xhat,
-			P             = p,
-			dev           = dev,
-			REF_LINE      = ref_lines_wm,
-			HEIGHT        = HEIGHT,
-			WIDTH         = WIDTH,
-			DR            = TREAD,
-			Tire_radius   = RADIUS,
-			T_camera1     = front_camera_pos,
-			T_camera2     = rear_camera_pos,
-			R_camera1_rad = np.array([np.deg2rad(0), front_camera_rad, np.deg2rad(0)]),
-			R_camera2_rad = np.array([np.deg2rad(0), rear_camera_rad, np.deg2rad(0)]),
-			Rslope        = ROLLPITCH,
-			Thre_len      = THRESHOLD_LEN,
-			Thre_rad      = THRESHOLD_RAD,
-			THRE          = THRESHOLD_DIS,
-			c1            = PRM_ERR_CAM1,
-			c2            = PRM_ERR_CAM2,
-		) if IS_KALMAN else None
-		# } kalman
-
-		# pid
-		self.__pid_l = pid.PID(Kp, Ki, Kd, B) if IS_PID else None
-		self.__pid_r = pid.PID(Kp, Ki, Kd, B) if IS_PID else None
-		# }
-
 		# PS / PL
 		self.__pspl_comm = pspl.pspl_comm()
 
+		# calibration
+		INIT_UTH = self.__calibration(VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT) if not IS_SIMULATION else 0
+
+		# XHAT {
+		x, z, theta = self.init_xhat(MAP_ROUTE, MAP_TILE_LEN, VEHICLE_DX, VEHICLE_DZ, INIT_UTH)
+		INIT_XHAT = {'x': x, 'z': z, 'theta': theta}
+		print("start position: [x:{:>6.3f}, z:{:>6.3f}, theta:{:>6.3f}]".format(x, z, np.rad2deg(theta)))
+		# XHAT }
+
+		# KALMAN {
+		if IS_KALMAN:
+			KALMAN_XHAT             = np.array([[x], [z], [theta]])
+			KALMAN_P                = np.diag([KALMAN_PX, KALMAN_PZ, KALMAN_PYAW]) ** 2
+			KALMAN_DEV              = np.array([KALMAN_STDDEV_V, KALMAN_STDDEV_W, KALMAN_STDDEV_X, KALMAN_STDDEV_Z, KALMAN_STDDEV_YAW])
+			KALMAN_REF_LINES        = np.load(KALMAN_REF_LINES_PATH)                                # (N, 2, 2)
+			KALMAN_REF_LINES_XZ     = KALMAN_REF_LINES.reshape(len(KALMAN_REF_LINES), 4)            # (N, 4)
+			KALMAN_REF_LINES_XYZ    = np.insert(KALMAN_REF_LINES_XZ, (1, 3), 0, axis=1)             # (N, 6)
+			KALMAN_REF_LINES_WM     = KALMAN_REF_LINES_XYZ.reshape(len(KALMAN_REF_LINES_XYZ), 2, 3) # (N, 2, 3)
+			KALMAN_FRONT_CAMERA_POS = KALMAN_XHAT + np.array([[VEHICLE_FRONT_CAMERA_DX], [VEHICLE_FRONT_CAMERA_DY], [VEHICLE_FRONT_CAMERA_DX]])
+			KALMAN_REAR_CAMERA_POS  = KALMAN_XHAT + np.array([[VEHICLE_REAR_CAMERA_DX], [VEHICLE_REAR_CAMERA_DY], [VEHICLE_REAR_CAMERA_DX]])
+			KALMAN_MAP_SIZE         = np.array([MAP_TILE_LEN * 5, MAP_TILE_LEN * 7])
+
+			KALMAN_KWARGS = {
+				'x_hat':          KALMAN_XHAT,
+				'P':              KALMAN_P,
+				'dev':            KALMAN_DEV,
+				'REF_LINE':       KALMAN_REF_LINES_WM,
+				'HEIGHT':         CAMERAVIEW_HEIGHT,
+				'WIDTH':          CAMERAVIEW_WIDTH,
+				'DR':             VEHICLE_TREAD,
+				'Tire_radius':    VEHICLE_RADIUS,
+				'T_camera_f':     KALMAN_FRONT_CAMERA_POS,
+				'T_camera_r':     KALMAN_REAR_CAMERA_POS,
+				'R_camera_f_rad': VEHICLE_FRONT_CAMERA_DR,
+				'R_camera_r_rad': VEHICLE_REAR_CAMERA_DR,
+				'Rslope':         KALMAN_ROLLPITCH,
+				'Thre_len':       KALMAN_THRESHOLD_LEN,
+				'Thre_rad':       KALMAN_THRESHOLD_RAD,
+				'THRE':           KALMAN_THRESHOLD_DIS,
+				'c1':             KALMAN_PRM_ERR_CAM1,
+				'c2':             KALMAN_PRM_ERR_CAM2,
+				'BIRD':           TOPVIEW_POS,
+				'MAP_SIZE':       KALMAN_MAP_SIZE,
+				'CONTEXT':        CAMERAVIEW_CONTEXT
+			}
+
+		self.__kalman = KalmanFilter(KALMAN_KWARGS) if IS_KALMAN else None
+		# KALMAN }
+
+		# pid
+		self.__pid_l = pid.PID(PID_KP, PID_KI, PID_KD, PID_B) if IS_PID else None
+		self.__pid_r = pid.PID(PID_KP, PID_KI, PID_KD, PID_B) if IS_PID else None
+		# }
+
 		# FIXED PARAM {
 		self.__fixed_param = {
-			'tile_len': TILE_LEN,
-			'radius'  : RADIUS,
-			'rps_max' : RPS_MAX,
-			'tread'   : TREAD,
-			'route'   : ROUTE,
-			'camera_y': EYE_Y,
-			'bird'    : BIRD,
-			'context' : CONTEXT,
-			'xini'    : INIT_XHAT,
+			'm_tile_len' : MAP_TILE_LEN,
+			'm_route'    : MAP_ROUTE,
+			'v_radius'   : VEHICLE_RADIUS,
+			'v_rps_max'  : VEHICLE_RPS_MAX,
+			'v_tread'    : VEHICLE_TREAD,
+			'v_cam_dy'   : VEHICLE_FRONT_CAMERA_DY,
+			'tv_pos'     : TOPVIEW_POS,
+			'cv_context' : CAMERAVIEW_CONTEXT,
+			'xini'       : INIT_XHAT,
 		}
 		# FIXED PARAM }
+
 		##### INIT PRAMETER ##### }
 
 		print("driver init end\n")
-		exit()
 	##### initializer ##### }
 
 	# load route {
@@ -267,12 +271,10 @@ class Driver:
 	# }
 
 	# initial xhat {
-	def init_xhat(self, dx, dz, uth):
-		route = self.__fixed_param['route']
-		tlen  = self.__fixed_param['tile_len']
+	def init_xhat(self, MAP_ROUTE, MAP_TILE_LEN, VEHICLE_DX, VEHICLE_DZ, UTH):
 
-		z1, x1 = route[0][0], route[0][1]
-		z2, x2 = route[1][0], route[1][1]
+		z1, x1 = MAP_ROUTE[0][0], MAP_ROUTE[0][1]
+		z2, x2 = MAP_ROUTE[1][0], MAP_ROUTE[1][1]
 
 		n = np.array([(x2 - x1), (z2 - z1)])
 		if   n[1] ==  1 and n[0] ==  0: theta = 0 * np.pi / 2
@@ -281,20 +283,19 @@ class Driver:
 		elif n[1] ==  0 and n[0] == -1: theta = 3 * np.pi / 2
 
 		r = theta2r(np.array([0, theta, 0]))
-		sx, _, sz = r @ np.array([dx, 0, dz])
-		x, z = x1 * tlen + tlen / 2 + sx, z1 * tlen + sz + tlen / 2
+		sx, _, sz = r @ np.array([VEHICLE_DX, 0, VEHICLE_DZ])
+		x, z = x1 * MAP_TILE_LEN + MAP_TILE_LEN / 2 + sx, z1 * MAP_TILE_LEN + sz + MAP_TILE_LEN / 2
 
-		return x, z, theta + uth + (-pi / 2 * 0.1) # debug
+		return x, z, theta + UTH
 	# }
 
 	# calibration {
-	def __calibration(self):
+	def __calibration(self, VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT):
 		self.__pspl_comm.begin()
 		uth = 0
-		EYE_Y   = self.__fixed_param['camera_y']
-		BIRD    = self.__fixed_param['bird']
-		CONTEXT = self.__fixed_param['context']
-		topview_front_lines = self.__pspl_comm.get_front_topview_lines(EYE_Y, BIRD, CONTEXT)
+		topview_front_lines = self.__pspl_comm.get_front_topview_lines(
+			VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT
+		)
 		self.__pspl_comm.end()
 		print("calibration finished.")
 		return uth
@@ -302,7 +303,7 @@ class Driver:
 
 	# hard-coded steering {
 	def __hard_coded_control(self, inst):
-		rps_max = self.__fixed_param['rps_max']
+		rps_max = self.__fixed_param['v_rps_max']
 		if   inst == self.BEGIN:      rps_l, rps_r = rps_max, rps_max
 		elif inst == self.STRAIGHT:   rps_l, rps_r = rps_max, rps_max
 		elif inst == self.TURN_LEFT:  rps_l, rps_r = self.__duty2rps(89/127), self.__duty2rps(1)
@@ -314,7 +315,7 @@ class Driver:
 
 	# car position to route tile {
 	def pos2tile(self, posx, posz):
-		tl = self.__fixed_param['tile_len']
+		tl = self.__fixed_param['m_tile_len']
 		tx = int(posx / tl)
 		tz = int(posz / tl)
 		return [tz, tx]
@@ -329,20 +330,20 @@ class Driver:
 
 	# motor speed to v {
 	def __rpslr2v(self, rps_l, rps_r):
-		v = self.__fixed_param['radius']*0.5*(rps_r+rps_l)
+		v = self.__fixed_param['v_radius']*0.5*(rps_r+rps_l)
 		return v
 	# }
 
 	# motor speed to w {
 	def __rpslr2w(self, rps_l, rps_r):
-		w = self.__fixed_param['radius']*(rps_r-rps_l)/self.__fixed_param['tread']
+		w = self.__fixed_param['v_radius']*(rps_r-rps_l)/self.__fixed_param['v_tread']
 		return w
 	# }
 
 	# motor speed to xhat {
 	def __feedback2odometry(self, feedback, pre_xhat, elapsed_time):
 		v, w = self.rpslr2vw(*feedback)
-		theta = w * elapsed_time                   + pre_xhat['th']
+		theta = w * elapsed_time                   + pre_xhat['theta']
 		x     = v * elapsed_time * math.sin(theta) + pre_xhat['x']
 		z     = v * elapsed_time * math.cos(theta) + pre_xhat['z']
 		return x, z, theta
@@ -350,12 +351,12 @@ class Driver:
 
 	# motor speed to duty {
 	def __rps2duty(self, rps):
-		return rps / self.__fixed_param['rps_max']
+		return rps / self.__fixed_param['v_rps_max']
 	# }
 
 	# duty to motor speed {
 	def __duty2rps(self, duty):
-		return duty * self.__fixed_param['rps_max']
+		return duty * self.__fixed_param['v_rps_max']
 	# }
 
 	# acc, ste to left and right duty {
@@ -401,8 +402,8 @@ class Driver:
 	# diff theta to diff left rps and right rps {
 	def __utheta2urpslr(self, utheta):
 		urps_l, urps_r = 0, 0
-		rps_max = self.__fixed_param['rps_max']
-		k       = self.__fixed_param['radius'] / self.__fixed_param['tread']
+		rps_max = self.__fixed_param['v_rps_max']
+		k       = self.__fixed_param['v_radius'] / self.__fixed_param['v_tread']
 
 		if utheta > 0:       # ste -> left
 			urps_r = rps_max
@@ -423,9 +424,9 @@ class Driver:
 
 			while is_pspl_comm == 1: pass
 			is_pspl_comm = 1
-			EYE_Y   = self.__fixed_param['camera_y']
-			BIRD    = self.__fixed_param['bird']
-			CONTEXT = self.__fixed_param['context']
+			EYE_Y   = self.__fixed_param['v_cam_dy']
+			BIRD    = self.__fixed_param['tv_pos']
+			CONTEXT = self.__fixed_param['cv_context']
 			topview_front_lines = self.__pspl_comm.get_front_topview_lines(EYE_Y, BIRD, CONTEXT)
 			fbrps_l, fbrps_r = self.__pspl_comm.get_motors_speed()
 			is_pspl_comm = 0
@@ -444,16 +445,16 @@ class Driver:
 	def control(self, xhat, trigger_time, topview_front_lines, feedback, route_id):
 		fbrps_l, fbrps_r = feedback
 		v, w = self.rpslr2vw(fbrps_l, fbrps_r)
-		utheta = xhat['th']
+		utheta = xhat['theta']
 
 		tile_hat     = self.pos2tile(xhat['x'], xhat['z'])
-		tile_current = self.__fixed_param['route'][route_id[0]][:2]
-		#tile_next    = self.__fixed_param['route'][self.__route_id + 1][:2]
+		tile_current = self.__fixed_param['m_route'][route_id[0]][:2]
+		#tile_next    = self.__fixed_param['m_route'][self.__route_id + 1][:2]
 		if tile_hat != tile_current:
 			route_id[0] = route_id[0] + 1
 
-		tile_inst    = self.__fixed_param['route'][route_id[0]  ][2]
-		nx_tile_inst = self.__fixed_param['route'][route_id[0]+1][2] if tile_inst != self.END else self.END
+		tile_inst    = self.__fixed_param['m_route'][route_id[0]  ][2]
+		nx_tile_inst = self.__fixed_param['m_route'][route_id[0]+1][2] if tile_inst != self.END else self.END
 
 		inst = tile_inst
 		#if tile_inst != nx_tile_inst:
@@ -477,7 +478,7 @@ class Driver:
 			if self.is_keepleft:
 				utheta = self.__keepleft.keep_left(topview_front_lines)
 			else:
-				utheta = xhat['th']
+				utheta = xhat['theta']
 		# }
 
 		# TURN {
@@ -501,16 +502,16 @@ class Driver:
 			elif inst == self.TURN_LEFT:  return 'TURN_LEFT'
 			elif inst == self.TURN_RIGHT: return 'TURN_RIGHT'
 
-		print("x:{:>+7,.2f}".format         (xhat['x']              ), end=', ')
-		print("z:{:>+7,.2f}".format         (xhat['z']              ), end=', ')
-		print("th:{:>+7.3f}".format         (np.rad2deg(xhat['th']) ), end=', ')
-		print("[{:^10}]".format             (inst2str(inst)         ), end=', ')
-		print("acc:{:>+3}".format           (acc                    ), end=', ')
-		print("ste:{:>+3}".format           (ste                    ), end=', ')
-		print("l:{:>6.5f}({:>+4.3e})".format(fbrps_l, uprps_l       ), end=', ')
-		print("r:{:>6.5f}({:>+4.3e})".format(fbrps_r, uprps_r       ), end=', ')
-		print("v:{:>7.3f}[mm/sec]".format   (v                      ), end=', ')
-		print("w:{:>+7.3f}[deg/sec]".format (math.degrees(w)        ), end=', ')
+		print("x:{:>+7,.2f}".format         (xhat['x']                 ), end=', ')
+		print("z:{:>+7,.2f}".format         (xhat['z']                 ), end=', ')
+		print("th:{:>+7.3f}".format         (np.rad2deg(xhat['theta']) ), end=', ')
+		print("[{:^10}]".format             (inst2str(inst)            ), end=', ')
+		print("acc:{:>+3}".format           (acc                       ), end=', ')
+		print("ste:{:>+3}".format           (ste                       ), end=', ')
+		print("l:{:>6.5f}({:>+4.3e})".format(fbrps_l, uprps_l          ), end=', ')
+		print("r:{:>6.5f}({:>+4.3e})".format(fbrps_r, uprps_r          ), end=', ')
+		print("v:{:>7.3f}[mm/sec]".format   (v                         ), end=', ')
+		print("w:{:>+7.3f}[deg/sec]".format (math.degrees(w)           ), end=', ')
 		print()
 		return acc, ste
 	# }
@@ -522,9 +523,9 @@ class Driver:
 			time.sleep(0.5)
 			if is_pspl_comm == 1: pass
 			is_pspl_comm = 1
-			EYE_Y   = self.__fixed_param['camera_y']
-			BIRD    = self.__fixed_param['bird']
-			CONTEXT = self.__fixed_param['context']
+			EYE_Y   = self.__fixed_param['v_cam_dy']
+			BIRD    = self.__fixed_param['tv_pos']
+			CONTEXT = self.__fixed_param['cv_context']
 			lsd_front_lines     = self.__pspl_comm.get_front_lsd_lines()
 			lsd_rear_lines      = self.__pspl_comm.get_rear_lsd_lines()
 			topview_front_lines = self.__pspl_comm.get_front_topview_lines(EYE_Y, BIRD, CONTEXT)
@@ -550,7 +551,7 @@ class Driver:
 		else:
 			x, z , theta = self.__feedback2odometry(feedback, xhat_in, elapsed_time)
 
-		xhat = {'x': x, 'z': z, 'th': theta}
+		xhat = {'x': x, 'z': z, 'theta': theta}
 		return xhat
 	# }
 
@@ -560,7 +561,7 @@ class Driver:
 		self.__pspl_comm.begin()
 		is_pspl_comm = Manager().Value('i', 0)
 
-		xhat = Manager().dict(self.INIT_XHAT)
+		xhat = Manager().dict(self.__fixed_param['xini'])
 
 		trigger_time = Manager().Value('f', -1)
 
@@ -580,7 +581,7 @@ class Driver:
 				'trigger_time'  : trigger_time,
 				})
 
-		print("ready...", end=' ')
+		print("ready...")
 		while self.__pspl_comm.get_sw1() != 1: pass
 		print("Go!")
 
@@ -599,10 +600,10 @@ class Driver:
 		np.seterr(divide='raise')
 		self.__pspl_comm.begin()
 
-		xhat = self.INIT_XHAT.copy()
+		xhat = self.__fixed_param['xini'].copy()
 		trigger_time = Manager().Value('f', -1)
 
-		print("ready...", end=' ')
+		print("ready...")
 		while self.__pspl_comm.get_sw1() != 1: pass
 		print("Go!")
 
@@ -616,9 +617,9 @@ class Driver:
 			elapsed_time = time.time() - previos_time
 			previos_time = time.time()
 
-			EYE_Y   = self.__fixed_param['camera_y']
-			BIRD    = self.__fixed_param['bird']
-			CONTEXT = self.__fixed_param['context']
+			EYE_Y   = self.__fixed_param['v_cam_dy']
+			BIRD    = self.__fixed_param['tv_pos']
+			CONTEXT = self.__fixed_param['cv_context']
 
 			lsd_front_lines     = self.__pspl_comm.get_front_lsd_lines()
 			lsd_rear_lines      = self.__pspl_comm.get_rear_lsd_lines()
