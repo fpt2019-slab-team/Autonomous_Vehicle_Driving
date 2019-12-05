@@ -14,9 +14,12 @@ def INIT_DARGS(dargs):
     dargs['time_before']       = time.time()
     dargs['accste']            = (0, 0)
     dargs['trigger_time']      = -1
-    dargs['xhat']              = dargs['XINI']
     dargs['route_id']          = [0]
     dargs['is_turning']        = False
+    
+    fixed_param = dargs['DRIVER'].fixed_param
+    dargs['xhat']              = fixed_param['xini']
+    dargs['p']                 = fixed_param['p']
 
 def FUNC_UPDATE(dargs):
     eye              = dargs['eye']
@@ -38,8 +41,8 @@ def FUNC_UPDATE(dargs):
 
     r_f = r
     r_r = r @ theta2r(np.array([0, pi, 0]))
-    eye_f = eye + r_f @ np.array([0, D_EYE_CAM_F, 0])
-    eye_r = eye + r_r @ np.array([0, D_EYE_CAM_R, 0])
+    eye_f = eye + r_f @ np.array([0, 0, D_EYE_CAM_F])
+    eye_r = eye + r_r @ np.array([0, 0, D_EYE_CAM_R])
 
     # get camera view
     uv_lines_f = wm_lines2uv_lines(WM_LINES_MAP, eye_f, r_f, CONTEXT)
@@ -56,6 +59,7 @@ def FUNC_UPDATE(dargs):
         xhat         = dargs['xhat']
         trigger_time = dargs['trigger_time']
         route_id     = dargs['route_id']
+        p            = dargs['p']
 
         feedback = DRIVER.accste2rpslr(*accste)
 
@@ -63,7 +67,7 @@ def FUNC_UPDATE(dargs):
         lsd_rear_lines      = uv_lines_r
         topview_front_lines = tv_f
         topview_rear_lines  = tv_r
-        xhat = DRIVER.navi(xhat, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
+        xhat, p = DRIVER.navi(xhat, p, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
 
         accste = DRIVER.control(xhat, trigger_time, topview_front_lines, feedback, route_id)
 
@@ -71,6 +75,7 @@ def FUNC_UPDATE(dargs):
         dargs['xhat']         = xhat
         dargs['trigger_time'] = trigger_time
         dargs['route_id']     = route_id
+        dargs['p']            = p
     else:
         is_turning = dargs['is_turning']
 
@@ -206,7 +211,6 @@ def main():
         'DRIVER'            : DRIVER,
         'D_EYE_CAM_F'       : D_EYE_CAM_F,
         'D_EYE_CAM_R'       : D_EYE_CAM_R,
-        'XINI'              : XINI,
     })
 
     debug(dargs)

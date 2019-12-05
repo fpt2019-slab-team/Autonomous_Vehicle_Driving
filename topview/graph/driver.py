@@ -123,8 +123,8 @@ class Driver:
 		KALMAN_ROLLPITCH       = np.array([[1,0,0],
 																[0,1,0],
 																[0,0,1]]),
-		KALMAN_THRESHOLD_LEN   = 2000,
-		KALMAN_THRESHOLD_RAD   = np.deg2rad(15),
+		KALMAN_THRESHOLD_LEN   = 200000,
+		KALMAN_THRESHOLD_RAD   = np.deg2rad(55),
 		KALMAN_THRESHOLD_DIS   = 5,
 		KALMAN_PRM_ERR_CAM1    = 15,
 		KALMAN_PRM_ERR_CAM2    = 15,
@@ -254,6 +254,7 @@ class Driver:
 			'tv_pos'     : TOPVIEW_POS,
 			'cv_context' : CAMERAVIEW_CONTEXT,
 			'xini'       : INIT_XHAT,
+			'p'          : KALMAN_P if IS_KALMAN else None,
 		}
 		self.fixed_param = self.__fixed_param
 		# FIXED PARAM }
@@ -541,20 +542,23 @@ class Driver:
 	# }
 
 	# route navigation {
-	def navi(self, xhat_in, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time):
+	def navi(self, xhat_in, p, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time):
 		if self.is_kalman:
-			x, z, theta = self.__kalman.kalman_filter(
+			x_hat, p = self.__kalman.kalman_filter(
 				xhat_in,
+				p,
 				lsd_front_lines, lsd_rear_lines,
 				#topview_front_lines, topview_rear_lines,
 				np.array(feedback),
 				elapsed_time
-				).flatten().tolist()
+				)
+			x, z, theta = x_hat.flatten().tolist()
 		else:
 			x, z , theta = self.__feedback2odometry(feedback, xhat_in, elapsed_time)
+			p = None
 
 		xhat = {'x': x, 'z': z, 'theta': theta}
-		return xhat
+		return xhat, p
 	# }
 
 	# let's drive {
