@@ -14,7 +14,7 @@ def INIT_DARGS(dargs):
     dargs['time_before']       = time.time()
     dargs['accste']            = (0, 0)
     dargs['trigger_time']      = -1
-    dargs['xhat']              = dargs['DRIVER'].INIT_XHAT
+    dargs['xhat']              = dargs['XINI']
     dargs['route_id']          = [0]
     dargs['is_turning']        = False
 
@@ -167,17 +167,15 @@ def main():
     D_EYE_CAM_R = 120 # mm
     DRIVER = driver.Driver(
         IS_PID              = False,
-        IS_KEEPLEFT         = True,
-        IS_KALMAN           = False,
+        IS_KEEPLEFT         = False,
+        IS_KALMAN           = True,
         IS_DETECT_COURSEOUT = False,
         IS_SIMULATION       = True,
-        BIRD                = BIRD,
-        DX                  =  700 / 4,     # [mm]
-        DZ                  =  700 / 4 * 7, # [mm]
     )
-    INIT_XHAT = DRIVER.INIT_XHAT
+    XINI = DRIVER.fixed_param['xini']
+    BIRD = DRIVER.fixed_param['tv_pos']
 
-    x, z, theta_y = INIT_XHAT['x'], INIT_XHAT['z'], INIT_XHAT['th']
+    x, z, theta_y = XINI['x'], XINI['z'], XINI['theta']
     eye = np.array([x, EYE_Y, z])
     theta = np.array([0, theta_y, 0]) # 0 <= theta_x <= pi / 2
     r = theta2r(theta)
@@ -208,6 +206,7 @@ def main():
         'DRIVER'            : DRIVER,
         'D_EYE_CAM_F'       : D_EYE_CAM_F,
         'D_EYE_CAM_R'       : D_EYE_CAM_R,
+        'XINI'              : XINI,
     })
 
     debug(dargs)

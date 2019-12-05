@@ -47,7 +47,33 @@ import math
 class KalmanFilter:
     __x_hat = None
     def __init__(self, kwargs):
+        #print(kwargs);exit()
+        
 
+        # print(kwargs['x_hat']         )
+        # print(kwargs['P']             )
+        # print(kwargs['dev']           )
+        # print(kwargs['REF_LINE']      )
+        # print(kwargs['HEIGHT']        )
+        # print(kwargs['WIDTH']         )
+        # print(kwargs['DR']            )
+        # print(kwargs['Tire_radius']   )
+        # print(kwargs['T_camera_f']     )
+        # print(kwargs['T_camera_r']     )
+        # print(kwargs['R_camera_f_rad'] )
+        # print(kwargs['R_camera_r_rad'] )
+        # print(kwargs['Rslope']        )
+        # print(kwargs['Thre_len']      )
+        # print(kwargs['Thre_rad']      )
+        # print(kwargs['THRE']          )
+        # print(kwargs['c1']            )
+        # print(kwargs['c2']            )
+        # print(kwargs['BIRD']          )
+        # print(kwargs['MAP_SIZE']      )
+        # print(kwargs['CONTEXT']       );exit()
+                        
+
+        
         x_hat         = kwargs['x_hat']
         P             = kwargs['P']
         dev           = kwargs['dev']
@@ -56,10 +82,10 @@ class KalmanFilter:
         WIDTH         = kwargs['WIDTH']
         DR            = kwargs['DR']
         Tire_radius   = kwargs['Tire_radius']
-        T_camera1     = kwargs['T_camera1']
-        T_camera2     = kwargs['T_camera2']
-        R_camera1_rad = kwargs['R_camera1_rad']
-        R_camera2_rad = kwargs['R_camera2_rad']
+        T_camera_f     = kwargs['T_camera_f']
+        T_camera_r     = kwargs['T_camera_r']
+        R_camera_f_rad = kwargs['R_camera_f_rad']
+        R_camera_r_rad = kwargs['R_camera_r_rad']
         Rslope        = kwargs['Rslope']
         Thre_len      = kwargs['Thre_len']
         Thre_rad      = kwargs['Thre_rad']
@@ -70,8 +96,7 @@ class KalmanFilter:
         MAP_SIZE      = kwargs['MAP_SIZE']
         CONTEXT       = kwargs['CONTEXT']
 
-
-
+        
         # x_hat         : 前時刻の事後推定値  (3, 1)    [[x(mm)], [z(mm)], [yaw(rad)]] x...0-MAP_WIDTH  z...0-MAP_HEIGHT
         # P             : 共分散行列          (3, 3)
         # dev           : 誤差を示す標準偏差 (1, 5)    [v, omega, x, z, yaw]
@@ -81,15 +106,15 @@ class KalmanFilter:
         # DR            : 車輪間距離 [mm]
         # Tire_radius   : タイヤ半径 [mm]
 
-        # T_camera1     : front camera 位置 (3, 1)      [[x], [y], [z]]  (mm)
-        # T_camera2     : rear  camera 位置 (3, 1)      [[x], [y], [z]]  (mm)
+        # T_camera_f     : front camera 位置 (3, 1)      [[x], [y], [z]]  (mm)
+        # T_camera_r     : rear  camera 位置 (3, 1)      [[x], [y], [z]]  (mm)
         '''    2つ後輪の中間地点を原点とした位置
                  x...左向き正
                  y...上向き正 地面からの高さ
                  z...前向き正                   '''
 
-        # R_camera1_rad : front camera 向き (1, 3)  [[x_rad], [y_rad], [z_rad]] (rad)
-        # R_camera2_rad : rear  camera 向き (1, 3)  [[x_rad], [y_rad], [z_rad]] (rad)
+        # R_camera_f_rad : front camera 向き (1, 3)  [[x_rad], [y_rad], [z_rad]] (rad)
+        # R_camera_r_rad : rear  camera 向き (1, 3)  [[x_rad], [y_rad], [z_rad]] (rad)
         '''    車両前方 ........ 0度
                車両左方向 ......90度   '''
 
@@ -125,24 +150,27 @@ class KalmanFilter:
 
         self.__DR = DR      # 車輪間距離
         self.__Tire_radius = Tire_radius
-        self.__camera_Height = T_camera1[1,0] # カメラの高さ
+        self.__camera_Height = T_camera_f[1,0] # カメラの高さ
 
 
         # カメラの位置, 姿勢
-        #self.__T_camera1 = np.array([[T_camera1[0,0]],
-        #                             [T_camera1[1,0]],
-        #                             [T_camera1[2,0]]])
-        #self.__T_camera2 = np.array([[T_camera2[0,0]],
-        #                             [T_camera2[1,0]],
-        #                             [T_camera2[2,0]]])
-        self.__T_camera1 = np.array([[0],
+        # self.__T_camera_f = np.array([[T_camera_f[0,0]],
+        #                              [T_camera_f[1,0]],
+        #                              [T_camera_f[2,0]]])
+        # self.__T_camera_r = np.array([[T_camera_r[0,0]],
+        #                              [T_camera_r[1,0]],
+        #                              [T_camera_r[2,0]]])
+
+        self.__T_camera_f = np.array([[  0],
                                      [100],
-                                     [0]])
-        self.__T_camera2 = np.array([[0],
+                                     [  0]])
+        self.__T_camera_r = np.array([[  0],
                                      [100],
-                                     [0]])
-        self.__R_camera1 = theta2r(np.array([R_camera1_rad[0], R_camera1_rad[1], R_camera1_rad[2]]))
-        self.__R_camera2 = theta2r(np.array([R_camera2_rad[0], R_camera2_rad[1], R_camera2_rad[2]]))
+                                     [  0]])
+
+
+        self.__R_camera_f = theta2r(np.array([R_camera_f_rad[0], R_camera_f_rad[1], R_camera_f_rad[2]]))
+        self.__R_camera_r = theta2r(np.array([R_camera_r_rad[0], R_camera_r_rad[1], R_camera_r_rad[2]]))
 
         # Roll/Pitch 回転無し
         self.__Rslope = Rslope
@@ -175,7 +203,7 @@ class KalmanFilter:
 
         
         self.__ratio = 2*self.__BIRD[1]*np.sqrt(1-cos(np.deg2rad(17.5))*cos(np.deg2rad(17.5))) / cos(np.deg2rad(17.5)) / self.__WIDTH
-        print(self.__ratio)
+        #print(self.__ratio)
         
         #sim用
         self.__step = 0
@@ -373,7 +401,11 @@ class KalmanFilter:
         yaw   = self.__x_hat[2, 0]
         v     = u[0,0]  # 車両速度
         omega = u[1,0]  # 車両角速度
+        
+        # print(self.__x_hat)
+        # print(v, DT_s, np.sinc(omega*DT_s/2), np.cos(yaw + omega*DT_s/2))
 
+        
         x_hat_m = self.__x_hat + np.array([[v*DT_s*np.sinc(omega*DT_s/2)*np.sin(yaw + omega*DT_s/2)],
                                            [v*DT_s*np.sinc(omega*DT_s/2)*np.cos(yaw + omega*DT_s/2)],
                                            [omega*DT_s]])
@@ -385,6 +417,10 @@ class KalmanFilter:
             x_hat_m = x_hat_m + np.array([[0],
                                           [0],
                                           [2*np.pi]])
+
+        #print(self.__x_hat)
+        #print(x_hat_m)
+            
         return x_hat_m
 
 
@@ -710,18 +746,40 @@ class KalmanFilter:
         # front camera の姿勢 から rear camera の姿勢を求める
         # y軸回転 180度 するだけ
 
-        yaw = float(front_position[2])
-        yaw += np.pi
+        # yaw = float(front_position[2])
+        # yaw += np.pi
 
+        # if yaw >= 2*np.pi:
+        #     yaw -= 2*np.pi
+        # if yaw < 0:
+        #     yaw += 2*np.pi
+            
+        # rear_position = np.array([[float(front_position[0])],
+        #                           [float(front_position[1])],
+        #                           [yaw]])
+
+        
+        CAMERA_DX = self.__T_camera_f[0][0]
+        CAMERA_DY = self.__T_camera_f[1][0]
+        CAMERA_DZ = self.__T_camera_f[2][0]
+        
+        yaw = front_position[2][0]
+        yaw += np.pi
+        
         if yaw >= 2*np.pi:
             yaw -= 2*np.pi
         if yaw < 0:
             yaw += 2*np.pi
-
-        rear_position = np.array([[float(front_position[0])],
-                                  [float(front_position[1])],
-                                  [yaw]])
-        return rear_position
+            
+        fcpdx             = CAMERA_DX * math.cos(yaw) - CAMERA_DZ * math.sin(yaw)
+        fcpdz             = CAMERA_DX * math.sin(yaw) + CAMERA_DZ * math.cos(yaw)
+        
+        rear_camera_pos   = np.array([[-fcpdx], [CAMERA_DY], [-fcpdz]])
+        rear_camera = self.__x_hat + np.array([[rear_camera_pos[0][0]],
+                                               [rear_camera_pos[2][0]],
+                                               [                np.pi]])
+        
+        return rear_camera
 
 
     def __LSD_uv2camera_uv(self, LSD_lines):
@@ -797,15 +855,6 @@ class KalmanFilter:
         lines = bird_view(lines, eye, r, self.__BIRD, self.__CONTEXT)
         return lines.reshape((len(lines),4))
 
-
-    # def __get_ib_lines_egw_sim_no_filter(self, lines, x_hat_m):
-    #     eye = np.array([float(x_hat_m[0]), 100, float(x_hat_m[1])])
-    #     theta = np.array([0, (np.rad2deg(x_hat_m[2])), 0]) / 180 * np.pi
-    #     r = theta2r(theta)
-
-    #     lines = lines.reshape((len(lines),2,2))
-    #     lines = bird_view_no_filter(lines, eye, r, self.__BIRD, self.__CONTEXT)
-    #     return lines.reshape((len(lines),4))
     #---------- 関数定義(線分取得) ここまで ----------
 
     #---------- 関数定義(線分マッチング)  ----------
@@ -838,185 +887,102 @@ class KalmanFilter:
             return f1 * f1 / r2
 
 
-    #def __matching(self, p, q, r, s, mode):
+        #-----------
     def __matching(self, p, q, r, s, valid, mode):
-        ### mode == 0
-        # p : maplines  (*, 4)
-        # q : obslines  (*, 5)
-        ### mode == 1
-        # p : obslines  (*, 5)
-        # q : maplines  (*, 4)
-
-        # r : camlines      (*, 4)
-        # s : vehiclelines  (*, 5)
-        theta_p = 0
-        theta_q = 0
-
         listtemp = [[0,0,0,0,0,0]]
-
+        
         px1 = p[0]
         py1 = p[1]
         px2 = p[2]
         py2 = p[3]
 
-        # pの直線の方程式
-        # ax + by + c = 0
-        a = py2-py1
-        b = px1-px2
-        # c = (py1-py2)*px1 + (px2-px1)*py1
-        if -1.0e-3 < b and b < 1.0e-3:
-            theta_p = np.pi/2.0 #90度
-        else:
-            m1 = -a/b # 傾き
-
-        #print(len(p), len(q), len(r), len(s))
-            
+        vec_px = px2 - px1
+        vec_py = py2 - py1
+        vec_p  = np.array([vec_px, vec_py])
+        
         # qの全ての点について
         # pに対応しそうな点を探す
         q_length = len(q)
         for j in range(q_length):
-            # if mode == 0 and q[j,4] == 0: #invalid  変な値のとき
-            #     continue
             if valid[j] == False:
                 continue
             
             qqq = q[j]
-            qx1 = qqq[0]
-            qy1 = qqq[1]
-            qx2 = qqq[2]
-            qy2 = qqq[3]
-
+            qx1 = q[j][0]
+            qy1 = q[j][1]
+            qx2 = q[j][2]
+            qy2 = q[j][3]
             
+            vec_qx = qx2 - qx1
+            vec_qy = qy2 - qy1
+            vec_q  = np.array([vec_qx, vec_qy])
+            
+            pq_dot  = np.inner(vec_p, vec_q)
+            pq_norm = np.linalg.norm(vec_p) * np.linalg.norm(vec_q)
+            
+            pq_cos  = pq_dot / pq_norm
+            pq_acos = np.arccos(np.clip(pq_cos, -1.0, 1.0))
+            #print(np.rad2deg(pq_acos))
+            
+            if abs(pq_acos) > self.__Thre_rad:
+                #print('Thre_rad より おおきい 1')
+                continue
+
+
             # 点と線分の距離
             # (基本は点と直線の距離.  直線に対して垂線が引けなければ対応する端点との距離)
             dist1 = self.__distance(qx1,qy1,px1,py1,px2,py2, 0)
             if dist1 > self.__Thre_len:
+                #print('dist1', dist1)
+                #print('Thre_len より おおきい 1')
                 continue
             dist2 = self.__distance(qx2,qy2,px1,py1,px2,py2, 1)
             if dist2 > self.__Thre_len:
+                #print('dist2', dist2)
+                #print('Thre_len より おおきい 2')
                 continue
-
-
-            # qの直線  傾き計算
-            a2 = qy2-qy1
-            b2 = qx1-qx2
-            if -1.0e-3 <b2 and b2 < 1.0e-3:
-                theta_q = np.pi/2.0
-            else:
-                m2 = -a2/b2
-
-            # 二直線のなす角  p基準
-            if theta_p == np.pi/2.0 and theta_q == np.pi/2.0: #どちらも90度 -> なす角0度
-                theta = 0
-            elif theta_p == np.pi/2.0: #pだけ90度
-                if m2 >= 0: #m2は正 -> なす角は90度-atan(m2)
-                    theta = (math.atan(m2)) - theta_p
-                else: #m2は負 ->
-                    theta = (math.atan(m2)) + theta_p # +theta_p = -(-theta_p)
-            elif theta_q == np.pi/2.0:
-                if m1 >= 0:
-                    theta = theta_q - (math.atan(m1))
-                else:
-                    theta = -theta_q - (math.atan(m1))
-            else:
-                if m1 * m2 == -1: #直交
-                    theta = np.pi/2.0
-                else:
-                    theta = math.atan((m2-m1)/(1+m2*m1))
-
-            if abs(theta) > self.__Thre_rad:
-                continue
-
+            
+            
             distdist = dist1 + dist2
-
+            
             # 候補を保存
             # x1, y1, x2, y2, 距離, index
             listtemp = np.vstack((listtemp, [qx1, qy1, qx2, qy2, distdist, j]))
-
+            
         if len(listtemp) != 1:   # 候補が存在すれば
             listtemp = sorted(listtemp, key=itemgetter(4))
-
+            
             # 一番近いやつを選択
             temp = listtemp[1]
-
+            
             # matchingしたobslineと同じindexのvehicleline camlineも返す
             if(mode == 1):
                 temp_r = r
                 temp_s = s
             else:
                 temp_r = r[int(temp[5])]
-                temp_s = s[int(temp[5])]
-
+                temp_s = s[int(temp[5])]    
             return p[0:4], temp[0:4], temp_r[0:4], temp_s[0:4]
+
         else:
             return [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
-
-
-    def __match_lines(self, maplines, obslines, camlines, vehiclelines, pred_valid, obs_valid):
-        ### maplines と obslines のマッチング
-        # camlines と vehiclelines も 同じ順番になるよう並び替え
-
-        aaa = maplines     #(*, 4) map
-        bbb = obslines     #(*, 5) obs
-        ccc = camlines     #(*, 4) obs
-        ddd = vehiclelines #(*, 5) obs
-
-        matched_obslines     = np.array([[0,0,0,0]])
-        matched_maplines     = np.array([[0,0,0,0]])
-        matched_camlines     = np.array([[0,0,0,0]])
-        matched_vehiclelines = np.array([[0,0,0,0]])
-
-        maplines_length = len(maplines)
-        obsline_length = len(obslines)
-
-        if obsline_length < maplines_length:
-            for i in range(obsline_length):
-                # if bbb[i,4] == 0: #invalid 変な値のとき
-                #     continue
-                if obs_valid[i] == False:
-                    continue
-                #obs_temp, map_temp, cam_temp, vehicle_temp = self.__matching(bbb[i], aaa, ccc[i], ddd[i], 1)
-                obs_temp, map_temp, cam_temp, vehicle_temp = self.__matching(bbb[i], aaa, ccc[i], ddd[i], pred_valid, 1)
-                if np.all(obs_temp == [0,0,0,0]):
-                    continue
-                matched_obslines = np.vstack((matched_obslines, obs_temp))
-                matched_maplines = np.vstack((matched_maplines, map_temp))
-                matched_camlines = np.vstack((matched_camlines, cam_temp))
-                matched_vehiclelines = np.vstack((matched_vehiclelines, vehicle_temp))
-        else:
-            for i in range(maplines_length):
-                # if pred_valid[i] == False:
-                #     continue
-                #map_temp, obs_temp, cam_temp, vehicle_temp = self.__matching(aaa[i], bbb, ccc, ddd, 0)
-                map_temp, obs_temp, cam_temp, vehicle_temp = self.__matching(aaa[i], bbb, ccc, ddd, obs_valid, 0)
-                if np.all(obs_temp == [0,0,0,0]):
-                    continue
-                matched_obslines = np.vstack((matched_obslines, obs_temp))
-                matched_maplines = np.vstack((matched_maplines, map_temp))
-                matched_camlines = np.vstack((matched_camlines, cam_temp))
-                matched_vehiclelines = np.vstack((matched_vehiclelines, vehicle_temp))
-
-        matched_maplines = matched_maplines[1:]
-        matched_obslines = matched_obslines[1:]
-        matched_camlines = matched_camlines[1:]
-        matched_vehiclelines = matched_vehiclelines[1:]
-
-        return matched_maplines, matched_obslines, matched_camlines, matched_vehiclelines
-
-
-
-    # def __matching_NOTtv(self, p, q, mode):
+            
+        #------------
+    
+    # def __matching(self, p, q, r, s, valid, mode):
     #     ### mode == 0
     #     # p : maplines  (*, 4)
-    #     # q : obslines  (*, 4)
+    #     # q : obslines  (*, 5)
     #     ### mode == 1
-    #     # p : obslines  (*, 4)
+    #     # p : obslines  (*, 5)
     #     # q : maplines  (*, 4)
 
+    #     # r : camlines      (*, 4)
+    #     # s : vehiclelines  (*, 5)
     #     theta_p = 0
     #     theta_q = 0
 
-    #     listtemp = [[0,0,0,0,0,0,0]]
+    #     listtemp = [[0,0,0,0,0,0]]
 
     #     px1 = p[0]
     #     py1 = p[1]
@@ -1032,18 +998,25 @@ class KalmanFilter:
     #         theta_p = np.pi/2.0 #90度
     #     else:
     #         m1 = -a/b # 傾き
+
+    #     #print(len(p), len(q), len(r), len(s))
             
     #     # qの全ての点について
     #     # pに対応しそうな点を探す
     #     q_length = len(q)
     #     for j in range(q_length):
-
+    #         # if mode == 0 and q[j,4] == 0: #invalid  変な値のとき
+    #         #     continue
+    #         if valid[j] == False:
+    #             continue
+            
     #         qqq = q[j]
     #         qx1 = qqq[0]
     #         qy1 = qqq[1]
     #         qx2 = qqq[2]
     #         qy2 = qqq[3]
 
+            
     #         # 点と線分の距離
     #         # (基本は点と直線の距離.  直線に対して垂線が引けなければ対応する端点との距離)
     #         dist1 = self.__distance(qx1,qy1,px1,py1,px2,py2, 0)
@@ -1087,8 +1060,8 @@ class KalmanFilter:
     #         distdist = dist1 + dist2
 
     #         # 候補を保存
-    #         # x1, y1, x2, y2, 距離, index, 角度
-    #         listtemp = np.vstack((listtemp, [qx1, qy1, qx2, qy2, distdist, j, theta]))
+    #         # x1, y1, x2, y2, 距離, index
+    #         listtemp = np.vstack((listtemp, [qx1, qy1, qx2, qy2, distdist, j]))
 
     #     if len(listtemp) != 1:   # 候補が存在すれば
     #         listtemp = sorted(listtemp, key=itemgetter(4))
@@ -1096,42 +1069,64 @@ class KalmanFilter:
     #         # 一番近いやつを選択
     #         temp = listtemp[1]
 
-    #         return p[0:4], temp[0:4]
+    #         # matchingしたobslineと同じindexのvehicleline camlineも返す
+    #         if(mode == 1):
+    #             temp_r = r
+    #             temp_s = s
+    #         else:
+    #             temp_r = r[int(temp[5])]
+    #             temp_s = s[int(temp[5])]
+
+    #         return p[0:4], temp[0:4], temp_r[0:4], temp_s[0:4]
     #     else:
-    #         return [0,0,0,0],[0,0,0,0]
+    #         return [0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]
 
-    
-    # def __match_lines_NOTtv(self, pred_lines, obs_lines):
-    #     aaa = pred_lines     #(*, 4) map
-    #     bbb = obs_lines      #(*, 5) obs
 
-    #     matched_obs_lines     = np.array([[0,0,0,0]])
-    #     matched_pred_lines     = np.array([[0,0,0,0]])
+    def __match_lines(self, maplines, obslines, camlines, vehiclelines, pred_valid, obs_valid):
+        ### maplines と obslines のマッチング
+        # camlines と vehiclelines も 同じ順番になるよう並び替え
 
-    #     pred_lines_length = len(pred_lines)
-    #     obsline_length    = len(obs_lines)
+        aaa = maplines     #(*, 4) map
+        bbb = obslines     #(*, 4) obs
+        ccc = camlines     #(*, 4) obs
+        ddd = vehiclelines #(*, 4) obs
 
-    #     if obsline_length < pred_lines_length:
-    #         for i in range(obsline_length):
-    #             obs_temp, map_temp = self.__matching_NOTtv(bbb[i], aaa, 1)
-    #             if np.all(obs_temp == [0,0,0,0]):
-    #                 continue
-    #             matched_obs_lines = np.vstack((matched_obs_lines, obs_temp))
-    #             matched_pred_lines = np.vstack((matched_pred_lines, map_temp))
-    #     else:
-    #         for i in range(pred_lines_length):
-    #             map_temp, obs_temp = self.__matching_NOTtv(aaa[i], bbb, 0)
-    #             if np.all(obs_temp == [0,0,0,0]):
-    #                 continue
-    #             matched_obs_lines = np.vstack((matched_obs_lines, obs_temp))
-    #             matched_pred_lines = np.vstack((matched_pred_lines, map_temp))
+        matched_obslines     = np.array([[0,0,0,0]])
+        matched_maplines     = np.array([[0,0,0,0]])
+        matched_camlines     = np.array([[0,0,0,0]])
+        matched_vehiclelines = np.array([[0,0,0,0]])
 
-    #     matched_pred_lines = matched_pred_lines[1:]
-    #     matched_obs_lines = matched_obs_lines[1:]
+        maplines_length = len(maplines)
+        obsline_length = len(obslines)
 
-    #     return matched_pred_lines, matched_obs_lines
+        if obsline_length < maplines_length:
+            for i in range(obsline_length):
+                if obs_valid[i] == False:
+                    continue
+                obs_temp, map_temp, cam_temp, vehicle_temp = self.__matching(bbb[i], aaa, ccc[i], ddd[i], pred_valid, 1)
+                if np.all(obs_temp == [0,0,0,0]):
+                    continue
+                matched_obslines = np.vstack((matched_obslines, obs_temp))
+                matched_maplines = np.vstack((matched_maplines, map_temp))
+                matched_camlines = np.vstack((matched_camlines, cam_temp))
+                matched_vehiclelines = np.vstack((matched_vehiclelines, vehicle_temp))
+        else:
+            for i in range(maplines_length):
+                map_temp, obs_temp, cam_temp, vehicle_temp = self.__matching(aaa[i], bbb, ccc, ddd, obs_valid, 0)
+                if np.all(obs_temp == [0,0,0,0]):
+                    continue
+                matched_obslines = np.vstack((matched_obslines, obs_temp))
+                matched_maplines = np.vstack((matched_maplines, map_temp))
+                matched_camlines = np.vstack((matched_camlines, cam_temp))
+                matched_vehiclelines = np.vstack((matched_vehiclelines, vehicle_temp))
 
-    #---------- 関数定義(線分マッチング) ここまで ----------
+        matched_maplines = matched_maplines[1:]
+        matched_obslines = matched_obslines[1:]
+        matched_camlines = matched_camlines[1:]
+        matched_vehiclelines = matched_vehiclelines[1:]
+
+        return matched_maplines, matched_obslines, matched_camlines, matched_vehiclelines
+
 
     #---------- 線分描画 ----------
     def __draw(self, lines):
@@ -1202,7 +1197,6 @@ class KalmanFilter:
         plt.show()
 
 
-
     def __draw_match2(self, lines, lines2):
         cmap = plt.get_cmap("tab20")
 
@@ -1232,6 +1226,7 @@ class KalmanFilter:
 
     #---------- feedback --------------
     def __calc_control_mat_from_odo(self, feedback):
+        #print(feedback)
         angv_r = feedback[0]
         angv_l = feedback[1]
         v_r = angv_r * self.__Tire_radius
@@ -1242,37 +1237,6 @@ class KalmanFilter:
     #---------- feedback ここまで--------------
 
     
-    # def __TOPVIEW(self, lines, R_camera, T_camera):
-    #     tv_lines = []
-    #     R13 = R_camera[0][2]
-    #     R23 = R_camera[1][2]
-    #     R33 = R_camera[2][2]
-    #     R31 = R_camera[2][0]
-    #     R21 = R_camera[1][0]
-    #     R11 = R_camera[0][0]
-    #     Tx = T_camera[0][0]
-    #     Ty = T_camera[1][0]
-    #     Tz = T_camera[2][0]
-    #     length = len(lines)
-    #     for i in range(length):
-    #         nu = lines[i][0]
-    #         nv = lines[i][1]
-    #         a = (-nv*Tz*(nu*R33-R13)+Ty*(nu*R33-R13)+nu*Tz*(nv*R33-R23)-Tx*(nv*R33-R23))/ \
-    #             ((nv*R31-R21)*(nu*R33-R13)-(nu*R31-R11)*(nv*R33-R23))
-    #         b = (-nv*Tz*(nu*R31-R11)+Ty*(nu*R31-R11)+nu*Tz*(nv*R31-R21)-Tx*(nv*R31-R21))/ \
-    #             ((nv*R33-R23)*(nu*R31-R11)-(nu*R33-R13)*(nv*R31-R21))
-            
-    #         nu = lines[i][2]
-    #         nv = lines[i][3]
-    #         c = (-nv*Tz*(nu*R33-R13)+Ty*(nu*R33-R13)+nu*Tz*(nv*R33-R23)-Tx*(nv*R33-R23))/ \
-    #             ((nv*R31-R21)*(nu*R33-R13)-(nu*R31-R11)*(nv*R33-R23))
-    #         d = (-nv*Tz*(nu*R31-R11)+Ty*(nu*R31-R11)+nu*Tz*(nv*R31-R21)-Tx*(nv*R31-R21))/ \
-    #             ((nv*R33-R23)*(nu*R31-R11)-(nu*R33-R13)*(nv*R31-R21))
-    #         tv_line = np.array([a, b, c, d])
-    #         tv_lines.append(tv_line)
-    #     return np.array(tv_lines)
-            
-
     def __uv_lines2tv_lines_fixed(self, uv_lines, T_camera):
         uv_lines = uv_lines.reshape((len(uv_lines),2,2))
         EYE_Y   = T_camera[1][0]
@@ -1290,272 +1254,183 @@ class KalmanFilter:
             valids.append(valid)
 
         return np.array(lines).reshape((len(lines), 4)), valids
+
+
+
+    def __get_lines_for_matching(self, pred_line, obs_line, Tv2m, x_hat_m, T_camera):
+        # convert [uv lines] to [camera uv lines]
+        obs_c_lines  = self.__LSD_uv2camera_uv( obs_line)
+
+        # convert [uv lines] to [translate vehicles lines]
+        pred_ib_lines, pred_valid = self.__uv_lines2tv_lines_fixed(pred_line, T_camera)
+        obs_ib_lines , obs_valid  = self.__uv_lines2tv_lines_fixed( obs_line, T_camera)
+        
+        # convert [translate vehicles lines] to [vehicles xz lines]
+        pred_vb_lines = self.__tv_uv2vehicle_xz(pred_ib_lines, pred_valid) 
+        obs_vb_lines  = self.__tv_uv2vehicle_xz( obs_ib_lines,  obs_valid) 
+
+        # convert [vehicles xz lines] to [map xz lines]
+        pred_mb_lines = self.__vehicle_xz2map_xz(pred_vb_lines, Tv2m, x_hat_m, pred_valid)
+        obs_mb_lines  = self.__vehicle_xz2map_xz( obs_vb_lines, Tv2m, x_hat_m,  obs_valid)
+
+        return pred_mb_lines, obs_mb_lines, obs_c_lines, obs_vb_lines, pred_valid, obs_valid
+        
     
     ###################################################kkkkkkkkkkkkkk
     ###################################################
 
 
+    ### INPUT ###
+    # LSD_lines(f/r)     : LSDからの線分情報(front/rear)       (*, 4) [x1, y1, x2, y2]
+    # feedback           : タイヤの角速度 [right, left]        (1, 2)
+    # passed_time        : 前時刻からの経過時間
+    ### OUTPUT ###
+    # x_hat : 事後推定値 (3, 1) [[x(mm)], [z(mm)], [theta(rad)]]
     def kalman_filter(self, x_hat_in, LSD_lines_f, LSD_lines_r, feedback, passed_time):
-        x_hat = np.array([[x_hat_in['x']], [x_hat_in['z']], [x_hat_in['th']]])
+    
+        x_hat        = np.array([[x_hat_in['x']], [x_hat_in['z']], [x_hat_in['theta']]])
         self.__x_hat = x_hat
-        ### INPUT ###
-        # LSD_lines(f/r)     : LSDからの線分情報(front/rear)       (*, 4) [x1, y1, x2, y2]
-        # feedback           : タイヤの角速度 [right, left]        (1, 2)
-        # passed_time        : 前時刻からの経過時間
-
-        ### OUTPUT ###
-        # x_hat : 事後推定値 (3, 1) [[x(mm)], [z(mm)], [theta(rad)]]
-
+    
         self.__step = self.__step + 1
-
-        #self.__x_hat = np.array([[self.__x_hat[0,0]],
-        #                         [self.__x_hat[1,0]],
-        #                         [self.__x_hat[2,0]]])
+    
         DT_s = passed_time
-
+    
         # feedback(角速度)から 制御行列計算
         # feedback(angular velocities) -> wheel velocities -> car's velocity and angular velocity
         control_mat = self.__calc_control_mat_from_odo(feedback)
-
+    
         # 一時刻前との走行距離の差分
         delta_d = DT_s * control_mat[0,0]
-
-        # ---------- [Step1]Prediction : feedback から 位置予測 ----------
+    
+        # [STEP1] { ================================================================
+        # feedback から 位置予測 
         # x_hat_m : 事前状態推定値
-        x_hat_m = self.__predict_position_from_feedback(control_mat, DT_s) ### (A)
-
-
+        x_hat_m_f = self.__predict_position_from_feedback(control_mat, DT_s) ### (A)
+    
         # Q   : 予測誤差を表す行列
         # jF  : ヤコビ行列  rounded(f)/rounded(u)
         # P_m : 事前誤差共分散行列
         Q   = self.__get_prediction_error_mat(control_mat, delta_d, DT_s)
         jF  = self.__jacobF(control_mat, DT_s)
         P_m = (jF @ self.__P @ jF.T) + Q  ### (B)
-        # ---------- [Step1]Prediction ここまで ----------
-
-
-        # ---------- [Step2]Update/Filtering ----------
-        ##### front camera #####
-        # feedback での予測位置で得られる線分情報
-        pred_line_f = self.__get_lines_from_position(x_hat_m)
-
-        # 実際に観測した線分情報
-        obs_line_f = LSD_lines_f
-
-
-        ##### rear camera #####
-        # rear camera の位置姿勢
-        x_hat_m_r = self.__convert_rear_position(x_hat_m)
-
-        # feedback での予測位置で得られる線分情報
+        # [STEP1] } ================================================================
+    
+    
+        # [STEP2] { ================================================================
+        # Update/Filtering 
+    
+        # camera info { ------------------------------------------------------------
+        # pred_line: feedback での予測位置で得られる線分情報
+        # obs_line: 実際に観測した線分情報
+        x_hat_m_r   = self.__convert_rear_position(x_hat_m_f)
+        pred_line_f = self.__get_lines_from_position(x_hat_m_f)
         pred_line_r = self.__get_lines_from_position(x_hat_m_r)
-
-        # 実際に観測した線分情報
-        obs_line_r = LSD_lines_r
-
-
+        obs_line_f  = LSD_lines_f.reshape(len(LSD_lines_f), 4)
+        obs_line_r  = LSD_lines_r.reshape(len(LSD_lines_r), 4)
+        # camera info } ------------------------------------------------------------
+    
         # 線分がひとつも検出されなければ修正を行わない(feedbackのみ利用)
         # x_hat : 事後推定値  [[x],[z],[yaw]]
-        if len(pred_line_f) == 0 or len(obs_line_f) == 0 or len(pred_line_r) == 0 or len(obs_line_r) == 0:
-            self.__x_hat = x_hat_m
-            self.__P = P_m
+        if len(pred_line_f) == 0 or len(obs_line_f) == 0 or \
+           len(pred_line_r) == 0 or len(obs_line_r) == 0:
+            self.__x_hat = x_hat_m_f
+            self.__P     = P_m
             print('-----did not [detect] any lines-----')
             return self.__x_hat
-
+    
         else:
             # Tv2m : vehicle座標系からmap座標系への並進行列(front)
             # Rv2m : vehicle座標系からmap座標系への回転行列(front)
             # ( _r 付きは rear)
-            Tv2m   = self.__get_Tv2m(x_hat_m)
-            Rv2m   = self.__get_Rv2m(x_hat_m)
+            Tv2m_f = self.__get_Tv2m(x_hat_m_f)
             Tv2m_r = self.__get_Tv2m(x_hat_m_r)
+            Rv2m_f = self.__get_Rv2m(x_hat_m_f)
             Rv2m_r = self.__get_Rv2m(x_hat_m_r)
-
+    
             # 得られた線分情報をさまざまな座標系に変換
             '''
-            # obs / pred
-            ### obs  : 実際に観測した線分
+            # pred / obs
             ### pred : feedbackによる予測地点での線分
-
+            ### obs  : 実際に観測した線分
+    
             # i / c / v / m
             ### i : image   座標系 左上原点   u軸右向き v軸下向き
             ### c : camera  座標系 中心原点   u軸左向き v軸上向き
             ### v : vehicle 座標系 後輪間中心原点  x軸左向き z軸前向き
             ### m : map     座標系
-
+    
             # b : 鳥瞰変換後の線分
             '''
-            # def _(x):
-            #     return x + 1
-            # EYE_Y = self.__T_camera1[1][0]
-            # BIRD  = self.__BIRD
-            # CONTEXT = self.__CONTEXT
-            
-            # obs_ib_lines_f = np.array([uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT) for uv_line in pred_c_lines])
-
-            # valids = map(lambda x: not x is None, obs_ib_lines_f)
-            # obs_ib_lines_f = np.array(map(lambda x: x if not x is None else line_dummy, obs_ib_lines_f))
-
-            # lines = []
-            # for uv_line in obs_c_lines_f:
-            #     line = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
-            #     lines.append(line)
-            # obs_ib_lines_f = np.array(lines)
-            
-            # for line in obs_ib_lines_f:
-            #     if line is None:
-            #         donothing
-            #     dosomething
-
-            # dummy_line = np.array([[0, 0], [0, 0]])
-            # lines = []
-            # valids = []
-            # for line in obs_c_lines_f:
-            #     line = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
-            #     valid = not line is None
-            #     lines.append(line if valid else line_dummy)
-            #     valids.append(valid)
-            # obs_ib_lines_f = np.array(lines)
-
-
-            ##### front #####
-            obs_c_lines_f  = self.__LSD_uv2camera_uv( obs_line_f)                              #つかう  (*, 4)
-            pred_c_lines_f = self.__LSD_uv2camera_uv(pred_line_f)                              #        (*, 4)
-
-            #obs_ib_lines_f , obs_valid_f  = self.__uv_lines2tv_lines_fixed( obs_c_lines_f, self.__T_camera1)
-            obs_ib_lines_f , obs_valid_f  = self.__uv_lines2tv_lines_fixed( obs_line_f, self.__T_camera1)
-
-
-            #pred_ib_lines_f, pred_valid_f = self.__uv_lines2tv_lines_fixed(pred_c_lines_f, self.__T_camera1)
-            pred_ib_lines_f, pred_valid_f = self.__uv_lines2tv_lines_fixed(pred_line_f, self.__T_camera1)
-            
-            obs_vb_lines_f  = self.__tv_uv2vehicle_xz(obs_ib_lines_f ,  obs_valid_f)                      #つかう  (*, 4)
-            pred_vb_lines_f = self.__tv_uv2vehicle_xz(pred_ib_lines_f, pred_valid_f)                      #        (*, 4)
-
-            # obs_mb_lines_f  = self.__vehicle_xz2map_xz(obs_vb_lines_f , Tv2m, x_hat_m, 0)      #つかう  (*, 5)
-            # pred_mb_lines_f = self.__vehicle_xz2map_xz(pred_vb_lines_f, Tv2m, x_hat_m, 0)      #つかう  (*, 4)
-            obs_mb_lines_f  = self.__vehicle_xz2map_xz(obs_vb_lines_f , Tv2m, x_hat_m,  obs_valid_f)      #つかう  (*, 4)
-            pred_mb_lines_f = self.__vehicle_xz2map_xz(pred_vb_lines_f, Tv2m, x_hat_m, pred_valid_f)      #つかう  (*, 4)
-
-
-            #self.__draw(obs_line_f)
-            #self.__draw(obs_c_lines_f)
-            #self.__draw(obs_ib_lines_f)
-            #self.__draw(obs_c_lines_f)
-            #self.__draw_match2(obs_ib_lines_f, pred_ib_lines_f)
-            #print(obs_ib_lines_f)
-            
-
-            ###### rear #####
-            obs_c_lines_r   = self.__LSD_uv2camera_uv( obs_line_r)                              #つかう  (*, 4)
-            pred_c_lines_r  = self.__LSD_uv2camera_uv(pred_line_r)                              #        (*, 4)
-            
-            # obs_ib_lines_r , obs_valid_r  = self.__uv_lines2tv_lines_fixed( obs_c_lines_r, self.__T_camera2)
-            # pred_ib_lines_r, pred_valid_r = self.__uv_lines2tv_lines_fixed(pred_c_lines_r, self.__T_camera2)
-            obs_ib_lines_r , obs_valid_r  = self.__uv_lines2tv_lines_fixed( obs_line_r, self.__T_camera2)
-            pred_ib_lines_r, pred_valid_r = self.__uv_lines2tv_lines_fixed(pred_line_r, self.__T_camera2)
-
-            
-            obs_vb_lines_r  = self.__tv_uv2vehicle_xz(obs_ib_lines_r ,  obs_valid_r)                      #つかう  (*, 4)
-            pred_vb_lines_r = self.__tv_uv2vehicle_xz(pred_ib_lines_r, pred_valid_r)                      #        (*, 4)
-
-            obs_mb_lines_r  = self.__vehicle_xz2map_xz(obs_vb_lines_r , Tv2m_r, x_hat_m_r,  obs_valid_r)  #つかう  (*, 4)
-            pred_mb_lines_r = self.__vehicle_xz2map_xz(pred_vb_lines_r, Tv2m_r, x_hat_m_r, pred_valid_r)  #つかう  (*, 4)
-
-            
             '''#++++++++++ (II)  [端点の対応付け]   map座標系で対応付け ++++++++++'''
             ### 対応する線分が同じindexとなるよう並び替えされる
             # matched_pred    <-  pred_mb_lines   (*, 4)
-            # matched_obs     <-  obs_mb_lines    (*, 5)
+            # matched_obs     <-  obs_mb_lines    (*, 4)
             # matched_cam     <-  obs_c_lines     (*, 4)
-            # matched_vehicle <-  obs_vb_lines    (*, 5)
+            # matched_vehicle <-  obs_vb_lines    (*, 4)
 
+            (
+                pred_mb_lines_f,
+                obs_mb_lines_f,
+                obs_c_lines_f,
+                obs_vb_lines_f,
+                pred_valid_f,
+                obs_valid_f,
+            ) = self.__get_lines_for_matching(
+                pred_line_f,
+                obs_line_f,
+                Tv2m_f,
+                x_hat_m_f,
+                self.__T_camera_f,
+            )
+
+
+            (
+                pred_mb_lines_r,
+                obs_mb_lines_r,
+                obs_c_lines_r,
+                obs_vb_lines_r,
+                pred_valid_r,
+                obs_valid_r,
+            ) = self.__get_lines_for_matching(
+                pred_line_r,
+                obs_line_r,
+                Tv2m_r,
+                x_hat_m_r,
+                self.__T_camera_r,
+            )
+            
+            
+            #pred_mb_lines_r, obs_mb_lines_r, obs_c_lines_r, obs_vb_lines_r, pred_valid_r, obs_valid_r = \
+            #    self.__get_lines_for_matching(pred_line_r, obs_line_r, Tv2m_r, x_hat_m_r, self.__T_camera_r)
+
+            
             matched_pred_f, matched_obs_f, matched_cam_f, matched_vehicle_f = \
-                    self.__match_lines(
-                        pred_mb_lines_f,
-                        obs_mb_lines_f,
-                        obs_c_lines_f,
-                        obs_vb_lines_f,
-                        pred_valid_f,
-                        obs_valid_f
-                    )
-            matched_pred_r, matched_obs_r, matched_cam_r, matched_vehicle_r = self.__match_lines(pred_mb_lines_r, obs_mb_lines_r, obs_c_lines_r, obs_vb_lines_r, pred_valid_r, obs_valid_r)
-
-            
-            #self.__draw_match(obs_mb_lines_f, pred_mb_lines_f)
-            # self.__draw(obs_mb_lines_f)
-            # self.__draw(pred_mb_lines_f)
-            #self.__draw_match(matched_pred_f, matched_obs_f)
-            #self.__draw_match2(obs_mb_lines_f, pred_mb_lines_f)
-
-            
-
-            #aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            # # topviewじゃない画像でマッチング
-            # matched_pred_NOTtv_f, matched_obs_NOTtv_f = self.__match_lines_NOTtv(pred_line_f, obs_line_f)
-            # matched_pred_NOTtv_r, matched_obs_NOTtv_r = self.__match_lines_NOTtv(pred_line_r, obs_line_r)
-
-
-            # # filter外し
-            # matched_pred_tv_f = self.__get_ib_lines_egw_sim_no_filter(matched_pred_NOTtv_f, x_hat_m)
-            # matched_obs_tv_f  = self.__get_ib_lines_egw_sim_no_filter(matched_obs_NOTtv_f , x_hat_m)
-            # # matched_pred_map_f    = uv2wm(matched_pred_tv_f)
-            # # matched_obs_map_f     = uv2wm(matched_obs_tv_f)
-            # # matched_obs_vehicle_f = wm2cm(matched_obs_map_f)
-            # matched_pred_vehicle_f = self.__tv_uv2vehicle_xz(matched_pred_tv_f, 0)
-            # matched_obs_vehicle_f  = self.__tv_uv2vehicle_xz(matched_obs_tv_f , 0)
-            # matched_pred_map_f     = self.__vehicle_xz2map_xz(matched_pred_vehicle_f, Tv2m, x_hat_m, 0)
-            # matched_obs_map_f      = self.__vehicle_xz2map_xz(matched_obs_vehicle_f , Tv2m, x_hat_m, 0)
-
-            # print(len(self.__get_ib_lines_egw_sim_no_filter(matched_pred_NOTtv_f, x_hat_m)))
-            # print(len(self.__get_ib_lines_egw_sim(matched_pred_NOTtv_f, x_hat_m)))
-            
-            # print(len(matched_pred_NOTtv_f), len(matched_obs_NOTtv_f))
-            # print(len(matched_pred_tv_f), len(matched_obs_tv_f))
-                        
-            # matched_pred_tv_r = self.__get_ib_lines_egw_sim_no_filter(matched_pred_NOTtv_r, x_hat_m)
-            # matched_obs_tv_r  = self.__get_ib_lines_egw_sim_no_filter(matched_obs_NOTtv_r , x_hat_m)
-            # # matched_pred_map_r    = uv2wm(matched_pred_tv_r)
-            # # matched_obs_map_r     = uv2wm(matched_obs_tv_r)
-            # # matched_obs_vehicle_r = wm2cm(matched_obs_map_r)
-            # matched_pred_vehicle_r = self.__tv_uv2vehicle_xz(matched_pred_tv_r, 0)
-            # matched_obs_vehicle_r  = self.__tv_uv2vehicle_xz(matched_obs_tv_r , 0)
-            # matched_pred_map_r     = self.__vehicle_xz2map_xz(matched_pred_vehicle_r, Tv2m, x_hat_m, 0)
-            # matched_obs_map_r      = self.__vehicle_xz2map_xz(matched_obs_vehicle_r , Tv2m, x_hat_m, 0)
-
-
-            # matched_pred_f = matched_pred_map_f
-            # matched_obs_f  = matched_obs_map_f
-            # matched_cam_f  = self.__LSD_uv2camera_uv(matched_pred_NOTtv_f)
-            # matched_vehicle_f = matched_obs_vehicle_f
-            # matched_pred_r = matched_pred_map_r
-            # matched_obs_r  = matched_obs_map_r
-            # matched_cam_r  = self.__LSD_uv2camera_uv(matched_pred_NOTtv_r)
-            # matched_vehicle_r = self.__LSD_uv2camera_uv(matched_pred_NOTtv_r)
+                self.__match_lines(pred_mb_lines_f, obs_mb_lines_f, obs_c_lines_f, obs_vb_lines_f, pred_valid_f, obs_valid_f)
+            matched_pred_r, matched_obs_r, matched_cam_r, matched_vehicle_r = \
+                self.__match_lines(pred_mb_lines_r, obs_mb_lines_r, obs_c_lines_r, obs_vb_lines_r, pred_valid_r, obs_valid_r)
 
              
             # 対応する線分がひとつもなければ修正を行わない
             if len(matched_pred_f) == 0 or len(matched_pred_r) == 0:
-                self.__x_hat = x_hat_m
+                self.__x_hat = x_hat_m_f
                 self.__P = P_m
                 print('                        +++++did not [match] any lines+++++')
-
+    
             else:
                 #"全ての線分に対して"
                 ### 射影誤差   Delta
                 ### 観測誤差   R_obs
                 ### ヤコビ行列 H     求める
-
+    
                 # front camera について
-                Delta_f = self.__matched_lines2obs_error(matched_obs_f, matched_pred_f, matched_vehicle_f, Rv2m, Tv2m)
-                R_obs_up_f, R_obs_mid_f, R_obs_down_f = self.__matched_lines2Robs(matched_obs_f, matched_pred_f, matched_cam_f)
-                H_f = self.__matched_lines2H(matched_obs_f, matched_pred_f, matched_vehicle_f, Rv2m, Tv2m, x_hat_m)
-
                 # rear camera について
+                Delta_f = self.__matched_lines2obs_error(matched_obs_f, matched_pred_f, matched_vehicle_f, Rv2m_f, Tv2m_f)
                 Delta_r = self.__matched_lines2obs_error(matched_obs_r, matched_pred_r, matched_vehicle_r, Rv2m_r, Tv2m_r)
+                R_obs_up_f, R_obs_mid_f, R_obs_down_f = self.__matched_lines2Robs(matched_obs_f, matched_pred_f, matched_cam_f)
                 R_obs_up_r, R_obs_mid_r, R_obs_down_r = self.__matched_lines2Robs(matched_obs_r, matched_pred_r, matched_cam_r)
+                H_f = self.__matched_lines2H(matched_obs_f, matched_pred_f, matched_vehicle_f, Rv2m_f, Tv2m_f, x_hat_m_f)
                 H_r = self.__matched_lines2H(matched_obs_r, matched_pred_r, matched_vehicle_r, Rv2m_r, Tv2m_r, x_hat_m_r)
-
+    
                 # front, rear のdata統合
                 Delta = np.vstack((Delta_f, Delta_r))
                 R_obs_up   = np.hstack((R_obs_up_f, R_obs_up_r))
@@ -1563,30 +1438,28 @@ class KalmanFilter:
                 R_obs_down = np.hstack((R_obs_down_f, R_obs_down_r))
                 R_obs = self.__combine_R(R_obs_up, R_obs_mid, R_obs_down)
                 H = np.vstack((H_f, H_r))
-
-                
-                # R_obs = np.diag(np.ones(len(R_obs)))*5 
-                # #print(R_obs)
-                # Delta = np.ones((len(Delta),1))*5
-                #print(Delta)
-                # H = np.ones((len(H),3))
-                # #print(H)
-
-                
+    
                 # カルマンゲイン計算
                 G = self.__calc_kalman_gain(P_m, R_obs, H)  #(C)
-
+    
                 # x_hat : 事後推定値   観測した線分情報でfeedbackから予測した位置の修正を行った後の推定位置姿勢
-                self.__x_hat = self.__correct_position(x_hat_m, G, Delta)   #(D)
-
+                self.__x_hat = self.__correct_position(x_hat_m_f, G, Delta)   #(D)
+    
                 # P : 事後誤差共分散行列
                 I = np.identity(self.__x_hat.shape[0])
                 self.__P = (I - G @ H) @ P_m   #(E)
-
+    
             return self.__x_hat
+    
+        # [STEP2] } ================================================================
+    
+    # kalman_filter ################################################################
+    
+    
 
-                # ---------- [Step2]Update/Filtering ここまで ----------
-    ###################################################
+
+
+    
 
 # simulation用 ########################################################################
 def wheel_velocities2control_mat(v_r, v_l, DR):
@@ -1646,58 +1519,9 @@ def get_lines_from_position(x_hat_m, WM_LINES, CONTEXT):
     eye = np.array([float(x_hat_m[0]), 100, float(x_hat_m[1])]) #注意 : "ミリ"メートル
     theta = np.array([0, (np.rad2deg(x_hat_m[2])), 0]) / 180 * np.pi
 
-    if abs(theta[1]-np.pi/2) < 1e-10 or abs(theta[1]+np.pi/2) < 1e-10 or abs(theta[1]-(3/2)*np.pi) < 1e-10 or abs(theta[1]+(3/2)*np.pi) < 1e-10:
-        #print('\n----------------------------------------------------------\n')
-        theta = np.array([0, (np.rad2deg(x_hat_m[2]) -0.5), 0]) / 180 * np.pi
-
     r = theta2r(theta)
     lines = wm_lines2uv_lines(WM_LINES, eye, r, CONTEXT)
     return lines.reshape((len(lines),4))
-
-# def four2five(lines):
-#     length = len(lines)
-#     LINES = np.array([[0,0,0,0,0]])
-#     for i in range(length):
-#         LINES = np.vstack((LINES, np.array([lines[i,0], lines[i,1], lines[i,2], lines[i,3], 1])))
-#     return LINES[1:]
-
-# def five2four(lines):
-#     length = len(lines)
-#     LINES = np.array([[0,0,0,0]])
-#     for i in range(length):
-#         LINES = np.vstack((LINES, np.array([lines[i,0], lines[i,1], lines[i,2], lines[i,3]])))
-#     return LINES[1:]
-
-# def get_ib_lines_egw_sim(lines, x_hat_m, CONTEXT, BIRD):
-#     eye = np.array([float(x_hat_m[0]), 100, float(x_hat_m[1])])
-#     theta = np.array([0, (np.rad2deg(x_hat_m[2])), 0]) / 180 * np.pi
-#     r = theta2r(theta)
-
-#     lines = lines.reshape((len(lines),2,2))
-#     lines = bird_view(lines, eye, r, BIRD, CONTEXT)
-
-#     lines = lines.reshape((len(lines),4))
-#     #print(lines)
-#     lines = four2five(lines)
-#     return lines
-
-
-
-# def uv_lines2tv_lines_fixed(uv_lines, T_camera, BIRD, CONTEXT):
-#     uv_lines = uv_lines.reshape((len(uv_lines),2,2))
-#     EYE_Y   = T_camera[1][0]
-
-#     dummy_line = np.array([[0, 0], [0, 0]])
-#     lines = []
-#     valids = []
-#     for uv_line in uv_lines:
-#         line = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
-#         valid = not line is None
-#         lines.append(line if valid else line_dummy)
-#         valids.append(valid)
-
-#     return np.array(lines).reshape((len(lines), 4)), valids
-
 
 
 # simulation用 ここまで ########################################################################
