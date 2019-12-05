@@ -300,9 +300,52 @@ def get_img_view(eye, r, CONTEXT, IMG_MAP):
 # uv:       np.array([u, v])
 # CONTEXT:
 # ret:      bool
-def is_inside(uv, CONTEXT):
-    u, v = uv
-    return 0 <= u <= CONTEXT['WIDTH'] - 1 and 0 <= v <= CONTEXT['HEIGHT'] - 1
+#def is_inside(uv, CONTEXT):
+#    u, v = uv
+#    return 0 <= u <= CONTEXT['WIDTH'] - 1 and 0 <= v <= CONTEXT['HEIGHT'] - 1
+
+# line: np.shape == (2, 2)
+# ret:  (a, b)
+# Note: y = a * x + b
+def line2ab(line):
+    n = line2n(line)
+    try:
+        a = n[1] / n[0]
+    except FloatingPointError:
+        a = 2 ** 32
+    y = line[0][1]
+    x = line[0][0]
+    b = y - a * x
+    return np.array([a, b])
+
+# p:    np.array([x, y])
+# line: np.shape == (2, 2)
+# ret:  np.array([x, y]) or None
+# Note: compatible for any 2D coordinate
+def left_horizontal_line_test(p, line):
+    px = p[0]
+    py = p[1]
+    ymin = min(line[0][1], line[1][1])
+    ymax = max(line[0][1], line[1][1])
+    if not ymin <= py <= ymax:
+        return None
+    # y = a * x + b
+    a, b = line2ab(line)
+    if abs(a) < 0.001: # line is horizontal
+        return None
+    x = (py - b) / a
+    return np.array([x, py]) if (x < px) else None
+
+
+# p:        np.array([x, y])
+# edges:    np.shape == (4, 2, 2)
+# ret:      bool
+# Note:     compatible to any 2D coordinate
+def is_inside(p, edges):
+    count = 0
+    for edge in edges:
+        count += 1 if left_horizontal_line_test(p, edge) is None else 0
+    return count % 2 == 1
 
 ################################################################################
 # https://www.hiramine.com/programming/graphics/2d_segmentintersection.html
@@ -573,27 +616,31 @@ def uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT):
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:
 # ret: uv_line: np.shape == (2, 2) or None
-def filter_uv_line(uv_line, CONTEXT, UV_VS=None):
-    if UV_VS is None:
-        UV_VS = get_UV_VS(CONTEXT)
+def filter_uv_line(uv_line, CONTEXT, uv_vs=None):
+    if uv_vs is None:
+        uv_vs = get_UV_VS(CONTEXT)
 
-    UV_EDGES = np.array((
-        (UV_VS[0], UV_VS[1]),
-        (UV_VS[1], UV_VS[2]),
-        (UV_VS[2], UV_VS[3]),
-        (UV_VS[3], UV_VS[0]),
+    uv_edges = np.array((
+        (uv_vs[0], uv_vs[1]),
+        (uv_vs[1], uv_vs[2]),
+        (uv_vs[2], uv_vs[3]),
+        (uv_vs[3], uv_vs[0]),
     ))
 
+    #is_insides = [
+    #    is_inside(uv_line[0], CONTEXT),
+    #    is_inside(uv_line[1], CONTEXT),
+    #]
     is_insides = [
-        is_inside(uv_line[0], CONTEXT),
-        is_inside(uv_line[1], CONTEXT),
+        is_inside(uv_line[0], uv_edges),
+        is_inside(uv_line[1], uv_edges),
     ]
 
     intersections = [
-        get_intersection(uv_line, UV_EDGES[0]),
-        get_intersection(uv_line, UV_EDGES[1]),
-        get_intersection(uv_line, UV_EDGES[2]),
-        get_intersection(uv_line, UV_EDGES[3]),
+        get_intersection(uv_line, uv_edges[0]),
+        get_intersection(uv_line, uv_edges[1]),
+        get_intersection(uv_line, uv_edges[2]),
+        get_intersection(uv_line, uv_edges[3]),
     ] # (4, 2)
 
     uv_line_filtered = np.array(uv_line)
@@ -633,6 +680,38 @@ def filter_uv_line(uv_line, CONTEXT, UV_VS=None):
         return None
 
     return uv_line_filtered
+
+def shrink_line(line, edges):
+    is_insides    = [is_inside(p, edges) for p in line ]
+    intersections = [get_intersection(line, edge) for edge in edges]
+
+    if is_insides[0] and is_insides[1]:
+        pass
+    elif (not is_insides[0]) and (not is_insides[1]):
+        indicies = get_true_indicies(intersections)
+        if not len(indicies) == 2:
+            return None
+        p0 = line[0]
+        i0 = intersections[indicies[0]]
+        i1 = intersections[indicies[1]]
+        d_p0_i0 = np.linalg.norm(i0 - p0)
+        d_p0_i1 = np.linalg.norm(i1 - p0)
+        line = np.array([i0, i1] if d_p0_i0 < d_p0_i1 else [i1, i0])
+    elif is_insides[0] or is_insides[1]:
+        try:
+             index_intersection = get_true_indicies(intersections)[0] # 0 - 3
+             index_inside = get_true_indicies(is_insides)[0]          # 0 or 1
+        except IndexError:
+            return None
+        p0 = line[index_inside]
+        p1 = intersections[index_intersection]
+        line = np.array((p0, p1) if index_inside == 0 else (p1, p0))
+
+    # reject short line
+    if np.linalg.norm(line[1] - line[0]) < 1:
+        return None
+
+    return line
 
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:

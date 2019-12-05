@@ -16,7 +16,7 @@ def INIT_DARGS(dargs):
     dargs['trigger_time']      = -1
     dargs['route_id']          = [0]
     dargs['is_turning']        = False
-    
+
     fixed_param = dargs['DRIVER'].fixed_param
     dargs['xhat']              = fixed_param['xini']
     dargs['p']                 = fixed_param['p']
