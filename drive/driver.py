@@ -33,168 +33,181 @@ from keepleft import KeepLeft
 # (0-4900 [mm])
 
 class Driver:
-	# instructions
+	# instructions {
 	BEGIN       = 0
 	END         = 1
 	STRAIGHT    = 2
 	TURN_LEFT   = 3
 	TURN_RIGHT  = 4
+	# instructions }
 
-	##### initilizer ##### {
+	##### initializer ##### {
 	def __init__(
+		print("driver init begin")
 		self,
 
-		### FIXED PARAMETER ### {
-		# flag {
-		IS_PID              = True,
-		IS_KEEPLEFT         = False,
-		IS_KALMAN           = False,
-		IS_DETECT_COURSEOUT = True,
-		IS_SIMULATION       = False,
-		IS_MULTIPROC        = False,
+		##### FIXED PARAMETER ##### {
+		# FLAG {
+		IS_PID                  = True,
+		IS_KEEPLEFT             = False,
+		IS_KALMAN               = False,
+		IS_DETECT_COURSEOUT     = True,
+		IS_SIMULATION           = False,
+		IS_MULTIPROC            = False,
+		# FLAG }
+
+		# SCCB {
+		SCCB                    = [
+															{'addr': '', 'pram': ''}, # param is hex
+															{'addr': '', 'pram': ''}, # param is hex
+															],
+		# SCCB }
+
+		# LSD {
+		LSD_GRADIENT            = 600,
+		# LSD }
+
+		# MAP {
+		MAP_TILE_LEN            =  700,  # [mm]
+		MAP_ROUTE_PATH          = './route.txt',
 		# }
 
-		# map {
-		TILE_LEN   =  700,         # [mm]
-		DX         =  700 / 4,     # [mm]
-		DZ         =  700 / 2,     # [mm]
-		ROUTE_PATH = './route.txt',
-		# }
+		# VEHICLE {
+		VEHICLE_RPS_MAX         = 9.0,   # [rad/sec]
+		VEHICLE_RADIUS          = 15.25, # [mm]
+		VEHICLE_TREAD           = 104,   # [mm]
+		VEHICLE_FRONT_CAMERA_DX = 0.0,   # [mm]
+		VEHICLE_FRONT_CAMERA_DZ = 70.0,  # [mm]
+		VEHICLE_FRONT_CAMERA_DY = 104.0, # [mm]
+		VEHICLE_FRONT_CAMERA_DR = 0,     # [rad]
+		VEHICLE_REAR_CAMERA_DX  = 0.0,   # [mm]
+		VEHICLE_REAR_CAMERA_DZ  = 70.0,  # [mm]
+		VEHICLE_REAR_CAMERA_DY  = 104.0, # [mm]
+		VEHICLE_REAR_CAMERA_DR  = 180,   # [rad]
+		# VEHICLE }
 
-		# car {
-		RADIUS     =  15.25,       # [mm]
-		TREAD      =  104,         # [mm]
-		RPS_MAX    =  9.0,         # [rad/sec]
-		# }
+		# CAMERAVIEW and TOPVIEW {
+		CAMERAVIEW_WIDTH    = 640,                # [px]
+		CAMERAVIEW_HEIGHT   = 480,                # [px]
+		CAMERAVIEW_THETA_W  = 35 / 180 * math.pi  # [rad]
+		TOPVIEW_POS_RATIO   = 3,
+		# CAMERAVIEW and TOPVIEW }
 
-		# pid {
-		Kp         = 0.55,
-		Ki         = 0.2,
-		Kd         = 0.1,
-		B          = 0,
-		# }
+		# PID {
+		PID_KP                  = 0.55,
+		PID_KI                  = 0.2,
+		PID_KD                  = 0.1,
+		PID_B                   = 0,
+		# PID }
 
-		# keep left {
-		URNG_SPTH        = 0,              # START PIXEL OF VALID URANGE [px]
-		URNG_EPTH        = 640,            # END   PIXEL OF VALID URANGE [px] (0-640px)
-		VRNG_SPTH        = 0,              # START PIXEL OF VALID ZRANGE [px]
-		VRNG_EPTH        = 480,            # END   PIXEL OF VALID ZRANGE [px] (0-480px)
-		LLEN_PTH         = 0,              # LENGTH      OF VALID LINE   [px]
-		ANG_LTL          = np.pi * 45/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
-		ANG_TTL          = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
-		PLD_PTL          = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
-		# }
+		# KEEP LEFT {
+		KEEPLEFT_URNG_SPTH     = 0,              # START PIXEL OF VALID URANGE     [px]
+		KEEPLEFT_URNG_EPTH     = 640,            # END   PIXEL OF VALID URANGE     [px] (0-640px)
+		KEEPLEFT_VRNG_SPTH     = 0,              # START PIXEL OF VALID VRANGE     [px]
+		KEEPLEFT_VRNG_EPTH     = 480,            # END   PIXEL OF VALID VRANGE     [px] (0-480px)
+		KEEPLEFT_LLEN_PTH      = 0,              # LENGTH      OF VALID LINE       [px]
+		KEEPLEFT_ANG_LTL       = np.pi * 45/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
+		KEEPLEFT_ANG_TTL       = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
+		KEEPLEFT_PLD_PTL       = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
+		# KEEP LEFT }
 
-		# kalman {
-		PX              = 1.0,
-		PZ              = 1.0,
-		PYAW            = 0.00001,
-		CAMERA_DX       = 0.0,   # [mm]
-		CAMERA_DZ       = 70.0,  # [mm]
-		CAMERA_DY       = 104.0, # [mm]
-		STDDEV_V        = 0.5,
-		STDDEV_W        = 0.0,
-		STDDEV_X        = 1.0,
-		STDDEV_Z        = 1.0,
-		STDDEV_YAW      = 0.0,
-		REF_LINES_PATH  = 'map.3500x4900.npy',
-		ROLLPITCH       = np.array([[1,0,0],
+		# KALMAN {
+		KALMAN_PX              = 1.0,
+		KALMAN_PZ              = 1.0,
+		KALMAN_PYAW            = 0.00001,
+		KALMAN_STDDEV_V        = 0.5,
+		KALMAN_STDDEV_W        = 0.0,
+		KALMAN_STDDEV_X        = 1.0,
+		KALMAN_STDDEV_Z        = 1.0,
+		KALMAN_STDDEV_YAW      = 0.0,
+		KALMAN_REF_LINES_PATH  = 'map.3500x4900.npy',
+		KALMAN_ROLLPITCH       = np.array([[1,0,0],
 																[0,1,0],
 																[0,0,1]]),
-		THRESHOLD_LEN   = 2000,
-		THRESHOLD_RAD   = np.deg2rad(15),
-		THRESHOLD_DIS   = 5,
-		PRM_ERR_CAM1    = 15,
-		PRM_ERR_CAM2    = 15,
-		REF_LINES_XZ    = np.load(REF_LINES_PATH)
-		# }
-
-		# topview {
-		HEIGHT          = 480, # [px]
-		WIDTH           = 640, # [px]
-		THETA_W         = 35 / 180 * math.pi
+		KALMAN_THRESHOLD_LEN   = 2000,
+		KALMAN_THRESHOLD_RAD   = np.deg2rad(15),
+		KALMAN_THRESHOLD_DIS   = 5,
+		KALMAN_PRM_ERR_CAM1    = 15,
+		KALMAN_PRM_ERR_CAM2    = 15,
+		# KALMAN }
 		):
+		##### FIXED PARAMETER #### }
 
-		THETA_H         = THETA_W * (3 / 4)
-		F               = (WIDTH / 2) / math.tan(THETA_W / 2)
-		SCALE           = 1
-
-		K               = 3
-		EYE_Y           = CAMERA_DY
-		BIRD_Z          = EYE_Y / math.tan(THETA_H / 2) + (K * HEIGHT / 2)
-		BIRD_Y          = (K * HEIGHT / 2) / math.tan(THETA_H / 2)
-		BIRD            = np.array([0, BIRD_Y, BIRD_Z])
-
-		CONTEXT = {
-			'F'     : F     ,
-			'WIDTH' : WIDTH ,
-			'HEIGHT': HEIGHT,
-			'SCALE' : SCALE ,
-			}
-		# }
-
-		# route
-		ROUTE = self.__init_route(ROUTE_PATH)
-		self.__fixed_param = {
-			'tile_len': TILE_LEN,
-			'radius'  : RADIUS,
-			'rps_max' : RPS_MAX,
-			'tread'   : TREAD,
-			'route'   : ROUTE,
-			'camera_y': EYE_Y,
-			'bird'    : BIRD,
-			'context' : CONTEXT,
-		}
-		# }
-
-		# initialization {
+		##### INIT PRAMETER ##### {
+		# FLAGS {
 		self.is_pid              = IS_PID
 		self.is_kalman           = IS_KALMAN
 		self.is_keepleft         = IS_KEEPLEFT
 		self.is_detect_courseout = IS_DETECT_COURSEOUT
 		self.is_simulation       = IS_SIMULATION
 		self.is_multiproc        = IS_MULTIPROC
+		# FLAGS }
 
-		# PS / PL
-		self.__pspl_comm = pspl.pspl_comm()
+		# VEHICLE {
+		VEHICLE_DX =  MAP_TILE_LEN / 4 # [mm]
+		VEHICLE_DZ =  MAP_TILE_LEN / 2 # [mm]
+		# VEHICLE }
 
-		# keep left {
+		# CAMERAVIEW and TOPVIEW {
+		CAMERAVIEW_THETA_H = CAMERAVIEW_THETA_W * (CAMERAVIEW_HEIGHT / CAMERAVIEW_WIDTH)
+		CAMERAVIEW_F       = (CAMERAVIEW_WIDTH / 2) / math.tan(CAMERAVIEW_THETA_W / 2)
+		CAMERAVIEW_SCALE   = 1
+
+		TOPVIEW_Z          = VEHICLE_FRONT_CAMERA_DY / math.tan(CAMERAVIEW_THETA_H / 2) + (TOPVIEW_POS_RATIO * CAMERAVIEW_HEIGHT / 2)
+		TOPVIEW_Y          = (TOPVIEW_POS_RATIO * CAMERAVIEW_HEIGHT / 2) / math.tan(VEHICLE_CAMERA_THETA_H / 2)
+		TOPVIEW_POS        = np.array([0, TOPVIEW_Y, TOPVIEW_Z])
+
+		CAMERAVIEW_CONTEXT = {
+			'WIDTH' : CAMERAVIEW_WIDTH ,
+			'HEIGHT': CAMERAVIEW_HEIGHT,
+			'F'     : CAMERAVIEW_F,
+			'SCALE' : CAMERAVIEW_SCALE,
+			}
+		# CAMERAVIEW and TOPVIEW {
+
+		# MAP {
+		MAP_ROUTE = self.__init_route(MAP_ROUTE_PATH)
+		# MAP }
+
+		# KEEP LEFT {
 		self.__keepleft = KeepLeft(
-			WIDTH     = WIDTH,
-			HEIGHT    = HEIGHT,
-			XRNG_SPTH = XRNG_SPTH,
-			XRNG_EPTH = XRNG_EPTH,
-			ZRNG_SPTH = ZRNG_SPTH,
-			ZRNG_EPTH = ZRNG_EPTH,
-			LLEN_PTH  = LLEN_PTH,
-			ANG_LTL   = ANG_LTL,
-			ANG_TTL   = ANG_TTL,
-			PLD_PTL   = PLD_PTL
-		) if not IS_KEEPLEFT else None
-		# }
+			WIDTH     = CAMERAVIEW_WIDTH,
+			HEIGHT    = CAMERAVIEW_HEIGHT,
+			URNG_SPTH = KEEPLEFT_URNG_SPTH,
+			URNG_EPTH = KEEPLEFT_URNG_EPTH,
+			ZRNG_SPTH = KEEPLEFT_VRNG_SPTH,
+			ZRNG_EPTH = KEEPLEFT_VRNG_EPTH,
+			LLEN_PTH  = KEEPLEFT_LLEN_PTH,
+			ANG_LTL   = KEEPLEFT_ANG_LTL,
+			ANG_TTL   = KEEPLEFT_ANG_TTL,
+			PLD_PTL   = KEEPLEFT_PLD_PTL
+		) if IS_KEEPLEFT else None
+		# KEEP LEFT }
 
 		# calibration
 		uth = self.__calibration() if not IS_SIMULATION else 0
+		exit()
 
-		# xhat initialize {
+		# XHAT {
 		x, z, theta = self.init_xhat(DX, DZ, uth)
-		self.INIT_XHAT = {'x': x, 'z': z, 'th': theta}
-		print("start position [x:{:>6.3f}, z:{:>6.3f}, theta:{:>6.3f}]".format(x, z, theta))
+		INIT_XHAT = {'x': x, 'z': z, 'theta': theta}
+		print("start position: [x:{:>6.3f}, z:{:>6.3f}, theta:{:>6.3f}]".format(x, z, theta))
 		# }
 
 		# kalman {
 		if IS_KALMAN:
-			xhat              = np.array([[x], [z], [theta]])
-			p                 = np.diag([PX, PZ, PYAW]) ** 2
-			dev               = np.array([STDDEV_V, STDDEV_W, STDDEV_X, STDDEV_Z, STDDEV_YAW])
-			ref_lines_xyz     = np.insert(REF_LINES_XZ, (1, 3), 0, axis=1)
-			ref_lines_wm      = ref_lines_xyz.reshape(len(ref_lines_xyz), 2, 3)
-			front_camera_rad  = theta
-			rear_camera_rad   = theta + np.pi if theta < 0 else theta - np.pi
-			fcpdx             = CAMERA_DX * math.cos(theta) - CAMERA_DZ * math.sin(theta)
-			fcpdz             = CAMERA_DX * math.sin(theta) + CAMERA_DZ * math.cos(theta)
-			front_camera_pos  = xhat + np.array([[fcpdx], [CAMERA_DY], [fcpdz]])
-			rear_camera_pos   = xhat + np.array([[-fcpdx], [CAMERA_DY], [-fcpdz]])
+			XHAT              = np.array([[x], [z], [theta]])
+			P                 = np.diag([PX, PZ, PYAW]) ** 2
+			DEV               = np.array([STDDEV_V, STDDEV_W, STDDEV_X, STDDEV_Z, STDDEV_YAW])
+			REF_LINES_XYZ     = np.insert(REF_LINES_XZ, (1, 3), 0, axis=1)
+			REF_LINES_WM      = ref_lines_xyz.reshape(len(ref_lines_xyz), 2, 3)
+			FRONT_CAMERA_RAD  = theta
+			REAR_CAMERA_RAD   = theta + np.pi if theta < 0 else theta - np.pi
+			FCPDX             = CAMERA_DX * math.cos(theta) - CAMERA_DZ * math.sin(theta)
+			FCPDZ             = CAMERA_DX * math.sin(theta) + CAMERA_DZ * math.cos(theta)
+			FRONT_CAMERA_POS  = xhat + np.array([[fcpdx], [CAMERA_DY], [fcpdz]])
+			REAR_CAMERA_POS   = xhat + np.array([[-fcpdx], [CAMERA_DY], [-fcpdz]])
+		KALMAN_REF_LINES_XZ    = np.load(REF_LINES_PATH)
 
 		self.__kalman = KalmanFilter(
 			x_hat         = xhat,
@@ -221,8 +234,28 @@ class Driver:
 		# pid
 		self.__pid_l = pid.PID(Kp, Ki, Kd, B) if IS_PID else None
 		self.__pid_r = pid.PID(Kp, Ki, Kd, B) if IS_PID else None
-
 		# }
+
+		# PS / PL
+		self.__pspl_comm = pspl.pspl_comm()
+
+		# FIXED PARAM {
+		self.__fixed_param = {
+			'tile_len': TILE_LEN,
+			'radius'  : RADIUS,
+			'rps_max' : RPS_MAX,
+			'tread'   : TREAD,
+			'route'   : ROUTE,
+			'camera_y': EYE_Y,
+			'bird'    : BIRD,
+			'context' : CONTEXT,
+			'xini'    : INIT_XHAT,
+		}
+		# FIXED PARAM }
+		##### INIT PRAMETER ##### }
+
+		print("driver init end\n")
+		exit()
 	##### initializer ##### }
 
 	# load route {

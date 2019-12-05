@@ -37,7 +37,7 @@ class KeepLeft():
 		URNG_EPTH = 640,          # END   PIXEL OF VALID URANGE [px] (0-640px)
 		VRNG_SPTH = 0,            # START PIXEL OF VALID VRANGE [px]
 		VRNG_EPTH = 480,          # END   PIXEL OF VALID VRANGE [px] (0-480px)
-		LLEN_PTH  = 10000000,     # LENGTH      OF VALID LINE   [px]
+		LLEN_PTH  = 0,            # LENGTH      OF VALID LINE   [px]
 		# }
 
 		# Tolerance {
@@ -69,15 +69,17 @@ class KeepLeft():
 	def keep_left(self, tv_lines):
 		if len(tv_lines) == 0: # if tv_lines is empty matrix
 			return 0
-		
-		print(np.shape(tv_lines), end='')
+
 		ilines, olines = self.tvlines2iolines(tv_lines)
-		print(np.shape(ilines), np.shape(olines), end='')
 		pairs          = self.detect_pair(ilines, olines)
-		print(np.shape(pairs), end='')
 		left_line      = self.detect_leftline(pairs)
-		print(np.shape(left_line))
 		diff_ang       = self.decide_dang(left_line)
+
+		print(np.shape(tv_lines), end='')
+		print(np.shape(ilines), np.shape(olines), end='')
+		print(np.shape(pairs), end='')
+		print(np.shape(left_line), end='')
+		print(np.rad2deg(diff_ang))
 
 		return diff_ang
 	# } keep left
@@ -100,10 +102,10 @@ class KeepLeft():
 		olines = []
 		for tv in tv_lines:
 			u1, u2 = WIDTH-tv[0], WIDTH-tv[2]
-			if URNG_SPTH < u1 < URNG_EPTH and URNG_SPTH < u2 < URNG_EPTH: # urange threshold
+			if not (URNG_SPTH <= u1 <= URNG_EPTH and URNG_SPTH <= u2 <= URNG_EPTH): # urange threshold
 				continue
 			v1, v2 = HEIGHT-tv[1], HEIGHT-tv[3]
-			if VRNG_SPTH < v1 < VRNG_EPTH and VRNG_SPTH < v2 < VRNG_EPTH: # vrange threshold
+			if not (VRNG_SPTH <= v1 <= VRNG_EPTH and VRNG_SPTH <= v2 <= VRNG_EPTH): # vrange threshold
 				continue
 		
 			length = (u1-u2)**2 + (v1-v2)**2
@@ -118,6 +120,8 @@ class KeepLeft():
 				olines.append([[u1, v1], [u2, v2], [length, angle]])
 			elif -np.pi+ANG_TTL < angle < -ANG_TTL:
 				ilines.append([[u1, v1], [u2, v2], [length, angle]])
+			else:
+				continue
 		
 		return np.array(ilines), np.array(olines)
 	# } tvlines2iolines
@@ -172,5 +176,5 @@ class KeepLeft():
 		if len(left_line) == 0:
 			return 0
 
-		diff_ang = np.pi / 2 - left_line[2,1]
+		diff_ang = -(np.pi / 2 + left_line[2,1])
 		return diff_ang
