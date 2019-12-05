@@ -4,7 +4,7 @@
 from ctypes import *
 import numpy as np
 
-import line as fixed
+from line import *
 
 class pspl_comm:
     # Init PS/PL communication {
@@ -194,11 +194,52 @@ class pspl_comm:
                                 self.__so.get_lsd_line_end_h(1, i),
                                 self.__so.get_lsd_line_end_v(1, i)
                                ]).reshape(2,2)
-            tv = fixed.uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
+            tv = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
             if not tv is None:
                 lines.append([*tv.reshape(4), 1])
         self.__so.send_lsd_write_protect(1, 0)
         return np.array(lines)
+
+    # Get front/rear lsd and topview lines as ndarray
+    # OUT: lsd_line_ndarray shape (N, 4), (N, 4), (N, 4), (N, 4), (N, 4)
+    # [ line0[start_v, start_h, end_v, end_h],
+    #   line1[...], 
+    #   ... ,
+    #   lineN[...]
+    # ]
+    def get_all_lines(self, EYE_Y, BIRD, CONTEXT, TV_VS):
+        self.__so.send_lsd_write_protect(0, 1)
+        while self.__so.get_lsd_ready(0) != 1: pass
+        tvs_f = []
+        tvs_r = []
+        tvfs = []
+
+        lsd_lines_f = np.zeros((self.__so.get_lsd_line_num(0), 4))
+        for i, uv_line in enumerate(lsd_lines_f):
+            uv_line[0] = self.__so.get_lsd_line_start_h(0, i)
+            uv_line[1] = self.__so.get_lsd_line_start_v(0, i)
+            uv_line[2] = self.__so.get_lsd_line_end_h(0, i)
+            uv_line[3] = self.__so.get_lsd_line_end_v(0, i)
+            tv         = uv_line2tv_fixed(uv_line.reshape(2,2), EYE_Y, BIRD, CONTEXT)
+            tvf        = filter_uv_line(tv, CONTEXT, UV_VS=TV_VS)
+            tvs_f.append(tv.flatten())
+            if not tvf is None:
+                tvfs.append(tvf.flatten())
+        tv_lines_f = np.array(tvs_f)
+        tvf_lines_f = np.array(tvfs)
+
+        lsd_lines_r = np.zeros((self.__so.get_lsd_line_num(1), 4))
+        for i, uv_line in enumerate(lsd_lines_r):
+            uv_line[0] = self.__so.get_lsd_line_start_h(1, i)
+            uv_line[1] = self.__so.get_lsd_line_start_v(1, i)
+            uv_line[2] = self.__so.get_lsd_line_end_h(1, i)
+            uv_line[3] = self.__so.get_lsd_line_end_v(1, i)
+            tv         = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
+            tvs_r.append(tv.flatten())
+        tv_lines_r = np.array(tvs_r.flatten())
+
+        self.__so.send_lsd_write_protect(0, 0)
+        return lsd_lines_f, lsd_lines_f, tv_lines_f, tv_lines_r, tvf_lines_f
 
     # } ########################################################################
 
@@ -233,5 +274,4 @@ def imwrite_lines(lines):
     for x in lines.astype(np.uint8):
         res = cv2.line(res, (x[0], x[1]), (x[2], x[3]), (0, 255, 0), 1)
     cv2.imwrite("lsd_view.png", res)
-
 # } ############################################################################
