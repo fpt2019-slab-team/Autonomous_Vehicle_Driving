@@ -573,8 +573,9 @@ def uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT):
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:
 # ret: uv_line: np.shape == (2, 2) or None
-def filter_uv_line(uv_line, CONTEXT):
-    UV_VS = get_UV_VS(CONTEXT)
+def filter_uv_line(uv_line, CONTEXT, UV_VS=None):
+    if UV_VS is None:
+        UV_VS = get_UV_VS(CONTEXT)
 
     UV_EDGES = np.array((
         (UV_VS[0], UV_VS[1]),
