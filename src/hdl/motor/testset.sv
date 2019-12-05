@@ -1,14 +1,17 @@
-module testset(
+module testset
+#(
+    parameter integer CLK_FREQ       = -1,
+    parameter integer CLK_DIVIDE     = -1,
+    parameter real    FB_EDGE_PERIOD = -1
+)
+(
   input wire          clk,
   input wire          n_rst,        //using botton ,botton always sends low signal
-//  input wire [1:0]    sw,         //control speed with swith
   input wire          btn,        //for brake action
   input wire          fbr,        //con to PMOD
   input wire          fbl,        //con to PMOD
   input wire  [6:0]   psv,        //con to PS
   input wire  [7:0]   ste,        //con to PS
-  // input wire  [6:0]   rvw,        //con to PS
-  // input wire  [6:0]   lvw,        //con to PS
 
   output wire [15:0]  out_edge_l, //con to PS 
   output wire [15:0]  out_edge_r, //con to PS 
@@ -21,13 +24,13 @@ module testset(
   output wire         stnby       //con to PMOD
 );
 
-  //reg   [6:0]   psv;
+localparam integer CLK_CNT_MAX = CLK_FREQ / CLK_DIVIDE;
+
   reg   [6:0]   rvr;
   reg   [6:0]   lvr;
 
   wire  [6:0]   rvw;
   wire  [6:0]   lvw;
-  wire          clk_8;
   wire          pulser;
   wire          pulsel;
   wire [13:0]   pb_rv,pb_lv;
@@ -37,24 +40,23 @@ module testset(
   assign out_edge_l = cnt_edge_l;
   assign out_edge_r = cnt_edge_r;
 
-  clock_gen clock_gen_inst (
-    .clk(clk),        //in
-    .n_rst(n_rst),
-    .clk_8(clk_8)    //out
-  );
+  reg [14:0]    clk_cnt;
 
-  wire clk_8_bufg;
-  BUFG BUFG_inst
-  (
-    .I(clk_8),
-    .O(clk_8_bufg)
-  );
+  always @(posedge clk)begin
+    if (!n_rst)begin
+      clk_cnt <= 15'd0;
+    end else if (clk_cnt == CLK_CNT_MAX - 1)begin
+      clk_cnt <= 15'd0; 
+    end else begin
+      clk_cnt <= clk_cnt + 1'b1;
+    end
+  end
 
-  always @(posedge clk_8_bufg) begin
+  always @(posedge clk) begin
     if (!n_rst)begin
       rvr <= 7'd0;
       lvr <= 7'd0;
-    end else begin
+    end else if (clk_cnt == CLK_CNT_MAX - 1)begin
       rvr <= rvw;
       lvr <= lvw;  
     end
@@ -63,22 +65,26 @@ module testset(
   /* steering */
   hoge hg(
     .in_acc(psv),
-    .in_ste(ste),  //8'b0 means go straight
+    .in_ste(ste),  
     .brk(btn),
     .v_r(rvw),
     .v_l(lvw)
   );
 
   /* buffer function */
-  pbsbf4_Top pb_r(
+  pbsbf4_Top 
+  #(
+    .CLK_FREQ(CLK_FREQ),
+    .CLK_DIVIDE(CLK_DIVIDE)
+  )pb_r(
     .n_rst(n_rst),
-    .clk(clk_8_bufg), // 8 kHz
+    .clk(clk), 
     .din(rvr),
     .dout_3(pb_rv)
-  );
-  pbsbf4_Top pb_l(
+  ),
+  pb_l(
     .n_rst(n_rst),
-    .clk(clk_8_bufg),
+    .clk(clk),
     .din(lvr),
     .dout_3(pb_lv)
   );
@@ -113,27 +119,23 @@ module testset(
   );
 
   // feedback from right motor
-  fbmod fbr_inst(
+  fbmod
+  #(
+    .CLK_FREQ(CLK_FREQ),
+    .EDGE_PERIOD(FB_EDGE_PERIOD)
+  )
+  fbr_inst(
     .clk(clk),       
     .n_rst(n_rst),
     .inp_fbp(fbr),
     .edge_out(cnt_edge_r)
-  );
-  fbmod fbl_inst(
+  ),
+  fbl_inst(
     .clk(clk),       
     .n_rst(n_rst),
     .inp_fbp(fbl),
     .edge_out(cnt_edge_l)
   );
-
-  /* for debug */
-  /*
-  reg  [13:0] pb_rv_reg, pb_lv_reg;
-  always_ff @(posedge clk_8_bufg) begin
-    pb_rv_reg <= pb_rv;
-    pb_lv_reg <= pb_lv;
-  end
-  */
 
 endmodule
 

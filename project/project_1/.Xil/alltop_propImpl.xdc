@@ -1,9 +1,9 @@
-set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc rfile:../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc id:1 order:EARLY scoped_inst:pspl_comm_inst/processing_system7_0/inst} [current_design]
-set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc rfile:../project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc id:2 order:EARLY scoped_inst:clk_wiz_0_inst/inst} [current_design]
-set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/src/xdc/system.xdc rfile:../../../src/xdc/system.xdc id:3} [current_design]
-current_instance pspl_comm_inst/processing_system7_0/inst
+set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1/pspl_comm_processing_system7_0_0.xdc rfile:../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1/pspl_comm_processing_system7_0_0.xdc id:1 order:EARLY scoped_inst:pspl_comm_inst/pspl_comm_i/processing_system7_0/inst} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc rfile:../project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc id:2 order:EARLY scoped_inst:clk_wiz_0_inst/inst} [current_design]
+set_property SRC_FILE_INFO {cfile:/home/users/matsuda/project/Autonomous_Vehicle_Driving/src/xdc/system.xdc rfile:../../../src/xdc/system.xdc id:3} [current_design]
+current_instance pspl_comm_inst/pspl_comm_i/processing_system7_0/inst
 set_property src_info {type:SCOPED_XDC file:1 line:21 export:INPUT save:INPUT read:READ} [current_design]
-set_input_jitter clk_fpga_0 0.6
+set_input_jitter clk_fpga_0 0.3
 set_property src_info {type:SCOPED_XDC file:1 line:29 export:INPUT save:INPUT read:READ} [current_design]
 set_property iostandard "SSTL15_T_DCI" [get_ports "DDR_VRP"]
 set_property src_info {type:SCOPED_XDC file:1 line:30 export:INPUT save:INPUT read:READ} [current_design]
@@ -615,7 +615,3 @@ set_property src_info {type:XDC file:3 line:9 export:INPUT save:INPUT read:READ}
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pclk_f_IBUF]
 set_property src_info {type:XDC file:3 line:10 export:INPUT save:INPUT read:READ} [current_design]
 set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pclk_r_IBUF]
-set_property src_info {type:XDC file:3 line:14 export:INPUT save:INPUT read:READ} [current_design]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_24m_IBUF]
-set_property src_info {type:XDC file:3 line:15 export:INPUT save:INPUT read:READ} [current_design]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_12m_IBUF]

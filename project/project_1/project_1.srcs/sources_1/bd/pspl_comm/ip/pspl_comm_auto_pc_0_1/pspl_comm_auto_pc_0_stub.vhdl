@@ -1,11 +1,11 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Thu Nov 14 13:55:59 2019
--- Host        : flamingo running 64-bit CentOS release 6.10 (Final)
+-- Date        : Thu Nov 28 17:30:23 2019
+-- Host        : cuckoo running 64-bit CentOS release 6.9 (Final)
 -- Command     : write_vhdl -force -mode synth_stub -rename_top pspl_comm_auto_pc_0 -prefix
---               pspl_comm_auto_pc_0_ pspl_comm_auto_pc_0_stub.vhdl
--- Design      : pspl_comm_auto_pc_0
+--               pspl_comm_auto_pc_0_ pspl_comm_auto_pc_1_stub.vhdl
+-- Design      : pspl_comm_auto_pc_1
 -- Purpose     : Stub declaration of top-level module interface
 -- Device      : xc7z020clg400-1
 -- --------------------------------------------------------------------------------

@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Wed Nov 27 12:24:52 2019" VIVADOVERSION="2018.3">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Fri Nov 29 17:58:15 2019" VIVADOVERSION="2018.3">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="pspl_comm" PACKAGE="clg400" SPEEDGRADE="-1"/>
 
   <EXTERNALPORTS>
+    <PORT DIR="O" LEFT="6" NAME="kl_accel" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_kl_accel">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="kl_accel"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" LEFT="7" NAME="kl_steer" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_kl_steer">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="kl_steer"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="O" LEFT="3" NAME="led" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_led">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="led"/>
@@ -19,6 +29,26 @@
         <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_addr_r"/>
       </CONNECTIONS>
     </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_h_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_h_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_h_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_h_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_h_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_v_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_v_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_v_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_v_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_v_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_v_r"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="I" LEFT="31" NAME="lsd_line_num_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_num_f">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_num_f"/>
@@ -29,6 +59,26 @@
         <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_num_r"/>
       </CONNECTIONS>
     </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_h_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_h_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_h_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_h_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_h_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_v_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_v_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_v_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_v_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_v_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_v_r"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="I" NAME="lsd_ready_f" SIGIS="undef" SIGNAME="External_Ports_lsd_ready_f">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_ready_f"/>
@@ -37,6 +87,16 @@
     <PORT DIR="I" NAME="lsd_ready_r" SIGIS="undef" SIGNAME="External_Ports_lsd_ready_r">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_ready_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="lsd_write_protect_f" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_write_protect_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_write_protect_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="lsd_write_protect_r" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_write_protect_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_write_protect_r"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="I" LEFT="15" NAME="motor_speed_l" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_motor_speed_l">
@@ -79,86 +139,6 @@
         <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_addr_r"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="I" NAME="topview_ready_f" SIGIS="undef" SIGNAME="External_Ports_topview_ready_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_ready_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="topview_ready_r" SIGIS="undef" SIGNAME="External_Ports_topview_ready_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_ready_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="6" NAME="kl_accel" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_kl_accel">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="kl_accel"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="O" LEFT="7" NAME="kl_steer" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_kl_steer">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="kl_steer"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="topview_line_num_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_num_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_num_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="topview_line_num_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_num_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_num_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="topview_line_valid_f" SIGIS="undef" SIGNAME="External_Ports_topview_line_valid_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_valid_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" NAME="topview_line_valid_r" SIGIS="undef" SIGNAME="External_Ports_topview_line_valid_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_valid_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_h_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_h_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_h_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_h_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_h_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_v_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_v_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_v_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_end_v_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_end_v_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_end_v_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_h_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_h_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_h_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_h_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_h_r"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_v_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_v_f">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_v_f"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="I" LEFT="31" NAME="lsd_line_start_v_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_lsd_line_start_v_r">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_line_start_v_r"/>
-      </CONNECTIONS>
-    </PORT>
     <PORT DIR="I" LEFT="31" NAME="topview_line_end_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_end_h_f">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_end_h_f"/>
@@ -179,6 +159,16 @@
         <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_end_v_r"/>
       </CONNECTIONS>
     </PORT>
+    <PORT DIR="I" LEFT="31" NAME="topview_line_num_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_num_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_num_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" LEFT="31" NAME="topview_line_num_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_num_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_num_r"/>
+      </CONNECTIONS>
+    </PORT>
     <PORT DIR="I" LEFT="31" NAME="topview_line_start_h_f" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_start_h_f">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_start_h_f"/>
@@ -197,6 +187,71 @@
     <PORT DIR="I" LEFT="31" NAME="topview_line_start_v_r" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_topview_line_start_v_r">
       <CONNECTIONS>
         <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_start_v_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="topview_line_valid_f" SIGIS="undef" SIGNAME="External_Ports_topview_line_valid_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_valid_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="topview_line_valid_r" SIGIS="undef" SIGNAME="External_Ports_topview_line_valid_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_line_valid_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="topview_ready_f" SIGIS="undef" SIGNAME="External_Ports_topview_ready_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_ready_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="I" NAME="topview_ready_r" SIGIS="undef" SIGNAME="External_Ports_topview_ready_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_ready_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="topview_write_protect_f" SIGIS="undef" SIGNAME="pspl_comm_0_topview_write_protect_f">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_write_protect_f"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="O" NAME="topview_write_protect_r" SIGIS="undef" SIGNAME="pspl_comm_0_topview_write_protect_r">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="topview_write_protect_r"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT CLKFREQUENCY="100000000" DIR="O" NAME="FCLK_CLK0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_MIO">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="MIO"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRN">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRN"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRP">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRP"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="processing_system7_0_PS_SRSTB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_SRSTB"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="processing_system7_0_PS_CLK">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_CLK"/>
+      </CONNECTIONS>
+    </PORT>
+    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="processing_system7_0_PS_PORB">
+      <CONNECTIONS>
+        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_PORB"/>
       </CONNECTIONS>
     </PORT>
     <PORT DIR="IO" NAME="DDR_cas_n" SIGIS="undef" SIGNAME="processing_system7_0_DDR_CAS_n">
@@ -274,39 +329,14 @@
         <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_DQS"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="IO" LEFT="53" NAME="FIXED_IO_mio" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_MIO">
+    <PORT DIR="O" LEFT="16" NAME="lsd_grad_thres_r" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_grad_thres_r">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="MIO"/>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_grad_thres_r"/>
       </CONNECTIONS>
     </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrn" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRN">
+    <PORT DIR="O" LEFT="16" NAME="lsd_grad_thres_f" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_grad_thres_f">
       <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRN"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ddr_vrp" SIGIS="undef" SIGNAME="processing_system7_0_DDR_VRP">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="DDR_VRP"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_srstb" SIGIS="undef" SIGNAME="processing_system7_0_PS_SRSTB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_SRSTB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_clk" SIGIS="undef" SIGNAME="processing_system7_0_PS_CLK">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_CLK"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT DIR="IO" NAME="FIXED_IO_ps_porb" SIGIS="undef" SIGNAME="processing_system7_0_PS_PORB">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="PS_PORB"/>
-      </CONNECTIONS>
-    </PORT>
-    <PORT CLKFREQUENCY="50000000" DIR="O" NAME="axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
-      <CONNECTIONS>
-        <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+        <CONNECTION INSTANCE="pspl_comm_0" PORT="lsd_grad_thres_f"/>
       </CONNECTIONS>
     </PORT>
   </EXTERNALPORTS>
@@ -549,7 +579,7 @@
         <PARAMETER NAME="PCW_TTC1_CLK2_PERIPHERAL_FREQMHZ" VALUE="133.333333"/>
         <PARAMETER NAME="PCW_PCAP_PERIPHERAL_FREQMHZ" VALUE="200"/>
         <PARAMETER NAME="PCW_TPIU_PERIPHERAL_FREQMHZ" VALUE="200"/>
-        <PARAMETER NAME="PCW_FPGA0_PERIPHERAL_FREQMHZ" VALUE="50"/>
+        <PARAMETER NAME="PCW_FPGA0_PERIPHERAL_FREQMHZ" VALUE="100"/>
         <PARAMETER NAME="PCW_FPGA1_PERIPHERAL_FREQMHZ" VALUE="50"/>
         <PARAMETER NAME="PCW_FPGA2_PERIPHERAL_FREQMHZ" VALUE="50"/>
         <PARAMETER NAME="PCW_FPGA3_PERIPHERAL_FREQMHZ" VALUE="50"/>
@@ -573,7 +603,7 @@
         <PARAMETER NAME="PCW_ACT_TTC_PERIPHERAL_FREQMHZ" VALUE="50"/>
         <PARAMETER NAME="PCW_ACT_PCAP_PERIPHERAL_FREQMHZ" VALUE="200.000000"/>
         <PARAMETER NAME="PCW_ACT_TPIU_PERIPHERAL_FREQMHZ" VALUE="200.000000"/>
-        <PARAMETER NAME="PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ" VALUE="50.000000"/>
+        <PARAMETER NAME="PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ" VALUE="100.000000"/>
         <PARAMETER NAME="PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ" VALUE="10.000000"/>
         <PARAMETER NAME="PCW_ACT_FPGA2_PERIPHERAL_FREQMHZ" VALUE="10.000000"/>
         <PARAMETER NAME="PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ" VALUE="10.000000"/>
@@ -583,7 +613,7 @@
         <PARAMETER NAME="PCW_ACT_TTC1_CLK0_PERIPHERAL_FREQMHZ" VALUE="111.111115"/>
         <PARAMETER NAME="PCW_ACT_TTC1_CLK1_PERIPHERAL_FREQMHZ" VALUE="111.111115"/>
         <PARAMETER NAME="PCW_ACT_TTC1_CLK2_PERIPHERAL_FREQMHZ" VALUE="111.111115"/>
-        <PARAMETER NAME="PCW_CLK0_FREQ" VALUE="50000000"/>
+        <PARAMETER NAME="PCW_CLK0_FREQ" VALUE="100000000"/>
         <PARAMETER NAME="PCW_CLK1_FREQ" VALUE="10000000"/>
         <PARAMETER NAME="PCW_CLK2_FREQ" VALUE="10000000"/>
         <PARAMETER NAME="PCW_CLK3_FREQ" VALUE="10000000"/>
@@ -597,7 +627,7 @@
         <PARAMETER NAME="PCW_SPI_PERIPHERAL_DIVISOR0" VALUE="1"/>
         <PARAMETER NAME="PCW_CAN_PERIPHERAL_DIVISOR0" VALUE="1"/>
         <PARAMETER NAME="PCW_CAN_PERIPHERAL_DIVISOR1" VALUE="1"/>
-        <PARAMETER NAME="PCW_FCLK0_PERIPHERAL_DIVISOR0" VALUE="8"/>
+        <PARAMETER NAME="PCW_FCLK0_PERIPHERAL_DIVISOR0" VALUE="4"/>
         <PARAMETER NAME="PCW_FCLK1_PERIPHERAL_DIVISOR0" VALUE="1"/>
         <PARAMETER NAME="PCW_FCLK2_PERIPHERAL_DIVISOR0" VALUE="1"/>
         <PARAMETER NAME="PCW_FCLK3_PERIPHERAL_DIVISOR0" VALUE="1"/>
@@ -667,7 +697,7 @@
         <PARAMETER NAME="PCW_USE_S_AXI_HP1" VALUE="0"/>
         <PARAMETER NAME="PCW_USE_S_AXI_HP2" VALUE="0"/>
         <PARAMETER NAME="PCW_USE_S_AXI_HP3" VALUE="0"/>
-        <PARAMETER NAME="PCW_M_AXI_GP0_FREQMHZ" VALUE="50"/>
+        <PARAMETER NAME="PCW_M_AXI_GP0_FREQMHZ" VALUE="100"/>
         <PARAMETER NAME="PCW_M_AXI_GP1_FREQMHZ" VALUE="10"/>
         <PARAMETER NAME="PCW_S_AXI_GP0_FREQMHZ" VALUE="10"/>
         <PARAMETER NAME="PCW_S_AXI_GP1_FREQMHZ" VALUE="10"/>
@@ -1297,7 +1327,7 @@
         <PARAMETER NAME="PCW_SMC_CYCLE_T6" VALUE="NA"/>
         <PARAMETER NAME="PCW_PACKAGE_NAME" VALUE="clg400"/>
         <PARAMETER NAME="PCW_PLL_BYPASSMODE_ENABLE" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_processing_system7_0_1"/>
+        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_processing_system7_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
@@ -1436,7 +1466,7 @@
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_AXI_wstrb"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="50000000" DIR="I" NAME="M_AXI_GP0_ACLK" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="M_AXI_GP0_ACLK" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
@@ -1496,20 +1526,20 @@
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_AXI_rdata"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="50000000" DIR="O" NAME="FCLK_CLK0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="O" NAME="FCLK_CLK0" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="M_AXI_GP0_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ACLK"/>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="slowest_sync_clk"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="slowest_sync_clk"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ACLK"/>
+            <CONNECTION INSTANCE="External_Ports" PORT="FCLK_CLK0"/>
             <CONNECTION INSTANCE="pspl_comm_0" PORT="s00_axi_aclk"/>
-            <CONNECTION INSTANCE="External_Ports" PORT="axi_aclk"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="O" NAME="FCLK_RESET0_N" SIGIS="rst" SIGNAME="processing_system7_0_FCLK_RESET0_N">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="ext_reset_in"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="ext_reset_in"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="IO" LEFT="53" NAME="MIO" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_MIO">
@@ -1669,7 +1699,7 @@
           <PARAMETER NAME="NUM_READ_OUTSTANDING" VALUE="8"/>
           <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
           <PARAMETER NAME="PROTOCOL" VALUE="AXI3"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="50000000"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="100000000"/>
           <PARAMETER NAME="ID_WIDTH" VALUE="12"/>
           <PARAMETER NAME="ADDR_WIDTH" VALUE="32"/>
           <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
@@ -1689,7 +1719,7 @@
           <PARAMETER NAME="HAS_RRESP" VALUE="1"/>
           <PARAMETER NAME="MAX_BURST_LENGTH" VALUE="16"/>
           <PARAMETER NAME="PHASE" VALUE="0.000"/>
-          <PARAMETER NAME="CLK_DOMAIN" VALUE="pspl_comm_processing_system7_0_1_FCLK_CLK0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="pspl_comm_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="NUM_READ_THREADS" VALUE="4"/>
           <PARAMETER NAME="NUM_WRITE_THREADS" VALUE="4"/>
           <PARAMETER NAME="RUSER_BITS_PER_BYTE" VALUE="0"/>
@@ -2063,7 +2093,7 @@
         <PARAMETER NAME="S13_ARB_PRIORITY" VALUE="0"/>
         <PARAMETER NAME="S14_ARB_PRIORITY" VALUE="0"/>
         <PARAMETER NAME="S15_ARB_PRIORITY" VALUE="0"/>
-        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_ps7_0_axi_periph_0"/>
+        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_ps7_0_axi_periph_1"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="BUS"/>
       </PARAMETERS>
       <PORTS>
@@ -2072,9 +2102,9 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_50M_peripheral_aresetn">
+        <PORT DIR="I" NAME="ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="peripheral_aresetn"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="S00_ACLK" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -2082,9 +2112,9 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="S00_ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_50M_peripheral_aresetn">
+        <PORT DIR="I" NAME="S00_ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="peripheral_aresetn"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" NAME="M00_ACLK" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
@@ -2092,9 +2122,9 @@
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="M00_ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_50M_peripheral_aresetn">
+        <PORT DIR="I" NAME="M00_ARESETN" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="peripheral_aresetn"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="11" NAME="S00_AXI_awid" RIGHT="0" SIGIS="undef" SIGNAME="processing_system7_0_M_AXI_GP0_AWID">
@@ -2451,7 +2481,7 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="7" FULLNAME="/pspl_comm_0" HWVERSION="1.0" INSTANCE="pspl_comm_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="pspl_comm" VLNV="pcalab:user:pspl_comm:1.0">
+    <MODULE COREREVISION="4" FULLNAME="/pspl_comm_0" HWVERSION="1.0" INSTANCE="pspl_comm_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="pspl_comm" VLNV="pcalab:user:pspl_comm:1.0">
       <DOCUMENTS/>
       <ADDRESSBLOCKS>
         <ADDRESSBLOCK ACCESS="" INTERFACE="S00_AXI" NAME="S00_AXI_reg" RANGE="4096" USAGE="register"/>
@@ -2459,7 +2489,7 @@
       <PARAMETERS>
         <PARAMETER NAME="C_S00_AXI_DATA_WIDTH" VALUE="32"/>
         <PARAMETER NAME="C_S00_AXI_ADDR_WIDTH" VALUE="4"/>
-        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_pspl_comm_0_0"/>
+        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_pspl_comm_0_5"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
         <PARAMETER NAME="C_S00_AXI_BASEADDR" VALUE="0x43C00000"/>
         <PARAMETER NAME="C_S00_AXI_HIGHADDR" VALUE="0x43C0FFFF"/>
@@ -2560,6 +2590,26 @@
             <CONNECTION INSTANCE="External_Ports" PORT="lsd_line_addr_r"/>
           </CONNECTIONS>
         </PORT>
+        <PORT DIR="O" NAME="lsd_write_protect_f" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_write_protect_f">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="lsd_write_protect_f"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="lsd_write_protect_r" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_write_protect_r">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="lsd_write_protect_r"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="16" NAME="lsd_grad_thres_f" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_grad_thres_f">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="lsd_grad_thres_f"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="16" NAME="lsd_grad_thres_r" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_lsd_grad_thres_r">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="lsd_grad_thres_r"/>
+          </CONNECTIONS>
+        </PORT>
         <PORT DIR="I" NAME="topview_ready_f" SIGIS="undef" SIGNAME="External_Ports_topview_ready_f">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="topview_ready_f"/>
@@ -2638,6 +2688,16 @@
         <PORT DIR="O" LEFT="31" NAME="topview_line_addr_r" RIGHT="0" SIGIS="undef" SIGNAME="pspl_comm_0_topview_line_addr_r">
           <CONNECTIONS>
             <CONNECTION INSTANCE="External_Ports" PORT="topview_line_addr_r"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="topview_write_protect_f" SIGIS="undef" SIGNAME="pspl_comm_0_topview_write_protect_f">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="topview_write_protect_f"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" NAME="topview_write_protect_r" SIGIS="undef" SIGNAME="pspl_comm_0_topview_write_protect_r">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="External_Ports" PORT="topview_write_protect_r"/>
           </CONNECTIONS>
         </PORT>
         <PORT DIR="I" LEFT="15" NAME="motor_speed_l" RIGHT="0" SIGIS="undef" SIGNAME="External_Ports_motor_speed_l">
@@ -2755,14 +2815,14 @@
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_AXI_rready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT CLKFREQUENCY="50000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="s00_axi_aclk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="rst_ps7_0_50M_peripheral_aresetn">
+        <PORT DIR="I" NAME="s00_axi_aresetn" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="rst_ps7_0_50M" PORT="peripheral_aresetn"/>
+            <CONNECTION INSTANCE="rst_ps7_0_100M" PORT="peripheral_aresetn"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -2773,7 +2833,7 @@
           <PARAMETER NAME="SUPPORTS_NARROW_BURST" VALUE="0"/>
           <PARAMETER NAME="DATA_WIDTH" VALUE="32"/>
           <PARAMETER NAME="PROTOCOL" VALUE="AXI4LITE"/>
-          <PARAMETER NAME="FREQ_HZ" VALUE="50000000"/>
+          <PARAMETER NAME="FREQ_HZ" VALUE="100000000"/>
           <PARAMETER NAME="ID_WIDTH" VALUE="0"/>
           <PARAMETER NAME="ADDR_WIDTH" VALUE="4"/>
           <PARAMETER NAME="AWUSER_WIDTH" VALUE="0"/>
@@ -2795,7 +2855,7 @@
           <PARAMETER NAME="NUM_WRITE_OUTSTANDING" VALUE="8"/>
           <PARAMETER NAME="MAX_BURST_LENGTH" VALUE="1"/>
           <PARAMETER NAME="PHASE" VALUE="0.000"/>
-          <PARAMETER NAME="CLK_DOMAIN" VALUE="pspl_comm_processing_system7_0_1_FCLK_CLK0"/>
+          <PARAMETER NAME="CLK_DOMAIN" VALUE="pspl_comm_processing_system7_0_0_FCLK_CLK0"/>
           <PARAMETER NAME="NUM_READ_THREADS" VALUE="4"/>
           <PARAMETER NAME="NUM_WRITE_THREADS" VALUE="4"/>
           <PARAMETER NAME="RUSER_BITS_PER_BYTE" VALUE="0"/>
@@ -2825,7 +2885,7 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE COREREVISION="13" FULLNAME="/rst_ps7_0_50M" HWVERSION="5.0" INSTANCE="rst_ps7_0_50M" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="proc_sys_reset" VLNV="xilinx.com:ip:proc_sys_reset:5.0">
+    <MODULE COREREVISION="13" FULLNAME="/rst_ps7_0_100M" HWVERSION="5.0" INSTANCE="rst_ps7_0_100M" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="proc_sys_reset" VLNV="xilinx.com:ip:proc_sys_reset:5.0">
       <DOCUMENTS>
         <DOCUMENT SOURCE="http://www.xilinx.com/cgi-bin/docs/ipdoc?c=proc_sys_reset;v=v5_0;d=pg164-proc-sys-reset.pdf"/>
       </DOCUMENTS>
@@ -2839,13 +2899,13 @@
         <PARAMETER NAME="C_NUM_PERP_RST" VALUE="1"/>
         <PARAMETER NAME="C_NUM_INTERCONNECT_ARESETN" VALUE="1"/>
         <PARAMETER NAME="C_NUM_PERP_ARESETN" VALUE="1"/>
-        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_rst_ps7_0_50M_0"/>
+        <PARAMETER NAME="Component_Name" VALUE="pspl_comm_rst_ps7_0_100M_1"/>
         <PARAMETER NAME="USE_BOARD_FLOW" VALUE="false"/>
         <PARAMETER NAME="RESET_BOARD_INTERFACE" VALUE="Custom"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="50000000" DIR="I" NAME="slowest_sync_clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="slowest_sync_clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
           </CONNECTIONS>
@@ -2862,7 +2922,7 @@
         <PORT DIR="O" LEFT="0" NAME="bus_struct_reset" RIGHT="0" SIGIS="rst"/>
         <PORT DIR="O" LEFT="0" NAME="peripheral_reset" RIGHT="0" SIGIS="rst"/>
         <PORT DIR="O" LEFT="0" NAME="interconnect_aresetn" RIGHT="0" SIGIS="rst"/>
-        <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_50M_peripheral_aresetn">
+        <PORT DIR="O" LEFT="0" NAME="peripheral_aresetn" RIGHT="0" SIGIS="rst" SIGNAME="rst_ps7_0_100M_peripheral_aresetn">
           <CONNECTIONS>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ARESETN"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ARESETN"/>

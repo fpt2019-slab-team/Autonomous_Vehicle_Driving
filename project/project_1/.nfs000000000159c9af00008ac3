@@ -1,0 +1,115 @@
+/*
+
+Xilinx Vivado v2018.3 (64-bit) [Major: 2018, Minor: 3]
+SW Build: 2405991 on Thu Dec  6 23:36:41 MST 2018
+IP Build: 2404404 on Fri Dec  7 01:43:56 MST 2018
+
+Process ID (PID): 11129
+License: Customer
+
+Current time: 	Thu Dec 05 14:25:45 JST 2019
+Time zone: 	Japan Standard Time (Japan)
+
+OS: CentOS release 6.10 (Final)
+OS Version: 2.6.32-754.17.1.el6.x86_64
+OS Architecture: amd64
+Available processors (cores): 48
+
+Display: localhost:10.0
+Screen size: 1920x1080
+Screen resolution (DPI): 96
+Available screens: 1
+Available disk space: 31 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/tps/lnx64/jre9.0.4
+Java executable location: 	/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/tps/lnx64/jre9.0.4/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	matsuda
+User home directory: /home/users/matsuda
+User working directory: /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1
+User country: 	JP
+User language: 	ja
+User locale: 	ja_JP
+
+RDI_BASEROOT: /home/cad/xilinx-vivado-2018.3/Vivado
+HDI_APPROOT: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3
+RDI_DATADIR: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data
+RDI_BINDIR: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3/bin
+
+Vivado preferences file location: /home/users/matsuda/.Xilinx/Vivado/2018.3/vivado.xml
+Vivado preferences directory: /home/users/matsuda/.Xilinx/Vivado/2018.3/
+Vivado layouts directory: /home/users/matsuda/.Xilinx/Vivado/2018.3/layouts
+PlanAhead jar file location: 	/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/lib/classes/planAhead.jar
+Vivado log file location: 	/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/vivado.log
+Vivado journal file location: 	/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-11129-flamingo
+
+Xilinx Environment Variables
+----------------------------
+XILINX: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3/ids_lite/ISE
+XILINXD_LICENSE_FILE: 2100@harrier
+XILINX_DSP: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3/ids_lite/ISE
+XILINX_EDK: /home/cad/xilinx-ise-14.7/14.7/ISE_DS/EDK
+XILINX_PLANAHEAD: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3
+XILINX_SDK: /home/cad/xilinx-vivado-2018.3/SDK/2018.3
+XILINX_VIVADO: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3
+XILINX_VIVADO_HLS: /home/cad/xilinx-vivado-2018.3/Vivado/2018.3
+
+
+GUI allocated memory:	209 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 5,234 MB
+
+Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// TclEventType: PROJECT_OPEN_DIALOG
+// [GUI Memory]: 92 MB (+94108kb) [00:00:05]
+// [Engine Memory]: 5,222 MB (+5324392kb) [00:00:05]
+// bx (cp):  Open Project : addNotify
+// Opening Vivado Project: project_1.xpr. Version: Vivado v2018.3 
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project project_1.xpr 
+// TclEventType: MSGMGR_MOVEMSG
+// HMemoryUtils.trashcanNow. Engine heap size: 5,278 MB. GUI used memory: 45 MB. Current time: 12/5/19, 2:25:47 PM JST
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: FILESET_TARGET_UCF_CHANGE
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 100 MB (+3642kb) [00:00:14]
+// [GUI Memory]: 106 MB (+292kb) [00:00:16]
+// WARNING: HEventQueue.dispatchEvent() is taking  2741 ms.
+// Tcl Message: open_project project_1.xpr 
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/matsuda/project/pspl_ip/ip_repo/pspl_comm_1.0'. INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'. 
+// Project name: project_1; location: /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1; part: xc7z020clg400-1
+dismissDialog("Open Project"); // bx (cp)
+// [GUI Memory]: 116 MB (+5671kb) [00:00:17]
+// Tcl Message: update_compile_order -fileset sources_1 
+// HMemoryUtils.trashcanNow. Engine heap size: 5,420 MB. GUI used memory: 58 MB. Current time: 12/5/19, 2:26:02 PM JST

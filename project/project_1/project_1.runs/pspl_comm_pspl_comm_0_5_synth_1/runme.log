@@ -1,0 +1,405 @@
+
+*** Running vivado
+    with args -log pspl_comm_pspl_comm_0_5.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source pspl_comm_pspl_comm_0_5.tcl
+
+
+****** Vivado v2018.3 (64-bit)
+  **** SW Build 2405991 on Thu Dec  6 23:36:41 MST 2018
+  **** IP Build 2404404 on Fri Dec  7 01:43:56 MST 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source pspl_comm_pspl_comm_0_5.tcl -notrace
+create_project: Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1431.773 ; gain = 3.012 ; free physical = 105414 ; free virtual = 117115
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/matsuda/project/pspl_ip/ip_repo/pspl_comm_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
+update_ip_catalog: Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1439.508 ; gain = 7.734 ; free physical = 105388 ; free virtual = 117089
+Command: synth_design -top pspl_comm_pspl_comm_0_5 -part xc7z020clg400-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: Launching helper process for spawning children vivado processes
+INFO: Helper process launched with PID 19980 
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1544.961 ; gain = 84.000 ; free physical = 105271 ; free virtual = 116972
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'pspl_comm_pspl_comm_0_5' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_pspl_comm_0_5/synth/pspl_comm_pspl_comm_0_5.v:56]
+INFO: [Synth 8-6157] synthesizing module 'pspl_comm_v1_0' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0.v:4]
+	Parameter C_S00_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_S00_AXI_ADDR_WIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'pspl_comm_v1_0_S00_AXI' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:54]
+	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_S_AXI_ADDR_WIDTH bound to: 4 - type: integer 
+	Parameter ADDR_LSB bound to: 2 - type: integer 
+	Parameter OPT_MEM_ADDR_BITS bound to: 1 - type: integer 
+INFO: [Synth 8-226] default block is never used [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:342]
+INFO: [Synth 8-226] default block is never used [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:519]
+INFO: [Synth 8-155] case statement is not full and has no default [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:603]
+WARNING: [Synth 8-6014] Unused sequential element slv_reg3_reg was removed.  [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:337]
+WARNING: [Synth 8-3848] Net topview_write_protect_f_reg in module/entity pspl_comm_v1_0_S00_AXI does not have driver. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:581]
+WARNING: [Synth 8-3848] Net topview_write_protect_r_reg in module/entity pspl_comm_v1_0_S00_AXI does not have driver. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:582]
+WARNING: [Synth 8-3848] Net cam_r_addr in module/entity pspl_comm_v1_0_S00_AXI does not have driver. [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:128]
+INFO: [Synth 8-6155] done synthesizing module 'pspl_comm_v1_0_S00_AXI' (1#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:54]
+WARNING: [Synth 8-350] instance 'pspl_comm_v1_0_S00_AXI_inst' of module 'pspl_comm_v1_0_S00_AXI' requires 68 connections, but only 66 given [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0.v:108]
+INFO: [Synth 8-6155] done synthesizing module 'pspl_comm_v1_0' (2#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0.v:4]
+INFO: [Synth 8-6155] done synthesizing module 'pspl_comm_pspl_comm_0_5' (3#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_pspl_comm_0_5/synth/pspl_comm_pspl_comm_0_5.v:56]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port topview_write_protect_f
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port topview_write_protect_r
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[18]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[17]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[16]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[15]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[14]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[13]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[12]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[11]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[10]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[9]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[8]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[7]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[6]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[5]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[4]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[3]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[2]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[1]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_r_addr[0]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[7]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[6]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[5]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[4]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[3]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[2]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[1]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port cam_pixel[0]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_AWPROT[2]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_AWPROT[1]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_AWPROT[0]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_ARPROT[2]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_ARPROT[1]
+WARNING: [Synth 8-3331] design pspl_comm_v1_0_S00_AXI has unconnected port S_AXI_ARPROT[0]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:06 . Memory (MB): peak = 1591.711 ; gain = 130.750 ; free physical = 105281 ; free virtual = 116982
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1591.711 ; gain = 130.750 ; free physical = 105280 ; free virtual = 116982
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:06 . Memory (MB): peak = 1591.711 ; gain = 130.750 ; free physical = 105280 ; free virtual = 116982
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1934.746 ; gain = 0.000 ; free physical = 105000 ; free virtual = 116701
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1935.742 ; gain = 0.000 ; free physical = 105000 ; free virtual = 116701
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.13 ; elapsed = 00:00:00.27 . Memory (MB): peak = 1936.746 ; gain = 2.000 ; free physical = 104998 ; free virtual = 116699
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:16 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 105086 ; free virtual = 116787
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:16 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 105086 ; free virtual = 116787
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:16 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 105088 ; free virtual = 116789
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5545] ROM "led_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "sccb_req_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "sccb_send_data_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_line_addr_f_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_line_addr_r_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_write_protect_f_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_write_protect_r_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_grad_thres_f_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "lsd_grad_thres_r_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "topview_line_addr_f_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "topview_line_addr_r_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "kl_accel_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+INFO: [Synth 8-5545] ROM "kl_steer_reg" won't be mapped to RAM because address size (32) is larger than maximum supported(25)
+WARNING: [Synth 8-327] inferring latch for variable 'led_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:586]
+WARNING: [Synth 8-327] inferring latch for variable 'sccb_req_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:587]
+WARNING: [Synth 8-327] inferring latch for variable 'sccb_send_data_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:588]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_line_addr_f_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:589]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_line_addr_r_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:590]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_write_protect_f_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:591]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_write_protect_r_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:592]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_grad_thres_f_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:593]
+WARNING: [Synth 8-327] inferring latch for variable 'lsd_grad_thres_r_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:594]
+WARNING: [Synth 8-327] inferring latch for variable 'topview_line_addr_f_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:595]
+WARNING: [Synth 8-327] inferring latch for variable 'topview_line_addr_r_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:596]
+WARNING: [Synth 8-327] inferring latch for variable 'kl_accel_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:599]
+WARNING: [Synth 8-327] inferring latch for variable 'kl_steer_reg_reg' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v:600]
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:09 ; elapsed = 00:00:17 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 105080 ; free virtual = 116782
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 3     
+	                4 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   4 Input     32 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 18    
+	  14 Input      1 Bit        Muxes := 13    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Hierarchical Component Statistics 
+---------------------------------------------------------------------------------
+Hierarchical RTL Component report 
+Module pspl_comm_v1_0_S00_AXI 
+Detailed RTL Component Info : 
++---Registers : 
+	               32 Bit    Registers := 3     
+	                4 Bit    Registers := 2     
+	                2 Bit    Registers := 2     
+	                1 Bit    Registers := 6     
++---Muxes : 
+	   2 Input     32 Bit        Muxes := 4     
+	   4 Input     32 Bit        Muxes := 4     
+	   2 Input      1 Bit        Muxes := 18    
+	  14 Input      1 Bit        Muxes := 13    
+---------------------------------------------------------------------------------
+Finished RTL Hierarchical Component Statistics
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+Warning: Parallel synthesis criteria is not met 
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/led_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/sccb_req_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/sccb_send_data_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_line_addr_f_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_line_addr_r_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_write_protect_f_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_write_protect_r_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_grad_thres_f_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/lsd_grad_thres_r_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_f_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/topview_line_addr_r_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/kl_accel_reg" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "inst/pspl_comm_v1_0_S00_AXI_inst/kl_steer_reg" won't be mapped to RAM because it is too sparse
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port topview_write_protect_f
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port topview_write_protect_r
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_awprot[2]
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_awprot[1]
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_awprot[0]
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_arprot[2]
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_arprot[1]
+WARNING: [Synth 8-3331] design pspl_comm_pspl_comm_0_5 has unconnected port s00_axi_arprot[0]
+INFO: [Synth 8-3886] merging instance 'inst/pspl_comm_v1_0_S00_AXI_inst/axi_rresp_reg[0]' (FDRE) to 'inst/pspl_comm_v1_0_S00_AXI_inst/axi_rresp_reg[1]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\inst/pspl_comm_v1_0_S00_AXI_inst/axi_rresp_reg[1] )
+INFO: [Synth 8-3886] merging instance 'inst/pspl_comm_v1_0_S00_AXI_inst/axi_bresp_reg[0]' (FDRE) to 'inst/pspl_comm_v1_0_S00_AXI_inst/axi_bresp_reg[1]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\inst/pspl_comm_v1_0_S00_AXI_inst/axi_bresp_reg[1] )
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:19 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 105057 ; free virtual = 116761
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104929 ; free virtual = 116633
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:15 ; elapsed = 00:00:24 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104929 ; free virtual = 116633
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:16 ; elapsed = 00:00:24 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104928 ; free virtual = 116632
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104902 ; free virtual = 116606
+---------------------------------------------------------------------------------
+
+Report Check Netlist: 
++------+------------------+-------+---------+-------+------------------+
+|      |Item              |Errors |Warnings |Status |Description       |
++------+------------------+-------+---------+-------+------------------+
+|1     |multi_driven_nets |      0|        0|Passed |Multi driven nets |
++------+------------------+-------+---------+-------+------------------+
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104904 ; free virtual = 116607
+---------------------------------------------------------------------------------
+
+Report RTL Partitions: 
++-+--------------+------------+----------+
+| |RTL Partition |Replication |Instances |
++-+--------------+------------+----------+
++-+--------------+------------+----------+
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104899 ; free virtual = 116603
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104899 ; free virtual = 116603
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104899 ; free virtual = 116603
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104899 ; free virtual = 116603
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+------+------+
+|      |Cell  |Count |
++------+------+------+
+|1     |LUT1  |     1|
+|2     |LUT2  |     6|
+|3     |LUT3  |     4|
+|4     |LUT4  |    31|
+|5     |LUT5  |    69|
+|6     |LUT6  |   259|
+|7     |MUXF7 |    21|
+|8     |FDRE  |   137|
+|9     |FDSE  |     1|
+|10    |LD    |   208|
++------+------+------+
+
+Report Instance Areas: 
++------+--------------------------------+-----------------------+------+
+|      |Instance                        |Module                 |Cells |
++------+--------------------------------+-----------------------+------+
+|1     |top                             |                       |   737|
+|2     |  inst                          |pspl_comm_v1_0         |   737|
+|3     |    pspl_comm_v1_0_S00_AXI_inst |pspl_comm_v1_0_S00_AXI |   737|
++------+--------------------------------+-----------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104899 ; free virtual = 116603
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 21 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:12 ; elapsed = 00:00:19 . Memory (MB): peak = 1936.746 ; gain = 130.750 ; free physical = 104959 ; free virtual = 116663
+Synthesis Optimization Complete : Time (s): cpu = 00:00:16 ; elapsed = 00:00:25 . Memory (MB): peak = 1936.746 ; gain = 475.785 ; free physical = 104970 ; free virtual = 116674
+INFO: [Project 1-571] Translating synthesized netlist
+INFO: [Netlist 29-17] Analyzing 229 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1963.770 ; gain = 0.000 ; free physical = 104910 ; free virtual = 116613
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 208 instances were transformed.
+  LD => LDCE: 208 instances
+
+INFO: [Common 17-83] Releasing license: Synthesis
+53 Infos, 62 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:18 ; elapsed = 00:00:27 . Memory (MB): peak = 1963.770 ; gain = 514.262 ; free physical = 104966 ; free virtual = 116669
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1963.770 ; gain = 0.000 ; free physical = 104966 ; free virtual = 116669
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/pspl_comm_pspl_comm_0_5_synth_1/pspl_comm_pspl_comm_0_5.dcp' has been generated.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP pspl_comm_pspl_comm_0_5, cache-ID = e2582a56fab5d3a4
+INFO: [Coretcl 2-1174] Renamed 2 cell refs.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1988.781 ; gain = 0.000 ; free physical = 104979 ; free virtual = 116684
+WARNING: [Constraints 18-5210] No constraints selected for write.
+Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/pspl_comm_pspl_comm_0_5_synth_1/pspl_comm_pspl_comm_0_5.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file pspl_comm_pspl_comm_0_5_utilization_synth.rpt -pb pspl_comm_pspl_comm_0_5_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Nov 29 17:59:15 2019...

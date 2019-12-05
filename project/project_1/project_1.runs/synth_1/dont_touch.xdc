@@ -12,17 +12,17 @@
 # Block Designs: bd/pspl_comm/pspl_comm.bd
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm || ORIG_REF_NAME==pspl_comm} -quiet] -quiet
 
-# IP: bd/pspl_comm/ip/pspl_comm_pspl_comm_0_0_1/pspl_comm_pspl_comm_0_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_pspl_comm_0_0 || ORIG_REF_NAME==pspl_comm_pspl_comm_0_0} -quiet] -quiet
+# IP: bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1/pspl_comm_processing_system7_0_0.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_processing_system7_0_0 || ORIG_REF_NAME==pspl_comm_processing_system7_0_0} -quiet] -quiet
 
-# IP: bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_processing_system7_0_1 || ORIG_REF_NAME==pspl_comm_processing_system7_0_1} -quiet] -quiet
+# IP: bd/pspl_comm/ip/pspl_comm_pspl_comm_0_5/pspl_comm_pspl_comm_0_5.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_pspl_comm_0_5 || ORIG_REF_NAME==pspl_comm_pspl_comm_0_5} -quiet] -quiet
 
-# IP: bd/pspl_comm/ip/pspl_comm_ps7_0_axi_periph_0_1/pspl_comm_ps7_0_axi_periph_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_ps7_0_axi_periph_0 || ORIG_REF_NAME==pspl_comm_ps7_0_axi_periph_0} -quiet] -quiet
+# IP: bd/pspl_comm/ip/pspl_comm_ps7_0_axi_periph_1/pspl_comm_ps7_0_axi_periph_1.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_ps7_0_axi_periph_1 || ORIG_REF_NAME==pspl_comm_ps7_0_axi_periph_1} -quiet] -quiet
 
-# IP: bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0.xci
-set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_rst_ps7_0_50M_0 || ORIG_REF_NAME==pspl_comm_rst_ps7_0_50M_0} -quiet] -quiet
+# IP: bd/pspl_comm/ip/pspl_comm_rst_ps7_0_100M_1/pspl_comm_rst_ps7_0_100M_1.xci
+set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_rst_ps7_0_100M_1 || ORIG_REF_NAME==pspl_comm_rst_ps7_0_100M_1} -quiet] -quiet
 
 # IP: bd/pspl_comm/ip/pspl_comm_auto_pc_0_1/pspl_comm_auto_pc_0.xci
 set_property DONT_TOUCH TRUE [get_cells -hier -filter {REF_NAME==pspl_comm_auto_pc_0 || ORIG_REF_NAME==pspl_comm_auto_pc_0} -quiet] -quiet

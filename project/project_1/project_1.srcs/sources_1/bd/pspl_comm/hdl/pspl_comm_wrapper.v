@@ -1,8 +1,8 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-//Date        : Wed Nov 27 12:24:51 2019
-//Host        : cuckoo running 64-bit CentOS release 6.9 (Final)
+//Date        : Fri Nov 29 17:58:13 2019
+//Host        : flamingo running 64-bit CentOS release 6.10 (Final)
 //Command     : generate_target pspl_comm_wrapper.bd
 //Design      : pspl_comm_wrapper
 //Purpose     : IP block netlist
@@ -25,16 +25,18 @@ module pspl_comm_wrapper
     DDR_ras_n,
     DDR_reset_n,
     DDR_we_n,
+    FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    axi_aclk,
     kl_accel,
     kl_steer,
     led,
+    lsd_grad_thres_f,
+    lsd_grad_thres_r,
     lsd_line_addr_f,
     lsd_line_addr_r,
     lsd_line_end_h_f,
@@ -49,6 +51,8 @@ module pspl_comm_wrapper
     lsd_line_start_v_r,
     lsd_ready_f,
     lsd_ready_r,
+    lsd_write_protect_f,
+    lsd_write_protect_r,
     motor_speed_l,
     motor_speed_r,
     sccb_busy,
@@ -70,7 +74,9 @@ module pspl_comm_wrapper
     topview_line_valid_f,
     topview_line_valid_r,
     topview_ready_f,
-    topview_ready_r);
+    topview_ready_r,
+    topview_write_protect_f,
+    topview_write_protect_r);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -86,16 +92,18 @@ module pspl_comm_wrapper
   inout DDR_ras_n;
   inout DDR_reset_n;
   inout DDR_we_n;
+  output FCLK_CLK0;
   inout FIXED_IO_ddr_vrn;
   inout FIXED_IO_ddr_vrp;
   inout [53:0]FIXED_IO_mio;
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
-  output axi_aclk;
   output [6:0]kl_accel;
   output [7:0]kl_steer;
   output [3:0]led;
+  output [16:0]lsd_grad_thres_f;
+  output [16:0]lsd_grad_thres_r;
   output [31:0]lsd_line_addr_f;
   output [31:0]lsd_line_addr_r;
   input [31:0]lsd_line_end_h_f;
@@ -110,6 +118,8 @@ module pspl_comm_wrapper
   input [31:0]lsd_line_start_v_r;
   input lsd_ready_f;
   input lsd_ready_r;
+  output lsd_write_protect_f;
+  output lsd_write_protect_r;
   input [15:0]motor_speed_l;
   input [15:0]motor_speed_r;
   input sccb_busy;
@@ -132,6 +142,8 @@ module pspl_comm_wrapper
   input topview_line_valid_r;
   input topview_ready_f;
   input topview_ready_r;
+  output topview_write_protect_f;
+  output topview_write_protect_r;
 
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
@@ -148,16 +160,18 @@ module pspl_comm_wrapper
   wire DDR_ras_n;
   wire DDR_reset_n;
   wire DDR_we_n;
+  wire FCLK_CLK0;
   wire FIXED_IO_ddr_vrn;
   wire FIXED_IO_ddr_vrp;
   wire [53:0]FIXED_IO_mio;
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
-  wire axi_aclk;
   wire [6:0]kl_accel;
   wire [7:0]kl_steer;
   wire [3:0]led;
+  wire [16:0]lsd_grad_thres_f;
+  wire [16:0]lsd_grad_thres_r;
   wire [31:0]lsd_line_addr_f;
   wire [31:0]lsd_line_addr_r;
   wire [31:0]lsd_line_end_h_f;
@@ -172,6 +186,8 @@ module pspl_comm_wrapper
   wire [31:0]lsd_line_start_v_r;
   wire lsd_ready_f;
   wire lsd_ready_r;
+  wire lsd_write_protect_f;
+  wire lsd_write_protect_r;
   wire [15:0]motor_speed_l;
   wire [15:0]motor_speed_r;
   wire sccb_busy;
@@ -194,6 +210,8 @@ module pspl_comm_wrapper
   wire topview_line_valid_r;
   wire topview_ready_f;
   wire topview_ready_r;
+  wire topview_write_protect_f;
+  wire topview_write_protect_r;
 
   pspl_comm pspl_comm_i
        (.DDR_addr(DDR_addr),
@@ -211,16 +229,18 @@ module pspl_comm_wrapper
         .DDR_ras_n(DDR_ras_n),
         .DDR_reset_n(DDR_reset_n),
         .DDR_we_n(DDR_we_n),
+        .FCLK_CLK0(FCLK_CLK0),
         .FIXED_IO_ddr_vrn(FIXED_IO_ddr_vrn),
         .FIXED_IO_ddr_vrp(FIXED_IO_ddr_vrp),
         .FIXED_IO_mio(FIXED_IO_mio),
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
-        .axi_aclk(axi_aclk),
         .kl_accel(kl_accel),
         .kl_steer(kl_steer),
         .led(led),
+        .lsd_grad_thres_f(lsd_grad_thres_f),
+        .lsd_grad_thres_r(lsd_grad_thres_r),
         .lsd_line_addr_f(lsd_line_addr_f),
         .lsd_line_addr_r(lsd_line_addr_r),
         .lsd_line_end_h_f(lsd_line_end_h_f),
@@ -235,6 +255,8 @@ module pspl_comm_wrapper
         .lsd_line_start_v_r(lsd_line_start_v_r),
         .lsd_ready_f(lsd_ready_f),
         .lsd_ready_r(lsd_ready_r),
+        .lsd_write_protect_f(lsd_write_protect_f),
+        .lsd_write_protect_r(lsd_write_protect_r),
         .motor_speed_l(motor_speed_l),
         .motor_speed_r(motor_speed_r),
         .sccb_busy(sccb_busy),
@@ -256,5 +278,7 @@ module pspl_comm_wrapper
         .topview_line_valid_f(topview_line_valid_f),
         .topview_line_valid_r(topview_line_valid_r),
         .topview_ready_f(topview_ready_f),
-        .topview_ready_r(topview_ready_r));
+        .topview_ready_r(topview_ready_r),
+        .topview_write_protect_f(topview_write_protect_f),
+        .topview_write_protect_r(topview_write_protect_r));
 endmodule

@@ -82,6 +82,7 @@ module topview
 		  0 <= out_v0 && out_v0 < OUT_HEIGHT && 0 <= out_v1 && out_v1 < OUT_HEIGHT;
    
    // BRAM ---------------------------------------------------------------------
+
    reg flag_buff[0:3], valid_buff[0:3];
    always@(posedge clk) begin
       flag_buff[0] <= in_flag;
@@ -181,61 +182,28 @@ module topview_trans
    input wire [$clog2(IN_WIDTH)-1:0] in_h;
    output reg signed [DIV_W-1:0] out_v;
    output reg signed [DIV_W-1:0] out_h;
-   
-   localparam f0_WID = bitW(C1 * (IN_HEIGHT-1));
-   localparam f1_WID = bitW(C2 * ( IN_WIDTH-1));
-   localparam f2_WID = bitW(C4 * (IN_HEIGHT-1));
-   localparam g0_WID = bitW2( C0, C0 + C1 * (IN_HEIGHT-1));
-   localparam g1_WID = bitW2(-C3, C2 * ( IN_WIDTH-1) - C3);
-   localparam g2_WID = bitW2(-C5, C4 * (IN_HEIGHT-1) - C5);
 
-   localparam N_WID = (g1_WID > g2_WID) ? g1_WID : g2_WID;
-      
-   reg signed [f0_WID-1:0] f0;
-   reg signed [f1_WID-1:0] f1;
-   reg signed [f2_WID-1:0] f2;
-   reg signed [g0_WID-1:0] g0;
-   reg signed [ N_WID-1:0] g1;
-   reg signed [ N_WID-1:0] g2;
-   reg signed [DIV_W-1:0]  h0;   
-   reg signed [DIV_W-1:0]  h1;
-
-   wire signed [N_WID-1:0] g1_d_g0, g2_d_g0;
-   
-   divider
-     #( 
-	.N_WID(N_WID), 
-	.D_WID(g0_WID) 
-     )
-   divider_inst0
-     (
-	.clk(clk), 
-	.N(g1), .D(g0), 
-	.Q(g1_d_g0)
-     ),
-   divider_inst1
-     (
-	.clk(clk), 
-	.N(g2), .D(g0), 
-	.Q(g2_d_g0)
-     );
+   reg signed [bitW(C1 * (IN_HEIGHT-1))-1:0] f0;
+   reg signed [bitW(C2 * ( IN_WIDTH-1))-1:0] f1;
+   reg signed [bitW(C4 * (IN_HEIGHT-1))-1:0] f2;
+   reg signed [bitW2( C0, C0 + C1 * (IN_HEIGHT-1))-1:0] g0;
+   reg signed [bitW2(-C3, C2 * ( IN_WIDTH-1) - C3)-1:0] g1;
+   reg signed [bitW2(-C5, C4 * (IN_HEIGHT-1) - C5)-1:0] g2;
+   reg signed [DIV_W-1:0] h0;   
+   reg signed [DIV_W-1:0] h1;
    
    always @(posedge clk) begin
-      // 0 --------------------------------------------
       f0 <= C1 * in_v;
       f1 <= C2 * in_h;
       f2 <= C4 * in_v;
-
-      // 1 ------------------------------------------
+      
       g0 <= C0 + f0;
       g1 <= f1 - C3;
       g2 <= f2 - C5;
 
-      // 2~N_WID+4 -----------------------------------------
-      h0 <= g1_d_g0;
-      h1 <= g2_d_g0;
+      h0 <= g1 / g0;
+      h1 <= g2 / g0;
 
-      // N_WID+5 --------------------------------------------
       out_h <= h0 + CXP;
       out_v <= C6 + h1;
    end
@@ -325,89 +293,5 @@ function integer bitW2;
       end
    endfunction
 */
-
-
-// Q = N / D
-// N_WID + 2
-// D = 0
-//       N  < 0 -> Q = -inf
-//       N >= 0 -> Q =  inf
-module divider
-  # (
-     parameter N_WID = -1,
-     parameter D_WID = -1
-     ) 
-   (clk, N, D, Q);
-
-   localparam signed [N_WID-1:0] MIN = 1 << (N_WID - 1);
-   localparam signed [N_WID-1:0] MAX = ~MIN;
-      
-   input wire clk;
-   input wire signed [N_WID-1:0] N;
-   input wire signed [D_WID-1:0] D;
-   output reg signed [N_WID-1:0] Q;
-
-   reg invers[0:N_WID];
-   reg d_zero[0:N_WID];
-   wire N_plus, D_plus;
-   assign N_plus = ~N[N_WID-1];
-   assign D_plus = ~D[D_WID-1];
-   wire [N_WID-1:0] N_abs;
-   wire [D_WID-1:0] D_abs;
-   assign N_abs = (N_plus) ? N : -N;
-   assign D_abs = (D_plus) ? D : -D;
-   
-   reg [N_WID-1:0]   Ns[0:N_WID-1];
-   reg [D_WID-1:0]   Ds[0:N_WID-1];
-   reg [D_WID+1-1:0] Rs[0:N_WID-1];
-   reg [N_WID-1:0]   Qs[0:N_WID];
-
-   wire [D_WID+1-1:0] R_sub_D[0:N_WID-1];
-   genvar i;
-   generate
-      for (i = 0; i < N_WID; i = i + 1) begin : compare_RD
-	 assign R_sub_D[i] = Rs[i] - Ds[i];
-      end
-   endgenerate
-   
-   always @(posedge clk) begin
-      // 0 : set absolute value, sign-------------------------------------------
-      invers[0] <= N_plus ^ D_plus;
-      d_zero[0] <= (D == 0); 
-      Ns[0] <= N_abs;
-      Ds[0] <= D_abs;
-      Rs[0] <= N_abs[N_WID-1];
-      
-      // 1~N_WID-1 --------------------------------------------
-      for (integer ii = 0; ii < N_WID - 1; ii = ii + 1) begin
-	 invers[ii + 1] <= invers[ii];
-	 d_zero[ii + 1] <= d_zero[ii];
-	 Ns[ii + 1] <= Ns[ii];
-	 Ds[ii + 1] <= Ds[ii];
-	 for(integer j = N_WID - ii; j < N_WID; j = j + 1)
-	   Qs[ii + 1][j] <= Qs[ii][j];
-	 
-	 if (R_sub_D[ii][D_WID] == 1'b0) begin // R > D	    
-	    Qs[ii + 1][N_WID-1 - ii] <= 1'b1;
-	    Rs[ii + 1] <= {R_sub_D[ii][D_WID-1:0], Ns[ii][N_WID-2 - ii]};
-	 end else begin
-	    Qs[ii + 1][N_WID-1 - ii] <= 1'b0;
-	    Rs[ii + 1] <= {Rs[ii][D_WID-1:0], Ns[ii][N_WID-2 - ii]};
-	 end	 
-      end
-
-      // N_WID ---------------------------------------------------
-      invers[N_WID] <= invers[N_WID-1];
-      d_zero[N_WID] <= d_zero[N_WID-1];
-      Qs[N_WID][N_WID-1:1] <= Qs[N_WID-1][N_WID-1:1];
-      Qs[N_WID][0] <= ~R_sub_D[N_WID-1][D_WID];
-      
-      // N_WID+1 : inverse --------------------------------------------------
-      Q <= (invers[N_WID]) ? 
-	   ((d_zero[N_WID]) ? MIN : $signed(-Qs[N_WID])) : 
-	   ((d_zero[N_WID]) ? MAX : $signed(Qs[N_WID]));
-   end
-endmodule
-
 
 `default_nettype wire

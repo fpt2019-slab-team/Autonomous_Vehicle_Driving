@@ -11,8 +11,9 @@ set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets pclk_r_IBUF]
 
 # create_clock -period 42.000 -name clk_24m_pin -waveform {0.000 21.000} -add [get_ports clk_24m]
 # create_clock -period 84.000 -name clk_12m_pin -waveform {0.000 42.000} -add [get_ports clk_12m]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_24m_IBUF]
-set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_12m_IBUF]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets xclk_OBUF]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets clk_12m]
+set_property CLOCK_DEDICATED_ROUTE FALSE [get_nets PS_CLK]
 
 ## Switches
 

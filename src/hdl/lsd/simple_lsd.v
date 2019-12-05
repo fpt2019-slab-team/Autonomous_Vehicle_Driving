@@ -2,14 +2,9 @@
 // <simple_lsd>
 //  - Simplified Line Segment Detector
 //-----------------------------------------------------------------------------
-// Version 1.07 (Nov. 12, 2019)
-//  - Renamed the parameters <TAU>, <RHO>, and <MIN_LEN> to
-//    <ANGLE_THRES>, <GRAD_THRES>, and <LENGTH_THRES> for clarity
-//  - Changed the parameters shown above from local parameters to 
-//    parameters which can be specified by a parent module
-//  - Added automatic parameter tuning to avoid overutilization of
-//    the line candidate RAM. If the utilization ratio exceeds 90%,
-//    <GRAD_THRES> is incremented by <TUNING_STEP> every frame
+// Version 1.07.1 (Nov. 29, 2019)
+//  - The gradient threshold can be specified through <in_grad_thres> port
+//    instead of <GRAD_THRES> parameter
 //-----------------------------------------------------------------------------
 // (C) 2019 Taito Manabe. All rights reserved.
 //-----------------------------------------------------------------------------
@@ -23,10 +18,9 @@ module simple_lsd
      parameter integer FRAME_HEIGHT = -1,
      parameter integer FRAME_WIDTH  = -1,
      parameter integer ANGLE_THRES  = 16,   // (tau) max. angle difference
-     parameter integer GRAD_THRES   = 655,  // (rho) min. grad. magnitude ** 2
-     parameter integer LENGTH_THRES = 64,   // min. length of lines ** 2
+     parameter integer LENGTH_THRES = 64,   // min. length of lines^2
      parameter integer RAM_SIZE     = 4096)
-   ( clock, n_rst, in_y, in_vcnt, in_hcnt, out_flag, out_valid, 
+   ( clock, n_rst, in_y, in_vcnt, in_hcnt, in_grad_thres, out_flag, out_valid, 
      out_start_v, out_start_h, out_end_v, out_end_h, out_angle );
 
    // local parameters --------------------------------------------------------
@@ -51,6 +45,7 @@ module simple_lsd
    input wire [BIT_WIDTH-1:0] 	in_y;
    input wire [V_BITW-1:0] 	in_vcnt;
    input wire [H_BITW-1:0] 	in_hcnt;
+   input wire [BIT_WIDTH*2:0] 	in_grad_thres; // (rho) min. grad. magnitude^2
    output reg 			out_flag,    out_valid;
    output reg [V_BITW-1:0] 	out_start_v, out_end_v;
    output reg [H_BITW-1:0] 	out_start_h, out_end_h;
@@ -112,7 +107,7 @@ module simple_lsd
      #( .BIT_WIDTH(1), .LATENCY(ATAN_LATENCY - 1) )
    dly_norm
      (  .clock(clock), .n_rst(n_rst), .out_data(grd_valid),
-	.in_data(((gx2 + gy2) >= (GRAD_THRES + grd_thres_offset))) );
+	.in_data(((gx2 + gy2) >= (in_grad_thres + grd_thres_offset))) );
 
    // arctangent
    arctan_calc 

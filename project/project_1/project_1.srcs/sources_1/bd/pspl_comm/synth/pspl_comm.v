@@ -1,15 +1,15 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-//Date        : Wed Nov 27 12:24:51 2019
-//Host        : cuckoo running 64-bit CentOS release 6.9 (Final)
+//Date        : Fri Nov 29 17:58:12 2019
+//Host        : flamingo running 64-bit CentOS release 6.10 (Final)
 //Command     : generate_target pspl_comm.bd
 //Design      : pspl_comm
 //Purpose     : IP block netlist
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "pspl_comm,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=pspl_comm,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=6,numReposBlks=4,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=2,da_ps7_cnt=3,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "pspl_comm.hwdef" *) 
+(* CORE_GENERATION_INFO = "pspl_comm,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=pspl_comm,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=6,numReposBlks=4,numNonXlnxBlks=1,numHierBlks=2,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=5,da_board_cnt=4,da_clkrst_cnt=4,da_ps7_cnt=4,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "pspl_comm.hwdef" *) 
 module pspl_comm
    (DDR_addr,
     DDR_ba,
@@ -26,16 +26,18 @@ module pspl_comm
     DDR_ras_n,
     DDR_reset_n,
     DDR_we_n,
+    FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
     FIXED_IO_mio,
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
-    axi_aclk,
     kl_accel,
     kl_steer,
     led,
+    lsd_grad_thres_f,
+    lsd_grad_thres_r,
     lsd_line_addr_f,
     lsd_line_addr_r,
     lsd_line_end_h_f,
@@ -50,6 +52,8 @@ module pspl_comm
     lsd_line_start_v_r,
     lsd_ready_f,
     lsd_ready_r,
+    lsd_write_protect_f,
+    lsd_write_protect_r,
     motor_speed_l,
     motor_speed_r,
     sccb_busy,
@@ -71,7 +75,9 @@ module pspl_comm
     topview_line_valid_f,
     topview_line_valid_r,
     topview_ready_f,
-    topview_ready_r);
+    topview_ready_r,
+    topview_write_protect_f,
+    topview_write_protect_r);
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR ADDR" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME DDR, AXI_ARBITRATION_SCHEME TDM, BURST_LENGTH 8, CAN_DEBUG false, CAS_LATENCY 11, CAS_WRITE_LATENCY 11, CS_ENABLED true, DATA_MASK_ENABLED true, DATA_WIDTH 8, MEMORY_TYPE COMPONENTS, MEM_ADDR_MAP ROW_COLUMN_BANK, SLOT Single, TIMEPERIOD_PS 1250" *) inout [14:0]DDR_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR BA" *) inout [2:0]DDR_ba;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR CAS_N" *) inout DDR_cas_n;
@@ -87,16 +93,18 @@ module pspl_comm
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR RAS_N" *) inout DDR_ras_n;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR RESET_N" *) inout DDR_reset_n;
   (* X_INTERFACE_INFO = "xilinx.com:interface:ddrx:1.0 DDR WE_N" *) inout DDR_we_n;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.FCLK_CLK0 CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.FCLK_CLK0, CLK_DOMAIN pspl_comm_processing_system7_0_0_FCLK_CLK0, FREQ_HZ 100000000, INSERT_VIP 0, PHASE 0.000" *) output FCLK_CLK0;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRN" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME FIXED_IO, CAN_DEBUG false" *) inout FIXED_IO_ddr_vrn;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO DDR_VRP" *) inout FIXED_IO_ddr_vrp;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO MIO" *) inout [53:0]FIXED_IO_mio;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK" *) inout FIXED_IO_ps_clk;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 CLK.AXI_ACLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME CLK.AXI_ACLK, CLK_DOMAIN pspl_comm_processing_system7_0_1_FCLK_CLK0, FREQ_HZ 50000000, INSERT_VIP 0, PHASE 0.000" *) output axi_aclk;
   output [6:0]kl_accel;
   output [7:0]kl_steer;
   output [3:0]led;
+  output [16:0]lsd_grad_thres_f;
+  output [16:0]lsd_grad_thres_r;
   output [31:0]lsd_line_addr_f;
   output [31:0]lsd_line_addr_r;
   input [31:0]lsd_line_end_h_f;
@@ -111,6 +119,8 @@ module pspl_comm
   input [31:0]lsd_line_start_v_r;
   input lsd_ready_f;
   input lsd_ready_r;
+  output lsd_write_protect_f;
+  output lsd_write_protect_r;
   input [15:0]motor_speed_l;
   input [15:0]motor_speed_r;
   input sccb_busy;
@@ -133,6 +143,8 @@ module pspl_comm
   input topview_line_valid_r;
   input topview_ready_f;
   input topview_ready_r;
+  output topview_write_protect_f;
+  output topview_write_protect_r;
 
   wire [31:0]lsd_line_end_h_f_0_1;
   wire [31:0]lsd_line_end_h_r_0_1;
@@ -231,13 +243,19 @@ module pspl_comm
   wire [6:0]pspl_comm_0_kl_accel;
   wire [7:0]pspl_comm_0_kl_steer;
   wire [3:0]pspl_comm_0_led;
+  wire [16:0]pspl_comm_0_lsd_grad_thres_f;
+  wire [16:0]pspl_comm_0_lsd_grad_thres_r;
   wire [31:0]pspl_comm_0_lsd_line_addr_f;
   wire [31:0]pspl_comm_0_lsd_line_addr_r;
+  wire pspl_comm_0_lsd_write_protect_f;
+  wire pspl_comm_0_lsd_write_protect_r;
   wire pspl_comm_0_sccb_req;
   wire [23:0]pspl_comm_0_sccb_send_data;
   wire [31:0]pspl_comm_0_topview_line_addr_f;
   wire [31:0]pspl_comm_0_topview_line_addr_r;
-  wire [0:0]rst_ps7_0_50M_peripheral_aresetn;
+  wire pspl_comm_0_topview_write_protect_f;
+  wire pspl_comm_0_topview_write_protect_r;
+  wire [0:0]rst_ps7_0_100M_peripheral_aresetn;
   wire sccb_busy_0_1;
   wire [1:0]sw_0_1;
   wire [31:0]topview_line_end_h_f_0_1;
@@ -255,10 +273,12 @@ module pspl_comm
   wire topview_ready_f_0_1;
   wire topview_ready_r_0_1;
 
-  assign axi_aclk = processing_system7_0_FCLK_CLK0;
+  assign FCLK_CLK0 = processing_system7_0_FCLK_CLK0;
   assign kl_accel[6:0] = pspl_comm_0_kl_accel;
   assign kl_steer[7:0] = pspl_comm_0_kl_steer;
   assign led[3:0] = pspl_comm_0_led;
+  assign lsd_grad_thres_f[16:0] = pspl_comm_0_lsd_grad_thres_f;
+  assign lsd_grad_thres_r[16:0] = pspl_comm_0_lsd_grad_thres_r;
   assign lsd_line_addr_f[31:0] = pspl_comm_0_lsd_line_addr_f;
   assign lsd_line_addr_r[31:0] = pspl_comm_0_lsd_line_addr_r;
   assign lsd_line_end_h_f_0_1 = lsd_line_end_h_f[31:0];
@@ -273,6 +293,8 @@ module pspl_comm
   assign lsd_line_start_v_r_0_1 = lsd_line_start_v_r[31:0];
   assign lsd_ready_f_0_1 = lsd_ready_f;
   assign lsd_ready_r_0_1 = lsd_ready_r;
+  assign lsd_write_protect_f = pspl_comm_0_lsd_write_protect_f;
+  assign lsd_write_protect_r = pspl_comm_0_lsd_write_protect_r;
   assign motor_speed_l_0_1 = motor_speed_l[15:0];
   assign motor_speed_r_0_1 = motor_speed_r[15:0];
   assign sccb_busy_0_1 = sccb_busy;
@@ -295,7 +317,9 @@ module pspl_comm
   assign topview_line_valid_r_0_1 = topview_line_valid_r;
   assign topview_ready_f_0_1 = topview_ready_f;
   assign topview_ready_r_0_1 = topview_ready_r;
-  pspl_comm_processing_system7_0_1 processing_system7_0
+  assign topview_write_protect_f = pspl_comm_0_topview_write_protect_f;
+  assign topview_write_protect_r = pspl_comm_0_topview_write_protect_r;
+  pspl_comm_processing_system7_0_0 processing_system7_0
        (.DDR_Addr(DDR_addr[14:0]),
         .DDR_BankAddr(DDR_ba[2:0]),
         .DDR_CAS_n(DDR_cas_n),
@@ -358,11 +382,11 @@ module pspl_comm
         .PS_CLK(FIXED_IO_ps_clk),
         .PS_PORB(FIXED_IO_ps_porb),
         .PS_SRSTB(FIXED_IO_ps_srstb));
-  pspl_comm_ps7_0_axi_periph_0 ps7_0_axi_periph
+  pspl_comm_ps7_0_axi_periph_1 ps7_0_axi_periph
        (.ACLK(processing_system7_0_FCLK_CLK0),
-        .ARESETN(rst_ps7_0_50M_peripheral_aresetn),
+        .ARESETN(rst_ps7_0_100M_peripheral_aresetn),
         .M00_ACLK(processing_system7_0_FCLK_CLK0),
-        .M00_ARESETN(rst_ps7_0_50M_peripheral_aresetn),
+        .M00_ARESETN(rst_ps7_0_100M_peripheral_aresetn),
         .M00_AXI_araddr(ps7_0_axi_periph_M00_AXI_ARADDR),
         .M00_AXI_arprot(ps7_0_axi_periph_M00_AXI_ARPROT),
         .M00_AXI_arready(ps7_0_axi_periph_M00_AXI_ARREADY),
@@ -383,7 +407,7 @@ module pspl_comm
         .M00_AXI_wstrb(ps7_0_axi_periph_M00_AXI_WSTRB),
         .M00_AXI_wvalid(ps7_0_axi_periph_M00_AXI_WVALID),
         .S00_ACLK(processing_system7_0_FCLK_CLK0),
-        .S00_ARESETN(rst_ps7_0_50M_peripheral_aresetn),
+        .S00_ARESETN(rst_ps7_0_100M_peripheral_aresetn),
         .S00_AXI_araddr(processing_system7_0_M_AXI_GP0_ARADDR),
         .S00_AXI_arburst(processing_system7_0_M_AXI_GP0_ARBURST),
         .S00_AXI_arcache(processing_system7_0_M_AXI_GP0_ARCACHE),
@@ -422,10 +446,12 @@ module pspl_comm
         .S00_AXI_wready(processing_system7_0_M_AXI_GP0_WREADY),
         .S00_AXI_wstrb(processing_system7_0_M_AXI_GP0_WSTRB),
         .S00_AXI_wvalid(processing_system7_0_M_AXI_GP0_WVALID));
-  pspl_comm_pspl_comm_0_0 pspl_comm_0
+  pspl_comm_pspl_comm_0_5 pspl_comm_0
        (.kl_accel(pspl_comm_0_kl_accel),
         .kl_steer(pspl_comm_0_kl_steer),
         .led(pspl_comm_0_led),
+        .lsd_grad_thres_f(pspl_comm_0_lsd_grad_thres_f),
+        .lsd_grad_thres_r(pspl_comm_0_lsd_grad_thres_r),
         .lsd_line_addr_f(pspl_comm_0_lsd_line_addr_f),
         .lsd_line_addr_r(pspl_comm_0_lsd_line_addr_r),
         .lsd_line_end_h_f(lsd_line_end_h_f_0_1),
@@ -440,11 +466,13 @@ module pspl_comm
         .lsd_line_start_v_r(lsd_line_start_v_r_0_1),
         .lsd_ready_f(lsd_ready_f_0_1),
         .lsd_ready_r(lsd_ready_r_0_1),
+        .lsd_write_protect_f(pspl_comm_0_lsd_write_protect_f),
+        .lsd_write_protect_r(pspl_comm_0_lsd_write_protect_r),
         .motor_speed_l(motor_speed_l_0_1),
         .motor_speed_r(motor_speed_r_0_1),
         .s00_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s00_axi_araddr(ps7_0_axi_periph_M00_AXI_ARADDR[3:0]),
-        .s00_axi_aresetn(rst_ps7_0_50M_peripheral_aresetn),
+        .s00_axi_aresetn(rst_ps7_0_100M_peripheral_aresetn),
         .s00_axi_arprot(ps7_0_axi_periph_M00_AXI_ARPROT),
         .s00_axi_arready(ps7_0_axi_periph_M00_AXI_ARREADY),
         .s00_axi_arvalid(ps7_0_axi_periph_M00_AXI_ARVALID),
@@ -482,17 +510,19 @@ module pspl_comm
         .topview_line_valid_f(topview_line_valid_f_0_1),
         .topview_line_valid_r(topview_line_valid_r_0_1),
         .topview_ready_f(topview_ready_f_0_1),
-        .topview_ready_r(topview_ready_r_0_1));
-  pspl_comm_rst_ps7_0_50M_0 rst_ps7_0_50M
+        .topview_ready_r(topview_ready_r_0_1),
+        .topview_write_protect_f(pspl_comm_0_topview_write_protect_f),
+        .topview_write_protect_r(pspl_comm_0_topview_write_protect_r));
+  pspl_comm_rst_ps7_0_100M_1 rst_ps7_0_100M
        (.aux_reset_in(1'b1),
         .dcm_locked(1'b1),
         .ext_reset_in(processing_system7_0_FCLK_RESET0_N),
         .mb_debug_sys_rst(1'b0),
-        .peripheral_aresetn(rst_ps7_0_50M_peripheral_aresetn),
+        .peripheral_aresetn(rst_ps7_0_100M_peripheral_aresetn),
         .slowest_sync_clk(processing_system7_0_FCLK_CLK0));
 endmodule
 
-module pspl_comm_ps7_0_axi_periph_0
+module pspl_comm_ps7_0_axi_periph_1
    (ACLK,
     ARESETN,
     M00_ACLK,

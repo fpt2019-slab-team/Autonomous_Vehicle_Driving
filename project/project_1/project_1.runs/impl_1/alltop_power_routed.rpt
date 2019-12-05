@@ -1,8 +1,8 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-| Date             : Wed Nov 27 13:34:58 2019
-| Host             : cuckoo running 64-bit CentOS release 6.9 (Final)
+| Date             : Wed Dec  4 13:02:20 2019
+| Host             : flamingo running 64-bit CentOS release 6.10 (Final)
 | Command          : report_power -file alltop_power_routed.rpt -pb alltop_power_summary_routed.pb -rpx alltop_power_routed.rpx
 | Design           : alltop
 | Device           : xc7z020clg400-1
@@ -30,14 +30,14 @@ Table of Contents
 ----------
 
 +--------------------------+--------------+
-| Total On-Chip Power (W)  | 1.854        |
+| Total On-Chip Power (W)  | 2.181        |
 | Design Power Budget (W)  | Unspecified* |
 | Power Budget Margin (W)  | NA           |
-| Dynamic (W)              | 1.706        |
-| Device Static (W)        | 0.148        |
+| Dynamic (W)              | 2.019        |
+| Device Static (W)        | 0.162        |
 | Effective TJA (C/W)      | 11.5         |
-| Max Ambient (C)          | 63.6         |
-| Junction Temperature (C) | 46.4         |
+| Max Ambient (C)          | 59.8         |
+| Junction Temperature (C) | 50.2         |
 | Confidence Level         | Low          |
 | Setting File             | ---          |
 | Simulation Activity File | ---          |
@@ -52,24 +52,25 @@ Table of Contents
 +--------------------------+-----------+----------+-----------+-----------------+
 | On-Chip                  | Power (W) | Used     | Available | Utilization (%) |
 +--------------------------+-----------+----------+-----------+-----------------+
-| Clocks                   |     0.007 |       12 |       --- |             --- |
-| Slice Logic              |     0.019 |    22554 |       --- |             --- |
-|   LUT as Logic           |     0.016 |     9718 |     53200 |           18.27 |
-|   CARRY4                 |     0.001 |     1601 |     13300 |           12.04 |
-|   Register               |    <0.001 |     7544 |    106400 |            7.09 |
-|   LUT as Shift Register  |    <0.001 |      373 |     17400 |            2.14 |
-|   BUFG                   |    <0.001 |        2 |        32 |            6.25 |
+| Clocks                   |     0.014 |       20 |       --- |             --- |
+| Slice Logic              |     0.012 |    12870 |       --- |             --- |
+|   LUT as Logic           |     0.011 |     6124 |     53200 |           11.51 |
+|   CARRY4                 |    <0.001 |      730 |     13300 |            5.49 |
+|   Register               |    <0.001 |     3804 |    106400 |            3.58 |
+|   LUT as Shift Register  |    <0.001 |       92 |     17400 |            0.53 |
+|   BUFG                   |    <0.001 |        1 |        32 |            3.13 |
+|   F7/F8 Muxes            |    <0.001 |       34 |     53200 |            0.06 |
 |   LUT as Distributed RAM |    <0.001 |        4 |     17400 |            0.02 |
-|   F7/F8 Muxes            |    <0.001 |       31 |     53200 |            0.06 |
-|   Others                 |     0.000 |      375 |       --- |             --- |
-| Signals                  |     0.019 |    16977 |       --- |             --- |
-| Block RAM                |     0.011 |       34 |       140 |           24.29 |
-| MMCM                     |     0.114 |        1 |         4 |           25.00 |
-| DSPs                     |     0.003 |       28 |       220 |           12.73 |
-| I/O                      |     0.007 |       47 |       125 |           37.60 |
-| PS7                      |     1.525 |        1 |       --- |             --- |
-| Static Power             |     0.148 |          |           |                 |
-| Total                    |     1.854 |          |           |                 |
+|   Others                 |     0.000 |      406 |       --- |             --- |
+| Signals                  |     0.015 |    10792 |       --- |             --- |
+| Block RAM                |     0.032 |     64.5 |       140 |           46.07 |
+| MMCM                     |     0.136 |        1 |         4 |           25.00 |
+| PLL                      |     0.135 |        1 |         4 |           25.00 |
+| DSPs                     |     0.006 |       42 |       220 |           19.09 |
+| I/O                      |     0.144 |       56 |       125 |           44.80 |
+| PS7                      |     1.526 |        1 |       --- |             --- |
+| Static Power             |     0.162 |          |           |                 |
+| Total                    |     2.181 |          |           |                 |
 +--------------------------+-----------+----------+-----------+-----------------+
 
 
@@ -79,20 +80,20 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) |
 +-----------+-------------+-----------+-------------+------------+
-| Vccint    |       1.000 |     0.076 |       0.059 |      0.018 |
-| Vccaux    |       1.800 |     0.080 |       0.064 |      0.016 |
-| Vcco33    |       3.300 |     0.003 |       0.002 |      0.001 |
+| Vccint    |       1.000 |     0.113 |       0.092 |      0.022 |
+| Vccaux    |       1.800 |     0.160 |       0.143 |      0.017 |
+| Vcco33    |       3.300 |     0.044 |       0.043 |      0.001 |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccbram   |       1.000 |     0.004 |       0.001 |      0.003 |
+| Vccbram   |       1.000 |     0.009 |       0.003 |      0.006 |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |
 | MGTVccaux |       1.800 |     0.000 |       0.000 |      0.000 |
-| Vccpint   |       1.000 |     0.754 |       0.722 |      0.032 |
+| Vccpint   |       1.000 |     0.759 |       0.723 |      0.036 |
 | Vccpaux   |       1.800 |     0.060 |       0.050 |      0.010 |
 | Vccpll    |       1.800 |     0.018 |       0.015 |      0.003 |
 | Vcco_ddr  |       1.500 |     0.459 |       0.457 |      0.002 |
@@ -139,20 +140,28 @@ Table of Contents
 2.2 Clock Constraints
 ---------------------
 
-+----------------------+-----------------------------------------------------------------+-----------------+
-| Clock                | Domain                                                          | Constraint (ns) |
-+----------------------+-----------------------------------------------------------------+-----------------+
-| cam_pclk_pin         | pclk_r                                                          |            42.0 |
-| clk_fpga_0           | pspl_comm_inst/processing_system7_0/inst/FCLK_CLK_unbuffered[0] |            20.0 |
-| clk_out1_clk_wiz_0   | clk_wiz_0_inst/inst/clk_out1_clk_wiz_0                          |            41.7 |
-| clk_out1_clk_wiz_0_1 | clk_wiz_0_inst/inst/clk_out1_clk_wiz_0                          |            41.7 |
-| clk_out2_clk_wiz_0   | clk_wiz_0_inst/inst/clk_out2_clk_wiz_0                          |            83.3 |
-| clk_out2_clk_wiz_0_1 | clk_wiz_0_inst/inst/clk_out2_clk_wiz_0                          |            83.3 |
-| clkfbout_clk_wiz_0   | clk_wiz_0_inst/inst/clkfbout_clk_wiz_0                          |            40.0 |
-| clkfbout_clk_wiz_0_1 | clk_wiz_0_inst/inst/clkfbout_clk_wiz_0                          |            40.0 |
-| sys_clk_pin          | sysclk                                                          |             8.0 |
-| sysclk               | sysclk                                                          |             8.0 |
-+----------------------+-----------------------------------------------------------------+-----------------+
++----------------------+-----------------------------------------------------------------------------+-----------------+
+| Clock                | Domain                                                                      | Constraint (ns) |
++----------------------+-----------------------------------------------------------------------------+-----------------+
+| CLKFBIN              | rgb2dvi_inst/ClockGenInternal.ClockGenX/CLKFBIN                             |            13.5 |
+| CLKFBIN_1            | rgb2dvi_inst/ClockGenInternal.ClockGenX/CLKFBIN                             |            13.5 |
+| PixelClkIO           | rgb2dvi_inst/ClockGenInternal.ClockGenX/PixelClk                            |            13.5 |
+| PixelClkIO_1         | rgb2dvi_inst/ClockGenInternal.ClockGenX/PixelClk                            |            13.5 |
+| SerialClkIO          | rgb2dvi_inst/ClockGenInternal.ClockGenX/SerialClk                           |             2.7 |
+| SerialClkIO_1        | rgb2dvi_inst/ClockGenInternal.ClockGenX/SerialClk                           |             2.7 |
+| cam_pclk_pin         | pclk_r                                                                      |            42.0 |
+| clk_fpga_0           | pspl_comm_inst/pspl_comm_i/processing_system7_0/inst/FCLK_CLK_unbuffered[0] |            10.0 |
+| clk_out1_clk_wiz_0   | clk_wiz_0_inst/inst/clk_out1_clk_wiz_0                                      |            41.7 |
+| clk_out1_clk_wiz_0_1 | clk_wiz_0_inst/inst/clk_out1_clk_wiz_0                                      |            41.7 |
+| clk_out2_clk_wiz_0   | clk_wiz_0_inst/inst/clk_out2_clk_wiz_0                                      |            83.4 |
+| clk_out2_clk_wiz_0_1 | clk_wiz_0_inst/inst/clk_out2_clk_wiz_0                                      |            83.4 |
+| clk_out3_clk_wiz_0   | clk_wiz_0_inst/inst/clk_out3_clk_wiz_0                                      |            13.5 |
+| clk_out3_clk_wiz_0_1 | clk_wiz_0_inst/inst/clk_out3_clk_wiz_0                                      |            13.5 |
+| clkfbout_clk_wiz_0   | clk_wiz_0_inst/inst/clkfbout_clk_wiz_0                                      |             8.0 |
+| clkfbout_clk_wiz_0_1 | clk_wiz_0_inst/inst/clkfbout_clk_wiz_0                                      |             8.0 |
+| sys_clk_pin          | sysclk                                                                      |             8.0 |
+| sysclk               | sysclk                                                                      |             8.0 |
++----------------------+-----------------------------------------------------------------------------+-----------------+
 
 
 3. Detailed Reports
@@ -161,52 +170,47 @@ Table of Contents
 3.1 By Hierarchy
 ----------------
 
-+--------------------------+-----------+
-| Name                     | Power (W) |
-+--------------------------+-----------+
-| alltop                   |     1.706 |
-|   cam_top_inst_f         |     0.001 |
-|     camera_if_inst       |     0.001 |
-|   cam_top_inst_r         |     0.001 |
-|     camera_if_inst       |     0.001 |
-|   clk_wiz_0_inst         |     0.115 |
-|     inst                 |     0.115 |
-|   pspl_comm_inst         |     1.528 |
-|     processing_system7_0 |     1.525 |
-|       inst               |     1.525 |
-|     ps7_0_axi_periph     |     0.002 |
-|       s00_couplers       |     0.002 |
-|   simple_lsd_inst_f      |     0.014 |
-|     gau_0                |     0.002 |
-|       stp_0              |     0.002 |
-|     ram_0                |     0.003 |
-|     stp_1                |     0.003 |
-|   simple_lsd_inst_r      |     0.014 |
-|     gau_0                |     0.002 |
-|       stp_0              |     0.002 |
-|     ram_0                |     0.004 |
-|     stp_1                |     0.003 |
-|   testset_inst           |     0.006 |
-|     pb_l                 |     0.003 |
-|       Parent             |     0.003 |
-|     pb_r                 |     0.003 |
-|       Parent             |     0.003 |
-|   topview_inst_f         |     0.009 |
-|     topview_ls_bram      |     0.001 |
-|     topview_trans_inst0  |     0.004 |
-|       divider_inst0      |     0.001 |
-|       divider_inst1      |     0.002 |
-|     topview_trans_inst1  |     0.004 |
-|       divider_inst0      |     0.001 |
-|       divider_inst1      |     0.002 |
-|   topview_inst_r         |     0.009 |
-|     topview_ls_bram      |     0.001 |
-|     topview_trans_inst0  |     0.004 |
-|       divider_inst0      |     0.001 |
-|       divider_inst1      |     0.002 |
-|     topview_trans_inst1  |     0.004 |
-|       divider_inst0      |     0.001 |
-|       divider_inst1      |     0.002 |
-+--------------------------+-----------+
++------------------------------------+-----------+
+| Name                               | Power (W) |
++------------------------------------+-----------+
+| alltop                             |     2.019 |
+|   cam_top_inst_f                   |     0.002 |
+|     camera_if_inst                 |     0.002 |
+|   cam_top_inst_r                   |     0.001 |
+|     camera_if_inst                 |     0.001 |
+|   clk_wiz_0_inst                   |     0.137 |
+|     inst                           |     0.137 |
+|   dpram_mclk_inst                  |     0.004 |
+|   lsd_output_buffer_inst_f         |     0.009 |
+|   lsd_output_buffer_inst_r         |     0.009 |
+|   pspl_comm_inst                   |     1.532 |
+|     pspl_comm_i                    |     1.532 |
+|       processing_system7_0         |     1.527 |
+|       ps7_0_axi_periph             |     0.004 |
+|       pspl_comm_0                  |     0.001 |
+|   rgb2dvi_inst                     |     0.274 |
+|     ClockGenInternal.ClockGenX     |     0.135 |
+|     ClockSerializer                |     0.034 |
+|     DataEncoders[0].DataSerializer |     0.034 |
+|     DataEncoders[1].DataSerializer |     0.035 |
+|     DataEncoders[2].DataSerializer |     0.035 |
+|   simple_lsd_inst_f                |     0.015 |
+|     gau_0                          |     0.002 |
+|       stp_0                        |     0.001 |
+|     ram_0                          |     0.004 |
+|     stp_1                          |     0.003 |
+|   simple_lsd_inst_r                |     0.015 |
+|     gau_0                          |     0.002 |
+|       stp_0                        |     0.001 |
+|     ram_0                          |     0.004 |
+|     stp_1                          |     0.003 |
+|   testset_inst                     |     0.005 |
+|     pb_l                           |     0.002 |
+|       Parent                       |     0.002 |
+|     pb_r                           |     0.002 |
+|       Parent                       |     0.002 |
+|   visualizer_inst                  |     0.004 |
+|     ls_ram                         |     0.002 |
++------------------------------------+-----------+
 
 

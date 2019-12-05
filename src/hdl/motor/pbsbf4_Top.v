@@ -1,4 +1,8 @@
 module pbsbf4_Top 
+#(
+  parameter CLK_DIVIDE = -1,
+  parameter CLK_FREQ   = -1  
+)
 (
   input wire         clk,
   //input wire         clk_8,
@@ -30,7 +34,9 @@ module pbsbf4_Top
     .DIN_W(7),
     .DOUT_W(14),
     .SPLINE_W(17),
-    .S(3)
+    .S(3),
+    .CLK_DIVIDE(CLK_DIVIDE),
+    .CLK_FREQ(CLK_FREQ)
   )Parent(
     .clk(clk),
     .din(din),

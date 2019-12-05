@@ -9,17 +9,20 @@
     ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 
 source clk_wiz_0.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository '/home/users/matsuda/project/pspl_ip/ip_repo/pspl_comm_1.0'.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip'.
 Command: synth_design -top clk_wiz_0 -part xc7z020clg400-1 -mode out_of_context
 Starting synth_design
 Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
 INFO: Launching helper process for spawning children vivado processes
-INFO: Helper process launched with PID 1694 
+INFO: Helper process launched with PID 2163 
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1546.766 ; gain = 82.000 ; free physical = 119672 ; free virtual = 127033
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1545.953 ; gain = 84.000 ; free physical = 113629 ; free virtual = 129079
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.v:71]
-INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0_clk_wiz' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v:69]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.v:72]
+INFO: [Synth 8-6157] synthesizing module 'clk_wiz_0_clk_wiz' [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v:70]
 INFO: [Synth 8-6157] synthesizing module 'IBUF' [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20408]
 	Parameter CAPACITANCE bound to: DONT_CARE - type: string 
 	Parameter IBUF_DELAY_VALUE bound to: 0 - type: string 
@@ -29,20 +32,20 @@ INFO: [Synth 8-6157] synthesizing module 'IBUF' [/home/cad/xilinx-vivado-2018.3/
 INFO: [Synth 8-6155] done synthesizing module 'IBUF' (1#1) [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:20408]
 INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:26717]
 	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
-	Parameter CLKFBOUT_MULT_F bound to: 36.000000 - type: float 
+	Parameter CLKFBOUT_MULT_F bound to: 9.500000 - type: float 
 	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKFBOUT_USE_FINE_PS bound to: FALSE - type: string 
 	Parameter CLKIN1_PERIOD bound to: 8.000000 - type: float 
 	Parameter CLKIN2_PERIOD bound to: 0.000000 - type: float 
-	Parameter CLKOUT0_DIVIDE_F bound to: 37.500000 - type: float 
+	Parameter CLKOUT0_DIVIDE_F bound to: 49.500000 - type: float 
 	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: float 
 	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKOUT0_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT1_DIVIDE bound to: 75 - type: integer 
+	Parameter CLKOUT1_DIVIDE bound to: 99 - type: integer 
 	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: float 
 	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKOUT1_USE_FINE_PS bound to: FALSE - type: string 
-	Parameter CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter CLKOUT2_DIVIDE bound to: 16 - type: integer 
 	Parameter CLKOUT2_DUTY_CYCLE bound to: 0.500000 - type: float 
 	Parameter CLKOUT2_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKOUT2_USE_FINE_PS bound to: FALSE - type: string 
@@ -64,7 +67,7 @@ INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [/home/cad/xilinx-vivado-2
 	Parameter CLKOUT6_PHASE bound to: 0.000000 - type: float 
 	Parameter CLKOUT6_USE_FINE_PS bound to: FALSE - type: string 
 	Parameter COMPENSATION bound to: ZHOLD - type: string 
-	Parameter DIVCLK_DIVIDE bound to: 5 - type: integer 
+	Parameter DIVCLK_DIVIDE bound to: 1 - type: integer 
 	Parameter IS_CLKINSEL_INVERTED bound to: 1'b0 
 	Parameter IS_PSEN_INVERTED bound to: 1'b0 
 	Parameter IS_PSINCDEC_INVERTED bound to: 1'b0 
@@ -79,10 +82,10 @@ INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [/home/cad/xilinx-vivado-2
 INFO: [Synth 8-6155] done synthesizing module 'MMCME2_ADV' (2#1) [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:26717]
 INFO: [Synth 8-6157] synthesizing module 'BUFG' [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:609]
 INFO: [Synth 8-6155] done synthesizing module 'BUFG' (3#1) [/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/scripts/rt/data/unisim_comp.v:609]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0_clk_wiz' (4#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v:69]
-INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (5#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.v:71]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0_clk_wiz' (4#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_clk_wiz.v:70]
+INFO: [Synth 8-6155] done synthesizing module 'clk_wiz_0' (5#1) [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.v:72]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1593.516 ; gain = 128.750 ; free physical = 119687 ; free virtual = 127048
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1593.703 ; gain = 131.750 ; free physical = 113648 ; free virtual = 129098
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -95,10 +98,10 @@ Report Check Netlist:
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1593.516 ; gain = 128.750 ; free physical = 119688 ; free virtual = 127049
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1593.703 ; gain = 131.750 ; free physical = 113647 ; free virtual = 129097
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:05 . Memory (MB): peak = 1593.516 ; gain = 128.750 ; free physical = 119688 ; free virtual = 127049
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:02 ; elapsed = 00:00:04 . Memory (MB): peak = 1593.703 ; gain = 131.750 ; free physical = 113647 ; free virtual = 129097
 ---------------------------------------------------------------------------------
 INFO: [Netlist 29-17] Analyzing 1 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
@@ -107,45 +110,45 @@ INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
 Initializing timing engine
-Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc] for cell 'inst'
-Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'inst'
-Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'inst'
-Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'inst'
-INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/clk_wiz_0_propImpl.xdc].
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_ooc.xdc] for cell 'inst'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_board.xdc] for cell 'inst'
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'inst'
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc] for cell 'inst'
+INFO: [Project 1-236] Implementation specific constraints were found while reading constraint file [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xdc]. These constraints will be ignored for synthesis but will be used in implementation. Impacted constraints are listed in the file [.Xil/clk_wiz_0_propImpl.xdc].
 Resolution: To avoid this warning, move constraints listed in [.Xil/clk_wiz_0_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 INFO: [Timing 38-2] Deriving generated clocks
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1881.543 ; gain = 0.000 ; free physical = 119404 ; free virtual = 126766
-Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc]
-Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc]
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1881.730 ; gain = 0.000 ; free physical = 113364 ; free virtual = 128815
+Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc]
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1881.543 ; gain = 0.000 ; free physical = 119406 ; free virtual = 126767
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1881.730 ; gain = 0.000 ; free physical = 113365 ; free virtual = 128816
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1882.539 ; gain = 0.000 ; free physical = 119406 ; free virtual = 126767
-Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.07 . Memory (MB): peak = 1882.539 ; gain = 0.996 ; free physical = 119405 ; free virtual = 126767
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1882.727 ; gain = 0.000 ; free physical = 113365 ; free virtual = 128816
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.02 ; elapsed = 00:00:00.07 . Memory (MB): peak = 1882.727 ; gain = 0.996 ; free physical = 113365 ; free virtual = 128815
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.539 ; gain = 417.773 ; free physical = 119493 ; free virtual = 126855
+Finished Constraint Validation : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.727 ; gain = 420.773 ; free physical = 113454 ; free virtual = 128904
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.539 ; gain = 417.773 ; free physical = 119493 ; free virtual = 126855
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.727 ; gain = 420.773 ; free physical = 113454 ; free virtual = 128904
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
-Applied set_property DONT_TOUCH = true for inst. (constraint file  /home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc, line 9).
+Applied set_property DONT_TOUCH = true for inst. (constraint file  /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1/dont_touch.xdc, line 9).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.539 ; gain = 417.773 ; free physical = 119494 ; free virtual = 126856
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.727 ; gain = 420.773 ; free physical = 113455 ; free virtual = 128906
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:15 . Memory (MB): peak = 1882.539 ; gain = 417.773 ; free physical = 119495 ; free virtual = 126857
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:14 . Memory (MB): peak = 1882.727 ; gain = 420.773 ; free physical = 113455 ; free virtual = 128906
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -181,7 +184,7 @@ Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 Warning: Parallel synthesis criteria is not met 
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:15 . Memory (MB): peak = 1882.539 ; gain = 417.773 ; free physical = 119493 ; free virtual = 126856
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:08 ; elapsed = 00:00:15 . Memory (MB): peak = 1882.727 ; gain = 420.773 ; free physical = 113454 ; free virtual = 128906
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -193,13 +196,13 @@ Report RTL Partitions:
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1885.523 ; gain = 420.758 ; free physical = 119366 ; free virtual = 126730
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1885.711 ; gain = 423.758 ; free physical = 113326 ; free virtual = 128778
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1885.523 ; gain = 420.758 ; free physical = 119366 ; free virtual = 126730
+Finished Timing Optimization : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1885.711 ; gain = 423.758 ; free physical = 113326 ; free virtual = 128778
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -211,7 +214,7 @@ Report RTL Partitions:
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.539 ; gain = 429.773 ; free physical = 119366 ; free virtual = 126729
+Finished Technology Mapping : Time (s): cpu = 00:00:13 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.727 ; gain = 432.773 ; free physical = 113326 ; free virtual = 128778
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -235,7 +238,7 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished IO Insertion : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 
 Report Check Netlist: 
@@ -248,7 +251,7 @@ Report Check Netlist:
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 
 Report RTL Partitions: 
@@ -260,25 +263,25 @@ Report RTL Partitions:
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -294,7 +297,7 @@ Report Cell Usage:
 +------+-----------+------+
 |      |Cell       |Count |
 +------+-----------+------+
-|1     |BUFG       |     3|
+|1     |BUFG       |     4|
 |2     |MMCME2_ADV |     1|
 |3     |IBUF       |     1|
 +------+-----------+------+
@@ -303,36 +306,36 @@ Report Instance Areas:
 +------+---------+------------------+------+
 |      |Instance |Module            |Cells |
 +------+---------+------------------+------+
-|1     |top      |                  |     5|
-|2     |  inst   |clk_wiz_0_clk_wiz |     5|
+|1     |top      |                  |     6|
+|2     |  inst   |clk_wiz_0_clk_wiz |     6|
 +------+---------+------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.543 ; gain = 429.777 ; free physical = 119362 ; free virtual = 126725
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.730 ; gain = 432.777 ; free physical = 113329 ; free virtual = 128781
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1894.543 ; gain = 140.754 ; free physical = 119420 ; free virtual = 126783
-Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:21 . Memory (MB): peak = 1894.547 ; gain = 429.777 ; free physical = 119431 ; free virtual = 126794
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:10 ; elapsed = 00:00:14 . Memory (MB): peak = 1894.730 ; gain = 143.754 ; free physical = 113387 ; free virtual = 128839
+Synthesis Optimization Complete : Time (s): cpu = 00:00:14 ; elapsed = 00:00:20 . Memory (MB): peak = 1894.734 ; gain = 432.777 ; free physical = 113398 ; free virtual = 128850
 INFO: [Project 1-571] Translating synthesized netlist
 INFO: [Netlist 29-17] Analyzing 1 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1900.543 ; gain = 0.000 ; free physical = 119362 ; free virtual = 126726
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1900.727 ; gain = 0.000 ; free physical = 113326 ; free virtual = 128778
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
 INFO: [Common 17-83] Releasing license: Synthesis
-25 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+28 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:15 ; elapsed = 00:00:22 . Memory (MB): peak = 1900.543 ; gain = 441.504 ; free physical = 119410 ; free virtual = 126774
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 1900.543 ; gain = 0.000 ; free physical = 119410 ; free virtual = 126774
+synth_design: Time (s): cpu = 00:00:15 ; elapsed = 00:00:21 . Memory (MB): peak = 1900.727 ; gain = 450.227 ; free physical = 113375 ; free virtual = 128827
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1900.727 ; gain = 0.000 ; free physical = 113375 ; free virtual = 128827
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
-INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1/clk_wiz_0.dcp' has been generated.
-INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP clk_wiz_0, cache-ID = a8c1b90a4199ade9
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1905.539 ; gain = 0.000 ; free physical = 119409 ; free virtual = 126773
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1/clk_wiz_0.dcp' has been generated.
+INFO: [Coretcl 2-1648] Added synthesis output to IP cache for IP clk_wiz_0, cache-ID = 63702636884685bb
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1905.727 ; gain = 0.000 ; free physical = 113374 ; free virtual = 128827
 WARNING: [Constraints 18-5210] No constraints selected for write.
 Resolution: This message can indicate that there are no constraints for the design, or it can indicate that the used_in flags are set such that the constraints are ignored. This later case is used when running synth_design to not write synthesis constraints to the resulting checkpoint. Instead, project constraints are read when the synthesized design is opened.
-INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1/clk_wiz_0.dcp' has been generated.
+INFO: [Common 17-1381] The checkpoint '/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1/clk_wiz_0.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file clk_wiz_0_utilization_synth.rpt -pb clk_wiz_0_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Tue Nov 12 16:03:39 2019...
+INFO: [Common 17-206] Exiting Vivado at Mon Dec  2 12:41:57 2019...

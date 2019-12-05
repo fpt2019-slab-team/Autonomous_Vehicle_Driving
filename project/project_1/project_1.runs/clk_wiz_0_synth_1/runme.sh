@@ -20,7 +20,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='/home/users/matsuda/project/Autonomous_Vehicle_Driving/top/project/project_1/project_1.runs/clk_wiz_0_synth_1'
+HD_PWD='/home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.runs/clk_wiz_0_synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

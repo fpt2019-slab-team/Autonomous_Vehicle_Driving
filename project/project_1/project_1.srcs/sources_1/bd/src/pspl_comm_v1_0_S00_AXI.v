@@ -37,6 +37,8 @@
 `define PSPL_SCCB_SEND_DATA         32'h0001_0001
 `define PSPL_LSD_LINE_ADDR_F        32'h0002_0000
 `define PSPL_LSD_LINE_ADDR_R        32'h0002_0001
+`define PSPL_LSD_WRITE_PROTECT_F    32'h0002_0002
+`define PSPL_LSD_WRITE_PROTECT_R    32'h0002_0003
 `define PSPL_TOPVIEW_LINE_ADDR_F    32'h0003_0000
 `define PSPL_TOPVIEW_LINE_ADDR_R    32'h0003_0001
 `define PSPL_KL_ACCEL               32'h0005_0000
@@ -81,6 +83,8 @@ module pspl_comm_v1_0_S00_AXI
     input wire [31:0]                         lsd_line_end_h_r,
     output wire [31:0]                        lsd_line_addr_f, 
     output wire [31:0]                        lsd_line_addr_r, 
+    output wire                               lsd_write_protect_f,
+    output wire                               lsd_write_protect_r,
 
     // Top View to Kalman Filter (prefix: 0x0003)
     input wire                                topview_ready_f, 
@@ -553,6 +557,8 @@ module pspl_comm_v1_0_S00_AXI
    reg [23:0]                    sccb_send_data_reg;
    reg [31:0]                    lsd_line_addr_f_reg;
    reg [31:0]                    lsd_line_addr_r_reg;
+   reg                           lsd_write_protect_f_reg;
+   reg                           lsd_write_protect_r_reg;
    reg [31:0]                    topview_line_addr_f_reg;
    reg [31:0]                    topview_line_addr_r_reg;
    reg [6:0]                     kl_accel_reg;
@@ -563,6 +569,8 @@ module pspl_comm_v1_0_S00_AXI
    assign sccb_send_data       = sccb_send_data_reg;
    assign lsd_line_addr_f      = lsd_line_addr_f_reg;
    assign lsd_line_addr_r      = lsd_line_addr_r_reg;
+   assign lsd_write_protect_f  = lsd_write_protect_f_reg;
+   assign lsd_write_protect_r  = lsd_write_protect_r_reg;
    assign topview_line_addr_f  = topview_line_addr_f_reg;
    assign topview_line_addr_r  = topview_line_addr_r_reg;
    assign kl_accel             = kl_accel_reg;
@@ -578,6 +586,8 @@ module pspl_comm_v1_0_S00_AXI
         // LSD to Kalman's Filter and Keep Left 
         `PSPL_LSD_LINE_ADDR_F:     lsd_line_addr_f_reg     <= ps_pl_value;
         `PSPL_LSD_LINE_ADDR_R:     lsd_line_addr_r_reg     <= ps_pl_value;
+        `PSPL_LSD_WRITE_PROTECT_F: lsd_write_protect_f_reg <= ps_pl_value[ 0:0];
+        `PSPL_LSD_WRITE_PROTECT_R: lsd_write_protect_r_reg <= ps_pl_value[ 0:0];
         // Top View to Kalman's Filter
         `PSPL_TOPVIEW_LINE_ADDR_F: topview_line_addr_f_reg <= ps_pl_value;
         `PSPL_TOPVIEW_LINE_ADDR_R: topview_line_addr_r_reg <= ps_pl_value;

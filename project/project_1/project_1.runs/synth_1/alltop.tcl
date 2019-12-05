@@ -28,44 +28,56 @@ set_property parent.project_path /home/users/matsuda/project/Autonomous_Vehicle_
 set_property XPM_LIBRARIES {XPM_CDC XPM_MEMORY} [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
-set_property ip_repo_paths /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/ip_repo/pspl_comm_1.0 [current_project]
+set_property ip_repo_paths /home/users/matsuda/project/pspl_ip/ip_repo/pspl_comm_1.0 [current_project]
 update_ip_catalog
 set_property ip_output_repo /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 read_verilog -library xil_defaultlib -sv {
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/apamod.sv
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v3/cam_top.sv
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/cam_top.sv
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/debouncer_with_synchronizer.sv
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/dpram_mclk.sv
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/hoge.sv
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/lsd_output_buffer_wp.sv
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/pwm14.sv
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v3/sccb_if.sv
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/sccb_if.sv
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/testset.sv
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/topview/topview2.sv
 }
 read_verilog -library xil_defaultlib {
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/arctan_calc.v
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v3/camera_if.v
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/clock_gen.v
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/camera_if.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/coord_adjuster.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/delay.v
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/divider_iter.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/fbmod_v1.1.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/fifo_dc.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/gaussian.v
-  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/lsd_output_buffer.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/pbsbf4_Top.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/motor/pbsbf4_renew.v
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/hdl/pspl_comm_wrapper.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/ram_dc.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/ram_sc.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/rgb2ycbcr_noreal.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/simple_lsd.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/stream_patch.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/common/tree_adder.v
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/lsd/visualizer.v
   /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/alltop.v
 }
+read_vhdl -library xil_defaultlib {
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/ClockGen.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/DVI_Constants.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/OutputSERDES.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/SyncAsync.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/SyncAsyncReset.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/TMDS_Encoder.vhd
+  /home/users/matsuda/project/Autonomous_Vehicle_Driving/src/hdl/camera/pynq_ov7670_v4/rgb2dvi/rgb2dvi.vhd
+}
 add_files /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/pspl_comm.bd
-set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/pspl_comm_processing_system7_0_1.xdc]
-set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0_board.xdc]
-set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0.xdc]
-set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/pspl_comm_rst_ps7_0_50M_0_ooc.xdc]
+set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1/pspl_comm_processing_system7_0_0.xdc]
+set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_100M_1/pspl_comm_rst_ps7_0_100M_1_board.xdc]
+set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_100M_1/pspl_comm_rst_ps7_0_100M_1.xdc]
+set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_rst_ps7_0_100M_1/pspl_comm_rst_ps7_0_100M_1_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_auto_pc_0_1/pspl_comm_auto_pc_0_ooc.xdc]
 set_property used_in_implementation false [get_files -all /home/users/matsuda/project/Autonomous_Vehicle_Driving/project/project_1/project_1.srcs/sources_1/bd/pspl_comm/pspl_comm_ooc.xdc]
 

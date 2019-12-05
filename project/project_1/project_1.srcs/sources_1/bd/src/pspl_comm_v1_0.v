@@ -39,6 +39,8 @@ module pspl_comm_v1_0
     input wire [31:0]                           lsd_line_end_h_r,
     output wire [31:0]                          lsd_line_addr_f, 
     output wire [31:0]                          lsd_line_addr_r, 
+    output wire                                 lsd_write_protect_f,
+    output wire                                 lsd_write_protect_r,
 
     // Top View to Kalman Filter (prefix: 0x0003)
     input wire                                  topview_ready_f, 
@@ -123,6 +125,9 @@ module pspl_comm_v1_0
       .lsd_line_end_h_r(lsd_line_end_h_r),   
       .lsd_line_addr_f(lsd_line_addr_f),
       .lsd_line_addr_r(lsd_line_addr_r),
+      .lsd_write_protect_f(lsd_write_protect_f),
+      .lsd_write_protect_r(lsd_write_protect_r),
+
       // Top View to Kalman Filter
       .topview_ready_f(topview_ready_f),
       .topview_ready_r(topview_ready_r),

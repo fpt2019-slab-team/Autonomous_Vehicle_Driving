@@ -159,10 +159,12 @@ proc create_root_design { parentCell } {
   set FIXED_IO [ create_bd_intf_port -mode Master -vlnv xilinx.com:display_processing_system7:fixedio_rtl:1.0 FIXED_IO ]
 
   # Create ports
-  set axi_aclk [ create_bd_port -dir O -type clk axi_aclk ]
+  set FCLK_CLK0 [ create_bd_port -dir O -type clk FCLK_CLK0 ]
   set kl_accel [ create_bd_port -dir O -from 6 -to 0 kl_accel ]
   set kl_steer [ create_bd_port -dir O -from 7 -to 0 kl_steer ]
   set led [ create_bd_port -dir O -from 3 -to 0 led ]
+  set lsd_grad_thres_f [ create_bd_port -dir O -from 16 -to 0 lsd_grad_thres_f ]
+  set lsd_grad_thres_r [ create_bd_port -dir O -from 16 -to 0 lsd_grad_thres_r ]
   set lsd_line_addr_f [ create_bd_port -dir O -from 31 -to 0 lsd_line_addr_f ]
   set lsd_line_addr_r [ create_bd_port -dir O -from 31 -to 0 lsd_line_addr_r ]
   set lsd_line_end_h_f [ create_bd_port -dir I -from 31 -to 0 lsd_line_end_h_f ]
@@ -177,6 +179,8 @@ proc create_root_design { parentCell } {
   set lsd_line_start_v_r [ create_bd_port -dir I -from 31 -to 0 lsd_line_start_v_r ]
   set lsd_ready_f [ create_bd_port -dir I lsd_ready_f ]
   set lsd_ready_r [ create_bd_port -dir I lsd_ready_r ]
+  set lsd_write_protect_f [ create_bd_port -dir O lsd_write_protect_f ]
+  set lsd_write_protect_r [ create_bd_port -dir O lsd_write_protect_r ]
   set motor_speed_l [ create_bd_port -dir I -from 15 -to 0 motor_speed_l ]
   set motor_speed_r [ create_bd_port -dir I -from 15 -to 0 motor_speed_r ]
   set sccb_busy [ create_bd_port -dir I sccb_busy ]
@@ -199,14 +203,77 @@ proc create_root_design { parentCell } {
   set topview_line_valid_r [ create_bd_port -dir I topview_line_valid_r ]
   set topview_ready_f [ create_bd_port -dir I topview_ready_f ]
   set topview_ready_r [ create_bd_port -dir I topview_ready_r ]
+  set topview_write_protect_f [ create_bd_port -dir O topview_write_protect_f ]
+  set topview_write_protect_r [ create_bd_port -dir O topview_write_protect_r ]
 
   # Create instance: processing_system7_0, and set properties
   set processing_system7_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:processing_system7:5.5 processing_system7_0 ]
   set_property -dict [ list \
+   CONFIG.PCW_ACT_APU_PERIPHERAL_FREQMHZ {666.666687} \
+   CONFIG.PCW_ACT_CAN_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_DCI_PERIPHERAL_FREQMHZ {10.158730} \
+   CONFIG.PCW_ACT_ENET0_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_ENET1_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ {100.000000} \
+   CONFIG.PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_FPGA2_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_PCAP_PERIPHERAL_FREQMHZ {200.000000} \
+   CONFIG.PCW_ACT_QSPI_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_SDIO_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_SMC_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_SPI_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_TPIU_PERIPHERAL_FREQMHZ {200.000000} \
+   CONFIG.PCW_ACT_TTC0_CLK0_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_TTC0_CLK1_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_TTC0_CLK2_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_TTC1_CLK0_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_TTC1_CLK1_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_TTC1_CLK2_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ACT_UART_PERIPHERAL_FREQMHZ {10.000000} \
+   CONFIG.PCW_ACT_WDT_PERIPHERAL_FREQMHZ {111.111115} \
+   CONFIG.PCW_ARMPLL_CTRL_FBDIV {40} \
+   CONFIG.PCW_CAN_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_CAN_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_CLK0_FREQ {100000000} \
+   CONFIG.PCW_CLK1_FREQ {10000000} \
+   CONFIG.PCW_CLK2_FREQ {10000000} \
+   CONFIG.PCW_CLK3_FREQ {10000000} \
+   CONFIG.PCW_CPU_CPU_PLL_FREQMHZ {1333.333} \
+   CONFIG.PCW_CPU_PERIPHERAL_DIVISOR0 {2} \
+   CONFIG.PCW_DCI_PERIPHERAL_DIVISOR0 {15} \
+   CONFIG.PCW_DCI_PERIPHERAL_DIVISOR1 {7} \
+   CONFIG.PCW_DDRPLL_CTRL_FBDIV {32} \
+   CONFIG.PCW_DDR_DDR_PLL_FREQMHZ {1066.667} \
+   CONFIG.PCW_DDR_PERIPHERAL_DIVISOR0 {2} \
+   CONFIG.PCW_ENET0_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_ENET0_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_ENET1_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_ENET1_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR0 {4} \
+   CONFIG.PCW_FCLK0_PERIPHERAL_DIVISOR1 {4} \
+   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_FCLK1_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_FCLK2_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_FCLK3_PERIPHERAL_DIVISOR1 {1} \
+   CONFIG.PCW_FPGA0_PERIPHERAL_FREQMHZ {100} \
    CONFIG.PCW_FPGA_FCLK0_ENABLE {1} \
    CONFIG.PCW_FPGA_FCLK1_ENABLE {0} \
    CONFIG.PCW_FPGA_FCLK2_ENABLE {0} \
    CONFIG.PCW_FPGA_FCLK3_ENABLE {0} \
+   CONFIG.PCW_I2C_PERIPHERAL_FREQMHZ {25} \
+   CONFIG.PCW_IOPLL_CTRL_FBDIV {48} \
+   CONFIG.PCW_IO_IO_PLL_FREQMHZ {1600.000} \
+   CONFIG.PCW_PCAP_PERIPHERAL_DIVISOR0 {8} \
+   CONFIG.PCW_QSPI_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_SDIO_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_SMC_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_SPI_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_TPIU_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_UART_PERIPHERAL_DIVISOR0 {1} \
+   CONFIG.PCW_UIPARAM_ACT_DDR_FREQ_MHZ {533.333374} \
  ] $processing_system7_0
 
   # Create instance: ps7_0_axi_periph, and set properties
@@ -218,8 +285,8 @@ proc create_root_design { parentCell } {
   # Create instance: pspl_comm_0, and set properties
   set pspl_comm_0 [ create_bd_cell -type ip -vlnv pcalab:user:pspl_comm:1.0 pspl_comm_0 ]
 
-  # Create instance: rst_ps7_0_50M, and set properties
-  set rst_ps7_0_50M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_ps7_0_50M ]
+  # Create instance: rst_ps7_0_100M, and set properties
+  set rst_ps7_0_100M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_ps7_0_100M ]
 
   # Create interface connections
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
@@ -242,18 +309,24 @@ proc create_root_design { parentCell } {
   connect_bd_net -net lsd_ready_r_0_1 [get_bd_ports lsd_ready_r] [get_bd_pins pspl_comm_0/lsd_ready_r]
   connect_bd_net -net motor_speed_l_0_1 [get_bd_ports motor_speed_l] [get_bd_pins pspl_comm_0/motor_speed_l]
   connect_bd_net -net motor_speed_r_0_1 [get_bd_ports motor_speed_r] [get_bd_pins pspl_comm_0/motor_speed_r]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports axi_aclk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins pspl_comm_0/s00_axi_aclk] [get_bd_pins rst_ps7_0_50M/slowest_sync_clk]
-  connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_50M/ext_reset_in]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports FCLK_CLK0] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins pspl_comm_0/s00_axi_aclk] [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+  connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins processing_system7_0/FCLK_RESET0_N] [get_bd_pins rst_ps7_0_100M/ext_reset_in]
   connect_bd_net -net pspl_comm_0_kl_accel [get_bd_ports kl_accel] [get_bd_pins pspl_comm_0/kl_accel]
   connect_bd_net -net pspl_comm_0_kl_steer [get_bd_ports kl_steer] [get_bd_pins pspl_comm_0/kl_steer]
   connect_bd_net -net pspl_comm_0_led [get_bd_ports led] [get_bd_pins pspl_comm_0/led]
+  connect_bd_net -net pspl_comm_0_lsd_grad_thres_f [get_bd_ports lsd_grad_thres_f] [get_bd_pins pspl_comm_0/lsd_grad_thres_f]
+  connect_bd_net -net pspl_comm_0_lsd_grad_thres_r [get_bd_ports lsd_grad_thres_r] [get_bd_pins pspl_comm_0/lsd_grad_thres_r]
   connect_bd_net -net pspl_comm_0_lsd_line_addr_f [get_bd_ports lsd_line_addr_f] [get_bd_pins pspl_comm_0/lsd_line_addr_f]
   connect_bd_net -net pspl_comm_0_lsd_line_addr_r [get_bd_ports lsd_line_addr_r] [get_bd_pins pspl_comm_0/lsd_line_addr_r]
+  connect_bd_net -net pspl_comm_0_lsd_write_protect_f [get_bd_ports lsd_write_protect_f] [get_bd_pins pspl_comm_0/lsd_write_protect_f]
+  connect_bd_net -net pspl_comm_0_lsd_write_protect_r [get_bd_ports lsd_write_protect_r] [get_bd_pins pspl_comm_0/lsd_write_protect_r]
   connect_bd_net -net pspl_comm_0_sccb_req [get_bd_ports sccb_req] [get_bd_pins pspl_comm_0/sccb_req]
   connect_bd_net -net pspl_comm_0_sccb_send_data [get_bd_ports sccb_send_data] [get_bd_pins pspl_comm_0/sccb_send_data]
   connect_bd_net -net pspl_comm_0_topview_line_addr_f [get_bd_ports topview_line_addr_f] [get_bd_pins pspl_comm_0/topview_line_addr_f]
   connect_bd_net -net pspl_comm_0_topview_line_addr_r [get_bd_ports topview_line_addr_r] [get_bd_pins pspl_comm_0/topview_line_addr_r]
-  connect_bd_net -net rst_ps7_0_50M_peripheral_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins pspl_comm_0/s00_axi_aresetn] [get_bd_pins rst_ps7_0_50M/peripheral_aresetn]
+  connect_bd_net -net pspl_comm_0_topview_write_protect_f [get_bd_ports topview_write_protect_f] [get_bd_pins pspl_comm_0/topview_write_protect_f]
+  connect_bd_net -net pspl_comm_0_topview_write_protect_r [get_bd_ports topview_write_protect_r] [get_bd_pins pspl_comm_0/topview_write_protect_r]
+  connect_bd_net -net rst_ps7_0_100M_peripheral_aresetn [get_bd_pins ps7_0_axi_periph/ARESETN] [get_bd_pins ps7_0_axi_periph/M00_ARESETN] [get_bd_pins ps7_0_axi_periph/S00_ARESETN] [get_bd_pins pspl_comm_0/s00_axi_aresetn] [get_bd_pins rst_ps7_0_100M/peripheral_aresetn]
   connect_bd_net -net sccb_busy_0_1 [get_bd_ports sccb_busy] [get_bd_pins pspl_comm_0/sccb_busy]
   connect_bd_net -net sw_0_1 [get_bd_ports sw] [get_bd_pins pspl_comm_0/sw]
   connect_bd_net -net topview_line_end_h_f_0_1 [get_bd_ports topview_line_end_h_f] [get_bd_pins pspl_comm_0/topview_line_end_h_f]

@@ -40,29 +40,30 @@ vlog -work xilinx_vip -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_
 "/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/hdl/clk_vip_if.sv" \
 "/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/hdl/rst_vip_if.sv" \
 
-vlog -work xil_defaultlib -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work xil_defaultlib -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
 "/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
 vcom -work xpm -64 -93 \
 "/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/ip/xpm/xpm_VCOMP.vhd" \
 
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/pspl_comm/project_1/project_1.srcs/sources_1/bd/src/pspl_comm_v1_0_S00_AXI.v" \
-"../../../bd/pspl_comm/project_1/project_1.srcs/sources_1/bd/src/pspl_comm_v1_0.v" \
-"../../../bd/pspl_comm/ip/pspl_comm_pspl_comm_0_0_1/sim/pspl_comm_pspl_comm_0_0.v" \
+vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+"../../../bd/pspl_comm/sim/pspl_comm.v" \
 
-vlog -work axi_infrastructure_v1_1_0 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work axi_infrastructure_v1_1_0 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl/axi_infrastructure_v1_1_vl_rfs.v" \
 
-vlog -work axi_vip_v1_1_4 -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work axi_vip_v1_1_4 -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/98af/hdl/axi_vip_v1_1_vl_rfs.sv" \
 
-vlog -work processing_system7_vip_v1_0_6 -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work processing_system7_vip_v1_0_6 -64 -incr -sv -L axi_vip_v1_1_4 -L processing_system7_vip_v1_0_6 -L xilinx_vip "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl/processing_system7_vip_v1_0_vl_rfs.sv" \
 
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/pspl_comm/ip/pspl_comm_processing_system7_0_1/sim/pspl_comm_processing_system7_0_1.v" \
+vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+"../../../bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1/sim/pspl_comm_processing_system7_0_0.v" \
+"../../../bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0_S00_AXI.v" \
+"../../../bd/pspl_comm/ipshared/af27/hdl/pspl_comm_v1_0.v" \
+"../../../bd/pspl_comm/ip/pspl_comm_pspl_comm_0_5/sim/pspl_comm_pspl_comm_0_5.v" \
 
 vcom -work lib_cdc_v1_0_2 -64 -93 \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ef1e/hdl/lib_cdc_v1_0_rfs.vhd" \
@@ -71,33 +72,30 @@ vcom -work proc_sys_reset_v5_0_13 -64 -93 \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/8842/hdl/proc_sys_reset_v5_0_vh_rfs.vhd" \
 
 vcom -work xil_defaultlib -64 -93 \
-"../../../bd/pspl_comm/ip/pspl_comm_rst_ps7_0_50M_0_1/sim/pspl_comm_rst_ps7_0_50M_0.vhd" \
+"../../../bd/pspl_comm/ip/pspl_comm_rst_ps7_0_100M_1/sim/pspl_comm_rst_ps7_0_100M_1.vhd" \
 
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
-"../../../bd/pspl_comm/sim/pspl_comm.v" \
-
-vlog -work generic_baseblocks_v2_1_0 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work generic_baseblocks_v2_1_0 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/b752/hdl/generic_baseblocks_v2_1_vl_rfs.v" \
 
-vlog -work fifo_generator_v13_2_3 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work fifo_generator_v13_2_3 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/64f4/simulation/fifo_generator_vlog_beh.v" \
 
 vcom -work fifo_generator_v13_2_3 -64 -93 \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/64f4/hdl/fifo_generator_v13_2_rfs.vhd" \
 
-vlog -work fifo_generator_v13_2_3 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work fifo_generator_v13_2_3 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/64f4/hdl/fifo_generator_v13_2_rfs.v" \
 
-vlog -work axi_data_fifo_v2_1_17 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work axi_data_fifo_v2_1_17 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/c4fd/hdl/axi_data_fifo_v2_1_vl_rfs.v" \
 
-vlog -work axi_register_slice_v2_1_18 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work axi_register_slice_v2_1_18 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/cc23/hdl/axi_register_slice_v2_1_vl_rfs.v" \
 
-vlog -work axi_protocol_converter_v2_1_18 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work axi_protocol_converter_v2_1_18 -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/7a04/hdl/axi_protocol_converter_v2_1_vl_rfs.v" \
 
-vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
+vlog -work xil_defaultlib -64 -incr "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/ec67/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ipshared/70cf/hdl" "+incdir+../../../../project_1.srcs/sources_1/bd/pspl_comm/ip/pspl_comm_processing_system7_0_0_1" "+incdir+/home/cad/xilinx-vivado-2018.3/Vivado/2018.3/data/xilinx_vip/include" \
 "../../../bd/pspl_comm/ip/pspl_comm_auto_pc_0_1/sim/pspl_comm_auto_pc_0.v" \
 
 vlog -work xil_defaultlib \
