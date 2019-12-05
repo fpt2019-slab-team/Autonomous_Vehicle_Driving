@@ -295,8 +295,8 @@ class Driver:
 	def __calibration(self, VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT):
 		self.__pspl_comm.begin()
 		uth = 0
-		topview_front_lines = self.__pspl_comm.get_front_topview_lines(
-			VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT)
+		TV_VS = self.get_tv_vs(EYE_Y, BIRD, CONTEXT)
+		topview_front_lines = self.__pspl_comm.get_all_lines(VEHICLE_FRONT_CAMERA_DY, TOPVIEW_POS, CAMERAVIEW_CONTEXT, TV_VS)
 		self.__pspl_comm.end()
 		print("calibration finished.")
 		exit()
@@ -644,6 +644,7 @@ class Driver:
 		previos_time = time.time()
 
 		p = self.__fixed_param['kalman_p']
+		TV_VS = self.get_tv_vs(EYE_Y, BIRD, CONTEXT)
 
 		# driving {
 		while True:
@@ -660,13 +661,7 @@ class Driver:
 			#lsd_rear_lines      = self.__pspl_comm.get_rear_lsd_lines()
 			#topview_front_lines = self.__pspl_comm.get_front_topview_lines(EYE_Y, BIRD, CONTEXT)
 			#topview_rear_lines  = self.__pspl_comm.get_rear_topview_lines(EYE_Y, BIRD, CONTEXT)
-			TV_VS = self.get_tv_vs(EYE_Y, BIRD, CONTEXT)
-			lsd_front_lines, \
-			lsd_rear_lines, \
-			topview_front_lines, \
-			topview_rear_lines, \
-			topview_front_lines_filtered = \
-				self.__pspl_comm.get_all_lines(EYE_Y, BIRD, CONTEXT, TV_VS)
+			lsd_front_lines, lsd_rear_lines, topview_front_lines_filtered = self.__pspl_comm.get_all_lines(EYE_Y, BIRD, CONTEXT, TV_VS)
 			feedback            = self.__pspl_comm.get_motors_speed()
 
 			xhat, p  = self.navi(xhat, p, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
@@ -681,7 +676,7 @@ class Driver:
 	#}
 
 	def drive(self):
-		if self.is_multiproc:
+		if False:#self.is_multiproc:
 			self.drive_wmp()
 		else:
 			self.drive_womp()

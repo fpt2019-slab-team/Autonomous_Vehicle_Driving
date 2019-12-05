@@ -174,6 +174,32 @@ class pspl_comm:
         self.__so.send_lsd_write_protect(0, 0)
         return np.array(lines)
 
+    # Get front topview lines filterd
+    # OUT: topview_line_ndarray shape(N, 4)
+    # [ line0[start_v, start_h, end_v, end_h],
+    #   line1[...], 
+    #   ... ,
+    #   lineN[...]
+    # ]
+    def get_front_topview_lines_filtered(self, EYE_Y, BIRD, CONTEXT, TV_VS):
+        self.__so.send_lsd_write_protect(0, 1)
+        while self.__so.get_lsd_ready(0) != 1: pass
+        line_num = self.__so.get_lsd_line_num(0)
+        lines = []
+        for i in range(line_num):
+            uv_line = np.array([
+                                self.__so.get_lsd_line_start_h(0, i),
+                                self.__so.get_lsd_line_start_v(0, i),
+                                self.__so.get_lsd_line_end_h(0, i),
+                                self.__so.get_lsd_line_end_v(0, i)
+                               ]).reshape(2,2)
+            tv = fixed.uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
+            tvf = filter_uv_line(tv, CONTEXT, UV_VS=TV_VS)
+            if not tvf is None:
+                lines.append([*tvf.reshape(4), 1])
+        self.__so.send_lsd_write_protect(0, 0)
+        return np.array(lines)
+
     # Get rear topview lines as ndarray for kalman (plane) 
     # OUT: topview_line_ndarray shape(N, 4)
     # [ line0[start_v, start_h, end_v, end_h],
@@ -201,45 +227,54 @@ class pspl_comm:
         return np.array(lines)
 
     # Get front/rear lsd and topview lines as ndarray
-    # OUT: lsd_line_ndarray shape (N, 4), (N, 4), (N, 4), (N, 4), (N, 4)
+    # OUT: lsd_line_ndarray shape (N, 4), (N, 4), (N, 4)
     # [ line0[start_v, start_h, end_v, end_h],
     #   line1[...], 
     #   ... ,
     #   lineN[...]
     # ]
     def get_all_lines(self, EYE_Y, BIRD, CONTEXT, TV_VS):
+
+        uv_lines_f = []
+        uv_lines_r = []
+        tv_lines_f = []
+
+        # front {
         self.__so.send_lsd_write_protect(0, 1)
         while self.__so.get_lsd_ready(0) != 1: pass
-        tvs_f = []
-        tvs_r = []
-        tvfs = []
-
-        lsd_lines_f = np.zeros((self.__so.get_lsd_line_num(0), 4))
-        for i, uv_line in enumerate(lsd_lines_f):
-            uv_line[0] = self.__so.get_lsd_line_start_h(0, i)
-            uv_line[1] = self.__so.get_lsd_line_start_v(0, i)
-            uv_line[2] = self.__so.get_lsd_line_end_h(0, i)
-            uv_line[3] = self.__so.get_lsd_line_end_v(0, i)
-            tv         = uv_line2tv_fixed(uv_line.reshape(2,2), EYE_Y, BIRD, CONTEXT)
-            tvf        = filter_uv_line(tv, CONTEXT, UV_VS=TV_VS)
-            tvs_f.append(tv.flatten())
+        line_num = self.__so.get_lsd_line_num(0)
+        for i in range(line_num):
+            uv_line = np.array([
+                                self.__so.get_lsd_line_start_h(0, i),
+                                self.__so.get_lsd_line_start_v(0, i),
+                                self.__so.get_lsd_line_end_h(0, i),
+                                self.__so.get_lsd_line_end_v(0, i)
+                               ]).reshape(2,2)
+            uv_lines_f.append(uv_lines)
+            tv  = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
+            tvf = filter_uv_line(tv, CONTEXT, UV_VS=TV_VS) if not tv is None else None
             if not tvf is None:
-                tvfs.append(tvf.flatten())
-        tv_lines_f = np.array(tvs_f)
-        tvf_lines_f = np.array(tvfs)
-
-        lsd_lines_r = np.zeros((self.__so.get_lsd_line_num(1), 4))
-        for i, uv_line in enumerate(lsd_lines_r):
-            uv_line[0] = self.__so.get_lsd_line_start_h(1, i)
-            uv_line[1] = self.__so.get_lsd_line_start_v(1, i)
-            uv_line[2] = self.__so.get_lsd_line_end_h(1, i)
-            uv_line[3] = self.__so.get_lsd_line_end_v(1, i)
-            tv         = uv_line2tv_fixed(uv_line, EYE_Y, BIRD, CONTEXT)
-            tvs_r.append(tv.flatten())
-        tv_lines_r = np.array(tvs_r.flatten())
-
+                tv_lines_f.append(tvf.flatten())
         self.__so.send_lsd_write_protect(0, 0)
-        return lsd_lines_f, lsd_lines_f, tv_lines_f, tv_lines_r, tvf_lines_f
+        # front {
+
+        # rear {
+        self.__so.send_lsd_write_protect(1, 1)
+        while self.__so.get_lsd_ready(1) != 1: pass
+        line_num = self.__so.get_lsd_line_num(1)
+        for i in range(line_num):
+            uv_line = np.array([
+                                self.__so.get_lsd_line_start_h(1, i),
+                                self.__so.get_lsd_line_start_v(1, i),
+                                self.__so.get_lsd_line_end_h(1, i),
+                                self.__so.get_lsd_line_end_v(1, i)
+                               ]).reshape(2,2)
+            uv_lines_r.append(uv_lines)
+
+        self.__so.send_lsd_write_protect(1, 0)
+        # rear {
+
+        return np.array(uv_lines_f), np.array(uv_lines_r), np.array(tv_lines_f)
 
     # } ########################################################################
 
