@@ -75,12 +75,12 @@ class Driver:
 		# }
 
 		# keep left {
-		XRNG_SPTH        = 0,             # START PIXEL OF VALID XRANGE [px]
-		XRNG_EPTH        = 640,           # END   PIXEL OF VALID XRANGE [px] (0-640px)
-		ZRNG_SPTH        = 0,             # START PIXEL OF VALID YRANGE [px]
-		ZRNG_EPTH        = 480,           # END   PIXEL OF VALID YRANGE [px] (0-480px)
-		LLEN_PTH         = 0,             # LENGTH      OF VALID LINE   [px]
-		ANG_LTL          = np.pi * 60/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
+		URNG_SPTH        = 0,              # START PIXEL OF VALID URANGE [px]
+		URNG_EPTH        = 640,            # END   PIXEL OF VALID URANGE [px] (0-640px)
+		VRNG_SPTH        = 0,              # START PIXEL OF VALID ZRANGE [px]
+		VRNG_EPTH        = 480,            # END   PIXEL OF VALID ZRANGE [px] (0-480px)
+		LLEN_PTH         = 0,              # LENGTH      OF VALID LINE   [px]
+		ANG_LTL          = np.pi * 45/180, # LOOSE TOLERANCE OF EQAUL ANGLE  [radian]
 		ANG_TTL          = np.pi * 5/180,  # TIGHT TOLERANCE OF EQAUL ANGLE  [radian]
 		PLD_PTL          = (500 ** 2) * 3, # TOLERANCE OF PAIR LINE DISTANCE [px] (500)
 		# }
@@ -97,7 +97,7 @@ class Driver:
 		STDDEV_X        = 1.0,
 		STDDEV_Z        = 1.0,
 		STDDEV_YAW      = 0.0,
-		REF_LINES_PATH  = 'map.npy',
+		REF_LINES_PATH  = 'map.3500x4900.npy',
 		ROLLPITCH       = np.array([[1,0,0],
 																[0,1,0],
 																[0,0,1]]),
@@ -106,29 +106,35 @@ class Driver:
 		THRESHOLD_DIS   = 5,
 		PRM_ERR_CAM1    = 15,
 		PRM_ERR_CAM2    = 15,
+		REF_LINES_XZ    = np.load(REF_LINES_PATH)
 		# }
 
-		# camera {
+		# topview {
 		HEIGHT          = 480, # [px]
 		WIDTH           = 640, # [px]
-		THETA_W         = 35 / 180 * math.pi,
-		F               = 1,
-		BIRD            = np.array([0, 2000, 2000])
+		THETA_W         = 35 / 180 * math.pi
 		):
 
-		SCALE           = WIDTH / 2 / math.tan(THETA_W / 2) / F # px / l
+		THETA_H         = THETA_W * (3 / 4)
+		F               = (WIDTH / 2) / math.tan(THETA_W / 2)
+		SCALE           = 1
+
+		K               = 3
 		EYE_Y           = CAMERA_DY
+		BIRD_Z          = EYE_Y / math.tan(THETA_H / 2) + (K * HEIGHT / 2)
+		BIRD_Y          = (K * HEIGHT / 2) / math.tan(THETA_H / 2)
+		BIRD            = np.array([0, BIRD_Y, BIRD_Z])
+
 		CONTEXT = {
 			'F'     : F     ,
 			'WIDTH' : WIDTH ,
 			'HEIGHT': HEIGHT,
 			'SCALE' : SCALE ,
 			}
-
-		ROUTE      = self.__init_route(ROUTE_PATH)
-		REF_LINES_XZ    = np.load(REF_LINES_PATH)
 		# }
 
+		# route
+		ROUTE = self.__init_route(ROUTE_PATH)
 		self.__fixed_param = {
 			'tile_len': TILE_LEN,
 			'radius'  : RADIUS,
@@ -541,9 +547,9 @@ class Driver:
 				'trigger_time'  : trigger_time,
 				})
 
+		print("ready...", end=' ')
 		while self.__pspl_comm.get_sw1() != 1: pass
-
-		print("start driving")
+		print("Go!")
 
 		process_ctrl.start()
 		process_navi.start()
@@ -563,9 +569,9 @@ class Driver:
 		xhat = self.INIT_XHAT.copy()
 		trigger_time = Manager().Value('f', -1)
 
+		print("ready...", end=' ')
 		while self.__pspl_comm.get_sw1() != 1: pass
-
-		print("start driving")
+		print("Go!")
 
 		route_id = [0] # for by reference
 		previos_time = time.time()

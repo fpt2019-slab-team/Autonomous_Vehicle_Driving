@@ -2,9 +2,20 @@ import numpy as np
 import math
 
 """
+image axis
+ O------------> U [0,640]
+ |
+ |
+ |
+ |
+ |
+ |
+ V
+[0,480]
+
+vehicle axis
                 Z
               0 ^
-                |
                 |
                 |
                 |
@@ -22,10 +33,10 @@ class KeepLeft():
 		# Thresholds {
 		WIDTH     = 640,          # IMAGE WIDTH                 [px]
 		HEIGHT    = 480,          # IMAGE HEIGHT                [px]
-		XRNG_SPTH = 0,            # START PIXEL OF VALID XRANGE [px]
-		XRNG_EPTH = 640,          # END   PIXEL OF VALID XRANGE [px] (0-640px)
-		ZRNG_SPTH = 0,            # START PIXEL OF VALID YRANGE [px]
-		ZRNG_EPTH = 480,          # END   PIXEL OF VALID YRANGE [px] (0-480px)
+		URNG_SPTH = 0,            # START PIXEL OF VALID URANGE [px]
+		URNG_EPTH = 640,          # END   PIXEL OF VALID URANGE [px] (0-640px)
+		VRNG_SPTH = 0,            # START PIXEL OF VALID VRANGE [px]
+		VRNG_EPTH = 480,          # END   PIXEL OF VALID VRANGE [px] (0-480px)
 		LLEN_PTH  = 10000000,     # LENGTH      OF VALID LINE   [px]
 		# }
 
@@ -40,10 +51,10 @@ class KeepLeft():
 		self.__fixed_param = {
 			'WIDTH':     WIDTH,
 			'HEIGHT':    HEIGHT,
-			'XRNG_SPTH': XRNG_SPTH,
-			'XRNG_EPTH': XRNG_EPTH,
-			'ZRNG_SPTH': ZRNG_SPTH,
-			'ZRNG_EPTH': ZRNG_EPTH,
+			'URNG_SPTH': URNG_SPTH,
+			'URNG_EPTH': URNG_EPTH,
+			'VRNG_SPTH': VRNG_SPTH,
+			'VRNG_EPTH': VRNG_EPTH,
 			'LLEN_PTH':  LLEN_PTH,
 			'ANG_LTL':   ANG_LTL,
 			'ANG_TTL':   ANG_TTL,
@@ -74,39 +85,39 @@ class KeepLeft():
 	# topview lines to in/out lines {
 	# in:  topview lines (numpy (N, 5))
 	# out: inlines, outlines (numpy (I, 3, 2), (O, 3, 2))
-	# output matrix [[sx, sz], [ex, ez], [length, angle], ...]
+	# output matrix [[su, sv], [eu, ev], [length, angle], ...]
 	def tvlines2iolines(self, tv_lines):
 		WIDTH     = self.__fixed_param['WIDTH']
 		HEIGHT    = self.__fixed_param['HEIGHT']
-		XRNG_SPTH = self.__fixed_param['XRNG_SPTH']
-		XRNG_EPTH = self.__fixed_param['XRNG_EPTH']
-		ZRNG_SPTH = self.__fixed_param['ZRNG_SPTH']
-		ZRNG_EPTH = self.__fixed_param['ZRNG_EPTH']
+		URNG_SPTH = self.__fixed_param['URNG_SPTH']
+		URNG_EPTH = self.__fixed_param['URNG_EPTH']
+		VRNG_SPTH = self.__fixed_param['VRNG_SPTH']
+		VRNG_EPTH = self.__fixed_param['VRNG_EPTH']
 		LLEN_PTH  = self.__fixed_param['LLEN_PTH']
 		ANG_TTL   = self.__fixed_param['ANG_TTL']
 
 		ilines = []
 		olines = []
 		for tv in tv_lines:
-			x1, x2 = WIDTH-tv[0], WIDTH-tv[2]
-			if XRNG_SPTH < x1 < XRNG_EPTH and XRNG_SPTH < x2 < XRNG_EPTH: # xrange threshold
+			u1, u2 = WIDTH-tv[0], WIDTH-tv[2]
+			if URNG_SPTH < u1 < URNG_EPTH and URNG_SPTH < u2 < URNG_EPTH: # urange threshold
 				continue
-			z1, z2 = HEIGHT-tv[1], HEIGHT-tv[3]
-			if ZRNG_SPTH < z1 < ZRNG_EPTH and ZRNG_SPTH < z2 < ZRNG_EPTH: # zrange threshold
+			v1, v2 = HEIGHT-tv[1], HEIGHT-tv[3]
+			if VRNG_SPTH < v1 < VRNG_EPTH and VRNG_SPTH < v2 < VRNG_EPTH: # vrange threshold
 				continue
 		
-			length = (x1-x2)**2 + (z1-z2)**2
+			length = (u1-u2)**2 + (v1-v2)**2
 			if (length < LLEN_PTH): # line length threshold [px]
 				continue
 		
-			angle = math.atan2(z2-z1, x2-x1)
+			angle = math.atan2(v2-v1, u2-u1)
 
 			# classify angle as up(b|w)->out or dn(w|b)->in
 			# angle threshold
 			if ANG_TTL < angle < np.pi-ANG_TTL:
-				olines.append([[x1, z1], [x2, z2], [length, angle]])
+				olines.append([[u1, v1], [u2, v2], [length, angle]])
 			elif -np.pi+ANG_TTL < angle < -ANG_TTL:
-				ilines.append([[x1, z1], [x2, z2], [length, angle]])
+				ilines.append([[u1, v1], [u2, v2], [length, angle]])
 		
 		return np.array(ilines), np.array(olines)
 	# } tvlines2iolines
