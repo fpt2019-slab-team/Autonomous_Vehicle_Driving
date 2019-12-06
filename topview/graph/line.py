@@ -530,10 +530,10 @@ def eye_r2eye_r_b(eye, r, BIRD):
 # BIRD:          np.array([X, Y, Z])
 # CONTEXT:
 # ret: uv_lines: np.shape == (N - *, 2, 2)
-def bird_view_fixed(uv_lines, eye, BIRD, CONTEXT):
-    theta = np.array([0, 0, 0])
-    r = theta2r(theta)
-    return bird_view(uv_lines, eye, r, BIRD, CONTEXT)
+#def bird_view_fixed(uv_lines, eye, BIRD, CONTEXT):
+#    theta = np.array([0, 0, 0])
+#    r = theta2r(theta)
+#    return bird_view(uv_lines, eye, r, BIRD, CONTEXT)
 
 ################################################################################
 # WIDTH:    int
@@ -780,7 +780,6 @@ def filter_uv_lines_pretv_fixed(uv_lines, CONTEXT):
     uv_lines_filtered = np.array(uv_lines_filtered)
     return uv_lines_filtered
 
-
 def get_wm_vs_infinity(eye, r, CONTEXT, length):
     uv_vs = get_UV_VS(CONTEXT)
     uv_vs[2][1] = uv_vs[0][1] / 4 * 3
@@ -812,4 +811,10 @@ def wm_lines2uv_lines_fixed(wm_lines, eye, r, CONTEXT):
     uv_lines = np.array(uv_lines)
     return uv_lines
 # fixed } ######################################################################
+
+def wm_line2cm_line(wm_line, eye, r):
+    return np.array([w2c(wm, eye, r) for wm in wm_line])
+
+def wm_lines2cm_lines(wm_lines, eye, r):
+    return np.array([wm_line2cm_line(wm_line, eye, r) for wm_line in wm_lines])
 

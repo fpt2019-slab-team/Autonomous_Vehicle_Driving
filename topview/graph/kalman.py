@@ -70,6 +70,32 @@ class KalmanFilter:
         MAP_SIZE       = kwargs['MAP_SIZE']
         CONTEXT        = kwargs['CONTEXT']
 
+        # print("x_hat          ", x_hat         )
+        # print("P              ", P             )
+        # print("dev            ", dev           )
+        # print("REF_LINE       ", REF_LINE      )
+        # print("HEIGHT         ", HEIGHT        )
+        # print("WIDTH          ", WIDTH         )
+        # print("DR             ", DR            )
+        # print("Tire_radius    ", Tire_radius   )
+        # print("T_camera_f     ", T_camera_f    )
+        # print("T_camera_r     ", T_camera_r    )
+        # print("R_camera_f_rad ", R_camera_f_rad)
+        # print("R_camera_r_rad ", R_camera_r_rad)
+        # print("Rslope         ", Rslope        )
+        # print("Thre_len       ", Thre_len      )
+        # print("Thre_rad       ", Thre_rad      )
+        # print("THRE           ", THRE          )
+        # print("c1             ", c1            )
+        # print("c2             ", c2            )
+        # print("BIRD           ", BIRD          )
+        # print("MAP_SIZE       ", MAP_SIZE      )
+        # print("CONTEXT        ", CONTEXT       );exit()
+
+
+
+        
+        
         
         # x_hat         : 前時刻の事後推定値  (3, 1)    [[x(mm)], [z(mm)], [yaw(rad)]] x...0-MAP_WIDTH  z...0-MAP_HEIGHT
         # P             : 共分散行列          (3, 3)
@@ -135,16 +161,9 @@ class KalmanFilter:
                                       [T_camera_r[1,0]],
                                       [T_camera_r[2,0]]])
         
-        # self.__T_camera_f = np.array([[  0],
-        #                              [100],
-        #                              [  0]])
-        # self.__T_camera_r = np.array([[  0],
-        #                              [100],
-        #                              [  0]])
+
         self.__R_camera_f = theta2r(np.array([R_camera_f_rad[0], R_camera_f_rad[1], R_camera_f_rad[2]]))
         self.__R_camera_r = theta2r(np.array([R_camera_r_rad[0], R_camera_r_rad[1], R_camera_r_rad[2]]))
-
-        self.__DIST_2camera = T_camera_f[2,0] - T_camera_r[2,0]
         
         
         # Roll/Pitch 回転無し
@@ -593,17 +612,39 @@ class KalmanFilter:
         return distance
 
 
-    def __get_lines_from_position(self, x_hat_m):
+    # def __get_lines_from_position(self, x_hat_m):
+    #     # x_hat_m の位置で見える線分情報を取得
+
+    #     eye   = np.array([x_hat_m[0][0], self.__T_camera_f[1][0], x_hat_m[1][0]])
+    #     theta = np.array([0, x_hat_m[2][0], 0])
+
+    #     r = theta2r(theta)
+
+    #     lines = wm_lines2uv_lines(self.__WM_LINES, eye, r, self.__CONTEXT)
+    #     return lines.reshape((len(lines),4))
+
+    def __get_lines_from_position(self, x_hat_m, T_camera, R_camera):
         # x_hat_m の位置で見える線分情報を取得
 
-        eye = np.array([x_hat_m[0][0], 100, x_hat_m[1][0]])
+        #print(self.__T_camera_f)
         theta = np.array([0, x_hat_m[2][0], 0])
 
-        r = theta2r(theta)
+        r_v   = theta2r(theta)
+        r_c   = r_v @ theta2r(np.array([0, np.pi, 0])) 
+        
+        eye_v = np.array([x_hat_m[0][0], T_camera[1][0], x_hat_m[1][0]])
+        eye_c = eye_v + r_c @ np.array([0, 0, T_camera[2][0]]) 
 
-        lines = wm_lines2uv_lines(self.__WM_LINES, eye, r, self.__CONTEXT)
+        #print(theta, eye_c)
+        
+        
+        #lines = wm_lines2uv_lines(self.__WM_LINES, eye, r, self.__CONTEXT)
+        lines = wm_lines2uv_lines(self.__WM_LINES, eye_c, r_c, self.__CONTEXT)
+        
         return lines.reshape((len(lines),4))
 
+    
+    
 
     def __matched_lines2obs_error(self, matched_obs, matched_pred, matched_vehicle, Rv2m, Tv2m):
         matched_obs_length = len(matched_obs)
@@ -729,9 +770,9 @@ class KalmanFilter:
         if yaw_r < 0:
             yaw_r += 2*np.pi
 
-        rear_camera = np.array([[self.__x_hat[0][0] - self.__T_camera_r[2][0]*np.sin(yaw_f)],
-                                [self.__x_hat[1][0] - self.__T_camera_r[2][0]*np.cos(yaw_f)],
-                                [                                                     yaw_r]])        
+        rear_camera = np.array([[self.__x_hat[0][0]],
+                                [self.__x_hat[1][0]],
+                                [            yaw_r ]])        
         return rear_camera
 
     
@@ -799,18 +840,8 @@ class KalmanFilter:
                 
     #---------- 関数定義(座標変換系) ここまで ----------
 
-    #---------- 関数定義(線分取得) ----------
-    def __get_ib_lines_egw_sim(self, lines, x_hat_m):
-        eye = np.array([float(x_hat_m[0]), 100, float(x_hat_m[1])])
-        theta = np.array([0, (np.rad2deg(x_hat_m[2])), 0]) / 180 * np.pi
-        r = theta2r(theta)
 
-        lines = lines.reshape((len(lines),2,2))
-        lines = bird_view(lines, eye, r, self.__BIRD, self.__CONTEXT)
-        return lines.reshape((len(lines),4))
-
-    #---------- 関数定義(線分取得) ここまで ----------
-
+    
     #---------- 関数定義(線分マッチング)  ----------
     def __distance(self, px, py, x1, y1, x2, y2, mode):
         '''
@@ -1280,8 +1311,11 @@ class KalmanFilter:
         # camera info { ------------------------------------------------------------
         # pred_line: feedback での予測位置で得られる線分情報
         # obs_line: 実際に観測した線分情報
-        pred_line_f = self.__get_lines_from_position(x_hat_m_f)
-        pred_line_r = self.__get_lines_from_position(x_hat_m_r)
+        # pred_line_f = self.__get_lines_from_position(x_hat_m_f)
+        # pred_line_r = self.__get_lines_from_position(x_hat_m_r)
+        pred_line_f = self.__get_lines_from_position(x_hat_m_f, self.__T_camera_f, self.__R_camera_f)
+        pred_line_r = self.__get_lines_from_position(x_hat_m_f, self.__T_camera_r, self.__R_camera_r)
+        
         obs_line_f  = LSD_lines_f.reshape(len(LSD_lines_f), 4)
         obs_line_r  = LSD_lines_r.reshape(len(LSD_lines_r), 4)
         # camera info } ------------------------------------------------------------
@@ -1293,7 +1327,8 @@ class KalmanFilter:
             self.__x_hat = x_hat_m_f
             self.__P     = P_m
             print('-----did not [detect] any lines-----')
-            #return self.__x_hat
+            print('pred_f: ', len(pred_line_f), '   obs_f: ', len(obs_line_f), \
+                  'pred_r: ', len(pred_line_r), '   obs_r: ', len(obs_line_r))
     
         else:
             # Tv2m : vehicle座標系からmap座標系への並進行列(front)
@@ -1392,7 +1427,9 @@ class KalmanFilter:
                 self.__x_hat = x_hat_m_f
                 self.__P = P_m
                 print('                        +++++did not [match] any lines+++++')
-    
+                print('pred_f: ', len(pred_line_f), '   obs_f: ', len(obs_line_f), \
+                      'pred_r: ', len(pred_line_r), '   obs_r: ', len(obs_line_r))
+                
             else:
                 #"全ての線分に対して"
                 ### 射影誤差   Delta

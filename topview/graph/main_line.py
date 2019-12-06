@@ -19,7 +19,7 @@ def INIT_DARGS(dargs):
 
     fixed_param = dargs['DRIVER'].fixed_param
     dargs['xhat']              = fixed_param['xini']
-    dargs['p']                 = fixed_param['p']
+    dargs['kalman_p']                 = fixed_param['kalman_p']
 
 def FUNC_UPDATE(dargs):
     eye              = dargs['eye']
@@ -32,6 +32,7 @@ def FUNC_UPDATE(dargs):
     DRIVER           = dargs['DRIVER']
     D_EYE_CAM_F      = dargs['D_EYE_CAM_F']
     D_EYE_CAM_R      = dargs['D_EYE_CAM_R']
+    MAP_SIZE         = dargs['MAP_SIZE']
 
     time_before = dargs['time_before']
     time_now    = time.time()
@@ -59,15 +60,15 @@ def FUNC_UPDATE(dargs):
         xhat         = dargs['xhat']
         trigger_time = dargs['trigger_time']
         route_id     = dargs['route_id']
-        p            = dargs['p']
+        kalman_p            = dargs['kalman_p']
 
         feedback = DRIVER.accste2rpslr(*accste)
 
         lsd_front_lines     = uv_lines_f
         lsd_rear_lines      = uv_lines_r
-        topview_front_lines = tv_f
-        topview_rear_lines  = tv_r
-        xhat, p = DRIVER.navi(xhat, p, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
+        topview_front_lines = tv_f.reshape(len(tv_f), 4)
+        topview_rear_lines  = tv_r.reshape(len(tv_r), 4)
+        xhat, kalman_p = DRIVER.navi(xhat, kalman_p, trigger_time, lsd_front_lines, lsd_rear_lines, topview_front_lines, topview_rear_lines, feedback, elapsed_time)
 
         accste = DRIVER.control(xhat, trigger_time, topview_front_lines, feedback, route_id)
 
@@ -75,14 +76,37 @@ def FUNC_UPDATE(dargs):
         dargs['xhat']         = xhat
         dargs['trigger_time'] = trigger_time
         dargs['route_id']     = route_id
-        dargs['p']            = p
+        dargs['kalman_p']     = kalman_p
     else:
         is_turning = dargs['is_turning']
+        theta_y = r2theta(r)[1]
+        theta_diff = pi / 2 / 100 * 5
 
         if is_turning:
             pass
+            wm_vs = get_wm_vs_infinity(eye, r, CONTEXT, max(MAP_SIZE * 2))
+            wm_lines = uv_lines2wm_lines(uv_lines_f, eye, r, CONTEXT)
+            cm_lines = wm_lines2cm_lines(wm_lines, eye, r)
+            cm_lines_d    = cm_lines[:,1,:] - cm_lines[:,0,:]
+            cm_lines_norm = np.sqrt(np.sum(cm_lines_d ** 2, axis=1))
+            cm_lines_n    = (cm_lines_d.T / cm_lines_norm).T
+            longest = np.argmax(cm_lines_norm)
+            theta = abs(np.arccos(cm_lines_n[longest][2]) / pi * 180 - 180)
+            print(theta)
+            if cm_lines_norm[longest] > 1500:
+                if theta < 5:
+                    is_turning = False
+            #print(cm_lines_n[:,2])
+            #print(wm_line)
+            #uv_line = wm_lines2uv_lines(np.array([wm_line]), eye, r, CONTEXT)
+            #print(uv_line);exit()
+            #wm_line = uv_line2wm_line(uv_line, eye, r, CONTEXT)
+            #cm_line = wm_line2cm_line(wm_line, eye, r)
+            #print(cm_line)
+            #exit()
+
         else:
-            if eye[2] < 700:
+            if eye[2] < 700 and abs(theta_y - pi) < theta_diff:
                 is_turning = True
 
         accste = (127, -32) if is_turning else (127, 0)
@@ -172,7 +196,7 @@ def main():
     D_EYE_CAM_R = 120 # mm
     DRIVER = driver.Driver(
         IS_PID              = False,
-        IS_KEEPLEFT         = False,
+        IS_KEEPLEFT         = True,
         IS_KALMAN           = True,
         IS_DETECT_COURSEOUT = False,
         IS_SIMULATION       = True,
