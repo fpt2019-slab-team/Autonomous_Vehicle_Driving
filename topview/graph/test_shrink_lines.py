@@ -12,7 +12,7 @@ def main():
         [[9, 3], [0, 4]],
         [[6, 4], [0, 3]],
     ])
-    num = 5
+    num = 30
     lines = np.random.rand(num * 2 * 2).reshape(num, 2, 2) * 10
 
     while True:
@@ -24,8 +24,11 @@ def main():
             (vs[3], vs[0]),
         ])
         ns = np.array([line2n(edge) for edge in edges])
-        theta = np.sum(np.abs(np.arccos([ns[i] @ ns[(i + 1) % 4]
-            for i in range(len(ns))])))
+        #thetas = np.abs(np.arccos([ns[i] @ ns[(i + 1) % 4] for i in range(len(ns))]))
+        thetas = np.abs(np.arccos([ns[i - 1] @ ns[i] for i in range(len(ns))]))
+        if np.min(thetas) < pi / 4:
+            continue
+        theta = np.sum(thetas)
         if abs(theta - 2 * pi) > 0.00001:
             continue
         norms = np.array([np.linalg.norm(edge[1] - edge[0]) for edge in edges])

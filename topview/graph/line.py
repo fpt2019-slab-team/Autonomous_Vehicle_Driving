@@ -392,12 +392,12 @@ def get_true_indicies(array):
 ################################################################################
 # CONTEXT:
 # ret: UV_VS: np.shape == (4, 2) 4 verticies of uv surface
-def get_UV_VS(CONTEXT):
+def get_UV_VS(CONTEXT, margin=0):
     UV_VS = np.array((
-        (                   0, CONTEXT['HEIGHT'] - 1),
-        (CONTEXT['WIDTH'] - 1, CONTEXT['HEIGHT'] - 1),
-        (CONTEXT['WIDTH'] - 1,                     0),
-        (                   0,                     0),
+        (                   0 + margin, CONTEXT['HEIGHT'] - 1 - margin),
+        (CONTEXT['WIDTH'] - 1 - margin, CONTEXT['HEIGHT'] - 1 - margin),
+        (CONTEXT['WIDTH'] - 1 - margin,                     0 + margin),
+        (                   0 + margin,                     0 + margin),
     ))
     return UV_VS
 
@@ -422,79 +422,79 @@ def delete_nan(lines):
 # uv_lines:      np.shape == (293 - *, 2, 2)
 # CONTEXT:
 # ret: uv_lines: np.shape == (293 - * - *, 2, 2)
-def filter_uv_lines(uv_lines, CONTEXT):
-    UV_VS = get_UV_VS(CONTEXT)
-
-    if len(uv_lines) == 0:
-        return np.array([])
-
-    is_insides = [] # (293 - *, 2)
-    for uv_line in uv_lines:
-        is_insides.append([
-            is_inside(uv_line[0], CONTEXT),
-            is_inside(uv_line[1], CONTEXT),
-        ])
-
-    uv_edges = np.array((
-        (UV_VS[0], UV_VS[1]),
-        (UV_VS[1], UV_VS[2]),
-        (UV_VS[2], UV_VS[3]),
-        (UV_VS[3], UV_VS[0]),
-    ))
-
-    intersections = [] # (293 - *, 4, 2)
-    for uv_line in uv_lines:
-        intersections.append([
-            get_intersection(uv_line, uv_edges[0]),
-            get_intersection(uv_line, uv_edges[1]),
-            get_intersection(uv_line, uv_edges[2]),
-            get_intersection(uv_line, uv_edges[3]),
-        ])
-
-    uv_lines_filtered = np.array(uv_lines)
-
-    # remove rows containing an nan
-    uv_lines_filtered = delete_nan(uv_lines_filtered)
-
-    # remove lines out of view
-    uv_lines_filtered_tmp = []
-    for i in range(len(uv_lines_filtered)):
-        true_indicies_is_inside = get_true_indicies(is_insides[i])
-        true_indicies_intersection = get_true_indicies(intersections[i])
-        if len(true_indicies_is_inside) == 2:
-            line = uv_lines_filtered[i]
-        elif len(true_indicies_is_inside) == 1:
-            # len(true_indicies_intersection) == 1
-            pa = uv_lines_filtered[i][true_indicies_is_inside[0]]
-            pb = intersections[i][true_indicies_intersection[0]]
-            line = (pa, pb) if true_indicies_is_inside[0] == 0 else (pb, pa)
-        elif len(true_indicies_intersection) == 2: # 0 or 2
-            pa = intersections[i][true_indicies_intersection[0]]
-            pb = intersections[i][true_indicies_intersection[1]]
-            norm_pa_0 = np.linalg.norm(uv_lines_filtered[i][0] - pa)
-            norm_pa_1 = np.linalg.norm(uv_lines_filtered[i][1] - pa)
-            line = (pa, pb) if norm_pa_0 <= norm_pa_1 else (pb, pa)
-        else:
-            continue
-        uv_lines_filtered_tmp.append(line)
-    uv_lines_filtered = np.array(uv_lines_filtered_tmp) # (293 - * - *, 2, 2)
-
-    if len(uv_lines_filtered) == 0:
-        return uv_lines_filtered
-
-    # remove points out of ((0, 0), (WIDTH, HEIGHT))
-    invalid_u_indices = uv_lines_filtered[:, :, 0] > CONTEXT['WIDTH']  - 1
-    invalid_j_indices = uv_lines_filtered[:, :, 1] > CONTEXT['HEIGHT'] - 1
-    uv_lines_filtered[invalid_u_indices, 0] = CONTEXT['WIDTH']  - 1
-    uv_lines_filtered[invalid_j_indices, 1] = CONTEXT['HEIGHT'] - 1
-
-    # remove lines shorter than LENGTH
-    LENGTH = 1
-    f = np.sum((uv_lines_filtered[:,0,:] - uv_lines_filtered[:,1,:])
-            ** 2, axis=1) ** 0.5 > LENGTH
-    uv_lines_filtered = uv_lines_filtered[f]
-
-    return uv_lines_filtered
+#def filter_uv_lines(uv_lines, CONTEXT):
+#    UV_VS = get_UV_VS(CONTEXT)
+#
+#    if len(uv_lines) == 0:
+#        return np.array([])
+#
+#    is_insides = [] # (293 - *, 2)
+#    for uv_line in uv_lines:
+#        is_insides.append([
+#            is_inside(uv_line[0], CONTEXT),
+#            is_inside(uv_line[1], CONTEXT),
+#        ])
+#
+#    uv_edges = np.array((
+#        (UV_VS[0], UV_VS[1]),
+#        (UV_VS[1], UV_VS[2]),
+#        (UV_VS[2], UV_VS[3]),
+#        (UV_VS[3], UV_VS[0]),
+#    ))
+#
+#    intersections = [] # (293 - *, 4, 2)
+#    for uv_line in uv_lines:
+#        intersections.append([
+#            get_intersection(uv_line, uv_edges[0]),
+#            get_intersection(uv_line, uv_edges[1]),
+#            get_intersection(uv_line, uv_edges[2]),
+#            get_intersection(uv_line, uv_edges[3]),
+#        ])
+#
+#    uv_lines_filtered = np.array(uv_lines)
+#
+#    # remove rows containing an nan
+#    uv_lines_filtered = delete_nan(uv_lines_filtered)
+#
+#    # remove lines out of view
+#    uv_lines_filtered_tmp = []
+#    for i in range(len(uv_lines_filtered)):
+#        true_indicies_is_inside = get_true_indicies(is_insides[i])
+#        true_indicies_intersection = get_true_indicies(intersections[i])
+#        if len(true_indicies_is_inside) == 2:
+#            line = uv_lines_filtered[i]
+#        elif len(true_indicies_is_inside) == 1:
+#            # len(true_indicies_intersection) == 1
+#            pa = uv_lines_filtered[i][true_indicies_is_inside[0]]
+#            pb = intersections[i][true_indicies_intersection[0]]
+#            line = (pa, pb) if true_indicies_is_inside[0] == 0 else (pb, pa)
+#        elif len(true_indicies_intersection) == 2: # 0 or 2
+#            pa = intersections[i][true_indicies_intersection[0]]
+#            pb = intersections[i][true_indicies_intersection[1]]
+#            norm_pa_0 = np.linalg.norm(uv_lines_filtered[i][0] - pa)
+#            norm_pa_1 = np.linalg.norm(uv_lines_filtered[i][1] - pa)
+#            line = (pa, pb) if norm_pa_0 <= norm_pa_1 else (pb, pa)
+#        else:
+#            continue
+#        uv_lines_filtered_tmp.append(line)
+#    uv_lines_filtered = np.array(uv_lines_filtered_tmp) # (293 - * - *, 2, 2)
+#
+#    if len(uv_lines_filtered) == 0:
+#        return uv_lines_filtered
+#
+#    # remove points out of ((0, 0), (WIDTH, HEIGHT))
+#    invalid_u_indices = uv_lines_filtered[:, :, 0] > CONTEXT['WIDTH']  - 1
+#    invalid_j_indices = uv_lines_filtered[:, :, 1] > CONTEXT['HEIGHT'] - 1
+#    uv_lines_filtered[invalid_u_indices, 0] = CONTEXT['WIDTH']  - 1
+#    uv_lines_filtered[invalid_j_indices, 1] = CONTEXT['HEIGHT'] - 1
+#
+#    # remove lines shorter than LENGTH
+#    LENGTH = 1
+#    f = np.sum((uv_lines_filtered[:,0,:] - uv_lines_filtered[:,1,:])
+#            ** 2, axis=1) ** 0.5 > LENGTH
+#    uv_lines_filtered = uv_lines_filtered[f]
+#
+#    return uv_lines_filtered
 
 ################################################################################
 
@@ -514,15 +514,15 @@ def eye_r2eye_r_b(eye, r, BIRD):
 # BIRD:          np.array([X, Y, Z])
 # CONTEXT:
 # ret: uv_lines: np.shape == (N - *, 2, 2)
-def bird_view(uv_lines, eye, r, BIRD, CONTEXT):
-    theta            = r2theta(r)
-    r_virtual        = theta2r(np.array([theta[0], 0, theta[2]]))
-    wm_lines_virtual = uv_lines2wm_lines(uv_lines, eye, r_virtual, CONTEXT)
-    eye_b            = eye + BIRD
-    r_b              = theta2r(np.array([pi / 2, 0, 0]))
-    uv_lines         = wm_lines2uv_lines(wm_lines_virtual, eye_b, r_b, CONTEXT)
-    uv_lines         = filter_uv_lines(uv_lines, CONTEXT)
-    return uv_lines
+#def bird_view(uv_lines, eye, r, BIRD, CONTEXT):
+#    theta            = r2theta(r)
+#    r_virtual        = theta2r(np.array([theta[0], 0, theta[2]]))
+#    wm_lines_virtual = uv_lines2wm_lines(uv_lines, eye, r_virtual, CONTEXT)
+#    eye_b            = eye + BIRD
+#    r_b              = theta2r(np.array([pi / 2, 0, 0]))
+#    uv_lines         = wm_lines2uv_lines(wm_lines_virtual, eye_b, r_b, CONTEXT)
+#    uv_lines         = filter_uv_lines(uv_lines, CONTEXT)
+#    return uv_lines
 
 # (theta_x = 0, theta_y = *, theta_z = 0)
 # uv_lines:      np.shape == (N, 2, 2)
@@ -613,73 +613,90 @@ def uv_lines2wm_lines_fixed(uv_lines, EYE_Y, CONTEXT):
     wm_lines = np.array(wm_lines)
     return wm_lines
 
+# vs:         np.shape == (4, N)
+# ret: edges: np.shape == (4, 2, N)
+# Note: N-dimensions vs to edges
+def vs2edges(vs):
+    edges = np.array((
+        (vs[0], vs[1]),
+        (vs[1], vs[2]),
+        (vs[2], vs[3]),
+        (vs[3], vs[0]),
+    ))
+    return edges
+
 # uv_line:      np.shape == (2, 2)
 # CONTEXT:
 # ret: uv_line: np.shape == (2, 2) or None
-def filter_uv_line(uv_line, CONTEXT, uv_vs=None):
-    if uv_vs is None:
-        uv_vs = get_UV_VS(CONTEXT)
+def filter_uv_line(uv_line, context_or_uv_vs):
+    if type(context_or_uv_vs) is type({}):
+        uv_vs = get_UV_VS(context_or_uv_vs, 1)
+    else:
+        uv_vs = context_or_uv_vs
 
-    uv_edges = np.array((
-        (uv_vs[0], uv_vs[1]),
-        (uv_vs[1], uv_vs[2]),
-        (uv_vs[2], uv_vs[3]),
-        (uv_vs[3], uv_vs[0]),
-    ))
+    uv_edges = vs2edges(uv_vs)
+    return shrink_line(uv_line, uv_edges)
+
+    #uv_edges = np.array((
+    #    (uv_vs[0], uv_vs[1]),
+    #    (uv_vs[1], uv_vs[2]),
+    #    (uv_vs[2], uv_vs[3]),
+    #    (uv_vs[3], uv_vs[0]),
+    #))
 
     #is_insides = [
     #    is_inside(uv_line[0], CONTEXT),
     #    is_inside(uv_line[1], CONTEXT),
     #]
-    is_insides = [
-        is_inside(uv_line[0], uv_edges),
-        is_inside(uv_line[1], uv_edges),
-    ]
+    #is_insides = [
+    #    is_inside(uv_line[0], uv_edges),
+    #    is_inside(uv_line[1], uv_edges),
+    #]
+    #
+    #intersections = [
+    #    get_intersection(uv_line, uv_edges[0]),
+    #    get_intersection(uv_line, uv_edges[1]),
+    #    get_intersection(uv_line, uv_edges[2]),
+    #    get_intersection(uv_line, uv_edges[3]),
+    #] # (4, 2)
 
-    intersections = [
-        get_intersection(uv_line, uv_edges[0]),
-        get_intersection(uv_line, uv_edges[1]),
-        get_intersection(uv_line, uv_edges[2]),
-        get_intersection(uv_line, uv_edges[3]),
-    ] # (4, 2)
+    #uv_line_filtered = np.array(uv_line)
 
-    uv_line_filtered = np.array(uv_line)
+    ## remove rows containing an nan
+    ##uv_lines_filtered = delete_nan(uv_lines_filtered)
 
-    # remove rows containing an nan
-    #uv_lines_filtered = delete_nan(uv_lines_filtered)
+    #true_indicies_is_insides = get_true_indicies(is_insides)
+    #true_indicies_intersections = get_true_indicies(intersections)
+    #if len(true_indicies_is_insides) == 2:
+    #    line = uv_line_filtered
+    #elif len(true_indicies_is_insides) == 1:
+    #    pa = uv_line_filtered[true_indicies_is_insides[0]]
+    #    #              len(true_indicies_intersections) == 1
+    #    pb = intersections[true_indicies_intersections[0]]
+    #    line = (pa, pb) if true_indicies_is_insides[0] == 0 else (pb, pa)
+    #elif len(true_indicies_intersections) == 2: # 0 or 2
+    #    pa = intersections[true_indicies_intersections[0]]
+    #    pb = intersections[true_indicies_intersections[1]]
+    #    distance_pa_0 = np.linalg.norm(uv_line_filtered[0] - pa)
+    #    distance_pa_1 = np.linalg.norm(uv_line_filtered[1] - pa)
+    #    # if distance_pa_0 <= distance_pa_1, then uv_line_filtered[0] is pa
+    #    line = (pa, pb) if distance_pa_0 <= distance_pa_1 else (pb, pa)
+    #else:
+    #    return None
+    #uv_line_filtered = np.array(line)
 
-    true_indicies_is_insides = get_true_indicies(is_insides)
-    true_indicies_intersections = get_true_indicies(intersections)
-    if len(true_indicies_is_insides) == 2:
-        line = uv_line_filtered
-    elif len(true_indicies_is_insides) == 1:
-        pa = uv_line_filtered[true_indicies_is_insides[0]]
-        #              len(true_indicies_intersections) == 1
-        pb = intersections[true_indicies_intersections[0]]
-        line = (pa, pb) if true_indicies_is_insides[0] == 0 else (pb, pa)
-    elif len(true_indicies_intersections) == 2: # 0 or 2
-        pa = intersections[true_indicies_intersections[0]]
-        pb = intersections[true_indicies_intersections[1]]
-        distance_pa_0 = np.linalg.norm(uv_line_filtered[0] - pa)
-        distance_pa_1 = np.linalg.norm(uv_line_filtered[1] - pa)
-        # if distance_pa_0 <= distance_pa_1, then uv_line_filtered[0] is pa
-        line = (pa, pb) if distance_pa_0 <= distance_pa_1 else (pb, pa)
-    else:
-        return None
-    uv_line_filtered = np.array(line)
+    ## move points out of ((0, 0), (WIDTH, HEIGHT)) to the edge
+    #invalid_u_indices = uv_line_filtered[:, 0] > CONTEXT['WIDTH' ] - 1
+    #invalid_j_indices = uv_line_filtered[:, 1] > CONTEXT['HEIGHT'] - 1
+    #uv_line_filtered[invalid_u_indices, 0] = CONTEXT['WIDTH' ] - 1
+    #uv_line_filtered[invalid_j_indices, 1] = CONTEXT['HEIGHT'] - 1
+    ##return uv_line_filtered
 
-    # move points out of ((0, 0), (WIDTH, HEIGHT)) to the edge
-    invalid_u_indices = uv_line_filtered[:, 0] > CONTEXT['WIDTH' ] - 1
-    invalid_j_indices = uv_line_filtered[:, 1] > CONTEXT['HEIGHT'] - 1
-    uv_line_filtered[invalid_u_indices, 0] = CONTEXT['WIDTH' ] - 1
-    uv_line_filtered[invalid_j_indices, 1] = CONTEXT['HEIGHT'] - 1
+    ## reject short line
+    #if np.linalg.norm(uv_line_filtered[1] - uv_line_filtered[0]) < 1:
+    #    return None
+
     #return uv_line_filtered
-
-    # reject short line
-    if np.linalg.norm(uv_line_filtered[1] - uv_line_filtered[0]) < 1:
-        return None
-
-    return uv_line_filtered
 
 def shrink_line(line, edges):
     is_insides    = [is_inside(p, edges) for p in line ]
@@ -717,35 +734,42 @@ def shrink_line(line, edges):
 # CONTEXT:
 # ret: uv_line: np.shape == (2, 2) or None
 def filter_uv_line_pretv_fixed(uv_line, CONTEXT):
-    HEIGHT = CONTEXT['HEIGHT']
     THRE   = HEIGHT / 2 + HEIGHT / 100 * 5
-    #return None if np.any(uv_line[:,1] < THRE) else uv_line
-    u0, v0 = uv_line[0]
-    u1, v1 = uv_line[1]
-    if   v0 < THRE and v1 < THRE:
-        return None
-    elif v0 > THRE and v1 > THRE:
-        return uv_line
-    # calculate intersection of 'uv_line' and 'v = THRE'
-    # v = a * u + b
-    lower, upper = (0, 1) if v0 > v1 else (1, 0)
-    du = u1 - u0
-    dv = v1 - v0
-    try:
-        a = dv / du
-    except FloatingPointError:
-        # uv_line is neary vertical
-        uv_line_filtered = np.array([uv_line[lower], (uv_line[upper][0], THRE)])
-        return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
-    b = v0 - a * u0
-    try:
-        upper_u = (THRE - b) / a
-    except FloatingPointError:
-        # uv_line is neary horizontal
-        uv_line_filtered = np.array([uv_line[lower], (uv_line[upper][0], THRE)])
-        return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
-    uv_line_filtered = np.array([uv_line[lower], (upper_u, THRE)])
-    return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
+    uv_vs = get_UV_VS(CONTEXT, 1)
+    uv_vs[2][1] = THRE
+    uv_vs[3][1] = THRE
+    uv_edges = vs2edges(uv_vs)
+    return shrink_line(uv_line, uv_edges)
+
+    #HEIGHT = CONTEXT['HEIGHT']
+    #THRE   = HEIGHT / 2 + HEIGHT / 100 * 5
+    ##return None if np.any(uv_line[:,1] < THRE) else uv_line
+    #u0, v0 = uv_line[0]
+    #u1, v1 = uv_line[1]
+    #if   v0 < THRE and v1 < THRE:
+    #    return None
+    #elif v0 > THRE and v1 > THRE:
+    #    return uv_line
+    ## calculate intersection of 'uv_line' and 'v = THRE'
+    ## v = a * u + b
+    #lower, upper = (0, 1) if v0 > v1 else (1, 0)
+    #du = u1 - u0
+    #dv = v1 - v0
+    #try:
+    #    a = dv / du
+    #except FloatingPointError:
+    #    # uv_line is neary vertical
+    #    uv_line_filtered = np.array([uv_line[lower], (uv_line[upper][0], THRE)])
+    #    return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
+    #b = v0 - a * u0
+    #try:
+    #    upper_u = (THRE - b) / a
+    #except FloatingPointError:
+    #    # uv_line is neary horizontal
+    #    uv_line_filtered = np.array([uv_line[lower], (uv_line[upper][0], THRE)])
+    #    return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
+    #uv_line_filtered = np.array([uv_line[lower], (upper_u, THRE)])
+    #return uv_line_filtered if lower == 0 else uv_line_filtered[::-1]
 
 def filter_uv_lines_pretv_fixed(uv_lines, CONTEXT):
     uv_lines_filtered = []
