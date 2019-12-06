@@ -22,3 +22,4 @@
 2019-12-04 we bug fix for plot 4 vertecies on map
 2019-12-05 th merge
 2019-12-06 fr shrink_line
+2019-12-06 fr success
